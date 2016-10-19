@@ -1,7 +1,7 @@
 name:     	Senior Project
 Created:  	2016-10-19 09:30
-Edited:   	2016-10-19 11:04
-Log Count:	29
+Edited:   	2016-10-19 11:54
+Log Count:	63
 -- Log -- 
 [Wed 2016-10-19]
 09:31 - Our second meeting and everyone else is late
@@ -34,3 +34,37 @@ Log Count:	29
 10:57 - * Developement * 
 10:59 - looking at the code there are a lot of pieces
 11:04 - made a new branch 
+11:12 - We are now doing HTML and we are going to strip the JS and the CSS
+11:12 - We will have an exception list 
+11:12 - looking at srcs and user's exceptions
+11:13 - we need to keep in mind that we will be adding exceptions with continued developement
+11:14 - For the CSS we are going to optimize styles 
+11:14 - IDs vs. Classes 
+11:15 - Look for the CSS style on the different blocks that might have similiar styles and merge them together.
+11:16 - We will need a huge amount of parsing. 'smart parsing' 
+11:17 - Style Combination
+11:18 - CSS has no exceptions...? But maybe
+11:19 - For JS parser, what is the best design practices for JS
+11:19 - move all variable declarations to the top of the file
+11:20 - or at least the globals 
+11:26 - We will just be doing HTML and CSS to begin with at the moment
+11:27 - "Websites can get messy, this makes it cleaner" -Eric Winkler
+11:30 - Do we need to add PHP
+11:32 - yes but later? 
+11:33 - If We do PHP I think we might as well do C
+11:34 - We got HTML in our HTML in out HTML
+11:34 - Web stuff can be done so many ways! 
+11:35 - HTML. CSS. JavaScript. These are our focus for the moment. 
+11:35 - HTML has an index 
+11:35 - the JS links to the index
+11:36 - the engine the events the controller all connected to the HTML index page
+11:37 - The CSS page(s) connected to all the HTML elements 
+11:39 - Then we will need to connect the Images, they will be a 'resources' file
+11:43 - What will people be clicking on? Classes the HTML Elements 
+11:44 - We will be using w3 best practices 
+11:44 - Visual Error in the visual 
+11:49 - I should make this logger do more Markdown stuff. That would be cool. 
+11:49 - Some side menu that Eric wants
+11:51 - It will have issue highlights, Sam dislikes it
+11:54 - Eric is convincing sam and I, Visual Studio Code will work
+11:54 - We worked 3 hours 
