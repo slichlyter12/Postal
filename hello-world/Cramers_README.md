@@ -1,7 +1,7 @@
 name:     	Senior Project
 Created:  	2016-10-19 09:30
-Edited:   	2016-10-19 11:54
-Log Count:	63
+Edited:   	2016-10-21 12:27
+Log Count:	75
 -- Log -- 
 [Wed 2016-10-19]
 09:31 - Our second meeting and everyone else is late
@@ -21,7 +21,6 @@ Log Count:	63
 10:19 - -
 10:22 - Okay we are thinking about doing HTML and websites
 10:28 - I found a good website that describes a 'hello world' - https://code.visualstudio.com/Docs/extensions/example-hello-world
-10:28 - downloaded Node.js
 10:30 - 
 10:42 - installed a code generator with 'npm install -g yo generator-code' 
 10:42 - Then I ran the command code with the command 'yo code' 
@@ -68,3 +67,20 @@ Log Count:	63
 11:51 - It will have issue highlights, Sam dislikes it
 11:54 - Eric is convincing sam and I, Visual Studio Code will work
 11:54 - We worked 3 hours 
+12:35 - ls
+[Thu 2016-10-20]
+17:03 - So we are wanting to make a simple Requirements. 
+17:03 - Just some basics
+17:03 - And we need to redo our problem statement
+17:08 - Eric and Sam are going over the stuff that we went over yesterday when Sam was not here cause he was late to our last meeting. 
+17:08 - Zach is working on the issue visualizer tool that he wants us to use.
+17:27 - Zach is failing
+17:27 - Eric's Grandparents are awesome
+18:41 - We are going to try again tomorrow morning
+[Fri 2016-10-21]
+10:11 - We are gonna get together today
+10:12 - I was at Kelley at 9:00am no one else was. 
+|
+12:26 - We met with Vee and we are awesome
+12:26 - We might need to tell Kevin of our accelerated schedule
+12:27 - Vee thinks that it might be a lot of work, but we think we can handle it
