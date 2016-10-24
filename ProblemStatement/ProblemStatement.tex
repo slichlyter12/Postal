@@ -1,6 +1,14 @@
 
 \documentclass[letterpaper,10pt,titlepage,draftclsnofoot,onecolumn] {IEEEtran}
 
+
+\usepackage[noadjust]{cite}
+
+\usepackage{enumitem}
+
+
+\nocite{*}
+
 \usepackage{geometry}
 \geometry{textheight=8.5in, textwidth=6in}
 
@@ -60,7 +68,11 @@ The Impact Location design pattern would be used to enable programmers to identi
 The notion of "impact" is distinct from similarity, in that impact means the outcomes of the code may change, while similarity only means that the code may be related functionally. 
 The Path Search design pattern would be used to automate searches across a path in a topology, collapsing a topology into a list of prey containing cues matching the predator's information goal. 
 The Recollection design pattern is used to quickly find a previously known class or method that is relevant to the task at hand.
+<<<<<<< HEAD
+With these design patterns the IDE will be able to find and identify sections of code to help organize code within the projects scope. \cite{iftwiki}
+=======
 With these design patterns the IDE will be able to find and identify sections of code to help organize large code bases within their scope.
+>>>>>>> 7bdb1655b71680f1ca27bf0849a37fe94f6f8c52
 
 \bigskip
 The effectiveness of this tool will be measured in two ways: if use of the tool saves developers time and if the code written by developers is cleaner and more organized than without the tool. 
@@ -70,5 +82,6 @@ Success of the IFT tool will be achieved, in part, if the group that used the to
 Additionally, there will be a group of experienced developers who will conduct a general code review on the solutions produced by each respective test group. 
 Success of the IFT tool will also be achieved if the code reviewers find that the solutions written with the text editor extension installed are organized more cleanly and logically that the solutions written without the extension. 
 
-
+\bibliographystyle{IEEEtran}
+\bibliography{ProblemStatement}
 \end{document}
