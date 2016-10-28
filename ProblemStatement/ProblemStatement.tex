@@ -1,6 +1,14 @@
 
 \documentclass[letterpaper,10pt,titlepage,draftclsnofoot,onecolumn] {IEEEtran}
 
+
+\usepackage[noadjust]{cite}
+
+\usepackage{enumitem}
+
+
+\nocite{*}
+
 \usepackage{geometry}
 \geometry{textheight=8.5in, textwidth=6in}
 
@@ -14,10 +22,28 @@
 \usepackage{titling}
 \title{Problem Statement}
 \author{Cramer Smith, Sam Lichlyter, Eric Winkler and Zach Schneider}
-\date{October 14th, 2016}
+\date{October 26th, 2016}
 
 \parindent = 0.0 in
 \parskip = 0.1 in
+
+\newcommand{\namesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+\newcommand{\studentnamesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
 
 \begin{document}
 
@@ -39,19 +65,16 @@ Developer tools are often complex pieces of software. Gathering and manipulating
 \end{titlepage}
 
 \section{Problem Statement}
-
+\subsection{Problem Definition}
 Software developers often spend a significant portion of their time seeking information within their development environments. 
 Tasks like re-factoring, debugging and writing correctly organized code can involve the developer spending valuable time scanning through their environments looking for examples, regions or specific functions.
-
-\bigskip
 For example, if a developer is tasked with extending the functionality of existing code, they may have a design pattern they are expected to conform to. 
 Finding the correct location in the project to place data access methods, GUIs, helper functions, etc. is essential in maintaining organized and understandable code. 
 It may also take the developer a lot of time.
-
-\bigskip
 The time spent navigating through code or seeking information in an IDE is not an efficient use of developer time and could be better spent elsewhere.
 
 \bigskip
+\subsection{Proposed Solution}
 The proposed solution to this problem is to implement Information Foraging Theory design patterns within an IDE to assist in maintaining the organization and structure of large code bases.
 The solution will use a number of IFT patterns including Specification Matcher, Structural Relatedness, Impact Location, Path Search and Recollection IFT design patterns.
 The Specifications Matcher design pattern identifies source code files that contain valuable code snippets based on the fact that they fulfill the specifications of the developer. 
@@ -60,15 +83,22 @@ The Impact Location design pattern would be used to enable programmers to identi
 The notion of "impact" is distinct from similarity, in that impact means the outcomes of the code may change, while similarity only means that the code may be related functionally. 
 The Path Search design pattern would be used to automate searches across a path in a topology, collapsing a topology into a list of prey containing cues matching the predator's information goal. 
 The Recollection design pattern is used to quickly find a previously known class or method that is relevant to the task at hand.
-With these design patterns the IDE will be able to find and identify sections of code to help organize large code bases within their scope.
+With these design patterns the IDE will be able to find and identify sections of code to help organize code within the projects scope. \cite{iftwiki}
 
 \bigskip
+\subsection{Performance Metrics}
 The effectiveness of this tool will be measured in two ways: if use of the tool saves developers time and if the code written by developers is cleaner and more organized than without the tool. 
-User tests will be conducted, giving developers and computer science students a problem which they must solve programmatically. 
+User tests will be conducted, giving developers and computer science students a task which they must carry out programmatically. 
 One group of users will attempt to solve the problem in the base version of a text editor, while the other will use an editor with the IFT extension installed. 
-Success of the IFT tool will be achieved, in part, if the group that used the tool took less time overall to solve the problem given to them. 
-Additionally, there will be a group of experienced developers who will conduct a general code review on the solutions produced by each respective test group. 
+Success of the IFT tool will be achieved, in part, if the group that used the tool took less time overall to complete the task given to them. 
+Additionally, code reviews will be conducted on the solutions produced by each respective test group.
 Success of the IFT tool will also be achieved if the code reviewers find that the solutions written with the text editor extension installed are organized more cleanly and logically that the solutions written without the extension. 
 
+\bibliographystyle{IEEEtran}
+\bibliography{ProblemStatement}
 
+\pagebreak
+
+\namesigdate{Client Signature} \hfill 
+\studentnamesigdate[4cm]{Student Signatures}
 \end{document}
