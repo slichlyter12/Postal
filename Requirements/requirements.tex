@@ -1,0 +1,226 @@
+\documentclass[letterpaper,10pt,titlepage,draftclsnofoot,onecolumn] {IEEEtran}
+\usepackage{listings}
+\usepackage{underscore}
+\usepackage[bookmarks=true]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\hypersetup{
+    bookmarks=false,    % show bookmarks bar?
+    pdftitle={Software Requirement Specification},    % title
+    pdfauthor={Jean-Philippe Eisenbarth},                     % author
+    pdfsubject={TeX and LaTeX},                        % subject of the document
+    pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=blue,       % color of internal links
+    citecolor=black,       % color of links to bibliography
+    filecolor=black,        % color of file links
+    urlcolor=purple,        % color of external links
+    linktoc=page            % only page is linked
+} %
+\def\myversion{1.0 }
+\date{}
+%\title{%
+
+%}
+\usepackage{hyperref}
+\begin{document}
+
+\begin{flushright}
+    \rule{16cm}{5pt}\vskip1cm
+    \begin{bfseries}
+        \Huge{SOFTWARE REQUIREMENTS\\ SPECIFICATION}\\
+        \vspace{1cm}
+        for\\
+        \vspace{1cm}
+        Postal\\
+        \vspace{.5cm}
+        Group \#38\\
+        \vspace{1.9cm}
+        Cramer Smith, Sam Lichlyter, Eric Winkler and Zach Schneider\\
+        \vspace{1.9cm}
+        Oregon State University\\
+        \vspace{1.9cm}
+        \today\\
+    \end{bfseries}
+\end{flushright}
+
+\tableofcontents
+
+\section{Introduction}
+
+We hope to help new developers avoid the same mistakes we made when we first started web development with very confusing CSS pages and way too many confusing HTML pages and poorly defined JavaScript files. 
+The Postal extension will do this by giving the user friendly reminders and suggestions of the best practices of the current language that they are using.
+
+\subsection{Purpose}
+The purpose of the Software Requirements Specification of the Postal extension is describe the ways that functionality and way that the extension will be used by our target user. 
+As well as being a guide line for us as developers steering us toward developing the correct functionality and making sure that we stick to a loose time line going through with the project.
+The hope is that this document will help us and our steak holders have a better understand of what it is our project's purpose actually is.
+
+\subsection{Scope}
+The Postal Project is to developed by Research Experience Undergraduates under the lead of Christopher Scaffidi. 
+The project will consist of a Visual studio code extension.
+The purpose of this extension is to help new web developers develop good practices in their styling of code.
+We hope to help new developers avoid the same mistakes we made when we first started web development with very confusing CSS pages and way too many confusing HTML pages and poorly defined JavaScript files.
+The scope of our project is to create an extension to be used on Visual Studio Code. 
+This extension will be able to look at the code that the user is editing and the program will be able to give them suggestions based on the the W3 standards. 
+
+\subsection{Definitions, Acronyms, and Abbreviations}
+Information Foraging Theory (IFT): \\
+An approach to the analysis of human activities involving information access technologies. The theory derives from optimal foraging theory in biology and anthropology, which analyzes the adaptive value of food-foraging strategies.\\\\
+IFT Design Patterns: \\
+General, reusable solutions to common design problems.\\\\
+Visualize Topology: \\
+To reveal the structure of the information topology to help developers more easily navigate structural relationships, backtrack, and make better decisions about which patches to visit.\\
+Notifier: \\\\
+Automatically notify the developer of a change in an information patch which may result in prey desired by the developer appearing in the patch.\\\\
+Dashboard: \\
+Generate an information patch in which a developer can become aware of links that lead to continually changing information patches relevant to his or her work.\\\\
+Gather Together: \\
+Enable a developer to assemble information features from disparate patches into a single patch, thus reducing the cost of navigation between those features.\\\\
+Reduce Duplicate Information: \\
+Enable developers to quickly forage by reducing the size of the topology. Here, the size of the topology is reduced by eliminating nodes with duplicate information.\\\\
+VSC, VS Code:\\
+Visual Studio Code.\\\\
+IRB: \\
+Institutional Review Board.\\\\
+File Map: \\
+The graphical user interface for visualizing project files and links, as well as errors inside code.
+
+\subsection{References}
+Working on Bibtex file.
+
+\subsection{Overview}
+For the rest of this document we will be looking at detailed requirements for the Postal Project. 
+This will be an overall description of what the product means to the people that the Postal extension means to the people that will be using the project and why they are using and how it will help them in their development processes. The next subsection will go over the specific requirements that steer the development process and keep the team focused on the goals specified in this document.   
+
+\section{Overall Description}
+Postal is an extension for Visual Studio code  that is supposed to help beginner developers while they make websites using HTML, CSS and JavaScript.
+
+\subsection{Product Perspective}
+The product is aimed toward people that are learning web development we hope that as a user they find that our tool makes the development process more educational and easier for them to understand.
+
+\subsubsection{System Interfaces}
+Visual Studio Code was chosen as the sole system interface for Postal. VSC is free, lightweight, and open source, making it accessible to both developers and users of this development tool.
+
+\subsubsection{User Interfaces}
+The main interface that we plan to implement is a graphical representation of the users files. 
+We want the users to be able to quickly navigate through a visual representation of their files in hopes that this will give new developers a different way of thinking about their projects.
+This different perspective will hopefully encourage the user to implement better file structure and organization in their projects.
+
+\subsubsection{Software Interfaces}
+From our end we would be interfacing with the VSC extension API. To create and develop our code and we will be using the npm tool that is included in Node.js and using a code generator called 'yoeman'. We will use yo to generate a skeleton of files which we will then be able to edit and make into an extension using JavaScript. The skeleton code will be the base of what we build the rest of the extension on. 
+
+\includegraphics[scale=0.5]{fileStructure.png}
+\subsubsection{Communication Interfaces}
+The only communication interface that Postal will require is an ability to download the extension from the VS Code Extension Marketplace. 
+
+\subsubsection{Operations}
+TODO: Uncertain what specific operations the users will follow.
+
+\subsection{Product Functions}
+%%%%%%%%%TODO%%%%%%%%%
+
+\subsection{User Characteristics}
+Users of Postal will be web developers and computer science students with some level of prior development experience, though prior knowledge will not be required. The users will be familiar with the concepts surrounding programming languages and markup languages, such as HTML, CSS and JavaScript. Users will be familiar with file systems, such that the visualization within Postal will enhance understanding of project structure. Users should have a basic understanding of debugging techniques that will be aided by the error recognition and highlighting within Postal.
+
+\subsection{Constraints}
+The Postal extension for VSC will be constrained chiefly by software and programming language level barriers. As this extension will be primarily written in JavaScript (ECMAScript2016 standard, specifically), it will be bound by any functional or design limitations that exist within that programming language. Additionally, all Postal functionality must be possible within the VSC environment. VSC does not detail any notable constraints in its documentation that would conflict with the goals of Postal at this time. Finally, the file visualization and linking features of postal will be reliant on read, write and execute permissions within the scope of project loaded into VSC at that time. If any user's operating system restricts Postal access to any of those file system features, that operating system will also be a constraint to proper function.
+
+\subsection{Assumptions and Dependencies}
+The successful development of Postal assumes that Microsoft will not update Visual Studio Code in such a manner that breaks the function of the Postal extension. It is also assumed that VSC will continue to support the operating systems used in development, testing, and utilization of Postal.
+
+\subsection{Apportionment of Requirements}
+
+\section{Specific Requirements}
+
+\subsection{External Interfaces}
+The primary interface of the extension will be a window within the Visual Studio Code environment. This window will contain two main elements (the File Map and the Error List) as well as a toolbar for options.
+\\
+The File Map is a visualization of the user's project. When a project is opened within VSC, the extension will automatically populate the map by scanning the directory of the opened solution. This map will display each file found in the project directory in an organized fashion. The map will also feature options to display a visual indicator of links and calls between files in the directory (for example, if an HTML page has an image embedded in it, the link option would indicate a link between the HTML and image files) as well as an option to display an indicator of the location of errors within the GUI.
+\\
+The user will also be able to interact with the File Map by “digging down” into a file. This process will allow a user to click on a visualized file and have the map display more details about that file. For example, if an HTML file is clicked on within the map, the UI will update and visualize details of the file like divs and links as their own objects. If the above mentioned error option is enabled, the object containing the error would indicate that.
+\\
+The Error list is a list which displays all errors that the parser detected during its last run. The User will be able to click on a particular error in this list which will then trigger the extension to navigate the user to that particular error in the code. Additionally if the user hovers over a particular error, the corresponding location in the file map will be highlighted.
+
+\subsection{Functions}
+
+\subsubsection{Parser Related Functionality}
+\begin{itemize}
+  \item Functionality capable of parsing JavaScript, HTML and CSS documents. As parsing occurs, particular instances of code that break rules defined in the system will be flagged. Flagged lines will be visualized in the File Map.
+  \item The system must have a method for storing rules that will be used by the parser to determine if a line of code should be marked as an error. Many of these rules will be based on W3 best practices for the particular parser.
+  \item The system must have an editable list of exceptions. Exceptions are defined segments of code that may break a parsing rule, but because it was either intentional or necessary, should not throw an error.
+  \item Current Parsing Rules for HTML:
+  \begin{itemize}
+  	\item Flag JavaScript and CSS code that is not in the exception list.
+  	\item Make a note of each use of another file within the HTML file. This will be used to visualize links between files in the map.
+  \end{itemize}
+  \item Current Parsing Rules for CSS:
+  \begin{itemize}
+  	\item Flag styles that can be optimized (ids vs. Classes).
+  	\item Flag redundant definitions.
+    \item Do not flag code in the exception list.
+  \end{itemize}
+  \item Current Parsing Rules for JS:
+    \begin{itemize}
+  	\item Flag Global variables that are not defined at the top of a file.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{File Map Functionality}
+\begin{itemize}
+	\item Display in a visual, chart-like manner all files in the project directory.
+    \item Display links and calls between files. This option can be turned off by the user.
+    \item Display indicators of errors (broken rules) at the corresponding location within the map. This option can be turned off by the user.
+    \item The system must allow for the “Dig Down” functionality. When an object in the map is clicked on, the map will update to display the object in more detail. Details will often be their own object. Error indicators will be updated.
+    \item Display an error list adjacent to the file map. Errors will be organized by location.
+    \begin{itemize}
+    	\item If the user hovers over a particular error in the list, the corresponding location in the file map will be 	highlighted.
+        \item If the user clicks on a particular error in the list, the extension will navigate the user to the location of the error in the code.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Performance Requirements}
+Our product will be able to support as many projects as each user has. 
+Given a web site project consisting of less than thirty HTML files, five CSS files, and ten JavaScript files, our product should complete its analysis in less than a second. 
+This example should be a pretty standard setup for most intermediate web developers.
+\\
+Our parser should complete each HTML file in less than 15/100th of a second and each CSS and JavaScript file in less than 1/100th of a second.
+
+\subsubsection{Standards Compliance}
+Other than the standards set forth by the VSC extension API, there are no overarching standards our product needs to comply with.
+
+\subsection{Software System Attributes}
+The software that we will use is Visual Studio Code. We are making an extension for this base
+
+\subsubsection{Reliability}
+Postal should complete its analysis for 95\% of the projects it is given. It should also satisfy the performace requirements 95\% of the time.  
+
+\subsubsection{Organizing the Specific Requirements}
+
+\section{Other Nonfunctional Requirements}
+Along with our product completing the aforementioned requirements, it also needs to be implemented using the IFT Design Patterns we also mentioned previously in this document.
+
+\subsection{Performance Requirements}
+It should run seamlessly with the user taking little notice that our processes are running. 
+
+\subsection{Safety Requirements}
+Our project inherently won't have any safety requirements. 
+We do plan on testing our product with people following the IRB protocols.
+We will follow their safety requirements regarding the testers information.
+
+\section{Other Requirements}
+
+\subsection{Appendix A: Glossary}
+%see https://en.wikibooks.org/wiki/LaTeX/Glossary
+
+\subsection{Appendix B: Analysis Models}
+
+\subsection{Appendix C: To Be Determined List}
+
+\pagebreak
+
+\includegraphics[scale=0.7]{gantt.png}
+
+\end{document}
