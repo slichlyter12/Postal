@@ -1,4 +1,4 @@
-\documentclass[letterpaper,10pt,titlepage,draftclsnofoot,onecolumn] {IEEEtran}
+ \documentclass[letterpaper,10pt,titlepage,draftclsnofoot,onecolumn] {IEEEtran}
 \usepackage{listings}
 \usepackage{underscore}
 \usepackage[bookmarks=true]{hyperref}
@@ -49,6 +49,10 @@
 \tableofcontents
 
 \section{Introduction}
+
+This Software Requirements Specification (SRS) specifically outline the functional and non functional requirements that are planned to be implemented within the Postal Extension for Visual Studio Code. 
+The requirements will be explained using terms that will be formally defined and user cases that will be created within this document.
+
 
 We hope to help new developers avoid the same mistakes we made when we first started web development with very confusing CSS pages and way too many confusing HTML pages and poorly defined JavaScript files. 
 The Postal extension will do this by giving the user friendly reminders and suggestions of the best practices of the current language that they are using.
@@ -148,24 +152,24 @@ The Error list is a list which displays all errors that the parser detected duri
 
 \subsubsection{Parser Related Functionality}
 \begin{itemize}
-  \item Functionality capable of parsing JavaScript, HTML and CSS documents. As parsing occurs, particular instances of code that break rules defined in the system will be flagged. Flagged lines will be visualized in the File Map.
-  \item The system must have a method for storing rules that will be used by the parser to determine if a line of code should be marked as an error. Many of these rules will be based on W3 best practices for the particular parser.
-  \item The system must have an editable list of exceptions. Exceptions are defined segments of code that may break a parsing rule, but because it was either intentional or necessary, should not throw an error.
-  \item Current Parsing Rules for HTML:
-  \begin{itemize}
-  	\item Flag JavaScript and CSS code that is not in the exception list.
-  	\item Make a note of each use of another file within the HTML file. This will be used to visualize links between files in the map.
-  \end{itemize}
-  \item Current Parsing Rules for CSS:
-  \begin{itemize}
-  	\item Flag styles that can be optimized (ids vs. Classes).
-  	\item Flag redundant definitions.
-    \item Do not flag code in the exception list.
-  \end{itemize}
-  \item Current Parsing Rules for JS:
-    \begin{itemize}
-  	\item Flag Global variables that are not defined at the top of a file.
-  \end{itemize}
+	\item Functionality capable of parsing JavaScript, HTML and CSS documents. As parsing occurs, particular instances of code that break rules defined in the system will be flagged. Flagged lines will be visualized in the File Map.
+	\item The system must have a method for storing rules that will be used by the parser to determine if a line of code should be marked as an error. Many of these rules will be based on W3 best practices for the particular parser.
+	\item The system must have an editable list of exceptions. Exceptions are defined segments of code that may break a parsing rule, but because it was either intentional or necessary, should not throw an error.
+	\item Current Parsing Rules for HTML:
+		\begin{itemize}
+			\item Flag JavaScript and CSS code that is not in the exception list.
+			\item Make a note of each use of another file within the HTML file. This will be used to visualize links between files in the map.
+		\end{itemize}
+	\item Current Parsing Rules for CSS:
+		\begin{itemize}
+			\item Flag styles that can be optimized (ids vs. Classes).
+			\item Flag redundant definitions.
+			\item Do not flag code in the exception list.
+		\end{itemize}
+	\item Current Parsing Rules for JS:
+		\begin{itemize}
+			\item Flag Global variables that are not defined at the top of a file.
+		\end{itemize}
 \end{itemize}
 
 \subsubsection{File Map Functionality}
