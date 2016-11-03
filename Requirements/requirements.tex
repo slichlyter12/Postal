@@ -7,6 +7,8 @@
 \usepackage{hyperref}
 \usepackage{titling}
 \usepackage{graphicx}
+\usepackage[noadjust]{cite}
+\nocite{*}
 \graphicspath{ {images/} }
 \hypersetup{
     bookmarks=false,    % show bookmarks bar?
@@ -18,7 +20,7 @@
     linkcolor=black,       % color of internal links
     citecolor=black,       % color of links to bibliography
     filecolor=black,        % color of file links
-    urlcolor=purple,        % color of external links
+    urlcolor=blue,        % color of external links
     linktoc=page            % only page is linked
 } 
 
@@ -60,20 +62,20 @@ The scope of our project is to create an extension to be used on Visual Studio C
 This extension will be able to look at the code that the user is editing and the program will be able to give them suggestions based on the the W3 standards. 
 
 \subsection{Definitions, Acronyms, and Abbreviations}
-Information Foraging Theory (IFT): \\
-An approach to the analysis of human activities involving information access technologies. The theory derives from optimal foraging theory in biology and anthropology, which analyzes the adaptive value of food-foraging strategies.\\\\
+\setlength\parindent{0pt}Information Foraging Theory (IFT): \\
+An approach to the analysis of human activities involving information access technologies. The theory derives from optimal foraging theory in biology and anthropology, which analyzes the adaptive value of food-foraging strategies.\cite{xeroxift}\\\\
 IFT Design Patterns: \\
-General, reusable solutions to common design problems.\\\\
+General, reusable solutions to common design problems.\cite{iftwiki}\\\\
 Visualize Topology: \\
-To reveal the structure of the information topology to help developers more easily navigate structural relationships, backtrack, and make better decisions about which patches to visit.\\
-Notifier: \\\\
-Automatically notify the developer of a change in an information patch which may result in prey desired by the developer appearing in the patch.\\\\
+To reveal the structure of the information topology to help developers more easily navigate structural relationships, backtrack, and make better decisions about which patches to visit.\cite{iftwiki}\\
+Notifier: \\
+Automatically notify the developer of a change in an information patch which may result in prey desired by the developer appearing in the patch.\cite{iftwiki}\\\\
 Dashboard: \\
-Generate an information patch in which a developer can become aware of links that lead to continually changing information patches relevant to his or her work.\\\\
+Generate an information patch in which a developer can become aware of links that lead to continually changing information patches relevant to his or her work.\cite{iftwiki}\\\\
 Gather Together: \\
-Enable a developer to assemble information features from disparate patches into a single patch, thus reducing the cost of navigation between those features.\\\\
+Enable a developer to assemble information features from disparate patches into a single patch, thus reducing the cost of navigation between those features.\cite{iftwiki}\\\\
 Reduce Duplicate Information: \\
-Enable developers to quickly forage by reducing the size of the topology. Here, the size of the topology is reduced by eliminating nodes with duplicate information.\\\\
+Enable developers to quickly forage by reducing the size of the topology. Here, the size of the topology is reduced by eliminating nodes with duplicate information.\cite{iftwiki}\\\\
 VSC, VS Code:\\
 Visual Studio Code.\\\\
 IRB: \\
@@ -82,7 +84,8 @@ File Map: \\
 The graphical user interface for visualizing project files and links, as well as errors inside code.
 
 \subsection{References}
-Working on Bibtex file.
+\bibliographystyle{IEEEtran}
+\bibliography{requirements}
 
 \subsection{Overview}
 For the rest of this document we will be looking at detailed requirements for the Postal Project. 
