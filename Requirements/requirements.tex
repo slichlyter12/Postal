@@ -33,6 +33,13 @@
 \author{Cramer Smith, Sam Lichlyter, Eric Winkler, Zach Schneider}
 
 \maketitle
+\vfill
+\begin{abstract}
+
+Developer tools are often complex pieces of software. Gathering and manipulating useful information for a programmer can often be a slow and costly process. By implementing Information Foraging Theory design patterns in the creation of these tools, the information collected may be more useful or produced faster. Information Foraging Theory is the theory and math behind the choices people make to maximize the value of the information they find versus the cost of getting that information. Our aim is to develop a tool that will act as a proof of concept to this idea and increase developer efficiency. Implementing multiple IFT design patterns, we will create a developer tool that helps enforce and maintain code structure. 
+
+\end{abstract}
+\vfill
 
 \pagebreak
 
@@ -43,7 +50,7 @@
 \section{Introduction}
 
 The Postal extension is being made with two goals in mind. The first being to provide evidence that the use of IFT Design Patterns in the production of developer tools is beneficial. The second is to create a tool that will help developers write and maintain clean code bases for websites.
-The Postal extension will do this by giving the user friendly reminders and suggestions of the best practices of the current language that they are using and by providing a visual representation of their project?s code base.
+The Postal extension will do this by giving the user friendly reminders and suggestions of the best practices of the current language that they are using and by providing a visual representation of their project's code base.
 
 \subsection{Purpose}
 The purpose of the Software Requirements Specification of the Postal extension is describe the ways that functionality and way that the extension will be used by our target user. 
@@ -126,8 +133,6 @@ The user should experience little to no lag while our extension is running depen
 We will assume that an average user is using a computer with at least two gigabytes of ram. 
 The project inherently won't have any safety requirements. 
 
-
-
 \subsection{User Characteristics}
 Users of Postal will be web developers and computer science students with some level of prior development experience, though prior knowledge will not be required. The users will be familiar with the concepts surrounding programming languages and markup languages, such as HTML, CSS and JavaScript. 
 Users will be familiar with file systems, such that the visualization within Postal will enhance understanding of project structure. 
@@ -153,7 +158,7 @@ The primary interface of the extension will be a window within the Visual Studio
 \\
 The File Map is a visualization of the user's project. When a project is opened within VSC, the extension will automatically populate the map by scanning the directory of the opened solution. This map will display each file found in the project directory in an organized fashion. The map will also feature options to display a visual indicator of links and calls between files in the directory (for example, if an HTML page has an image embedded in it, the link option would indicate a link between the HTML and image files) as well as an option to display an indicator of the location of errors within the GUI.
 \\
-The user will also be able to interact with the File Map by “digging down” into a file. This process will allow a user to click on a visualized file and have the map display more details about that file. For example, if an HTML file is clicked on within the map, the UI will update and visualize details of the file like divs and links as their own objects. If the above mentioned error option is enabled, the object containing the error would indicate that.
+The user will also be able to interact with the File Map by ``digging down'' into a file. This process will allow a user to click on a visualized file and have the map display more details about that file. For example, if an HTML file is clicked on within the map, the UI will update and visualize details of the file like divs and links as their own objects. If the above mentioned error option is enabled, the object containing the error would indicate that.
 \\
 The Error list is a list which displays all errors that the parser detected during its last run. The User will be able to click on a particular error in this list which will then trigger the extension to navigate the user to that particular error in the code. Additionally if the user hovers over a particular error, the corresponding location in the file map will be highlighted.
 
@@ -209,7 +214,7 @@ The plan is to test our product with people following the IRB protocols, and the
 The software that we will use is Visual Studio Code. We are making an extension for this base
 
 \subsubsection{Reliability}
-Postal should complete its analysis for 95\% of the projects it is given. It should also satisfy the performace requirements 95\% of the time.   
+Postal should complete its analysis for 95\% of the projects it is given. It should also satisfy the performance requirements 95\% of the time.   
 
 \subsubsection{Organizing the Specific Requirements}
 
