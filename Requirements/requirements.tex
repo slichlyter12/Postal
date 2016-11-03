@@ -86,16 +86,18 @@ The graphical user interface for visualizing project files and links, as well as
 
 \subsection{Overview}
 For the rest of this document we will be looking at detailed requirements for the Postal Project. 
-This will be an overall description of what the product means to the people that the Postal extension means to the people that will be using the project and why they are using and how it will help them in their development processes. The next subsection will go over the specific requirements that steer the development process and keep the team focused on the goals specified in this document.   
+This will be an overall description of what the product means to the people that the Postal extension means to the people that will be using the project and why they are using and how it will help them in their development processes. 
+The next subsection will go over the specific requirements that steer the development process and keep the team focused on the goals specified in this document.   
 
 \section{Overall Description}
-Postal is an extension for Visual Studio code  that is supposed to help beginner developers while they make websites using HTML, CSS and JavaScript.
+Postal is an extension for Visual Studio code  that is supposed to help beginner developers while they make websites using HTML, CSS and JavaScript. 
 
 \subsection{Product Perspective}
 The product is aimed toward people that are learning web development we hope that as a user they find that our tool makes the development process more educational and easier for them to understand.
 
 \subsubsection{System Interfaces}
-Visual Studio Code was chosen as the sole system interface for Postal. VSC is free, lightweight, and open source, making it accessible to both developers and users of this development tool.
+Visual Studio Code was chosen as the sole system interface for Postal.
+VSC is free, lightweight, and open source, making it accessible to both developers and users of this development tool.
 
 \subsubsection{User Interfaces}
 The main interface that we plan to implement is a graphical representation of the users files. 
@@ -116,12 +118,27 @@ TODO: Uncertain what specific operations the users will follow.
 From a functional perspective, Postal will largely do two things: Provide the user with a visual perspective of their project folder and parse HTML, CSS and JavaScript files for bad coding practices and information to feed into the visual interface. 
 The visual interface component will be a separate window referred to as the ?File Map?. This window will scan the directory of the currently open project and create a visual representation of the files in the folder. The representation will also feature indicators of errors that the parser detects in files and visually display any links between files.
 The parser will read the HTML, CSS and JavaScript files in the user?s project folder and look for specific violations of rules the defined in the system. These rules will be based on W3?s best practices guidelines. Additionally, the parser will ignore any lines of code that marked in an exception list, allowing the user to break rules in the case that they have to.
+Along with our product completing the aforementioned requirements, it also needs to be implemented using the IFT Design Patterns we also mentioned previously in this document.
+The exention will be able to parse and interpret a code projects with up to one hundred thousand lines of code quickly without noticeable lag. 
+More specifically the extension will be able to handle files of this size with less than one second of lag.
+The entire extension should run seamlessly with the user taking little to no notice that our processes are running. 
+The user should experience little to no lag while our extension is running depending on the power of their personal machine.
+We will assume that an average user is using a computer with at least two gigabytes of ram. 
+The project inherently won't have any safety requirements. 
+
+
 
 \subsection{User Characteristics}
-Users of Postal will be web developers and computer science students with some level of prior development experience, though prior knowledge will not be required. The users will be familiar with the concepts surrounding programming languages and markup languages, such as HTML, CSS and JavaScript. Users will be familiar with file systems, such that the visualization within Postal will enhance understanding of project structure. Users should have a basic understanding of debugging techniques that will be aided by the error recognition and highlighting within Postal.
+Users of Postal will be web developers and computer science students with some level of prior development experience, though prior knowledge will not be required. The users will be familiar with the concepts surrounding programming languages and markup languages, such as HTML, CSS and JavaScript. 
+Users will be familiar with file systems, such that the visualization within Postal will enhance understanding of project structure. 
+Users should have a basic understanding of debugging techniques that will be aided by the error recognition and highlighting within Postal.
 
 \subsection{Constraints}
-The Postal extension for VSC will be constrained chiefly by software and programming language level barriers. As this extension will be primarily written in JavaScript (ECMAScript2016 standard, specifically), it will be bound by any functional or design limitations that exist within that programming language. Additionally, all Postal functionality must be possible within the VSC environment. VSC does not detail any notable constraints in its documentation that would conflict with the goals of Postal at this time. Finally, the file visualization and linking features of postal will be reliant on read, write and execute permissions within the scope of project loaded into VSC at that time. If any user's operating system restricts Postal access to any of those file system features, that operating system will also be a constraint to proper function.
+The Postal extension for VSC will be constrained chiefly by software and programming language level barriers.
+As this extension will be primarily written in JavaScript (ECMAScript2016 standard, specifically), it will be bound by any functional or design limitations that exist within that programming language. 
+Additionally, all Postal functionality must be possible within the VSC environment. 
+VSC does not detail any notable constraints in its documentation that would conflict with the goals of Postal at this time. 
+Finally, the file visualization and linking features of postal will be reliant on read, write and execute permissions within the scope of project loaded into VSC at that time. If any user's operating system restricts Postal access to any of those file system features, that operating system will also be a constraint to proper function.
 
 \subsection{Assumptions and Dependencies}
 The successful development of Postal assumes that Microsoft will not update Visual Studio Code in such a manner that breaks the function of the Postal extension. It is also assumed that VSC will continue to support the operating systems used in development, testing, and utilization of Postal.
@@ -186,6 +203,7 @@ Our parser should complete each HTML file in less than 1/5th of a second and eac
 
 \subsubsection{Standards Compliance}
 Other than the standards set forth by the VSC extension API, there are no overarching standards our product needs to comply with.
+The plan is to test our product with people following the IRB protocols, and the testing will follow their safety requirements regarding the testers information.
 
 \subsection{Software System Attributes}
 The software that we will use is Visual Studio Code. We are making an extension for this base
@@ -194,21 +212,6 @@ The software that we will use is Visual Studio Code. We are making an extension 
 Postal should complete its analysis for 95\% of the projects it is given. It should also satisfy the performace requirements 95\% of the time.   
 
 \subsubsection{Organizing the Specific Requirements}
-
-\section{Other Nonfunctional Requirements}
-Along with our product completing the aforementioned requirements, it also needs to be implemented using the IFT Design Patterns we also mentioned previously in this document. 
-
-\subsection{Performance Requirements} 
-We predict that the exention will be able to parse and interpret code projects with one hundred thousand lines of code quickly without noticeable lag. 
-More specifically the extension will be able to handle files of this size with less than one second of lag.
-Our entire extension should run seamlessly with the user taking little to no notice that our processes are running. 
-The user should experience little to no lag while our extension is running depending on the power of their personal machine.
-We will assume that an average user is using a computer with at least two gigabytes of ram. 
-
-\subsection{Safety Requirements}
-Our project inherently won't have any safety requirements. 
-We do plan on testing our product with people following the IRB protocols.
-We will follow their safety requirements regarding the testers information.
 
 \section{Other Requirements}
 
