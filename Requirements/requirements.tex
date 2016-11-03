@@ -1,52 +1,41 @@
- \documentclass[letterpaper,10pt,titlepage,draftclsnofoot,onecolumn] {IEEEtran}
+\documentclass[letterpaper,10pt,titlepage,draftclsnofoot,onecolumn,onesided] {IEEEtran}
 \usepackage{listings}
 \usepackage{underscore}
 \usepackage[bookmarks=true]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{titling}
 \usepackage{graphicx}
 \graphicspath{ {images/} }
 \hypersetup{
     bookmarks=false,    % show bookmarks bar?
     pdftitle={Software Requirement Specification},    % title
-    pdfauthor={Jean-Philippe Eisenbarth},                     % author
-    pdfsubject={TeX and LaTeX},                        % subject of the document
-    pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
+    pdfauthor={Cramer Smith, Sam Lichlyter, Eric Winkler, Zach Schneider},                     % author
+    pdfsubject={Requirements Document},                        % subject of the document
+    pdfkeywords={IFT, Requirements, Postal}, % list of keywords
     colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=blue,       % color of internal links
+    linkcolor=black,       % color of internal links
     citecolor=black,       % color of links to bibliography
     filecolor=black,        % color of file links
     urlcolor=purple,        % color of external links
     linktoc=page            % only page is linked
-} %
-\def\myversion{1.0 }
-\date{}
-%\title{%
+} 
 
-%}
-\usepackage{hyperref}
 \begin{document}
 
-\begin{flushright}
-    \rule{16cm}{5pt}\vskip1cm
-    \begin{bfseries}
-        \Huge{SOFTWARE REQUIREMENTS\\ SPECIFICATION}\\
-        \vspace{1cm}
-        for\\
-        \vspace{1cm}
-        Postal\\
-        \vspace{.5cm}
-        Group \#38\\
-        \vspace{1.9cm}
-        Cramer Smith, Sam Lichlyter, Eric Winkler and Zach Schneider\\
-        \vspace{1.9cm}
-        Oregon State University\\
-        \vspace{1.9cm}
-        \today\\
-    \end{bfseries}
-\end{flushright}
+\markboth{Oregon State University}{Requirements Document for Postal}
+
+\title{\Huge{\bfseries{\textsf{Requirements Document for Postal}}}}
+\author{Cramer Smith, Sam Lichlyter, Eric Winkler, Zach Schneider}
+
+\maketitle
+
+\pagebreak
 
 \tableofcontents
+
+\pagebreak
 
 \section{Introduction}
 
