@@ -39,9 +39,8 @@
 
 \section{Introduction}
 
-This Software Requirements Specification (SRS) specifically outline the functional and non functional requirements that are planned to be implemented within the Postal Extension for Visual Studio Code. 
-The requirements will be explained using terms that will be formally defined and user cases that will be created within this document.
-
+This Software Requirements Specification (SRS) specifically outlines the functional and non functional requirements that are planned to be implemented within the Postal Extension for Visual Studio Code. 
+The requirements will be explained using terms that will be formally defined and user cases that will be created within this document. 
 
 We hope to help new developers avoid the same mistakes we made when we first started web development with very confusing CSS pages and way too many confusing HTML pages and poorly defined JavaScript files. 
 The Postal extension will do this by giving the user friendly reminders and suggestions of the best practices of the current language that they are using.
@@ -197,7 +196,12 @@ Postal should complete its analysis for 95\% of the projects it is given. It sho
 Along with our product completing the aforementioned requirements, it also needs to be implemented using the IFT Design Patterns we also mentioned previously in this document.
 
 \subsection{Performance Requirements}
-It should run seamlessly with the user taking little notice that our processes are running. 
+The Postal extension will be working mostly on parsing and interpretting the parsed text data. 
+We predict that the exention will be able to parse and interpret code projects with one hundred thousand lines of code quickly without noticeable lag. 
+More specifically the extension will be able to handle files of this size with less than one second of lag.
+Our entire extension should run seamlessly with the user taking little to no notice that our processes are running. 
+The user should experience little to no lag while our extension is running depending on the power of their personal machine.
+We will assume that an average user is using a computer with at least two gigabytes of ram. 
 
 \subsection{Safety Requirements}
 Our project inherently won't have any safety requirements. 
