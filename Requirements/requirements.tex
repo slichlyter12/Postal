@@ -58,7 +58,12 @@
 \vfill
 \begin{abstract}
 
-Developer tools are often complex pieces of software. Gathering and manipulating useful information for a programmer can often be a slow and costly process. By implementing Information Foraging Theory design patterns in the creation of these tools, the information collected may be more useful or produced faster. Information Foraging Theory is the theory and math behind the choices people make to maximize the value of the information they find versus the cost of getting that information. Our aim is to develop a tool that will act as a proof of concept to this idea and increase developer efficiency. Implementing multiple IFT design patterns, we will create a developer tool that helps enforce and maintain code structure. 
+Developer tools are often complex pieces of software. 
+Gathering and manipulating useful information for a programmer can often be a slow and costly process. 
+By implementing Information Foraging Theory design patterns in the creation of these tools, the information collected may be more useful or produced faster. 
+Information Foraging Theory is the theory and math behind the choices people make to maximize the value of the information they find versus the cost of getting that information.
+Our aim is to develop a tool that will act as a proof of concept to this idea and increase developer efficiency.
+Implementing multiple IFT design patterns, we will create a developer tool that helps enforce and maintain code structure. 
 
 \end{abstract}
 \vfill
@@ -85,13 +90,13 @@ The hope is that this document will help us and our steak holders have a better 
 The Postal Project is to developed by Research Experience Undergraduates under the lead of Christopher Scaffidi. 
 The project will consist of a Visual studio code extension.
 The purpose of this extension is to help new web developers develop good practices in their styling of code.
-We hope to help new developers avoid the same mistakes we made when we first started web development with very confusing CSS pages and way too many confusing HTML pages and poorly defined JavaScript files.
-The scope of our project is to create an extension to be used on Visual Studio Code. 
-This extension will be able to look at the code that the user is editing and the program will be able to give them suggestions based on the the W3 standards. 
+The extension will be aimed at new developers in hopes that it will help them avoid the common mistakes made during web development.
+This extension will be able to look at the code that the user is editing and the program will be able to give them suggestions based on the the current W3 standards. 
 
 \subsection{Definitions, Acronyms, and Abbreviations}
 \setlength\parindent{0pt}Information Foraging Theory (IFT): \\
-An approach to the analysis of human activities involving information access technologies. The theory derives from optimal foraging theory in biology and anthropology, which analyzes the adaptive value of food-foraging strategies.\cite{xeroxift}\\\\
+An approach to the analysis of human activities involving information access technologies.
+The theory derives from optimal foraging theory in biology and anthropology, which analyzes the adaptive value of food-foraging strategies.\cite{xeroxift}\\\\
 IFT Design Patterns: \\
 General, reusable solutions to common design problems.\cite{iftwiki}\\\\
 Visualize Topology: \\
@@ -125,10 +130,13 @@ This will be an overall description of what the product means to the people that
 The next subsection will go over the specific requirements that steer the development process and keep the team focused on the goals specified in this document.   
 
 \section{Overall Description}
-Postal is an extension for Visual Studio code  that is supposed to help beginner developers while they make websites using HTML, CSS and JavaScript. 
+Postal is an extension for Visual Studio code that is supposed to help beginner developers while they make websites using HTML, CSS and JavaScript. 
+This analysis of the code will require that the extension parses and can find mistakes. 
 
 \subsection{Product Perspective}
-The product is aimed toward people that are learning web development we hope that as a user they find that our tool makes the development process more educational and easier for them to understand.
+The product is aimed toward people that are learning web development we hope that as a user they find that our tool makes the development process more educational and easier for them to understand. 
+This checking tool will be different from other kinds of code checkers because it will be in a light weight text editor.
+This will make the code checking much faster and more accessible to the users, and ingrain the correction more thoroughly.
 
 \subsubsection{System Interfaces}
 Visual Studio Code was chosen as the sole system interface for Postal.
