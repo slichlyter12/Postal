@@ -11,6 +11,28 @@
 \nocite{*}
 \graphicspath{ {images/} }
 
+\makeatletter
+\renewenvironment{thebibliography}[1]
+     {\subsection*{\bibname}% <-- this line was changed from \chapter* to \section*
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+
 \hypersetup{
     bookmarks=false,    % show bookmarks bar?
     pdftitle={Software Requirement Specification},    % title
@@ -89,9 +111,13 @@ Institutional Review Board.\\\\
 File Map: \\
 The graphical user interface for visualizing project files and links, as well as errors inside code.
 
-\subsection{References}
+%\subsection{References}
+
+\begingroup
+\renewcommand{\section}[2]{\subsection{References}}
 \bibliographystyle{IEEEtran}
 \bibliography{requirements}
+\endgroup
 
 \subsection{Overview}
 For the rest of this document we will be looking at detailed requirements for the Postal Project. 
@@ -116,16 +142,19 @@ This different perspective will hopefully encourage the user to implement better
 \subsubsection{Software Interfaces}
 From our end we would be interfacing with the VSC extension API. To create and develop our code and we will be using the npm tool that is included in Node.js and using a code generator called 'yoeman'. We will use yo to generate a skeleton of files which we will then be able to edit and make into an extension using JavaScript. The skeleton code will be the base of what we build the rest of the extension on. 
 
+\begin{figure}
+\centering
 \includegraphics[scale=0.5]{fileStructure.png}
 \subsubsection{Communication Interfaces}
-The only communication interface that Postal will require is an ability to download the extension from the VS Code Extension Marketplace. 
+\caption{The only communication interface that Postal will require is an ability to download the extension from the VS Code Extension Marketplace.}
+\end{figure}
 
 \subsubsection{Operations}
 TODO: Uncertain what specific operations the users will follow.
 
 \subsection{Product Functions}
 From a functional perspective, Postal will largely do two things: Provide the user with a visual perspective of their project folder and parse HTML, CSS and JavaScript files for bad coding practices and information to feed into the visual interface. 
-The visual interface component will be a separate window referred to as the ?File Map?. This window will scan the directory of the currently open project and create a visual representation of the files in the folder. The representation will also feature indicators of errors that the parser detects in files and visually display any links between files.
+The visual interface component will be a separate window referred to as the `File Map'. This window will scan the directory of the currently open project and create a visual representation of the files in the folder. The representation will also feature indicators of errors that the parser detects in files and visually display any links between files.
 The parser will read the HTML, CSS and JavaScript files in the user?s project folder and look for specific violations of rules the defined in the system. These rules will be based on W3?s best practices guidelines. Additionally, the parser will ignore any lines of code that marked in an exception list, allowing the user to break rules in the case that they have to.
 Along with our product completing the aforementioned requirements, it also needs to be implemented using the IFT Design Patterns we also mentioned previously in this document.
 The exention will be able to parse and interpret a code projects with up to one hundred thousand lines of code quickly without noticeable lag. 
@@ -200,6 +229,20 @@ The Error list is a list which displays all errors that the parser detected duri
         \item If the user clicks on a particular error in the list, the extension will navigate the user to the location of the error in the code.
     \end{itemize}
 \end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.25]{filemap.png}
+\caption{A mockup of what the file map could look like. In this example HTML pages are blue, CSS pages are navy, image files are purple and JavaScript files are green. Red dots indicate that the parser found a broken rule in the file.}
+
+\includegraphics[scale=0.25]{links.png}
+\caption{A mockup of the link feature in the file map. The Homepage.html file is `selected' and all links to other files are shown via arrows. Note that files like Application2.js are greyed out as they do not have a link to the selected file.}
+
+\pagebreak
+
+\includegraphics[scale=0.25]{digdown.png}
+\caption{An example of what a `dug into' Hompage.html file could look like. In this example, the visual is expanded to the next level down of html tags. These details may be expanded themselves.The error indicator from previous examples is also present and in this case states that the parse found an error in the Body section of the html document.}
+\end{figure}
 
 \subsection{Performance Requirements}
 Our product will be able to support as many projects as each user has. 
