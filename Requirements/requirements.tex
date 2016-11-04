@@ -11,6 +11,7 @@
 \nocite{*}
 \graphicspath{ {images/} }
 
+% Needed to get rid of "References" section in the TOC:
 \makeatletter
 \renewenvironment{thebibliography}[1]
      {\subsection*{\bibname}% <-- this line was changed from \chapter* to \section*
@@ -47,11 +48,14 @@
     linktoc=page            % only page is linked
 } 
 
+% Document Title:
+\def\doctitle{Requirements Document for Postal}
+
+\markboth{Oregon State University}{\doctitle}
+
 \begin{document}
 
-\markboth{Oregon State University}{Requirements Document for Postal}
-
-\title{\Huge{\bfseries{\textsf{Requirements Document for Postal}}}}
+\title{\Huge{\bfseries{\textsf{\doctitle}}}}
 \author{Cramer Smith, Sam Lichlyter, Eric Winkler, Zach Schneider}
 
 \maketitle
@@ -148,28 +152,30 @@ We want the users to be able to quickly navigate through a visual representation
 This different perspective will hopefully encourage the user to implement better file structure and organization in their projects.
 
 \subsubsection{Software Interfaces}
-From our end we would be interfacing with the VSC extension API. To create and develop our code and we will be using the npm tool that is included in Node.js and using a code generator called 'yoeman'. We will use yo to generate a skeleton of files which we will then be able to edit and make into an extension using JavaScript. The skeleton code will be the base of what we build the rest of the extension on. 
+From our end we would be interfacing with the VSC extension API. To create and develop our code and we will be using the npm tool that is included in Node.js and using a code generator called 'yeoman'. We will use yeoman to generate skeleton files which we will then be able to edit and make into an extension using JavaScript. The skeleton code will be the base of what we build the rest of the extension on. 
+
+\subsubsection{Communication Interfaces}
+The only communication interface that Postal will require is an ability to download the extension from the VS Code Extension Marketplace.
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{fileStructure.png}
-\subsubsection{Communication Interfaces}
-\caption{The only communication interface that Postal will require is an ability to download the extension from the VS Code Extension Marketplace.}
+\caption{Basic file structure for a VS Code extension}
 \end{figure}
 
 \subsubsection{Operations}
-TODO: Uncertain what specific operations the users will follow.
+
 
 \subsection{Product Functions}
 From a functional perspective, Postal will largely do two things: Provide the user with a visual perspective of their project folder and parse HTML, CSS and JavaScript files for bad coding practices and information to feed into the visual interface. 
 The visual interface component will be a separate window referred to as the `File Map'.
 This window will scan the directory of the currently open project and create a visual representation of the files in the folder.
 The representation will also feature indicators of errors that the parser detects in files and visually display any links between files.
-The parser will read the HTML, CSS and JavaScript files in the user?s project folder and look for specific violations of rules the defined in the system.
-These rules will be based on W3?s best practices guidelines.
+The parser will read the HTML, CSS and JavaScript files in the user's project folder and look for specific violations of rules the defined in the system.
+These rules will be based on W3's best practices guidelines.
 Additionally, the parser will ignore any lines of code that marked in an exception list, allowing the user to break rules in the case that they have to.
 Along with our product completing the aforementioned requirements, it also needs to be implemented using the IFT Design Patterns we also mentioned previously in this document.
-The exention will be able to parse and interpret a code projects with up to one hundred thousand lines of code quickly without noticeable lag. 
+The extention will be able to parse and interpret a code projects with up to one hundred thousand lines of code quickly without noticeable lag. 
 More specifically the extension will be able to handle files of this size with less than one second of lag.
 The entire extension should run seamlessly with the user taking little to no notice that our processes are running. 
 The user should experience little to no lag while our extension is running depending on the power of their personal machine.
