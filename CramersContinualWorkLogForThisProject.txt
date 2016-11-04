@@ -1,6 +1,6 @@
 name:     	Senior Project
 Created:  	2016-10-19 09:30
-Edited:   	2016-11-03 17:05
+Edited:   	2016-11-03 17:12
 Log Count:	81
 -- Log -- 
 [Wed 2016-10-19]
@@ -93,4 +93,5 @@ Log Count:	81
 [Tue 2016-11-01]
 13:30 - made I new example extension hopefully with a new file names that should be short enough for Zach's dumb laptop.
 |
-17:05 - We worked on our requirements doc.
+[Thu 2016-11-03]
+17:12 - We worked on our requirements doc
