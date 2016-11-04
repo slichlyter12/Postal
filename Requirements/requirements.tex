@@ -11,6 +11,28 @@
 \nocite{*}
 \graphicspath{ {images/} }
 
+\makeatletter
+\renewenvironment{thebibliography}[1]
+     {\subsection*{\bibname}% <-- this line was changed from \chapter* to \section*
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+
 \hypersetup{
     bookmarks=false,    % show bookmarks bar?
     pdftitle={Software Requirement Specification},    % title
@@ -87,10 +109,13 @@ Institutional Review Board.\\\\
 File Map: \\
 The graphical user interface for visualizing project files and links, as well as errors inside code.
 
-\subsection{References}
+%\subsection{References}
 
+\begingroup
+\renewcommand{\section}[2]{\subsection{References}}
 \bibliographystyle{IEEEtran}
 \bibliography{requirements}
+\endgroup
 
 \subsection{Overview}
 For the rest of this document we will be looking at detailed requirements for the Postal Project. 
@@ -115,9 +140,12 @@ This different perspective will hopefully encourage the user to implement better
 \subsubsection{Software Interfaces}
 From our end we would be interfacing with the VSC extension API. To create and develop our code and we will be using the npm tool that is included in Node.js and using a code generator called 'yoeman'. We will use yo to generate a skeleton of files which we will then be able to edit and make into an extension using JavaScript. The skeleton code will be the base of what we build the rest of the extension on. 
 
+\begin{figure}
+\centering
 \includegraphics[scale=0.5]{fileStructure.png}
 \subsubsection{Communication Interfaces}
-The only communication interface that Postal will require is an ability to download the extension from the VS Code Extension Marketplace. 
+\caption{The only communication interface that Postal will require is an ability to download the extension from the VS Code Extension Marketplace.}
+\end{figure}
 
 \subsubsection{Operations}
 TODO: Uncertain what specific operations the users will follow.
