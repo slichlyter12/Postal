@@ -162,8 +162,12 @@ TODO: Uncertain what specific operations the users will follow.
 
 \subsection{Product Functions}
 From a functional perspective, Postal will largely do two things: Provide the user with a visual perspective of their project folder and parse HTML, CSS and JavaScript files for bad coding practices and information to feed into the visual interface. 
-The visual interface component will be a separate window referred to as the `File Map'. This window will scan the directory of the currently open project and create a visual representation of the files in the folder. The representation will also feature indicators of errors that the parser detects in files and visually display any links between files.
-The parser will read the HTML, CSS and JavaScript files in the user?s project folder and look for specific violations of rules the defined in the system. These rules will be based on W3?s best practices guidelines. Additionally, the parser will ignore any lines of code that marked in an exception list, allowing the user to break rules in the case that they have to.
+The visual interface component will be a separate window referred to as the `File Map'.
+This window will scan the directory of the currently open project and create a visual representation of the files in the folder.
+The representation will also feature indicators of errors that the parser detects in files and visually display any links between files.
+The parser will read the HTML, CSS and JavaScript files in the user?s project folder and look for specific violations of rules the defined in the system.
+These rules will be based on W3?s best practices guidelines.
+Additionally, the parser will ignore any lines of code that marked in an exception list, allowing the user to break rules in the case that they have to.
 Along with our product completing the aforementioned requirements, it also needs to be implemented using the IFT Design Patterns we also mentioned previously in this document.
 The exention will be able to parse and interpret a code projects with up to one hundred thousand lines of code quickly without noticeable lag. 
 More specifically the extension will be able to handle files of this size with less than one second of lag.
@@ -173,7 +177,8 @@ We will assume that an average user is using a computer with at least two gigaby
 The project inherently won't have any safety requirements. 
 
 \subsection{User Characteristics}
-Users of Postal will be web developers and computer science students with some level of prior development experience, though prior knowledge will not be required. The users will be familiar with the concepts surrounding programming languages and markup languages, such as HTML, CSS and JavaScript. 
+Users of Postal will be web developers and computer science students with some level of prior development experience, though prior knowledge will not be required. 
+The users will be familiar with the concepts surrounding programming languages and markup languages, such as HTML, CSS and JavaScript. 
 Users will be familiar with file systems, such that the visualization within Postal will enhance understanding of project structure. 
 Users should have a basic understanding of debugging techniques that will be aided by the error recognition and highlighting within Postal.
 
@@ -181,11 +186,14 @@ Users should have a basic understanding of debugging techniques that will be aid
 The Postal extension for VSC will be constrained chiefly by software and programming language level barriers.
 As this extension will be primarily written in JavaScript (ECMAScript2016 standard, specifically), it will be bound by any functional or design limitations that exist within that programming language. 
 Additionally, all Postal functionality must be possible within the VSC environment. 
-VSC does not detail any notable constraints in its documentation that would conflict with the goals of Postal at this time. 
-Finally, the file visualization and linking features of postal will be reliant on read, write and execute permissions within the scope of project loaded into VSC at that time. If any user's operating system restricts Postal access to any of those file system features, that operating system will also be a constraint to proper function.
+VSC does not detail any notable performance constraints in its documentation that would conflict with the goals of Postal at this time. 
+VSC does specify that extensions are not allowed access to the underlying UI DOM.
+Finally, the file visualization and linking features of postal will be reliant on read, write and execute permissions within the scope of project loaded into VSC at that time.
+If any user's operating system restricts Postal access to any of those file system features, that operating system will also be a constraint to proper function.
 
 \subsection{Assumptions and Dependencies}
-The successful development of Postal assumes that Microsoft will not update Visual Studio Code in such a manner that breaks the function of the Postal extension. It is also assumed that VSC will continue to support the operating systems used in development, testing, and utilization of Postal.
+The successful development of Postal assumes that Microsoft will not update Visual Studio Code in such a manner that breaks the function of the Postal extension. 
+It is also assumed that VSC will continue to support the operating systems used in development, testing, and utilization of Postal.
 
 \subsection{Apportionment of Requirements}
 \includegraphics[scale=0.7]{gantt.png}
@@ -193,21 +201,33 @@ The successful development of Postal assumes that Microsoft will not update Visu
 \section{Specific Requirements}
 
 \subsection{External Interfaces}
-The primary interface of the extension will be a window within the Visual Studio Code environment. This window will contain two main elements (the File Map and the Error List) as well as a toolbar for options.
+The primary interface of the extension will be a window within the Visual Studio Code environment.
+This window will contain two main elements (the File Map and the Error List) as well as a toolbar for options.
 \\
-The File Map is a visualization of the user's project. When a project is opened within VSC, the extension will automatically populate the map by scanning the directory of the opened solution. This map will display each file found in the project directory in an organized fashion. The map will also feature options to display a visual indicator of links and calls between files in the directory (for example, if an HTML page has an image embedded in it, the link option would indicate a link between the HTML and image files) as well as an option to display an indicator of the location of errors within the GUI.
+The File Map is a visualization of the user's project.
+When a project is opened within VSC, the extension will automatically populate the map by scanning the directory of the opened solution. 
+This map will display each file found in the project directory in an organized fashion.
+The map will also feature options to display a visual indicator of links and calls between files in the directory (for example, if an HTML page has an image embedded in it, the link option would indicate a link between the HTML and image files) as well as an option to display an indicator of the location of errors within the GUI.
 \\
-The user will also be able to interact with the File Map by ``digging down'' into a file. This process will allow a user to click on a visualized file and have the map display more details about that file. For example, if an HTML file is clicked on within the map, the UI will update and visualize details of the file like divs and links as their own objects. If the above mentioned error option is enabled, the object containing the error would indicate that.
+The user will also be able to interact with the File Map by ``digging down'' into a file.
+This process will allow a user to click on a visualized file and have the map display more details about that file. 
+For example, if an HTML file is clicked on within the map, the UI will update and visualize details of the file like divs and links as their own objects.
+If the above mentioned error option is enabled, the object containing the error would indicate that.
 \\
-The Error list is a list which displays all errors that the parser detected during its last run. The User will be able to click on a particular error in this list which will then trigger the extension to navigate the user to that particular error in the code. Additionally if the user hovers over a particular error, the corresponding location in the file map will be highlighted.
+The Error list is a list which displays all errors that the parser detected during its last run.
+The User will be able to click on a particular error in this list which will then trigger the extension to navigate the user to that particular error in the code. Additionally if the user hovers over a particular error, the corresponding location in the file map will be highlighted.
 
 \subsection{Functions}
 
 \subsubsection{Parser Related Functionality}
 \begin{itemize}
-	\item Functionality capable of parsing JavaScript, HTML and CSS documents. As parsing occurs, particular instances of code that break rules defined in the system will be flagged. Flagged lines will be visualized in the File Map.
-	\item The system must have a method for storing rules that will be used by the parser to determine if a line of code should be marked as an error. Many of these rules will be based on W3 best practices for the particular parser.
-	\item The system must have an editable list of exceptions. Exceptions are defined segments of code that may break a parsing rule, but because it was either intentional or necessary, should not throw an error.
+	\item Functionality capable of parsing JavaScript, HTML and CSS documents. 
+	As parsing occurs, particular instances of code that break rules defined in the system will be flagged. 
+	Flagged lines will be visualized in the File Map.
+	\item The system must have a method for storing rules that will be used by the parser to determine if a line of code should be marked as an error.
+	Many of these rules will be based on W3 best practices for the particular parser.
+	\item The system must have an editable list of exceptions. 
+	Exceptions are defined segments of code that may break a parsing rule, but because it was either intentional or necessary, should not throw an error.
 	\item Current Parsing Rules for HTML:
 		\begin{itemize}
 			\item Flag JavaScript and CSS code that is not in the exception list.
@@ -229,11 +249,15 @@ The Error list is a list which displays all errors that the parser detected duri
 \begin{itemize}
 	\item Display in a visual, chart-like manner all files in the project directory.
     \item Display links and calls between files. This option can be turned off by the user.
-    \item Display indicators of errors (broken rules) at the corresponding location within the map. This option can be turned off by the user.
-    \item The system must allow for the Dig Down functionality. When an object in the map is clicked on, the map will update to display the object in more detail. Details will often be their own object. Error indicators will be updated.
-    \item Display an error list adjacent to the file map. Errors will be organized by location.
+    \item Display indicators of errors (broken rules) at the corresponding location within the map.
+	 This option can be turned off by the user.
+    \item The system must allow for the Dig Down functionality.
+	 When an object in the map is clicked on, the map will update to display the object in more detail. Details will often be their own object.
+	 Error indicators will be updated.
+    \item Display an error list adjacent to the file map.
+	 Errors will be organized by location.
     \begin{itemize}
-    	\item If the user hovers over a particular error in the list, the corresponding location in the file map will be 	highlighted.
+    	\item If the user hovers over a particular error in the list, the corresponding location in the file map will be highlighted.
         \item If the user clicks on a particular error in the list, the extension will navigate the user to the location of the error in the code.
     \end{itemize}
 \end{itemize}
@@ -241,15 +265,21 @@ The Error list is a list which displays all errors that the parser detected duri
 \begin{figure}
 \centering
 \includegraphics[scale=0.25]{filemap.png}
-\caption{A mockup of what the file map could look like. In this example HTML pages are blue, CSS pages are navy, image files are purple and JavaScript files are green. Red dots indicate that the parser found a broken rule in the file.}
+\caption{A mockup of what the file map could look like. 
+In this example HTML pages are blue, CSS pages are navy, image files are purple and JavaScript files are green.
+Red dots indicate that the parser found a broken rule in the file.}
 
 \includegraphics[scale=0.25]{links.png}
-\caption{A mockup of the link feature in the file map. The Homepage.html file is `selected' and all links to other files are shown via arrows. Note that files like Application2.js are greyed out as they do not have a link to the selected file.}
+\caption{A mockup of the link feature in the file map.
+The Homepage.html file is `selected' and all links to other files are shown via arrows.
+Note that files like Application2.js are greyed out as they do not have a link to the selected file.}
 
 \pagebreak
 
 \includegraphics[scale=0.25]{digdown.png}
-\caption{An example of what a `dug into' Hompage.html file could look like. In this example, the visual is expanded to the next level down of html tags. These details may be expanded themselves.The error indicator from previous examples is also present and in this case states that the parse found an error in the Body section of the html document.}
+\caption{An example of what a `dug into' Hompage.html file could look like.
+In this example, the visual is expanded to the next level down of html tags.
+These details may be expanded themselves.The error indicator from previous examples is also present and in this case states that the parse found an error in the Body section of the html document.}
 \end{figure}
 
 \subsection{Performance Requirements}
