@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage[noadjust]{cite}
 \nocite{*}
+\usepackage{abstract}
 \graphicspath{ {images/} }
 
 % Needed to get rid of "References" section in the TOC:
@@ -34,6 +35,7 @@
       \endlist}
 \makeatother
 
+
 \hypersetup{
     bookmarks=false,    % show bookmarks bar?
     pdftitle={Software Requirement Specification},    % title
@@ -51,26 +53,27 @@
 % Document Title:
 \def\doctitle{A Tool to Automatically Organize the Structure of a Codebase Using Information Foraging Theory Design Patterns}
 \def\doctype{Requirements Document}
+\def\team{Team Postal}
 
 \markboth{Oregon State University}{\doctitle}
 
 \begin{document}
 
-\title{\Huge{\bfseries{\textsf{\doctitle}}}\\\textsf{\Large{\doctype}}}
+\title{\Huge{\bfseries{\textsf{\doctitle}}}\\\textsf{\Large{\doctype}}\\\textsf{\large{\team}}}
 \author{Cramer Smith, Sam Lichlyter, Eric Winkler, Zach Schneider}
 
 \maketitle
 \vfill
-\begin{abstract}
+%\begin{abstract}
 
-Developer tools are often complex pieces of software. 
+\setlength\parindent{0pt} \textbf{Abstract:} Developer tools are often complex pieces of software. 
 Gathering and manipulating useful information for a programmer can often be a slow and costly process. 
 By implementing Information Foraging Theory design patterns in the creation of these tools, the information collected may be more useful or produced faster. 
 Information Foraging Theory is the theory and math behind the choices people make to maximize the value of the information they find versus the cost of getting that information.
-Our aim is to develop a tool that will act as a proof of concept to this idea and increase developer efficiency.
-Implementing multiple IFT design patterns, we will create a developer tool that helps enforce and maintain code structure. 
+The aim of this project is to develop a tool that will act as a proof of concept to this idea and increase developer efficiency.
+Through the implementation of multiple IFT design patterns, the Postal team will create a developer tool that helps enforce and maintain code structure. 
 
-\end{abstract}
+%\end{abstract}
 \vfill
 
 \pagebreak
