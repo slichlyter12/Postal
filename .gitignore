@@ -5,3 +5,6 @@
 *.synctex*
 *.toc
 *.dvi
+*.blg
+*latexmk*
+*.fls
