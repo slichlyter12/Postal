@@ -12,6 +12,24 @@
 \usepackage{abstract}
 \graphicspath{ {images/} }
 
+\newcommand{\namesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+\newcommand{\studentnamesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+
 % Needed to get rid of "References" section in the TOC:
 \makeatletter
 \renewenvironment{thebibliography}[1]
@@ -310,7 +328,6 @@ Other than the standards set forth by the VSC extension API, there are no overar
 The plan is to test our product with people following the IRB protocols, and the testing will follow their safety requirements regarding the testers information.
 
 \subsection{Software System Attributes}
-The software that we will use is Visual Studio Code. We are making an extension for this base
 
 \subsubsection{Reliability}
 Postal should complete its analysis for 95\% of the projects it is given. It should also satisfy the performance requirements 95\% of the time.   
@@ -320,8 +337,8 @@ The extension will always be available as long as it is accessible from the VS C
 It will not need to pull any data from the internet for it to function, so it should always be available.
 
 \subsubsection{Security}
-The Postal extension will only save data that the user defines as setting of the application. 
-The extension will know nothing of the user, and therefore will have nothing to be kept secure.
+The Postal extension will only save data that the user defines in the settings of the application. 
+The extension will know nothing about the individual user, and therefore will have nothing to be kept secure.
 
 \subsubsection{Maintainability}
 Postal will be implemented using Object Oriented Programming techniques which will aid in the maintainability of the software. 
@@ -331,4 +348,9 @@ This will mean if one section of the code is changed that is used in multiple pl
 The Postal extension will be written in JavaScript and will be able to be run on any computer that is able to run Visual Studio Code. 
 The development will focus mainly on the Windows and Mac OSX operating systems, with minor testing in some variants of Linux.
 
+
+\pagebreak
+
+\namesigdate{Client Signature} \hfill 
+\studentnamesigdate[4cm]{Student Signatures}
 \end{document}
