@@ -1,13 +1,8 @@
+'use strict';
+
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 let vscode = require('vscode');
-
-class WordCounter {
-    constructor( ){
-        StatusBarItem;
-    }
-
- }
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -17,7 +12,9 @@ function activate(context) {
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "postal" is now active!');
 
-    let wordcount = new WordCounter
+
+    var intCounter = 0
+
 
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
@@ -27,10 +24,23 @@ function activate(context) {
 
         // Display a message box to the user
         vscode.window.showInformationMessage('Sam is a silly muffin!');
+        console.log('This is how the extension do '.concat(intCounter));
+        intCounter = intCounter + 1;
 
+        // Thenable<Uri[]> What is a thenable<uri[]>?
+        //     -> https://code.visualstudio.com/Docs/extensionAPI/vscode-api#Thenable
+        //        A thenable that resolves to an array of resource identifiers.
+        var files = vscode.workspace.findFiles('*', 'hi')
+
+        console.log(files)
+
+        files.forEach(function(element) {
+            console.log(element)
+        });
+
+        console.log('This is how the extension did '.concat(intCounter));
     });
 
-    context.subscriptions.push(wordCounter);
     context.subscriptions.push(disposable);
 }
 exports.activate = activate;
