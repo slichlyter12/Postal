@@ -22,7 +22,7 @@ function activate(context) {
 
         // Display a message box to the user
         vscode.window.showInformationMessage('Sam is a silly muffin!');
-        console.log('This is how the extension do '.concat(intCounter));
+        //console.log('This is how the extension do '.concat(intCounter));
         intCounter = intCounter + 1;
 
         // Thenable<Uri[]> What is a thenable<uri[]>?
@@ -30,30 +30,26 @@ function activate(context) {
         //        A thenable that resolves to an array of resource identifiers.
         var files;
         var filesThen;
+        var filesArray = [];
         files = vscode.workspace.findFiles('*', 'hi');
 
         // Found a website that gave me this https://spring.io/understanding/javascript-promises
+        // Thenables/Promises run asynchronously, therefore this finishes AFTER the following 
+        // print statements of filesArray and theFilesArray
         var theFilesArray = files.then(function(gettingTheFiles) {
-            console.log("hi you");
-            console.log(gettingTheFiles);
             gettingTheFiles.forEach(function(fileInfo) {
+                //console.log(typeof(fileInfo.path));
                 console.log(fileInfo.path);
+                filesArray.push(fileInfo.path);
             });
             return (gettingTheFiles);
         });
+
+        console.log("theFilesArray:");
         console.log(theFilesArray);
-
-        // var greetingPromise = sayHello();
-        // greetingPromise.then(function (greeting) {
-        //     console.log(greeting);    // 'hello world’
-        //  });
-
-
-
-        console.log("The out file");
-        console.log(filesThen);
-
-        console.log('This is how the extension did '.concat(intCounter));
+        console.log("filesArray:");
+        console.log(filesArray);
+        
     });
 
     context.subscriptions.push(disposable);
