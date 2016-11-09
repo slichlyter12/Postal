@@ -30,12 +30,15 @@ function activate(context) {
         // Thenable<Uri[]> What is a thenable<uri[]>?
         //     -> https://code.visualstudio.com/Docs/extensionAPI/vscode-api#Thenable
         //        A thenable that resolves to an array of resource identifiers.
-        var files = vscode.workspace.findFiles('*', 'hi')
+        var files
+        files = vscode.workspace.findFiles('*', 'hi')
 
         console.log(files)
+        console.log(files.then().toString())
 
+        countter = 0
         files.forEach(function(element) {
-            console.log(element)
+            console.log(countter.concat(element))
         });
 
         console.log('This is how the extension did '.concat(intCounter));
