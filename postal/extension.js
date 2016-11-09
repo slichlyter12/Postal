@@ -32,11 +32,16 @@ function activate(context) {
         var filesThen;
         files = vscode.workspace.findFiles('*', 'hi');
 
+        // Found a website that gave me this https://spring.io/understanding/javascript-promises
         var theFilesArray = files.then(function(gettingTheFiles) {
             console.log("hi you");
-            return gettingTheFiles;
+            console.log(gettingTheFiles);
+            gettingTheFiles.forEach(function(fileInfo) {
+                console.log(fileInfo.path);
+            });
+            return (gettingTheFiles);
         });
-        console.log("THis is a file " + theFilesArray);
+        console.log(theFilesArray);
 
         // var greetingPromise = sayHello();
         // greetingPromise.then(function (greeting) {
