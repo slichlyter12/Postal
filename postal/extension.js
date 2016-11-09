@@ -1,5 +1,3 @@
-'use strict';
-
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 let vscode = require('vscode');
@@ -30,16 +28,25 @@ function activate(context) {
         // Thenable<Uri[]> What is a thenable<uri[]>?
         //     -> https://code.visualstudio.com/Docs/extensionAPI/vscode-api#Thenable
         //        A thenable that resolves to an array of resource identifiers.
-        var files
-        files = vscode.workspace.findFiles('*', 'hi')
+        var files;
+        var filesThen;
+        files = vscode.workspace.findFiles('*', 'hi');
 
-        console.log(files)
-        console.log(files.then().toString())
-
-        countter = 0
-        files.forEach(function(element) {
-            console.log(countter.concat(element))
+        var theFilesArray = files.then(function(gettingTheFiles) {
+            console.log("hi you");
+            return gettingTheFiles;
         });
+        console.log("THis is a file " + theFilesArray);
+
+        // var greetingPromise = sayHello();
+        // greetingPromise.then(function (greeting) {
+        //     console.log(greeting);    // 'hello world’
+        //  });
+
+
+
+        console.log("The out file");
+        console.log(filesThen);
 
         console.log('This is how the extension did '.concat(intCounter));
     });
