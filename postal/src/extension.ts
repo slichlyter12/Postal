@@ -53,12 +53,14 @@ export function activate(context: vscode.ExtensionContext) {
             });
             // add file names to list
             foundFiles.forEach(function(file) {
-                let html = "<li>" + file + "</li>\n";
-                fs.appendFile(htmlFilePath, html, function(error) {
-                    if (error) {
-                        console.error("Failed to write " + file + ", html: " + html + "\nerror: " + error);
-                    }
-                });
+                if (file.path != htmlFilePath) {
+                    let html = "<li>" + file + "</li>\n";
+                    fs.appendFile(htmlFilePath, html, function(error) {
+                        if (error) {
+                            console.error("Failed to write " + file + ", html: " + html + "\nerror: " + error);
+                        }
+                    });
+                }
             });
             // end file
             var htmlClose = "</ul></body></html>\n";
