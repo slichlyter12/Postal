@@ -1,6 +1,6 @@
 {
-  "name": "postalt",
-  "displayName": "postalt",
+  "name": "postal",
+  "displayName": "postal",
   "description": "typescript postal",
   "version": "0.0.1",
   "publisher": "postal",
@@ -11,14 +11,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.sayHello"
+    "onCommand:extension.postal"
   ],
   "main": "./out/src/extension",
   "contributes": {
     "commands": [
       {
-        "command": "extension.sayHello",
-        "title": "Hello World"
+        "command": "extension.postal",
+        "title": "Postal"
       }
     ]
   },
