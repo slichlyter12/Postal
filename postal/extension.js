@@ -7,21 +7,11 @@ let fs = require('fs');
 // your extension is activated the very first time the command is executed
 function activate(context) {
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "postal" is now active!');
-
-
-    var intCounter = 0
-
-
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
-    let FindFiles = vscode.commands.registerCommand('extension.findFiles', function() {
-        // The code you place here will be executed every time your command is executed
+    let findFiles = vscode.commands.registerCommand('extension.findFiles', function() {
 
-        // Display a message box to the user
         //vscode.window.showInformationMessage('Running Postal...');
         vscode.window.setStatusBarMessage("Running Postal...");
 
@@ -30,8 +20,39 @@ function activate(context) {
         //        A thenable that resolves to an array of resource identifiers.
         var files = vscode.workspace.findFiles('*', 'hi');
         files.then(function(foundFiles) {
-            console.log("foundFiles");
+            console.log("foundFiles:");
             console.log(foundFiles);
+
+            // get filepath
+            var htmlFilePath = vscode.workspace.rootPath;
+            htmlFilePath += "/dirStructure.html";
+
+            // start/create file
+            var htmlOpen = "<!DOCTYPE html><html><head><title>files in current dir</title></head><body><ul>";
+            fs.writeFile(htmlFilePath, htmlOpen, function(error) {
+                if (error) {
+                    console.error("Failed to write opening HTML\nerror: " + error);
+                }
+            });
+            foundFiles.forEach(function(file) {
+                let html = "<li>" + file + "</li>";
+                fs.appendFile(htmlFilePath, html, function(error) {
+                    if (error) {
+                        console.error("Failed to write " + file + ", html: " + html + "\nerror: " + error);
+                    }
+                });
+            });
+            // end file
+            var htmlClose = "</ul></body></html>";
+            fs.appendFile(htmlFilePath, htmlClose, function(error) {
+                if (error) {
+                    console.error("Failed to write closing HTML\nerror: " + error);
+                }
+            });
+
+            // show preview window
+            let uri = vscode.Uri.parse(htmlFilePath);
+            vscode.commands.executeCommand('vscode.previewHtml', uri);
         });
 
         var cwd = vscode.workspace.rootPath;
@@ -45,7 +66,7 @@ function activate(context) {
         vscode.window.setStatusBarMessage("");
     });
 
-    context.subscriptions.push(FindFiles);
+    context.subscriptions.push(findFiles);
 }
 exports.activate = activate;
 
