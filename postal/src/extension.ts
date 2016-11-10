@@ -14,19 +14,13 @@ export function activate(context: vscode.ExtensionContext) {
     // get filepath and create file
     var htmlFilePath = vscode.workspace.rootPath;
     htmlFilePath += "/dirStructure.html";
-    console.log(htmlFilePath);
     fs.writeFile(htmlFilePath, "\n", function(error) {
         if (error) {
             console.error("Error creating dirStructure.html");
-        } else {
-            console.log("Created file");
         }
     });
 
-    //let previewUri = vscode.Uri.parse(htmlFilePath);
-    console.log("File://" + htmlFilePath);
     let previewUri = vscode.Uri.parse("Files://" + htmlFilePath);
-    console.log(previewUri);
 
     let provider = new ContentProv();
     
@@ -41,8 +35,6 @@ export function activate(context: vscode.ExtensionContext) {
         // generate html list of files
         var files = vscode.workspace.findFiles('*', '');
         files.then(function(foundFiles) {
-            console.log("foundFiles:");
-            console.log(foundFiles);
 
             // start/create file
             var htmlOpen = "<!DOCTYPE html><html><head><title>Files</title></head><body><ul>\n";
@@ -51,6 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
                     console.error("Failed to write opening HTML\nerror: " + error);
                 }
             });
+
             // add file names to list
             foundFiles.forEach(function(file) {
                 if (file.path != htmlFilePath) {
@@ -62,6 +55,7 @@ export function activate(context: vscode.ExtensionContext) {
                     });
                 }
             });
+
             // end file
             var htmlClose = "</ul></body></html>\n";
             fs.appendFile(htmlFilePath, htmlClose, function(error) {

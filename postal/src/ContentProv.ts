@@ -9,7 +9,6 @@ export class ContentProv implements vscode.TextDocumentContentProvider {
     private _onDidChange = new vscode.EventEmitter<vscode.Uri>();
 
     public provideTextDocumentContent(uri: vscode.Uri): string {
-        console.log('In Doc Content');
         return this.createProvSnippet();
     }
 
@@ -24,7 +23,6 @@ export class ContentProv implements vscode.TextDocumentContentProvider {
     }
 
     private snippet(properties): string {
-        console.log('In snippet');
         return properties;
     }
 }
