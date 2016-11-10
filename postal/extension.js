@@ -35,15 +35,15 @@ function activate(context) {
                     console.error("Failed to write opening HTML\nerror: " + error);
                 }
             });
-            // 
+            // add file names to list
             foundFiles.forEach(function(file) {
                 if (file !== htmlFilePath) {
                     let html = "<li>" + file + "</li>\n";
                     fs.appendFile(htmlFilePath, html, function(error) {
-                    if (error) {
-                        console.error("Failed to write " + file + ", html: " + html + "\nerror: " + error);
-                    }
-                });
+                        if (error) {
+                            console.error("Failed to write " + file + ", html: " + html + "\nerror: " + error);
+                        }
+                    });
                 }
             });
             // end file
@@ -79,6 +79,22 @@ function activate(context) {
     context.subscriptions.push(findFiles);
 }
 exports.activate = activate;
+
+// let disposable = vscode.commands.registerCommand('extension.showCssPropertyPreview', () => {
+//     return vscode.commands.executeCommand('vscode.previewHtml', previewUri, vscode.ViewColumn.Two, 'CSS Property Preview').then((success) => {
+//     }, (reason) => {
+//             vscode.window.showErrorMessage(reason);
+//     });
+// });
+
+// let disposable = vscode.commands.registerCommand('extension.showFilesListPreivew') {
+//     return vscode.commands.executeCommand('vscode.previewHtml', uri, vscode.ViewColumn.Two, 'Files list').then(function(success) {
+//         if (success) {
+//             console.log("success:");
+//             console.log(success);
+//         }
+//     });
+// }
 
 // this method is called when your extension is deactivated
 function deactivate() {}
