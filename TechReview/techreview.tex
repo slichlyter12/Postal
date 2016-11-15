@@ -189,6 +189,8 @@ The URI that would be past to the command would have a HTML DOM that would be re
 This seems like an easy way of creating a user interphase, but the only interactable element would be links. 
 Links would only be able to change the the view to other HTML files. 
 The idea of making every possible use case a seperate HTML file would be difficult without the use of PHP.
+\subsubseciton{Built In Events}
+The Extension could fire events that are built in to Visual Studio Code and have handlers set up to listen to those events . 
 \subsubsection{EventEmitter}
 The better option would be to use the VSCodes EventEmitter to create and manage for other to subscribe to. 
 With an eventEmitter the extension can create listeners that can then be listen for when the event fires signifying to the listeners that the event has occurred. 
@@ -199,22 +201,34 @@ These events can be onLanguage, onCommand, onDebug, workspaceContains or a star 
 When the extension recieves one of these events that it is listening for it will start the extension operations. 
 Setting these custom eventEmitters and event listeners should be the first thing that the extension sets up as they will be very important for the interface that the user will interacet with. \cite{VSCode Documentation}
 
-\subsubSection{Desicion}
+\subsubSection{Decision}
 For the purpose of this project the eventEmmiter and Listener will be used for obvious reasons. 
 The first being that it is the standard of Visual Studio. 
-The second reason being that the HTML preview would be extremely tedious and impractical.
+The second reason being that the HTML preview would be extremely limited, tedious and impractical.
 
 %  _                                         
 % | |   __ _ _ _  __ _ _  _ __ _ __ _ ___ ___
 % | |__/ _` | ' \/ _` | || / _` / _` / -_|_-<
 % |____\__,_|_||_\__, |\_,_\__,_\__, \___/__/ 		The Languages that the Visual Studio uses. 
-%						|___/          |___/        
+%				      |___/          |___/        
 \subsection{Languages Exetensions Written in}
+With all the possible IDEs the extension can be written in HTML, CSS, and JavaScript, but the bulk of the code is  JavaScript. 
+With Visual Studio Code there is the option to use TypeScript. 
+This portion will look at JavaScript and TypeScript looking at each language's pros and cons.
 \subsubsection{JavaScript}
-With all the possible IDEs the extension can be written in JavaScript and correspnding JSON files. 
+With all the possible IDEs the extension can be written in JavaScript  and correspnding JSON files. 
 JavaSctipt was created in 10 days in 1995, is a well known and well documented language. \cite{JavaScript History}
+It can be very confusing at times as it is an asynchronous language and not compiled inline.
+%TODO:Add more
 \subsubsection{TypeScript}
-TypeScript is a language created by Microsoft in \cite{TypeScript}
+TypeScript is a language created by Microsoft with the purpose of being \'JavaScript that scales.\' \cite{TypeScript}
+In fact TypeScript compiles to JavaScript and its syntax is almost identical to JavaScript. 
+The main advantage of using TypeScript is that it adds types to JavaScript allowing for static checking and code refactoring when developing JavaScript applications. \cite{TypeScript}
+Another major benefit of using TypeScript is the ability to import .NET libraries. 
+This allows for developers to use more powerful APIs then the some of the less robust JavaScript APIs. 
+For this project that will allows the the extension access to APIs that the team has experience using.
+%TODO:Add more
+\subsubsection{Decision}
 
 
 \section{Eric Winkler}
