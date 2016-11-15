@@ -128,22 +128,22 @@ To this purpose this review will examine three IDEs that could all be used as th
 Those IDEs are Brackets, Atom, and Visual Studio Code (VSCode) all of which have there advantages and disadvantages.
 
 \subsubsection{Brackets}
-Brackets is a text editor owned by Adobe, and is currently in development as an open source project. 
+Brackets is a text editor owned by Adobe, and is currently in development as an open source project. \cite{Brackets}
 Brackets is made specifically for web development, and offers tools such as the Chrome debugger, inline editor, and live website previewer built in.
 The research into the Brackets IDE has brought to attention many features that were good but also some that were not as good.
 Adobe started the developement in 2011 making Brackets the oldest of the IDEs that are examined in this paper meaning it is the most established and it has had more time to become a more stable build. 
-The longer life of Brackets could also explain the more extensive documentation that it has when compared to other extension development documentation.
+The longer life of Brackets could also explain the more extensive documentation that it has when compared to other IDEs extension development documentation.
 Another nice feature of Brackets is that it has dedicated API functionality that allows for extensions to safely modify the underlying Document Object Map (DOM) which would be advantagous to have that ability.
 While there are several benefits to Brackets there are some drawbacks specifically being the extension debugging and lack of usability in the extension manager. 
 The extension debugging consists of having another development environment open with the extensions code and restarting Brackets with every change.
 This restarting will get tedious after prolonged developement.
 The extension manager in brackets is not user friendly, it is basically a list of extensions and a search bar.
-With the target audience we are hoping to reach we think that the extensions need to be more readily available and easier to understand.
+With the target audience we are hoping to reach we think that the extensions need to be more readily available and easier to understand. 
 
 \subsubsection{Atom}
 Atom is a text editor developed by GitHub that is currently in development as an open source project. 
 It features cross platform editing, a built in package manager, and smart auto completion.
-Atom advertises itself as the \'hackable\' text editor meaning that it is made using HTML, CSS and JavaScript in such a way that anyone is using the text editor for web development then they should be able to develop for Atom.
+Atom advertises itself as the \'hackable\' text editor meaning that it is made using HTML, CSS and JavaScript in such a way that anyone is using the text editor for web development then they should be able to develop for Atom. \cite{Atom}
 This is a commonality between all of the possible IDEs.
 Atom is actually what VSCode from, but VSCode added TypeScript to the languages that it is built in.
 While atom is a good has a editor and auto completion it does not stand out when compared to the other IDEs. 
@@ -151,7 +151,7 @@ In fact it seems as though Atom uses extensions as a crutch not implementing bui
 While this does make the initial learning curve of using Atom a bit larger it does keep the editor light and running very fast.
 
 \subsubsection{Visual Studio Code}
-Visual Studio Code is an editor by Microsoft, and it was the editor that was initially proposed as the base of the extenstion. 
+Visual Studio Code is an editor by Microsoft, and it was the editor that was initially proposed as the base of the extenstion. \cite{VSCode}
 This initial idea to use VSCode was a product of the team having worked with Visual Studio and enjoying the experience. 
 Now that the team has tried working with Visual Studio Code there has been some benefits and drawbacks identified. 
 The benefits were that VSCode has justifiably better extension debugging than the other IDEs available. 
@@ -183,9 +183,26 @@ The Postal extension needs a way of getting information from the extension, this
 The events that the IDE will be listening 
 
 \subsubsection{HTML Preview Links}
-At the moment we have know that we can make in an HTML privew that will link the user to the file. 
-\subsubsection{JavaScript Events Listeners}
-%TODO
+The first way that VSCode makes it possible to have events is through the HTML Previewer. \cite{VSCode Documentation} 
+This method would require that the extension makes an HTML page and then display that page either in a web browser or using the built in command previewHtml using the vscode.executeCommand() and passing it an Uniform Resource Identifier (URI). 
+The URI that would be past to the command would have a HTML DOM that would be rendered in a seperate panel on top of the VSCode's HTML and CSS. 
+This seems like an easy way of creating a user interphase, but the only interactable element would be links. 
+Links would only be able to change the the view to other HTML files. 
+The idea of making every possible use case a seperate HTML file would be difficult without the use of PHP.
+\subsubsection{EventEmitter}
+The better option would be to use the VSCodes EventEmitter to create and manage for other to subscribe to. 
+With an eventEmitter the extension can create listeners that can then be listen for when the event fires signifying to the listeners that the event has occurred. 
+This is the intended way that exentions are supposed to create and the event handlers. 
+There are also built in events that the these event listeners will need to be initialized before the user actually interfaces with the extension and to do that the extension will need to use the activation events. 
+An activation event is set in the package.json of the extension and these activation events are sent from the IDE to the extensions.
+These events can be onLanguage, onCommand, onDebug, workspaceContains or a star (*) signifying that the extension should always be running. 
+When the extension recieves one of these events that it is listening for it will start the extension operations. 
+Setting these custom eventEmitters and event listeners should be the first thing that the extension sets up as they will be very important for the interface that the user will interacet with. \cite{VSCode Documentation}
+
+\subsubSection{Desicion}
+For the purpose of this project the eventEmmiter and Listener will be used for obvious reasons. 
+The first being that it is the standard of Visual Studio. 
+The second reason being that the HTML preview would be extremely tedious and impractical.
 
 %  _                                         
 % | |   __ _ _ _  __ _ _  _ __ _ __ _ ___ ___
@@ -195,9 +212,9 @@ At the moment we have know that we can make in an HTML privew that will link the
 \subsection{Languages Exetensions Written in}
 \subsubsection{JavaScript}
 With all the possible IDEs the extension can be written in JavaScript and correspnding JSON files. 
-JavaSctipt was created in 10 days in 1995, is a well known and well documented language. 
+JavaSctipt was created in 10 days in 1995, is a well known and well documented language. \cite{JavaScript History}
 \subsubsection{TypeScript}
-TypeScript is a language created by Microsoft in 
+TypeScript is a language created by Microsoft in \cite{TypeScript}
 
 
 \section{Eric Winkler}
