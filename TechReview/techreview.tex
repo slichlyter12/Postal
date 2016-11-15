@@ -76,10 +76,10 @@ It would also mean we could optimize the algorithms we use for it specifically s
 This would also reduce the number of dependencies our extension would rely on greatly. 
 For these reasons I think this is the route we will take.
 
-\subsection{Data Structure}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+\subsection{Parsing Language}
+\subsubsection{Ruby}
+\subsubsection{Python}
+\subsubsection{JavaScript}
 
 \subsection{Piece 3}
 \subsubsection{Technology 1}
@@ -153,11 +153,10 @@ For these reasons, our team opted not to use deepEqual. \cite{deep}
 %  | || |) | _|(_-<
 % |___|___/|___/__/  	Please keep this I have trouble keeping where I am
 %
-\subsection{The Best Base Integrate Developement Enviroment} 
-It is nesecary to look all the possible integrated developement environments for the postal project to see what would be the best fit for this specific extension, both developement wise and release wise.
-To this purpose this review will examine three IDEs that could all be used as the base of the extension that is plannned to be implemented.
+\subsection{The Best Base Integrate Development Environment} 
+It is necessary to look all the possible integrated development environments for the postal project to see what would be the best fit for this specific extension, both development wise and release wise.
+To this purpose this review will examine three IDEs that could all be used as the base of the extension that is planned to be implemented.
 Those IDEs are Brackets, Atom, and Visual Studio Code (VSCode) all of which have there advantages and disadvantages.
-\\
 \subsubsection{Brackets}
 Brackets is a text editor owned by Adobe, and is currently in development as an open source project. \cite{Brackets}
 Brackets is made specifically for web development, and offers tools such as the Chrome debugger, inline editor, and live website previewer built in.
@@ -221,7 +220,7 @@ This seems like an easy way of creating a user interphase, but the only intracta
 Links would only be able to change the the view to other HTML files. 
 The idea of making every possible use case a separate HTML file would be difficult without the use of PHP.
 \subsubsection{Built In Events}
-The Extension could fire events that are built in to Visual Studio Code and have handlers set up to listen to those events . 
+The Extension could fire events that are built in to Visual Studio Code and have handlers set up to listen to those events. 
 \subsubsection{EventEmitter}
 The better option would be to use the VSCodes EventEmitter to create and manage for other to subscribe to. 
 With an eventEmitter the extension can create listeners that can then be listen for when the event fires signifying to the listeners that the event has occurred. 
@@ -316,12 +315,12 @@ It claims to provide several callbacks and methods to allow maximum flexibility 
 It is called through CSS classes and does feature an API hook for triggering a JavaScript event on clicking an object. 
 It being a JQuery plug in should allow it to work within Visual Studio Code. 
 It features a relatively through API guide and install instructions.
-\\
+
 The example news tickers it displays an aesthetically pleasing and varied, indicating that customizing the displays is possible. 
 It features a standard vertical list which will suit this projects needs but also an interesting call out version. 
 The version has on expanded item in the list while the rest are collapsed, saving a decent amount of screen space. 
 This may be something to look more into if the project uses this API.
-\\
+
 JQuery Advanced news ticker is available under the GNU Public License.
 
 \subsubsection{nanoScroller.js}
@@ -332,9 +331,9 @@ It is likely a much more efficient option in comparison to JQuery Advanced News 
 It will accomplish the minimum in terms of displaying errors within the UI. 
 A downside of the plugin is that it doesn't feature explicit hooks for triggering a JavaScript event when something is clicked. 
 This is to be expected as it is basically just a div class but it will still be something we will have to implement ourselves if we go with this option.
-\\
+
 Documentation is fairly thorough and the website offers a website compression file which will help keep the extension size to a minimum. 
-\\
+
 NanoScroller.js is available under the MIT license. 
 
 \subsubsection{Custom Code}
