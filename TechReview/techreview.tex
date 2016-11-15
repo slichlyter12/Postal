@@ -80,7 +80,7 @@ The text editor extension created for this project function in part by parsing a
 The parsed code base will be converted into a sort of data structure that can be more easily utilized and manipulated for helping the user, while not interfering with their actual files. 
 The user's code base will be parsed periodically, but that parse function may be resource intensive, and as such, serialization of the parsed data into a more accessible form will be required. 
 JSON.stringify, a mongoDB database, and the serialize-javascript npm package will be considered for the serialization of our data structure.
-
+\\
 \subsubsection{JSON.stringify}
 Since the text editor will be written in JavaScript or a superset of it, using JSON as the method of storing objects seems the most obvious. 
 JSON text is valid JavaScript code and is supported in many modern languages and IDEs. 
@@ -105,10 +105,31 @@ MongoDB is supported on numerous cloud and local platforms, scaling from small l
 The two main drawbacks for using MongoDB is that it has a large overhead to install (hundreds of megabytes) and none of our team members have used a NoSQL database before. 
 For this unfamiliarity and space requirement, our team has opted not to use MongoDB to serialize our extension data. \cite{mongo}
 
-\subsection{Piece 2}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+\subsection{Comparing the Data Structure to the Serialized JSON}
+Once the parsed user code base has been serialized into a JSON file, the extension will then need to periodically check if the data objects in memory are different than the objects saved to the disk in the JSON file. 
+There are dozens of methods to compare objects in JavaScript, some prioritizing speed with others focusing on functionality. Our team opted for somewhat of a middle ground, while leaning towards functionality and ease of development when comparing the Lodash library, the JSON.stringify comparison function, and the deepEqual npm module.
+\\
+\subsubsection{Lodash}
+Lodash is a JavaScript library the provides a wide range of functionality while focusing on performance.
+Lodash abstracts iteration through arrays and objects to maintain speed while simplifying the experience for the developer. 
+The library contains functions such as .cloneDeep() and .isEqual() which allow for deep object comparison (instead of the native ===), as is needed for this extension's circumstances. 
+Lodash has continuing developer support and sufficient documentation throughout web. 
+The main detraction for using Lodash is that it creates a new dependency on an entire library, something our developers would have liked to avoid. 
+However, the benefits of Lodash seem to have outweighed that primary flaw enough for this library to be our choice method of data structure comparison. \cite{lodash}
+
+\subsubsection{JSON.stringify}
+JSON.stringify, as previously mentioned, is native to JavaScript and will be our primary method of serialization to JSON files. 
+The usage JSON.stringify(a) === JSON.stringify(b) can compare more deeply than === alone, caring about the contents of the objects it serializes rather than the structure or referential equality. 
+JSON.stringify can also compare more efficiently than the deepEqual package according to this article. \cite{compare}
+The main downside in relying on JSON.stringify to compare our data structure to existing JSON files is that the rest of the legwork in finding what was different would still be up to our team to develop. 
+Lodash, instead provides much of this functionality, leading to it being chosen over JSON.stringify. \cite{stringify}
+
+\subsubsection{DeepEqual}
+The deepEqual deep object compare function is a free library available via npm. 
+It is quite popular among JavaScript developers and has a decent amount of documentation online. 
+Like JSON.stringify, it does a deep comparison on two JavaScript objects checking for differences.
+However, it is not only slower than JSON.stringify, but it also has the same lack of functionality that JSON.stringfy suffers from. 
+For these reasons, our team opted not to use deepEqual. \cite{deep}
 
 \subsection{Piece 3}
 \subsubsection{Technology 1}
@@ -126,7 +147,7 @@ For this unfamiliarity and space requirement, our team has opted not to use Mong
 It is nesecary to look all the possible integrated developement environments for the postal project to see what would be the best fit for this specific extension, both developement wise and release wise.
 To this purpose this review will examine three IDEs that could all be used as the base of the extension that is plannned to be implemented.
 Those IDEs are Brackets, Atom, and Visual Studio Code (VSCode) all of which have there advantages and disadvantages.
-
+\\
 \subsubsection{Brackets}
 Brackets is a text editor owned by Adobe, and is currently in development as an open source project. \cite{Brackets}
 Brackets is made specifically for web development, and offers tools such as the Chrome debugger, inline editor, and live website previewer built in.
@@ -181,7 +202,7 @@ Visual Studio Code is going to interface with the user and our extension will ne
 The specific instance that this portion focuses on the the event handler that the IDE is actively listening for from it's extension.
 The Postal extension needs a way of getting information from the extension, this section will explore the options that the VSCode extension API offers developers for this kind of interaction. 
 The events that the IDE will be listening 
-
+\\
 \subsubsection{HTML Preview Links}
 The first way that VSCode makes it possible to have events is through the HTML Previewer. \cite{VSCode Documentation} 
 This method would require that the extension makes an HTML page and then display that page either in a web browser or using the built in command previewHtml using the vscode.executeCommand() and passing it an Uniform Resource Identifier (URI). 
@@ -232,16 +253,85 @@ For this project that will allows the the extension access to APIs that the team
 
 
 \section{Eric Winkler}
-\subsection{Piece 1}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+\subsection{Rendering the File Map}
+The file map is the visual representation of the user's current project. 
+It will most closely resemble a web of nodes where the nodes are individual files and the edges are confirmation of some sort of link or dependency between two files. 
+Whatever technology we use for this must be capable of running the VS Code environment (JavaScript). \\
+\subsubsection{vis.js}
+Vis.js is a "dynamic, browser based visualization library". 
+It features several modules for visualizing data in a JavaScript application. 
+One of these modules, the Network module could serve to visualize the file map in a web like format. 
+The Network modules features the ability to click and drag the map around which will be useful for navigation. 
+Even better is the modules ability to zoom further into the map and dynamically change text size of the nodes depending on the zoom level. 
+This is an extremely beneficial feature as it allows the system to draw many smaller nodes without having to deal with the concern of the user being able to clearly read each node at once. 
+Additionally, the module appears to be highly customizable in terms of aesthetic.
+\\
+Vis.js claims to "run fine on Chrome, Opera, Safari and IE9+". However as the project is being developed with the intent to within visual studio code, Its ability to run in that environment is questionable. This is currently the primary concern with this option.
+\\
+Vis.js  is open source and is dual licensed under both Apahe 2.0 and MIT.
 
-\subsection{Piece 2}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+\subsubsection{d3js}
+Similar to vis.js, d3js is another javascript library designed to visualize arbitrary data. 
+Unlike vis.js, it allows the user to bind processed data directly to a Document Object Model (DOM). 
+This essentially means that it is more flexible in its ability to read in data. 
+It also features an output to an SVG file type, which could be useful as we know Visual Studio Code is capable of displaying SVGs within the environment. 
+\\
+D3js features a large massive number of what vis.js referred to as modules. 
+There are several suitable modules that D3js offers, but the most promising appears to be either the force-Directed Graphs or the Curved link graphs. 
+Like vis.js, D3.js features zooming and panning. 
+The API reference appears to be a bit less straight forward than vis.js and the library descriptions claim to prioritize making the library light weight and efficient. 
+This option has the potential benefit of being more efficient, but will likely be slightly more difficult to integrate.
+\\
+D3.js supports "modern browsers" ( Firefox, Chrome, Safari, Opera, IE9+, etc.) and also runs on node. 
+The library is available under the BSD License.
 
+
+\subsubsection{Custom Code}
+Our final option is to write custom own code for generating the file map. 
+This option is massively more work than the first two but still has some benefits. 
+Writing custom code allows us more flexibility in how the code runs and allows us to keep the size of the extension to a minimum. 
+Every feature implemented in the custom code will be out of necessity. 
+Additionally, it adds the benefit of not having to worry about properly citing the code according to the licenses above. 
+This is a relatively minor benefit, but also means that copy write will never be an issue for this corner of the project.
+
+\subsection{Displaying Broken Rules}
+In addition to displaying the file map, the UI will also feature a list of “broken rules” to one side. 
+These broken rules are pseudo-error our parse detects within the project directory and should be displayed alongside the map. 
+The displays should be as aesthetically pleasing as possible and will ideally provide an API a hook for triggering an event when the user clicks on an object in the display. 
+The errors will be stored as strings, so there should be relatively little complexity in passing the data to an API. \\
+
+\subsubsection{Jquery Advanced News Ticker}
+The JQuery Advanced News Ticker is a JavaScript based JQuery plugin. 
+It claims to provide several callbacks and methods to allow maximum flexibility and implementation. 
+It is called through CSS classes and does feature an API hook for triggering a JavaScript event on clicking an object. 
+It being a JQuery plug in should allow it to work within Visual Studio Code. 
+It features a relatively through API guide and install instructions.
+\\
+The example news tickers it displays an aesthetically pleasing and varied, indicating that customizing the displays is possible. 
+It features a standard vertical list which will suit this projects needs but also an interesting call out version. 
+The version has on expanded item in the list while the rest are collapsed, saving a decent amount of screen space. 
+This may be something to look more into if the project uses this API.
+\\
+JQuery Advanced news ticker is available under the GNU Public License.
+
+\subsubsection{nanoScroller.js}
+NanoScroller.js is similar to the JQuery Advanced News Ticker in that it too is a JQuery plugin. 
+Its goal is to offer a very simple and uncluttered way to create scrollable divs that are visually pleasant. 
+As such it features far less in terms of animation and visual ‘coolness’ but is far smaller in size. 
+It is likely a much more effiecient option in comparison to JQuery Advanced News Ticker as well. 
+It will accomplish the minimum in terms of displaying errors within the UI. 
+A downside of the plugin is that it doesn’t feature explicit hooks for triggering a JavaScript event when something is clicked. 
+This is to be expected as it is basically just a div class but it will still be something we will have to implement ourselves if we go with this option.
+\\
+Documentation is fairly thorough and the website offers a website compression file which will help keep the extension size to a minimum. 
+\\
+NanoScroller.js is available under the MIT license. 
+
+\subsubsection{Custom Code}
+The final option is to create our own div class. 
+As discussed above in the file map technologies section, this will be quite a bit more works but has quite a few benefits. 
+Again, the project team will have more control over design, efficiency and features than if an API was used. 
+Additionally, code created would belong to the project and the need to cite could would not be a concern.
 \subsection{Piece 3}
 \subsubsection{Technology 1}
 \subsubsection{Technology 2}
