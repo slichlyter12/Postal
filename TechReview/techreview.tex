@@ -29,7 +29,7 @@
 
 % Document Title:
 \def\doctitle{A Tool to Automatically Organize the Structure of a Codebase Using Information Foraging Theory Design Patterns}
-\def\doctype{Technology Review and Implmentation Plan}
+\def\doctype{Technology Review and Implementation Plan}
 \def\team{Team Postal}
 
 \markboth{Oregon State University}{\doctitle}
@@ -58,12 +58,27 @@
 
 \section{Sam Lichlyter}
 
-\subsection{Piece 1}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+\subsection{Parser Class}
+\subsubsection{PEG.js}
+PEG.js is a parser generator.
+Its sole function is to generate a parser which is saved as a JavaScript Object with which we can interact.
+It also generates a small API for us to use.
+This would reduce a ton of work we would have to do as far as writing our own parser.
+The problem with this is that we would only have a simple API that we could interact with.
+Theoretically we could modify the API it generated for us but then we would have to learn how this parser was generated.\cite{pegjs}
+\subsubsection{UglifyJS}
+Uglify JS looks as though it could also generate a JavaScript Parser for us.
+It has the added bonus of being able to generate a source map of our source code which could be helpful for our own file map.
+This although has all the same problems that PEG.js does.\cite{uglifyjs}
+\subsubsection{Custom Parser}
+The pros of a custom parser are that we would only include what we needed to.
+This would reduce a massive overhead in interacting with any API we would have to use with a third-party tool. 
+It would also mean we could optimize the algorithms we use for it specifically so it could be faster than the third-party tools.
+This would also reduce the number of dependencies our extension would rely on greatly. 
+For these reasons I think this is the route we will take.
 
-\subsection{Piece 2}
+
+\subsection{Data Structure}
 \subsubsection{Technology 1}
 \subsubsection{Technology 2}
 \subsubsection{Technology 3}
