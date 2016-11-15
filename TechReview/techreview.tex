@@ -155,23 +155,25 @@ For these reasons, our team opted not to use deepEqual. \cite{deep}
 %
 \subsection{The Best Base Integrate Development Environment} 
 It is necessary to look all the possible integrated development environments for the postal project to see what would be the best fit for this specific extension, both development wise and release wise.
-To this purpose this review will examine three IDEs that could all be used as the base of the extension that is planned to be implemented.
+To this purpose this review will examine three similiar IDEs that could all be used as the base of the extension that is planned to be implemented.
 Those IDEs are Brackets, Atom, and Visual Studio Code (VSCode) all of which have there advantages and disadvantages.
+
 \subsubsection{Brackets}
 Brackets is a text editor owned by Adobe, and is currently in development as an open source project. \cite{Brackets}
 Brackets is made specifically for web development, and offers tools such as the Chrome debugger, inline editor, and live website previewer built in.
-The research into the Brackets IDE has brought to attention many features that were good but also some that were not as good.
-Adobe started the development in 2011 making Brackets the oldest of the IDEs that are examined in this paper meaning it is the most established and it has had more time to become a more stable build. 
+The research into the Brackets IDE has brought to attention many features that were good, but also some that were not as good.
+Adobe started the development in 2011 making Brackets the oldest of the IDEs research in this paper meaning it is the most established and it has had more time to become a more stable build. 
 The longer life of Brackets could also explain the more extensive documentation that it has when compared to other IDEs extension development documentation.
-Another nice feature of Brackets is that it has dedicated API functionality that allows for extensions to safely modify the underlying Document Object Map (DOM) which would be advantageous to have that ability.
+Another nice feature of Brackets is that it has dedicated API functionality that allows for extensions to safely modify the underlying Document Object Map (DOM) which would be very useful for the Postal extension.
 While there are several benefits to Brackets there are some drawbacks specifically being the extension debugging and lack of usability in the extension manager. 
 The extension debugging consists of having another development environment open with the extensions code and restarting Brackets with every change.
 This restarting will get tedious after prolonged development.
-The extension manager in brackets is not user friendly, it is basically a list of extensions and a search bar.
-With the target audience we are hoping to reach we think that the extensions need to be more readily available and easier to understand. 
+The other issue is the extension manager in brackets is not user friendly, it is basically a list of extensions and a search bar.
+With the target audience Postal is trying to reach is one of rather new web developers, people who do not want to sift through extensive lists of confusing extensions. 
+Brackets would make it more difficult for our product to get to the users.
 
 \subsubsection{Atom}
-Atom is a text editor developed by GitHub that is currently in development as an open source project. 
+Atom  very similar to Brackets in that it is a text editor developed by GitHub that is currently in development as an open source project. 
 It features cross platform editing, a built in package manager, and smart auto completion.
 Atom advertises itself as the 'hackable' text editor meaning that it is made using HTML, CSS and JavaScript in such a way that anyone is using the text editor for web development then they should be able to develop for Atom. \cite{Atom}
 This is a commonality between all of the possible IDEs.
@@ -179,18 +181,20 @@ Atom is actually what VSCode from, but VSCode added TypeScript to the languages 
 While atom is a good has a editor and auto completion it does not stand out when compared to the other IDEs. 
 In fact it seems as though Atom uses extensions as a crutch not implementing built in functionality requiring the user to get extensions in order to complete their tasks. 
 While this does make the initial learning curve of using Atom a bit larger it does keep the editor light and running very fast.
+What Atom gains in speed it loses in ease of use as a new user has to do a good amount of initial set up and for the audience that Postal is targetting would be put off by the confusing intial set up of Atom.
 
 \subsubsection{Visual Studio Code}
-Visual Studio Code is an editor by Microsoft, and it was the editor that was initially proposed as the base of the extension. \cite{VSCode}
-This initial idea to use VSCode was a product of the team having worked with Visual Studio and enjoying the experience. 
+Visual Studio Code, like the other IDEs, is a text editor by Microsoft, that is currently in development as an open source project. \cite{VSCode}
+It is the editor that was initially proposed as the base of the Postal extension. 
+This initial idea to using VSCode was a product of the team having worked with Visual Studio and enjoying the experience. 
 Now that the team has tried working with Visual Studio Code there has been some benefits and drawbacks identified. 
 The benefits were that VSCode has justifiably better extension debugging than the other IDEs available. 
 VSCode seems to build around the idea that people will be making extensions for Visual Studio Code so there is a development window that is created when debugging extension code within VSCode. 
 The other IDEs seem to be less approachable with a system that makes the developer reinitialize the IDE every time the extension's code is changed. 
 The other benefit of using VSCode was that the extension can be written using TypeScript, but that being said none of the team members have used TypeScript meaning it would be additional learning curve added on to the obstacle of learning more JavaScript. 
 The first of the drawbacks of VSCode become evident when working with the documentation and finding that Visual Code is fairly new, and does not have a lot of documentation or examples of extensions to readily examine. 
-As this team is fairly new to creating extensions and not efficient at writing in JavaScript this was going to be a problem. 
-Visual Studio Code also had no built in API for modifying underlying DOM that make up the main user interface which the postal extension plans on doing extensively.
+As this team is fairly new to creating extensions and not efficient at writing in JavaScript or TypeScript this is going to be a problem. 
+Visual Studio Code also had no built in API for modifying underlying DOM that make up the main user interface which the postal extension possibly could do.
 
 \subsubsection{Decision}
 All this being said the team has decided to use Visual Studio Code based on several major benefits. 
@@ -218,9 +222,15 @@ This method would require that the extension makes an HTML page and then display
 The URI that would be past to the command would have a HTML DOM that would be rendered in a separate panel on top of the VSCode's HTML and CSS. 
 This seems like an easy way of creating a user interphase, but the only intractable element would be links. 
 Links would only be able to change the the view to other HTML files. 
-The idea of making every possible use case a separate HTML file would be difficult without the use of PHP.
-\subsubsection{Built In Events}
-The Extension could fire events that are built in to Visual Studio Code and have handlers set up to listen to those events. 
+The idea of making every possible use case a separate HTML file would be difficult, and extremely tedious.
+
+\subsubsection{IDEs Built In Events}
+Visual Studio Code has a number of already built in events that the extension could listen for but these events fire at specific timing such as when the user saves a file or edits a document. 
+The Extension could fire these events that are built in to Visual Studio Code, and have handlers set up to listen to those events using the already built in listeners.
+This method would be extremely problematic.
+These built in events are meant to be used at very specific times and have set listeners that parts of the IDE itself, and other extensions are expecting at very specific times.
+Using the events would be an incorrect solution as these events happen at every specific instances and using these events for any purpose other than the purpose that they are currently made for would be irresponsible and would not work properly.
+
 \subsubsection{EventEmitter}
 The better option would be to use the VSCodes EventEmitter to create and manage for other to subscribe to. 
 With an eventEmitter the extension can create listeners that can then be listen for when the event fires signifying to the listeners that the event has occurred. 
@@ -233,8 +243,10 @@ Setting these custom eventEmitters and event listeners should be the first thing
 
 \subsubsection{Decision}
 For the purpose of this project the eventEmmiter and Listener will be used for obvious reasons. 
-The first being that it is the standard of Visual Studio. 
-The second reason being that the HTML preview would be extremely limited, tedious and impractical.
+The first being that it is the standard of Visual Studio extensions, and this is what extensiona are expected to implement. 
+The other proposed option could work but would be improper and irresponsible.
+The HTML preview method would be extremely limited, tedious and impractical, and the built in events would go against the design of the IDE and would cause conflicts that would be extremely problematic.
+Make custom eventEmitters will allow for greater flexibility and better design in general. 
 
 %  _                                         
 % | |   __ _ _ _  __ _ _  _ __ _ __ _ ___ ___
@@ -242,16 +254,20 @@ The second reason being that the HTML preview would be extremely limited, tediou
 % |____\__,_|_||_\__, |\_,_\__,_\__, \___/__/ 		The Languages that the Visual Studio uses. 
 %				      |___/          |___/        
 \subsection{Languages Extensions Written in}
-With all the possible IDEs the extension can be written in HTML, CSS, and JavaScript, but the bulk of the code is  JavaScript. 
-With Visual Studio Code there is the option to use TypeScript. 
-Visual Studio Code 
-This portion will look at Node.js JavaScript and TypeScript looking at each language's pros and cons.
+All the possible IDEs that could be used for this project are written in HTML, CSS, and JavaScript, but the bulk of the logic is JavaScript. 
+This means that the extensions use mainly Javascript. 
+With Visual Studio Code there is the option to use either JavaScript or TypeScript. 
+This portion will look at JavaScript and TypeScript looking at each language's pros and cons in terms of the development of the Postal extension.
+
 \subsubsection{JavaScript}
-With all the possible IDEs the extension can be written in JavaScript  and corresponding JSON files. 
-JavaSctipt was created in 10 days in 1995, is a well known and well documented language. \cite{JavaScriptHistory}
+JavaSctipt was created in 10 days in 1995.\cite{JavaScriptHistory}
+It is a well known, and well documented language. 
+With all the possible IDEs the extension can be written in JavaScript. 
 It can be very confusing at times as it is an asynchronous language and not compiled inline.
-This compounded with the fact that all the extension documentation for VSCode is written with TypeScript in mind makes JavaScript a mark steeper learning curve for this specific instance. 
-The upside would be that there are in general more people programming with JavaScript in general and that it has a larger community to gather information from when compared to TypeScript. 
+This compounded with the fact that all the extension documentation for VSCode is written with TypeScript in mind making the learning curve for making an extension in JavaScript that much steeper.
+The upside would be that there are in more people programming with JavaScript and that it has a larger community to gather information from when compared to TypeScript. 
+This would allow the Postal team more f
+
 \subsubsection{TypeScript}
 TypeScript is a language created by Microsoft with the purpose of being 'JavaScript that scales.' \cite{TypeScript}
 In fact TypeScript compiles to JavaScript and its syntax is almost identical to JavaScript. 
@@ -261,9 +277,10 @@ This allows for developers to use more powerful APIs then the some of the less r
 For this project that will allows the the extension access to APIs that the team has experience using.
 Another major advantage of using TypeScript is that all the VSCode examples are already written in type script making understanding the documentation easier to understand. 
 TypeScript also allows for the use of JavaScript within TypeScript files and that flexibility will be nice to have while developing an extension.
+
 \subsubsection{Decision}
-For the postal extension we will use TypeScript as its main programming language. 
-The main reason for this decision is that the documentation is written with TypeScript examples making for a smoother developement experience. 
+For the postal extension the developement will be done with TypeScript as its main programming language. 
+The main reason for this decision is that the documentation for VSCode extension developement is written with TypeScript examples making for a smoother developement experience. 
 The other reasons for chosing TypeScript over JavaScript is that TypeScript will allow for the use of both JavaScript and TypeScript. 
 Have the flexability to chose either depending on the circumstance will make for faster developement with more possible solutions to some problems that the developers may face. 
 
