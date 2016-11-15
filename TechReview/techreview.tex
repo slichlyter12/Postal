@@ -4,7 +4,6 @@
 \usepackage[bookmarks=true]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage{hyperref}
 \usepackage{titling}
 \usepackage{graphicx}
 \usepackage[noadjust]{cite}
@@ -77,7 +76,6 @@ It would also mean we could optimize the algorithms we use for it specifically s
 This would also reduce the number of dependencies our extension would rely on greatly. 
 For these reasons I think this is the route we will take.
 
-
 \subsection{Data Structure}
 \subsubsection{Technology 1}
 \subsubsection{Technology 2}
@@ -94,9 +92,7 @@ For these reasons I think this is the route we will take.
 The text editor extension created for this project function in part by parsing an existing code base. 
 The parsed code base will be converted into a sort of data structure that can be more easily utilized and manipulated for helping the user, while not interfering with their actual files. 
 The user's code base will be parsed periodically, but that parse function may be resource intensive, and as such, serialization of the parsed data into a more accessible form will be required. 
-JSON.stringify, a mongoDB database, and the serialize-javascript npm package will be considered for the serialization of our data structure.
-\\
-\subsubsection{JSON.stringify}
+JSON.stringify, a mongoDB database, and the serialize-javascript npm package will be considered for the serialization of our data structure.\subsubsection{JSON.stringify}
 Since the text editor will be written in JavaScript or a superset of it, using JSON as the method of storing objects seems the most obvious. 
 JSON text is valid JavaScript code and is supported in many modern languages and IDEs. 
 JSON is also plaintext, which requires significantly less overhead and space than a full database. 
@@ -123,7 +119,6 @@ For this unfamiliarity and space requirement, our team has opted not to use Mong
 \subsection{Comparing the Data Structure to the Serialized JSON}
 Once the parsed user code base has been serialized into a JSON file, the extension will then need to periodically check if the data objects in memory are different than the objects saved to the disk in the JSON file. 
 There are dozens of methods to compare objects in JavaScript, some prioritizing speed with others focusing on functionality. Our team opted for somewhat of a middle ground, while leaning towards functionality and ease of development when comparing the Lodash library, the JSON.stringify comparison function, and the deepEqual npm module.
-\\
 \subsubsection{Lodash}
 Lodash is a JavaScript library the provides a wide range of functionality while focusing on performance.
 Lodash abstracts iteration through arrays and objects to maintain speed while simplifying the experience for the developer. 
@@ -167,19 +162,19 @@ Those IDEs are Brackets, Atom, and Visual Studio Code (VSCode) all of which have
 Brackets is a text editor owned by Adobe, and is currently in development as an open source project. \cite{Brackets}
 Brackets is made specifically for web development, and offers tools such as the Chrome debugger, inline editor, and live website previewer built in.
 The research into the Brackets IDE has brought to attention many features that were good but also some that were not as good.
-Adobe started the developement in 2011 making Brackets the oldest of the IDEs that are examined in this paper meaning it is the most established and it has had more time to become a more stable build. 
+Adobe started the development in 2011 making Brackets the oldest of the IDEs that are examined in this paper meaning it is the most established and it has had more time to become a more stable build. 
 The longer life of Brackets could also explain the more extensive documentation that it has when compared to other IDEs extension development documentation.
-Another nice feature of Brackets is that it has dedicated API functionality that allows for extensions to safely modify the underlying Document Object Map (DOM) which would be advantagous to have that ability.
+Another nice feature of Brackets is that it has dedicated API functionality that allows for extensions to safely modify the underlying Document Object Map (DOM) which would be advantageous to have that ability.
 While there are several benefits to Brackets there are some drawbacks specifically being the extension debugging and lack of usability in the extension manager. 
 The extension debugging consists of having another development environment open with the extensions code and restarting Brackets with every change.
-This restarting will get tedious after prolonged developement.
+This restarting will get tedious after prolonged development.
 The extension manager in brackets is not user friendly, it is basically a list of extensions and a search bar.
 With the target audience we are hoping to reach we think that the extensions need to be more readily available and easier to understand. 
 
 \subsubsection{Atom}
 Atom is a text editor developed by GitHub that is currently in development as an open source project. 
 It features cross platform editing, a built in package manager, and smart auto completion.
-Atom advertises itself as the \'hackable\' text editor meaning that it is made using HTML, CSS and JavaScript in such a way that anyone is using the text editor for web development then they should be able to develop for Atom. \cite{Atom}
+Atom advertises itself as the 'hackable' text editor meaning that it is made using HTML, CSS and JavaScript in such a way that anyone is using the text editor for web development then they should be able to develop for Atom. \cite{Atom}
 This is a commonality between all of the possible IDEs.
 Atom is actually what VSCode from, but VSCode added TypeScript to the languages that it is built in.
 While atom is a good has a editor and auto completion it does not stand out when compared to the other IDEs. 
@@ -187,7 +182,7 @@ In fact it seems as though Atom uses extensions as a crutch not implementing bui
 While this does make the initial learning curve of using Atom a bit larger it does keep the editor light and running very fast.
 
 \subsubsection{Visual Studio Code}
-Visual Studio Code is an editor by Microsoft, and it was the editor that was initially proposed as the base of the extenstion. \cite{VSCode}
+Visual Studio Code is an editor by Microsoft, and it was the editor that was initially proposed as the base of the extension. \cite{VSCode}
 This initial idea to use VSCode was a product of the team having worked with Visual Studio and enjoying the experience. 
 Now that the team has tried working with Visual Studio Code there has been some benefits and drawbacks identified. 
 The benefits were that VSCode has justifiably better extension debugging than the other IDEs available. 
@@ -200,10 +195,10 @@ Visual Studio Code also had no built in API for modifying underlying DOM that ma
 
 \subsubsection{Decision}
 All this being said the team has decided to use Visual Studio Code based on several major benefits. 
-Visual Studio Code's use of TypeScript and being able to import .NET librarys. 
-All of the team members have at least some experience with .NET libraries, and these could be used to greatly imporve the project. 
+Visual Studio Code's use of TypeScript and being able to import .NET libraries. 
+All of the team members have at least some experience with .NET libraries, and these could be used to greatly improve the project. 
 The Visual Studio Code also has the best Extension Debugger than the other IDEs and a more defined extension creation process.
-This is important for the integrity of the developement of the extension in the long run. 
+This is important for the integrity of the development of the extension in the long run. 
 Visual Studio Code has a extension creation guides the developer through the process of making the extension and creates all the helper files that the developer will need in their extension.
 The other benefit is that the built in extension manager will be easy for the user to manage than the other IDEs. 
 
@@ -212,30 +207,30 @@ The other benefit is that the built in extension manager will be easy for the us
 % | _|\ V / -_) ' \  _(_-<
 % |___|\_/\___|_||_\__/__/ 		The events that the IDE will be listening 
 %
-\subsection{Event Handling Within A Seperate Window of the IDE}
+\subsection{Event Handling Within A Separate Window of the IDE}
 Visual Studio Code is going to interface with the user and our extension will need to know what the user is doing.
 The specific instance that this portion focuses on the the event handler that the IDE is actively listening for from it's extension.
 The Postal extension needs a way of getting information from the extension, this section will explore the options that the VSCode extension API offers developers for this kind of interaction. 
 The events that the IDE will be listening 
-\\
+
 \subsubsection{HTML Preview Links}
 The first way that VSCode makes it possible to have events is through the HTML Previewer. \cite{VSCodeDocumentation} 
 This method would require that the extension makes an HTML page and then display that page either in a web browser or using the built in command previewHtml using the vscode.executeCommand() and passing it an Uniform Resource Identifier (URI). 
-The URI that would be past to the command would have a HTML DOM that would be rendered in a seperate panel on top of the VSCode's HTML and CSS. 
-This seems like an easy way of creating a user interphase, but the only interactable element would be links. 
+The URI that would be past to the command would have a HTML DOM that would be rendered in a separate panel on top of the VSCode's HTML and CSS. 
+This seems like an easy way of creating a user interphase, but the only intractable element would be links. 
 Links would only be able to change the the view to other HTML files. 
-The idea of making every possible use case a seperate HTML file would be difficult without the use of PHP.
+The idea of making every possible use case a separate HTML file would be difficult without the use of PHP.
 \subsubsection{Built In Events}
 The Extension could fire events that are built in to Visual Studio Code and have handlers set up to listen to those events . 
 \subsubsection{EventEmitter}
 The better option would be to use the VSCodes EventEmitter to create and manage for other to subscribe to. 
 With an eventEmitter the extension can create listeners that can then be listen for when the event fires signifying to the listeners that the event has occurred. 
-This is the intended way that exentions are supposed to create and the event handlers. 
+This is the intended way that exertions are supposed to create and the event handlers. 
 There are also built in events that the these event listeners will need to be initialized before the user actually interfaces with the extension and to do that the extension will need to use the activation events. 
 An activation event is set in the package.json of the extension and these activation events are sent from the IDE to the extensions.
 These events can be onLanguage, onCommand, onDebug, workspaceContains or a star (*) signifying that the extension should always be running. 
-When the extension recieves one of these events that it is listening for it will start the extension operations. 
-Setting these custom eventEmitters and event listeners should be the first thing that the extension sets up as they will be very important for the interface that the user will interacet with. \cite{VSCodeDocumentation}
+When the extension receives one of these events that it is listening for it will start the extension operations. 
+Setting these custom eventEmitters and event listeners should be the first thing that the extension sets up as they will be very important for the interface that the user will interact with. \cite{VSCodeDocumentation}
 
 \subsubsection{Decision}
 For the purpose of this project the eventEmmiter and Listener will be used for obvious reasons. 
@@ -247,17 +242,17 @@ The second reason being that the HTML preview would be extremely limited, tediou
 % | |__/ _` | ' \/ _` | || / _` / _` / -_|_-<
 % |____\__,_|_||_\__, |\_,_\__,_\__, \___/__/ 		The Languages that the Visual Studio uses. 
 %				      |___/          |___/        
-\subsection{Languages Exetensions Written in}
+\subsection{Languages Extensions Written in}
 With all the possible IDEs the extension can be written in HTML, CSS, and JavaScript, but the bulk of the code is  JavaScript. 
 With Visual Studio Code there is the option to use TypeScript. 
 This portion will look at JavaScript and TypeScript looking at each language's pros and cons.
 \subsubsection{JavaScript}
-With all the possible IDEs the extension can be written in JavaScript  and correspnding JSON files. 
+With all the possible IDEs the extension can be written in JavaScript  and corresponding JSON files. 
 JavaSctipt was created in 10 days in 1995, is a well known and well documented language. \cite{JavaScriptHistory}
 It can be very confusing at times as it is an asynchronous language and not compiled inline.
 %TODO:Add more
 \subsubsection{TypeScript}
-TypeScript is a language created by Microsoft with the purpose of being \'JavaScript that scales.\cite{TypeScript}
+TypeScript is a language created by Microsoft with the purpose of being 'JavaScript that scales.' \cite{TypeScript}
 In fact TypeScript compiles to JavaScript and its syntax is almost identical to JavaScript. 
 The main advantage of using TypeScript is that it adds types to JavaScript allowing for static checking and code refactoring when developing JavaScript applications. \cite{TypeScript}
 Another major benefit of using TypeScript is the ability to import .NET libraries. 
@@ -271,33 +266,33 @@ For this project that will allows the the extension access to APIs that the team
 \subsection{Rendering the File Map}
 The file map is the visual representation of the user's current project. 
 It will most closely resemble a web of nodes where the nodes are individual files and the edges are confirmation of some sort of link or dependency between two files. 
-Whatever technology we use for this must be capable of running the VS Code environment (JavaScript). \\
+Whatever technology we use for this must be capable of running the VS Code environment (JavaScript).
 \subsubsection{vis.js}
-Vis.js is a "dynamic, browser based visualization library". 
+Vis.js is a ``dynamic, browser based visualization library''. 
 It features several modules for visualizing data in a JavaScript application. 
 One of these modules, the Network module could serve to visualize the file map in a web like format. 
 The Network modules features the ability to click and drag the map around which will be useful for navigation. 
 Even better is the modules ability to zoom further into the map and dynamically change text size of the nodes depending on the zoom level. 
 This is an extremely beneficial feature as it allows the system to draw many smaller nodes without having to deal with the concern of the user being able to clearly read each node at once. 
 Additionally, the module appears to be highly customizable in terms of aesthetic.
-\\
-Vis.js claims to "run fine on Chrome, Opera, Safari and IE9+". However as the project is being developed with the intent to within visual studio code, Its ability to run in that environment is questionable. This is currently the primary concern with this option.
-\\
-Vis.js  is open source and is dual licensed under both Apahe 2.0 and MIT.
+
+Vis.js claims to ``run fine on Chrome, Opera, Safari and IE9+.'' However as the project is being developed with the intent to within visual studio code, Its ability to run in that environment is questionable. This is currently the primary concern with this option.
+
+Vis.js  is open source and is dual licensed under both Apache 2.0 and MIT.
 
 \subsubsection{d3js}
 Similar to vis.js, d3js is another javascript library designed to visualize arbitrary data. 
 Unlike vis.js, it allows the user to bind processed data directly to a Document Object Model (DOM). 
 This essentially means that it is more flexible in its ability to read in data. 
 It also features an output to an SVG file type, which could be useful as we know Visual Studio Code is capable of displaying SVGs within the environment. 
-\\
+
 D3js features a large massive number of what vis.js referred to as modules. 
 There are several suitable modules that D3js offers, but the most promising appears to be either the force-Directed Graphs or the Curved link graphs. 
 Like vis.js, D3.js features zooming and panning. 
 The API reference appears to be a bit less straight forward than vis.js and the library descriptions claim to prioritize making the library light weight and efficient. 
 This option has the potential benefit of being more efficient, but will likely be slightly more difficult to integrate.
-\\
-D3.js supports "modern browsers" ( Firefox, Chrome, Safari, Opera, IE9+, etc.) and also runs on node. 
+
+D3.js supports ``modern browsers'' ( Firefox, Chrome, Safari, Opera, IE9+, etc.) and also runs on node. 
 The library is available under the BSD License.
 
 
@@ -310,12 +305,12 @@ Additionally, it adds the benefit of not having to worry about properly citing t
 This is a relatively minor benefit, but also means that copy write will never be an issue for this corner of the project.
 
 \subsection{Displaying Broken Rules}
-In addition to displaying the file map, the UI will also feature a list of “broken rules” to one side. 
+In addition to displaying the file map, the UI will also feature a list of broken rules to one side.
 These broken rules are pseudo-error our parse detects within the project directory and should be displayed alongside the map. 
 The displays should be as aesthetically pleasing as possible and will ideally provide an API a hook for triggering an event when the user clicks on an object in the display. 
 The errors will be stored as strings, so there should be relatively little complexity in passing the data to an API. \\
 
-\subsubsection{Jquery Advanced News Ticker}
+\subsubsection{JQuery Advanced News Ticker}
 The JQuery Advanced News Ticker is a JavaScript based JQuery plugin. 
 It claims to provide several callbacks and methods to allow maximum flexibility and implementation. 
 It is called through CSS classes and does feature an API hook for triggering a JavaScript event on clicking an object. 
@@ -332,10 +327,10 @@ JQuery Advanced news ticker is available under the GNU Public License.
 \subsubsection{nanoScroller.js}
 NanoScroller.js is similar to the JQuery Advanced News Ticker in that it too is a JQuery plugin. 
 Its goal is to offer a very simple and uncluttered way to create scrollable divs that are visually pleasant. 
-As such it features far less in terms of animation and visual ‘coolness’ but is far smaller in size. 
-It is likely a much more effiecient option in comparison to JQuery Advanced News Ticker as well. 
+As such it features far less in terms of animation and visual `coolness' but is far smaller in size.
+It is likely a much more efficient option in comparison to JQuery Advanced News Ticker as well. 
 It will accomplish the minimum in terms of displaying errors within the UI. 
-A downside of the plugin is that it doesn’t feature explicit hooks for triggering a JavaScript event when something is clicked. 
+A downside of the plugin is that it doesn't feature explicit hooks for triggering a JavaScript event when something is clicked. 
 This is to be expected as it is basically just a div class but it will still be something we will have to implement ourselves if we go with this option.
 \\
 Documentation is fairly thorough and the website offers a website compression file which will help keep the extension size to a minimum. 
