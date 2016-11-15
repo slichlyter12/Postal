@@ -15,10 +15,10 @@
 
 \hypersetup{
     bookmarks=false,    % show bookmarks bar?
-    pdftitle={Software Requirement Specification},    % title
+    pdftitle={Technology Review},    % title
     pdfauthor={Cramer Smith, Sam Lichlyter, Eric Winkler, Zach Schneider},                     % author
-    pdfsubject={Requirements Document},                        % subject of the document
-    pdfkeywords={IFT, Requirements, Postal}, % list of keywords
+    pdfsubject={Technology Review Document},                        % subject of the document
+    pdfkeywords={IFT, TechReview, Postal}, % list of keywords
     colorlinks=true,       % false: boxed links; true: colored links
     linkcolor=black,       % color of internal links
     citecolor=black,       % color of links to bibliography
@@ -75,10 +75,35 @@
 
 
 \section{Zach Schneider}
-\subsection{Piece 1}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+\subsection{Data Structure Serialization and Storage}
+The text editor extension created for this project function in part by parsing an existing code base. 
+The parsed code base will be converted into a sort of data structure that can be more easily utilized and manipulated for helping the user, while not interfering with their actual files. 
+The user's code base will be parsed periodically, but that parse function may be resource intensive, and as such, serialization of the parsed data into a more accessible form will be required. 
+JSON.stringify, a mongoDB database, and the serialize-javascript npm package will be considered for the serialization of our data structure.
+
+\subsubsection{JSON.stringify}
+Since the text editor will be written in JavaScript or a superset of it, using JSON as the method of storing objects seems the most obvious. 
+JSON text is valid JavaScript code and is supported in many modern languages and IDEs. 
+JSON is also plaintext, which requires significantly less overhead and space than a full database. 
+As of the ECMAScript 5.1 standard (2011), the JSON object in JavaScript has a built in stringify and parse function, which will serialize and deserialize JavaScript variables and object respectively. 
+As this function has been officially supported for many years and has multiple sources of documentation and example usage online, it will be the primary choice for how the extension stores files related to user projects. \cite{stringify}
+
+\subsubsection{serialize-javascript}
+A shortcoming of JSON.stringify is that it does not allow actual JavaScript functions to be serialized into JSON, nor does it allow regular expression statements. 
+The serialize-javascript npm package serves as a superset of JSON.stringify while also including the aforementioned functionality. 
+Additionally, serialize-javascript will auto escape HTML code, making the JSON  safe to display on webpages in raw form. 
+Npm is supported by dozens of IDEs and text editors, so compatibility will not likely be a problem. 
+The largest drawback of using serialize-javascript is its lack of documentation, despite its mild popularity. 
+There are fewer examples of its usage online than JSON.stringify, and it adds another external dependency to our extension. 
+For these reasons, serialize-javascript will not be a part of the storage system in the extension. \cite{serialize}
+
+\subsubsection{MongoDB}
+MongoDB is a free and open-source database solution that uses JSON-like documents for storing data. 
+It is a NoSQL database, meaning it differs from typical SQL-based relational schema systems. 
+It is commonly used in big-data or real-time applications, often used in conjunction with node.js and other JavaScript technologies our development team is familiar with. 
+MongoDB is supported on numerous cloud and local platforms, scaling from small local uses to large server applications. 
+The two main drawbacks for using MongoDB is that it has a large overhead to install (hundreds of megabytes) and none of our team members have used a NoSQL database before. 
+For this unfamiliarity and space requirement, our team has opted not to use MongoDB to serialize our extension data. \cite{mongo}
 
 \subsection{Piece 2}
 \subsubsection{Technology 1}
@@ -125,5 +150,8 @@
 \subsubsection{Technology 3}
 
 \section{Conclusion}
+
+\bibliographystyle{IEEEtran}
+\bibliography{techreview}
 
 \end{document}
