@@ -80,7 +80,7 @@ The text editor extension created for this project function in part by parsing a
 The parsed code base will be converted into a sort of data structure that can be more easily utilized and manipulated for helping the user, while not interfering with their actual files. 
 The user's code base will be parsed periodically, but that parse function may be resource intensive, and as such, serialization of the parsed data into a more accessible form will be required. 
 JSON.stringify, a mongoDB database, and the serialize-javascript npm package will be considered for the serialization of our data structure.
-
+\\
 \subsubsection{JSON.stringify}
 Since the text editor will be written in JavaScript or a superset of it, using JSON as the method of storing objects seems the most obvious. 
 JSON text is valid JavaScript code and is supported in many modern languages and IDEs. 
@@ -105,10 +105,31 @@ MongoDB is supported on numerous cloud and local platforms, scaling from small l
 The two main drawbacks for using MongoDB is that it has a large overhead to install (hundreds of megabytes) and none of our team members have used a NoSQL database before. 
 For this unfamiliarity and space requirement, our team has opted not to use MongoDB to serialize our extension data. \cite{mongo}
 
-\subsection{Piece 2}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+\subsection{Comparing the Data Structure to the Serialized JSON}
+Once the parsed user code base has been serialized into a JSON file, the extension will then need to periodically check if the data objects in memory are different than the objects saved to the disk in the JSON file. 
+There are dozens of methods to compare objects in JavaScript, some prioritizing speed with others focusing on functionality. Our team opted for somewhat of a middle ground, while leaning towards functionality and ease of development when comparing the Lodash library, the JSON.stringify comparison function, and the deepEqual npm module.
+\\
+\subsubsection{Lodash}
+Lodash is a JavaScript library the provides a wide range of functionality while focusing on performance.
+Lodash abstracts iteration through arrays and objects to maintain speed while simplifying the experience for the developer. 
+The library contains functions such as .cloneDeep() and .isEqual() which allow for deep object comparison (instead of the native ===), as is needed for this extension's circumstances. 
+Lodash has continuing developer support and sufficient documentation throughout web. 
+The main detraction for using Lodash is that it creates a new dependency on an entire library, something our developers would have liked to avoid. 
+However, the benefits of Lodash seem to have outweighed that primary flaw enough for this library to be our choice method of data structure comparison. \cite{lodash}
+
+\subsubsection{JSON.stringify}
+JSON.stringify, as previously mentioned, is native to JavaScript and will be our primary method of serialization to JSON files. 
+The usage JSON.stringify(a) === JSON.stringify(b) can compare more deeply than === alone, caring about the contents of the objects it serializes rather than the structure or referential equality. 
+JSON.stringify can also compare more efficiently than the deepEqual package according to this article. \cite{compare}
+The main downside in relying on JSON.stringify to compare our data structure to existing JSON files is that the rest of the legwork in finding what was different would still be up to our team to develop. 
+Lodash, instead provides much of this functionality, leading to it being chosen over JSON.stringify. \cite{stringify}
+
+\subsubsection{DeepEqual}
+The deepEqual deep object compare function is a free library available via npm. 
+It is quite popular among JavaScript developers and has a decent amount of documentation online. 
+Like JSON.stringify, it does a deep comparison on two JavaScript objects checking for differences.
+However, it is not only slower than JSON.stringify, but it also has the same lack of functionality that JSON.stringfy suffers from. 
+For these reasons, our team opted not to use deepEqual. \cite{deep}
 
 \subsection{Piece 3}
 \subsubsection{Technology 1}
@@ -126,7 +147,7 @@ For this unfamiliarity and space requirement, our team has opted not to use Mong
 It is nesecary to look all the possible integrated developement environments for the postal project to see what would be the best fit for this specific extension, both developement wise and release wise.
 To this purpose this review will examine three IDEs that could all be used as the base of the extension that is plannned to be implemented.
 Those IDEs are Brackets, Atom, and Visual Studio Code (VSCode) all of which have there advantages and disadvantages.
-
+\\
 \subsubsection{Brackets}
 Brackets is a text editor owned by Adobe, and is currently in development as an open source project. 
 Brackets is made specifically for web development, and offers tools such as the Chrome debugger, inline editor, and live website previewer built in.
@@ -181,7 +202,7 @@ Visual Studio Code is going to interface with the user and our extension will ne
 The specific instance that this portion focuses on the the event handler that the IDE is actively listening for from it's extension.
 The Postal extension needs a way of getting information from the extension, this section will explore the options that the VSCode extension API offers developers for this kind of interaction. 
 The events that the IDE will be listening 
-
+\\
 \subsubsection{HTML Preview Links}
 At the moment we have know that we can make in an HTML privew that will link the user to the file. 
 \subsubsection{JavaScript Events Listeners}
@@ -204,7 +225,7 @@ TypeScript is a language created by Microsoft in
 \subsection{Rendering the File Map}
 The file map is the visual representation of the user's current project. 
 It will most closely resemble a web of nodes where the nodes are individual files and the edges are confirmation of some sort of link or dependency between two files. 
-Whatever technology we use for this must be capable of running the VS Code environment (JavaScript).
+Whatever technology we use for this must be capable of running the VS Code environment (JavaScript). \\
 \subsubsection{vis.js}
 Vis.js is a "dynamic, browser based visualization library". 
 It features several modules for visualizing data in a JavaScript application. 
@@ -246,7 +267,7 @@ This is a relatively minor benefit, but also means that copy write will never be
 In addition to displaying the file map, the UI will also feature a list of “broken rules” to one side. 
 These broken rules are pseudo-error our parse detects within the project directory and should be displayed alongside the map. 
 The displays should be as aesthetically pleasing as possible and will ideally provide an API a hook for triggering an event when the user clicks on an object in the display. 
-The errors will be stored as strings, so there should be relatively little complexity in passing the data to an API.
+The errors will be stored as strings, so there should be relatively little complexity in passing the data to an API. \\
 
 \subsubsection{Jquery Advanced News Ticker}
 The JQuery Advanced News Ticker is a JavaScript based JQuery plugin. 
