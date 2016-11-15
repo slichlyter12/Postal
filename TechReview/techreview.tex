@@ -29,7 +29,7 @@
 % Document Title:
 \def\doctitle{A Tool to Automatically Organize the Structure of a Codebase Using Information Foraging Theory Design Patterns}
 \def\doctype{Technology Review and Implementation Plan}
-\def\team{Team Postal}
+\def\team{Team Postal | Group \#38}
 
 \markboth{Oregon State University}{\doctitle}
 
@@ -40,10 +40,8 @@
 
 \maketitle
 \vfill
-\begin{abstract}
-
-
-\end{abstract}
+%\begin{abstract}
+%\end{abstract}
 \vfill
 
 \pagebreak
@@ -53,31 +51,42 @@
 \pagebreak
 
 \section{Introduction}
-
-
-\section{Sam Lichlyter}
+%TODO
 
 \subsection{Parser Class}
+This is the class we will use to actually parse the files in the directory and translate it into the data structure we decide to use.
 \subsubsection{PEG.js}
 PEG.js is a parser generator.
-Its sole function is to generate a parser which is saved as a JavaScript Object with which we can interact.
-It also generates a small API for us to use.
-This would reduce a ton of work we would have to do as far as writing our own parser.
-The problem with this is that we would only have a simple API that we could interact with.
-Theoretically we could modify the API it generated for us but then we would have to learn how this parser was generated.\cite{pegjs}
-\subsubsection{UglifyJS}
-Uglify JS looks as though it could also generate a JavaScript Parser for us.
-It has the added bonus of being able to generate a source map of our source code which could be helpful for our own file map.
-This although has all the same problems that PEG.js does.\cite{uglifyjs}
+Its sole function is to generate a parser which is saved as a JavaScript Object that can be interacted with.
+It also generates a small API.
+This would reduce a ton of work needed to create a parser, which would allow for more time to be dedicated to other areas of the project.
+The problem with this is that it would only generate a simple API.
+Theoretically the API it generated could be altered, but this would then require more time dedicated to learning how the generated parser was built and how to successfully build in the required changes.
+\cite{pegjs}
+\subsubsection{GOLD}
+GOLD is also a parser generator.
+It however does not generate to JavaScript.
+It could generate either Python or Ruby code however (see the next section for this comparison).
+GOLD takes in a grammar, which we would come up with that reflected the various web technologies we would support and then it outputs an engine in which we would use to parse the files we were given and output our data structure.
+This would require us to figure out how to use this engine once we get it generated and test it against the various scenarios we expect to come against.
+It could however catch various corner cases we had not expected, but this is unlikely since we would have to come up with the grammars.
+\cite{gold}
 \subsubsection{Custom Parser}
 The pros of a custom parser are that we would only include what we needed to.
 This would reduce a massive overhead in interacting with any API we would have to use with a third-party tool. 
 It would also mean we could optimize the algorithms we use for it specifically so it could be faster than the third-party tools.
-This would also reduce the number of dependencies our extension would rely on greatly. 
+This would also reduce the number of dependencies our extension would rely on greatly meaning there is fundamentally less to go wrong should one of the dependencies change.
 For these reasons I think this is the route we will take.
 
+\section{Sam Lichlyter}
 \subsection{Parsing Language}
-\subsubsection{Ruby}
+This is the language we will choose to use for the parser.
+This was fairly dependent on the parser class we chose to use, but since we are planning on writing our own, we have a little bit more flexibility to choose which language would be best.
+\subsubsection{Perl}
+Perl from the beginning isn't that great of a choice because not very many of our team members have experience with it.
+However it does do really well as a parsing language.
+There are multiple examples of excellent parsers coming out of Perl. 
+For example Markdown\cite{markdown} is written in Perl.
 \subsubsection{Python}
 \subsubsection{JavaScript}
 
