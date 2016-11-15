@@ -220,7 +220,7 @@ There are also built in events that the these event listeners will need to be in
 An activation event is set in the package.json of the extension and these activation events are sent from the IDE to the extensions.
 These events can be onLanguage, onCommand, onDebug, workspaceContains or a star (*) signifying that the extension should always be running. 
 When the extension recieves one of these events that it is listening for it will start the extension operations. 
-Setting these custom eventEmitters and event listeners should be the first thing that the extension sets up as they will be very important for the interface that the user will interacet with. \cite{VSCode Documentation}
+Setting these custom eventEmitters and event listeners should be the first thing that the extension sets up as they will be very important for the interface that the user will interacet with. \cite{VSCodeDocumentation}
 
 \subsubSection{Decision}
 For the purpose of this project the eventEmmiter and Listener will be used for obvious reasons. 
@@ -235,12 +235,14 @@ The second reason being that the HTML preview would be extremely limited, tediou
 \subsection{Languages Exetensions Written in}
 With all the possible IDEs the extension can be written in HTML, CSS, and JavaScript, but the bulk of the code is  JavaScript. 
 With Visual Studio Code there is the option to use TypeScript. 
-This portion will look at JavaScript and TypeScript looking at each language's pros and cons.
+Visual Studio Code 
+This portion will look at Node.js JavaScript and TypeScript looking at each language's pros and cons.
 \subsubsection{JavaScript}
 With all the possible IDEs the extension can be written in JavaScript  and correspnding JSON files. 
-JavaSctipt was created in 10 days in 1995, is a well known and well documented language. \cite{JavaScript History}
+JavaSctipt was created in 10 days in 1995, is a well known and well documented language. \cite{JavaScriptHistory}
 It can be very confusing at times as it is an asynchronous language and not compiled inline.
-%TODO:Add more
+This compounded with the fact that all the extension documentation for VSCode is written with TypeScript in mind makes JavaScript a mark steeper learning curve for this specific instance. 
+The upside would be that there are in general more people programming with JavaScript in general and that it has a larger community to gather information from when compared to TypeScript. 
 \subsubsection{TypeScript}
 TypeScript is a language created by Microsoft with the purpose of being \'JavaScript that scales.\' \cite{TypeScript}
 In fact TypeScript compiles to JavaScript and its syntax is almost identical to JavaScript. 
@@ -248,8 +250,13 @@ The main advantage of using TypeScript is that it adds types to JavaScript allow
 Another major benefit of using TypeScript is the ability to import .NET libraries. 
 This allows for developers to use more powerful APIs then the some of the less robust JavaScript APIs. 
 For this project that will allows the the extension access to APIs that the team has experience using.
-%TODO:Add more
+Another major advantage of using TypeScript is that all the VSCode examples are already written in type script making understanding the documentation easier to understand. 
+TypeScript also allows for the use of JavaScript within TypeScript files and that flexibility will be nice to have while developing an extension.
 \subsubsection{Decision}
+For the postal extension we will use TypeScript as its main programming language. 
+The main reason for this decision is that the documentation is written with TypeScript examples making for a smoother developement experience. 
+The other reasons for chosing TypeScript over JavaScript is that TypeScript will allow for the use of both JavaScript and TypeScript. 
+Have the flexability to chose either depending on the circumstance will make for faster developement with more possible solutions to some problems that the developers may face. 
 
 
 \section{Eric Winkler}
