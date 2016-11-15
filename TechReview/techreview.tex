@@ -92,6 +92,11 @@
 
 
 \section{Cramer Smith}
+%  ___ ___  ___ 
+% |_ _|   \| __|___
+%  | || |) | _|(_-<
+% |___|___/|___/__/  	Please keep this I have trouble keeping where I am
+%
 \subsection{The Best Base Integrate Developement Enviroment} 
 It is nesecary to look all the possible integrated developement environments for the postal project to see what would be the best fit for this specific extension, both developement wise and release wise.
 To this purpose this review will examine three IDEs that could all be used as the base of the extension that is plannned to be implemented.
@@ -111,7 +116,6 @@ The extension manager in brackets is not user friendly, it is basically a list o
 With the target audience we are hoping to reach we think that the extensions need to be more readily available and easier to understand.
 
 \subsubsection{Atom}
-%TODO
 Atom is a text editor developed by GitHub that is currently in development as an open source project. 
 It features cross platform editing, a built in package manager, and smart auto completion.
 Atom advertises itself as the \'hackable\' text editor meaning that it is made using HTML, CSS and JavaScript in such a way that anyone is using the text editor for web development then they should be able to develop for Atom.
@@ -142,12 +146,27 @@ This is important for the integrity of the developement of the extension in the 
 Visual Studio Code has a extension creation guides the developer through the process of making the extension and creates all the helper files that the developer will need in their extension.
 The other benefit is that the built in extension manager will be easy for the user to manage than the other IDEs. 
 
+%  ___             _      
+% | __|_ _____ _ _| |_ ___
+% | _|\ V / -_) ' \  _(_-<
+% |___|\_/\___|_||_\__/__/ 		The events that the IDE will be listening 
+%
 \subsection{Event Handling Within A Seperate Window of the IDE}
+Visual Studio Code is going to interface with the user and our extension will need to know what the user is doing.
+The specific instance that this portion focuses on the the event handler that the IDE is actively listening for from it's extension.
+The Postal extension needs a way of getting information from the extension, this section will explore the options that the VSCode extension API offers developers for this kind of interaction. 
+The events that the IDE will be listening 
+
 \subsubsection{HTML Preview Links}
 At the moment we have know that we can make in an HTML privew that will link the user to the file. 
 \subsubsection{JavaScript Events Listeners}
 %TODO
 
+%  _                                         
+% | |   __ _ _ _  __ _ _  _ __ _ __ _ ___ ___
+% | |__/ _` | ' \/ _` | || / _` / _` / -_|_-<
+% |____\__,_|_||_\__, |\_,_\__,_\__, \___/__/ 		The Languages that the Visual Studio uses. 
+%						|___/          |___/        
 \subsection{Languages Exetensions Written in}
 \subsubsection{JavaScript}
 With all the possible IDEs the extension can be written in JavaScript and correspnding JSON files. 
