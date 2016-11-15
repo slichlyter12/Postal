@@ -92,20 +92,68 @@
 
 
 \section{Cramer Smith}
-\subsection{Piece 1}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+\subsection{The Best Base Integrate Developement Enviroment} 
+It is nesecary to look all the possible integrated developement environments for the postal project to see what would be the best fit for this specific extension, both developement wise and release wise.
+To this purpose this review will examine three IDEs that could all be used as the base of the extension that is plannned to be implemented.
+Those IDEs are Brackets, Atom, and Visual Studio Code (VSCode) all of which have there advantages and disadvantages.
 
-\subsection{Piece 2}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+\subsubsection{Brackets}
+Brackets is a text editor owned by Adobe, and is currently in development as an open source project. 
+Brackets is made specifically for web development, and offers tools such as the Chrome debugger, inline editor, and live website previewer built in.
+The research into the Brackets IDE has brought to attention many features that were good but also some that were not as good.
+Adobe started the developement in 2011 making Brackets the oldest of the IDEs that are examined in this paper meaning it is the most established and it has had more time to become a more stable build. 
+The longer life of Brackets could also explain the more extensive documentation that it has when compared to other extension development documentation.
+Another nice feature of Brackets is that it has dedicated API functionality that allows for extensions to safely modify the underlying Document Object Map (DOM) which would be advantagous to have that ability.
+While there are several benefits to Brackets there are some drawbacks specifically being the extension debugging and lack of usability in the extension manager. 
+The extension debugging consists of having another development environment open with the extensions code and restarting Brackets with every change.
+This restarting will get tedious after prolonged developement.
+The extension manager in brackets is not user friendly, it is basically a list of extensions and a search bar.
+With the target audience we are hoping to reach we think that the extensions need to be more readily available and easier to understand.
 
-\subsection{Piece 3}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+\subsubsection{Atom}
+%TODO
+Atom is a text editor developed by GitHub that is currently in development as an open source project. 
+It features cross platform editing, a built in package manager, and smart auto completion.
+Atom advertises itself as the \'hackable\' text editor meaning that it is made using HTML, CSS and JavaScript in such a way that anyone is using the text editor for web development then they should be able to develop for Atom.
+This is a commonality between all of the possible IDEs.
+Atom is actually what VSCode from, but VSCode added TypeScript to the languages that it is built in.
+While atom is a good has a editor and auto completion it does not stand out when compared to the other IDEs. 
+In fact it seems as though Atom uses extensions as a crutch not implementing built in functionality requiring the user to get extensions in order to complete their tasks. 
+While this does make the initial learning curve of using Atom a bit larger it does keep the editor light and running very fast.
+
+\subsubsection{Visual Studio Code}
+Visual Studio Code is an editor by Microsoft, and it was the editor that was initially proposed as the base of the extenstion. 
+This initial idea to use VSCode was a product of the team having worked with Visual Studio and enjoying the experience. 
+Now that the team has tried working with Visual Studio Code there has been some benefits and drawbacks identified. 
+The benefits were that VSCode has justifiably better extension debugging than the other IDEs available. 
+VSCode seems to build around the idea that people will be making extensions for Visual Studio Code so there is a development window that is created when debugging extension code within VSCode. 
+The other IDEs seem to be less approachable with a system that makes the developer reinitialize the IDE every time the extension's code is changed. 
+The other benefit of using VSCode was that the extension can be written using TypeScript, but that being said none of the team members have used TypeScript meaning it would be additional learning curve added on to the obstacle of learning more JavaScript. 
+The first of the drawbacks of VSCode become evident when working with the documentation and finding that Visual Code is fairly new, and does not have a lot of documentation or examples of extensions to readily examine. 
+As this team is fairly new to creating extensions and not efficient at writing in JavaScript this was going to be a problem. 
+Visual Studio Code also had no built in API for modifying underlying DOM that make up the main user interface which the postal extension plans on doing extensively.
+
+\subsubsection{Decision}
+All this being said the team has decided to use Visual Studio Code based on several major benefits. 
+Visual Studio Code's use of TypeScript and being able to import .NET librarys. 
+All of the team members have at least some experience with .NET libraries, and these could be used to greatly imporve the project. 
+The Visual Studio Code also has the best Extension Debugger than the other IDEs and a more defined extension creation process.
+This is important for the integrity of the developement of the extension in the long run. 
+Visual Studio Code has a extension creation guides the developer through the process of making the extension and creates all the helper files that the developer will need in their extension.
+The other benefit is that the built in extension manager will be easy for the user to manage than the other IDEs. 
+
+\subsection{Event Handling Within A Seperate Window of the IDE}
+\subsubsection{HTML Preview Links}
+At the moment we have know that we can make in an HTML privew that will link the user to the file. 
+\subsubsection{JavaScript Events Listeners}
+%TODO
+
+\subsection{Languages Exetensions Written in}
+\subsubsection{JavaScript}
+With all the possible IDEs the extension can be written in JavaScript and correspnding JSON files. 
+This is a well known and well documented language 
+\subsubsection{TypeScript}
+TypeScript is a language created by Microsoft in 
 
 
 \section{Eric Winkler}
