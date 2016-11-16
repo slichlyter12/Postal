@@ -10,8 +10,6 @@
 \nocite{*}
 \usepackage{abstract}
 
-
-
 \hypersetup{
     bookmarks=false,    % show bookmarks bar?
     pdftitle={Technology Review},    % title
@@ -54,24 +52,27 @@
 %TODO
 
 \section{Sam Lichlyter}
+
 \subsection{Parser Class}
 This is the class we will use to actually parse the files in the directory and translate it into the data structure we decide to use.
+
 \subsubsection{PEG.js}
-PEG.js is a parser generator.
+PEG.js is a parser generator in JavaScript.
 Its sole function is to generate a parser which is saved as a JavaScript Object that can be interacted with.
 It also generates a small API.
-This would reduce a ton of work needed to create a parser, which would allow for more time to be dedicated to other areas of the project.
+This would reduce the work needed to create a parser, which would allow for more time to be dedicated to other areas of the project.
 The problem with this is that it would only generate a simple API.
 Theoretically the API it generated could be altered, but this would then require more time dedicated to learning how the generated parser was built and how to successfully build in the required changes.
 \cite{pegjs}
+
 \subsubsection{GOLD}
 GOLD is also a parser generator.
 It however does not generate to JavaScript.
-It could generate either Python or Ruby code however (see the next section for this comparison).
 GOLD takes in a grammar, which we would come up with that reflected the various web technologies we would support and then it outputs an engine in which we would use to parse the files we were given and output our data structure.
 This would require us to figure out how to use this engine once we get it generated and test it against the various scenarios we expect to come against.
 It could however catch various corner cases we had not expected, but this is unlikely since we would have to come up with the grammars.
 \cite{gold}
+
 \subsubsection{Custom Parser}
 The pros of a custom parser are that we would only include what we needed to.
 This would reduce a massive overhead in interacting with any API we would have to use with a third-party tool. 
@@ -82,26 +83,65 @@ For these reasons I think this is the route we will take.
 \subsection{Parsing Language}
 This is the language we will choose to use for the parser.
 This was fairly dependent on the parser class we chose to use, but since we are planning on writing our own, we have a little bit more flexibility to choose which language would be best.
+
 \subsubsection{Perl}
 Perl from the beginning isn't that great of a choice because not very many of our team members have experience with it.
 However it does do really well as a parsing language.
 There are multiple examples of excellent parsers coming out of Perl. 
-For example Markdown\cite{markdown} is written in Perl.
+For example Markdown\cite{markdown} was originally written in Perl.
+Perl was written for parsing in mind.
+There are many articles explaining why regular expressions will not be sufficient enough to parse HTML.\cite{oreilly}
+For these reasons, at least part of our parser will be written in Perl.
+
 \subsubsection{Python}
+Python includes an HTML parser built-in, but it is not nearly as robust or as extensive as the ones written for Perl. 
+The Python library only looks for starting and ending tags.
+It has a small amount of error reporting, but for our tool, these will not be sufficient.
+\cite{python}
+
 \subsubsection{JavaScript}
+Writing a parser in JavaScript would be ideal since most of our tool will also be written in JavaScript.
+In the end the parser may be required to be JavaScript because of the restrictions placed on us by VSCode.
+This is fine because there are many tools included in Node.js and npm that also parse HTML similar to some of the Perl tools.
+\cite{jsdom}\cite{htmlparser}
 
-\subsection{Piece 3}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+\subsection{Perl Parsing Tool}
+This is the Perl tool we will be using to parse the HTML which our users want analyzed. 
+This tool must be able to parse complicated HTML in a reasonable manner and give some form of error feedback.
 
+\subsubsection{HTML-Parser}
+The HTML-Parser is the canonical Perl HTML parser. 
+It will recognize the various forms of markup on an HTML page as well as separating it from plain text.
+This tool also parses HTML similar to how web browsers, which is not always how the W3C specifies it should be done.
+The HTML-Parser will also allow us to turn this feature off, which will allow us to check against the standards of the W3C which is what our tool is mostly about.
+\cite{perlhtmlparser}
+
+\subsubsection{HTML-TokeParser-Simple}
+The TokeParser parses HTML and tokenizes the HTML page.
+This is another popular way to parse HTML pages, but for our intents, it may not be the best solution.
+We don't care much about tokenizing the input as much as verifying the input is standards compliant as well as throwing it into our data structure. 
+Another problem with this tool is it says the tokens are not always intuitive to parse, meaning there could come extra overhead to get this to work. 
+\cite{htmltokeparser}
+
+\subsubsection{Parse-RecDescent}
+The RecDescent parser isn't really a parser, it's a parser generator similar to GOLD mentioned above.
+It has most of the same pros and cons that GOLD did. 
+We would have to pass it a grammar, which again probably wouldn't catch many corner cases because we would be creating the grammar.
+\cite{recdescent}
+
+\subsubsection{Decision}
+The HTML-Parser is our best stand-alone option.
+However, we are not limited to just one of these options.
+Using the HTML-Parser to parse our HTML and check if it is standards compliant would be the best use case.
+We could also use the TokeParser to tokenize our HTML input which might be extremely useful for building our data structure. 
 
 \section{Zach Schneider}
 \subsection{Data Structure Serialization and Storage}
 The text editor extension created for this project function in part by parsing an existing code base. 
 The parsed code base will be converted into a sort of data structure that can be more easily utilized and manipulated for helping the user, while not interfering with their actual files. 
 The user's code base will be parsed periodically, but that parse function may be resource intensive, and as such, serialization of the parsed data into a more accessible form will be required. 
-JSON.stringify, a mongoDB database, and the serialize-javascript npm package will be considered for the serialization of our data structure.\subsubsection{JSON.stringify}
+JSON.stringify, a mongoDB database, and the serialize-javascript npm package will be considered for the serialization of our data structure.
+\subsubsection{JSON.stringify}
 Since the text editor will be written in JavaScript or a superset of it, using JSON as the method of storing objects seems the most obvious. 
 JSON text is valid JavaScript code and is supported in many modern languages and IDEs. 
 JSON is also plaintext, which requires significantly less overhead and space than a full database. 
@@ -340,7 +380,7 @@ This is a relatively minor benefit, but also means that copy write will never be
 In addition to displaying the file map, the UI will also feature a list of broken rules to one side.
 These broken rules are pseudo-error our parse detects within the project directory and should be displayed alongside the map. 
 The displays should be as aesthetically pleasing as possible and will ideally provide an API a hook for triggering an event when the user clicks on an object in the display. 
-The errors will be stored as strings, so there should be relatively little complexity in passing the data to an API. \\
+The errors will be stored as strings, so there should be relatively little complexity in passing the data to an API. 
 
 \subsubsection{JQuery Advanced News Ticker}
 The JQuery Advanced News Ticker is a JavaScript based JQuery plugin. 
@@ -407,6 +447,7 @@ The primary disadvantage would again be that the extension has to include the en
 
 \section{Conclusion}
 
+\pagebreak
 \bibliographystyle{IEEEtran}
 \bibliography{techreview}
 
