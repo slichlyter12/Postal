@@ -374,10 +374,36 @@ The final option is to create our own div class.
 As discussed above in the file map technologies section, this will be quite a bit more works but has quite a few benefits. 
 Again, the project team will have more control over design, efficiency and features than if an API was used. 
 Additionally, code created would belong to the project and the need to cite could would not be a concern.
-\subsection{Piece 3}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
+
+\subsection{Technologies for displaying the file map}
+The file map will be created in JavaScript but there are multiple options for choosing where to actually display it in a desktop environment. 
+Any technologies used in this process should be capable of handling a HTML or JavaScript UI application.
+
+\subsubsection{Visual Studio Code HTML Preview}
+In the initial plan for the project, the file map was to render within the Visual Studio Code environment. 
+This option is still valid and the team has already demonstrated from a code perspective in the last prototype that this can be accomplished. 
+The actual process for doing this is slightly unusual however. 
+The code to do this is HTML Preview which is a built in functionality to vs code and is typically used to preview a website. 
+By dynamically creating an HTML page, we can simulate a GUI within VS Code. 
+A downside to this is that the team has already noticed some slightly unusual behavior which may need to be tweaked. 
+Additionally, the size of the window that is used to render the HTML is slightly difficult to control. 
+There is also a major advantage of using the HTML Preview however. 
+The first is that, by using built in functionality, the extension can remain more compact and not have to support itself.
+
+\subsubsection{In Browser Window}
+Through the use of some Visual Studio Code API Calls, we can have the IDE launch the user’s default browser and load our rendered file map into it.
+The advantage of this methodology is that the UI can be constructed entirely as a webpage. 
+This provides us with many simple to implement options for creating an interactive UI. 
+The down side however is that the web application UI will have to support multiple browsers and additionally the use of an external program for the extension will make usability inconvenient. 
+
+\subsubsection{Electron}
+Electron is a framework for creating desktop applications through the use of HTML, CSS and JavaScript. 
+It is kind of like a lightweight browser that doesn’t browse but instead servers as a container for applications made with web based technologies. 
+Interestingly enough, Electron was used to create visual studio code. 
+Using Electron would allow us some freedoms for the UI that might otherwise be restricted by Visual Studio Code’s preview HTML Option. 
+As mentioned above, testing the preview option led to some slightly bizarre behavior. 
+Electron could potentially fix those issues. 
+The primary disadvantage would again be that the extension has to include the entirety of the electron framework, making it significantly larger.
 
 \section{Conclusion}
 
