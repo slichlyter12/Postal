@@ -97,11 +97,29 @@ For example Markdown\cite{markdown} is written in Perl.
 
 
 \section{Zach Schneider}
-\subsection{Data Structure Serialization and Storage}
-The text editor extension created for this project function in part by parsing an existing code base. 
-The parsed code base will be converted into a sort of data structure that can be more easily utilized and manipulated for helping the user, while not interfering with their actual files. 
-The user's code base will be parsed periodically, but that parse function may be resource intensive, and as such, serialization of the parsed data into a more accessible form will be required. 
-JSON.stringify, a mongoDB database, and the serialize-javascript npm package will be considered for the serialization of our data structure.\subsubsection{JSON.stringify}
+\subsection{Data Structure Storage Medium}
+The text editor extension created for this project function in part by parsing an existing code base. The parsed code base will be converted into a sort of data structure that can be more easily utilized and manipulated for helping the user, while not interfering with their actual files. The user's code base will be parsed periodically, but that parse function may be resource intensive, and as such, serialization of the parsed data into a more accessible form will be required. The following sections will evaluate SQL vs. NoSQL data storage options, as well as the method for converting the parsed data into a storable format.
+
+\subsubsection{SQL Databases}
+SQL Databases have historically been the go-to method for data storage for many computing applications. SQL has been around for many years, resulting in great familiarity with it and its resources among developers and our team. SQL databases are often based on tables and predefined schemas, contrasted with NoSQL databases which often lack a predefined structure and consist of key-value pairs. The primary issue with a SQL database in our project is the overhead required in installing and maintaining a local database. Databases may be hundreds of megabytes just to install, and setting up a database connection may not be natively supported in or application. For these reasons, our extension will opt not to use a SQL database. \cite{sql}
+
+\subsubsection{NoSQL - JSON}
+In contract to a more structured SQL database, NoSQL databases may provide the flexibility, native support and light weight file structure our team needs to efficiently store parsed user data. 
+NoSQL databases often store data in the JSON format, a human and machine readable file that is ideal for temporary data storage and exchange. 
+JSON is built into JavaScript, one of the languages that will be used in our extension, meaning no additional setup will be required to send parser data to this storage format. 
+Additionally, JSON is natively supported by most modern text editors and browsers, including the one being considered for this project. 
+JSON can store complex JavaScript objects and variables, making it the ideal choice for containing the data structure utilized by our extension. \cite{bson}
+
+\subsubsection{NoSQL - BSON}
+BSON is a binary-encoded JSON data format utilized by MongoDB, a NoSQL database. 
+BSON provides additional data types to the database for "efficient encoding and decoding within different languages." \cite{bson} MongoDB is able to manipulate BSON files to create additional structures inside the file, even after object hierarchies have been created. 
+MongoDB is a free and open-source database solution that uses BSON documents for storing data. It is commonly used in big-data or real-time applications, often used in conjunction with node.js and other JavaScript technologies our development team is familiar with. 
+Two main problems exist with BSON: it is not human readable, making it harder to debug, and it requires a full installation of MongoDB, which brings the same space and overhead concerns mentioned before. 
+These additional challenges have convinced the team to stick with a purely JSON solution. \cite{mongo}
+
+\subsection{Data Structure Storage Serialization}
+
+\subsubsection{JSON.stringify}
 Since the text editor will be written in JavaScript or a superset of it, using JSON as the method of storing objects seems the most obvious. 
 JSON text is valid JavaScript code and is supported in many modern languages and IDEs. 
 JSON is also plaintext, which requires significantly less overhead and space than a full database. 
@@ -117,17 +135,16 @@ The largest drawback of using serialize-javascript is its lack of documentation,
 There are fewer examples of its usage online than JSON.stringify, and it adds another external dependency to our extension. 
 For these reasons, serialize-javascript will not be a part of the storage system in the extension. \cite{serialize}
 
-\subsubsection{MongoDB}
-MongoDB is a free and open-source database solution that uses JSON-like documents for storing data. 
-It is a NoSQL database, meaning it differs from typical SQL-based relational schema systems. 
-It is commonly used in big-data or real-time applications, often used in conjunction with node.js and other JavaScript technologies our development team is familiar with. 
-MongoDB is supported on numerous cloud and local platforms, scaling from small local uses to large server applications. 
-The two main drawbacks for using MongoDB is that it has a large overhead to install (hundreds of megabytes) and none of our team members have used a NoSQL database before. 
-For this unfamiliarity and space requirement, our team has opted not to use MongoDB to serialize our extension data. \cite{mongo}
+\subsubsection{JSON-js}
+JSON-js, also known as JSON in JavaScript is the former implementation of JSON support for JavaScript in web browsers. It provides conversion of JavaScript data to the JSON format, as well as the reverse parsing functionality. 
+It is backwards compatible for browsers all the way back to Internet Explorer 8 with its json2.js file. 
+However, these files have been superseded by native JavaScript support of JSON since ECMAScript 5 was made the web development standard in 2009. Even Douglas Crockford, the author of this utility now recommends against its use. 
+For this reason, our team will opt for the natively supported JSON.stringify function. \cite{json2js}
 
 \subsection{Comparing the Data Structure to the Serialized JSON}
 Once the parsed user code base has been serialized into a JSON file, the extension will then need to periodically check if the data objects in memory are different than the objects saved to the disk in the JSON file. 
 There are dozens of methods to compare objects in JavaScript, some prioritizing speed with others focusing on functionality. Our team opted for somewhat of a middle ground, while leaning towards functionality and ease of development when comparing the Lodash library, the JSON.stringify comparison function, and the deepEqual npm module.
+
 \subsubsection{Lodash}
 Lodash is a JavaScript library the provides a wide range of functionality while focusing on performance.
 Lodash abstracts iteration through arrays and objects to maintain speed while simplifying the experience for the developer. 
@@ -149,11 +166,6 @@ It is quite popular among JavaScript developers and has a decent amount of docum
 Like JSON.stringify, it does a deep comparison on two JavaScript objects checking for differences.
 However, it is not only slower than JSON.stringify, but it also has the same lack of functionality that JSON.stringfy suffers from. 
 For these reasons, our team opted not to use deepEqual. \cite{deep}
-
-\subsection{Piece 3}
-\subsubsection{Technology 1}
-\subsubsection{Technology 2}
-\subsubsection{Technology 3}
 
 
 \section{Cramer Smith}
