@@ -1,0 +1,7 @@
+NodeStruct{
+    int id;
+    string name;
+    int links[];
+
+    
+}
