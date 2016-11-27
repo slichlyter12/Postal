@@ -28,7 +28,7 @@ function activate(context) {
         var files = vscode.workspace.findFiles('*', '');
         files.then(function (foundFiles) {
             // start/create file
-            var htmlOpen = "<!DOCTYPE html><html><head><title>Files</title></head><body><ul>\n";
+            var htmlOpen = "<!DOCTYPE html><html><head><title>DERP</title></head><body><ul>\n";
             fs.writeFile(htmlFilePath, htmlOpen, function (error) {
                 if (error) {
                     console.error("Failed to write opening HTML\nerror: " + error);
