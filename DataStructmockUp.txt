@@ -1,7 +1,13 @@
-NodeStruct{
+FileStruct{ //Node in the file map
     int id;
-    string name;
-    int links[];
+    string name; //file name with extension
+    int links[]; //links to other file structs by id?
+    int errors[]; //links to errors by id?
+}
 
-    
+ErrorStruct{
+    id;
+    lineNumer;
+    fileName;
+    Error message;
 }
