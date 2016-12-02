@@ -165,10 +165,10 @@ The following document makes us of ER diagrams to represent information and data
 \section{Composition Viewpoint}
 The Composition viewpoint describes the way the design subject is (recursively) structured into constituent
 parts and establishes the roles of those parts. 
-\subection{Design Concerns}
+\subsection{Design Concerns}
 \subsection{Design Elements}
 
-	\subsubsections{Extension}
+	\subsubsection{Extension}
 	Type: system
 	Description:
 	
@@ -208,7 +208,10 @@ as classes and interfaces with their structural static relationships. This viewp
 instances of types in outlining design ideas. 
 \subsection{Design Concerns}
 \subsection{Design Elements}
-	Parser
+
+
+	\subsubsection{Parser}
+
 
 	\subsubsection{File Map and Error List UI}
 	The User Interface system will consist of two main components: The File Map and the Error List. 
@@ -283,12 +286,12 @@ If that were the case there would have a specific command that the user would ne
 This scenario would greatly decrease the usability of the extension by adding an unnecessary step to the process.
 
 \subsubsection{Design Elements}
-<<<<<<< HEAD
+
 	Parse Files on savefile
 		step 1 ....
 		step 2 ...
 	open UI vs code command
-=======
+
 	-----Parse Files on savebox
 	
 There are several actions that occur within VSCode that will initiate the extension parsing and interpreting process.
@@ -310,7 +313,6 @@ These three events should be able cover the major of instances when the extensio
 	
 When the a parsing of the files happens it is important for the extension to know what has change in the user current work space. 
 	
->>>>>>> 757893940a66d4d9e78a6b80fbfbda17b8d8d62f
 	
 	-----Open error object
 
