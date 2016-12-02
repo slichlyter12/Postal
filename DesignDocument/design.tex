@@ -142,12 +142,6 @@ To accomplish this, the design of the extension will contain a UI, a number of p
 The parsers and the extension's UI will need to communicate between each other and VSC.
 The communication between VSC and the parser will go though the data structure as VSC passes text to the parser and the parser populates information within the data structure.
 
-% 3.2
-\subsection{Software Design Descriptions Within the Life Cycle}
-\subsubsection{Influences on SDD Preparation}
-\subsubsection{Influences on Software Life Cycle Products}
-\subsubsection{Design Verification and Design Role in Validation}
-
 % 4
 \section{Design Description Information Content}
 
@@ -219,7 +213,10 @@ parts and establishes the roles of those parts.
 \subsection{Design Concerns}
 Show the major components of the extension and their general, high-level functions.
 \subsection{Design Elements}
-
+	\begin{figure}
+                 \includegraphics[width=300px]{CompositionUMLEPS.eps}
+                 \caption{Components of the Postal Extension}
+      		\end{figure}
 	\subsubsection{Extension}
 	Type: system
 	Description: The design of the extension is meant to help new web developers make better design decisions when writing HTML and CSS code.
@@ -447,6 +444,10 @@ Identifies the interfaces that the components of the framework expose or require
 functionality. 
 \subsection{Design Elements}
 
+		\begin{figure}
+                 \includegraphics[width=300px]{InterfaceUMLEPS.eps}
+                 \caption{Exposed interfaces}
+      		\end{figure}
 
 	\subsection{IDE}
 		\subsubsection{Exposes}
