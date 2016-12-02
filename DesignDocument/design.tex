@@ -203,7 +203,9 @@ Show the major components of the extension and their general, high-level functio
 	It is responsible for gathering and analyzing all the data from the user and generating the data that will go into the data structure.
 	It will parse through each file and check if the user's code violates any best practices of HTML, CSS, JavaScript, or PHP. 
 	It will also generate the file map by looking at what HTML pages are linked to other HTML pages.
-	The parser will update the data structure with only the new changes.
+	The parser will update the data structure with only the data that was changed most recently.
+	For example if a user saves a file, only that file be parsed again and its new data sent to the data structure.
+	Similarly if a user saves multiple files at the same time then only those file would be parsed and sent to the data structure.
 	
 		
 	
@@ -247,7 +249,8 @@ Show the abstractions at the class and datatype level that are required for each
 	The parser will use this information to grab links from the pages and determine which pages are linked to each other.
 	It will also look at a higher level of the users code structure and determine if they are violating any best practice thus creating Broken Rules. 
 	
-	The Broken Rules will be determined by going through the W3C best practices list and looking at what that entails, we will then format rules in which our parser will interpret and spit back error messages to the user if they broke a best practice thus generating a Broken Rule.\cite{w3c}
+	The Broken Rules will be determined by going through the W3C best practices list and determining what types of things should exist in each file type. For example having only the structure of the website in the HTML pages and having all the styling in the CSS pages. We will then format rules in which our parser will interpret and return error messages to the user if they broke a best practice thus generating a Broken Rule.\cite{w3c}
+	
 
 	\subsubsection{File Map and Error List UI}
 	The User Interface system will consist of two main components: The File Map and the Error List. 
@@ -416,12 +419,17 @@ functionality.
 			\item The operations are signalled to start on certain event listeners.
 			\end{itemize}
 			
-	Parsers
-		Exposes
-			Parse 
-		Requires
-			The Parser will be triggered on the saves, the extension initialization and when the extension is killed.
-			Get Data (data structure)
+	\subsection{Parser}
+		\subsubsection{Exposes}
+			\begin{itemize}
+			\item Parsing for links and Broken Rules
+			\end{itemize}
+		\subsubsection{Requires}
+			\begin{itemize}
+			\item The parser will be triggered when the user saves files, and only those files will be parsed. 
+			It will also parse on first launch of the extension.
+			\item Get Data from the Data Structure
+			\end{itemize}
 	
 	\subsection{Data Structure}
 		\subsubsection{Exposes}
