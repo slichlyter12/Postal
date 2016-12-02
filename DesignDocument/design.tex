@@ -370,15 +370,23 @@ functionality.
 			Parse 
 		Requires
 			Save File (IDE)
-			Get Data (DataStructure)
+			Get Data (Datastructure)
 	
-	DataStructure
-		Exposes
-			Get Data
-		Requires
-			Load Data (Files)
-			Parse (Parsers)
-	
+\subsection{Datastructure}
+		\subsubsection{Exposes}
+		\begin{itemize}
+			\item Get Data
+			\\
+			The Datastructure has its dictionary of file nodes updated when the Parser reparses the loaded project. 
+			The Datastructure gets its data from the parser when Get Data is called.
+		\subsubsection{Requires}
+			\item Load Data (Files)
+			\\
+			The Datastructure will compare its updated data with the data stored in the JSON file. 
+			In order for this to occur, the Datastructure must make use of JSON.parse and the deep object compare as part of the Load Data function.
+			\item Parse (Parsers)
+			\\
+			The Datastructure will only have its data updated when the Parse function is called.
 \subsection{UI}
 		\subsubsection{Exposes}
 		\begin{itemize}
@@ -395,16 +403,25 @@ functionality.
 		\includegraphics{UIMockupEPS}
 		\subsubsection{Requires}
 		\begin{itemize}
-			\item Get Data (DataStructure)
+			\item Get Data (Datastructure)
 			\item Open GUI (IDE)
 		\end{itemize}
 		
-	Files
-		Exposes
-			Load Data
-			Save Data
-		Requires
-			Get Data (DataStructure)
+	\subsection{Files}
+		\subsubsection{Exposes}
+		\begin{itemize}
+			\item Load Data
+			\\
+			The JSON.parse function will be utilized to pull data from the JSON file.
+			Once the information about the file nodes from the Datastructure are pulled from the JSON file, it will be compared to the current Datastructure values to identify which links or errors have changed.
+			\item Save Data
+			\\
+			Once parsed data from the Parser is transfered to the Datastructure using the Get Data functionality, this data will be serialized into a JSON file with the JSON.stringify function built into JavaScript.
+		\subsubsection{Requires}
+		\begin{itemize}
+			\item Get Data (Datastructure)
+			\\
+			It is necessary for the Datastructure to obtain data from the Parser each time it parses so that this data can, in turn, be saved to the JSON file.
 
 
 % Annex A  Bibliography
