@@ -194,10 +194,10 @@ parts and establishes the roles of those parts.
 	\subsubsection{Data Handling} 
 	Type: component
 	Description: The information source from which the UI derives its data will be called the Datastructure. 
-	The Datastructure is a series of JavaScript objects and values populated by the Parser, containing details on the project currently loaded into VSC. 
-	TODO: ADD DETAILS ON DATA Structure
+	The Datastructure is a dictionary of file nodes and links collected by the Parser for the project currently loaded into VSC. 
+	The file nodes within the Datastructure will contain information related to all the files in the projects, as well as error data detected by the parser.
 	The Datastructure will be serialized into structured JSON objects by the JSON.stringify function and saved to a file. 
-	This file will be the direct source from which the UI obtains its data.
+	This JSON file will be the direct source from which the UI obtains its data.
 
 	
 	
@@ -210,14 +210,13 @@ instances of types in outlining design ideas.
 \subsection{Design Elements}
 	Parser
 
-	\subsection{File Map and Error List UI}
+	\subsubsection{File Map and Error List UI}
 	The User Interface system will consist of two main components: The File Map and the Error List. 
 	Both of these components will be bundled together into a single screen. 
 	This screen will implemented in an electron application window. 
 	Electron is a platform used to create desktop applications as if they were websites.
 	The user interface will then be implemented using JavaScript, HTML and CSS.
-	\subsection{Design Concerns}
-	\subsection{Design Elements}
+	
 	\subsubsection{FileMap}
 	Type: Interface
 	\\
@@ -250,7 +249,7 @@ instances of types in outlining design ideas.
 	An asterisk will appear next to the name text within the rendered node if there are errors within the FileStruct for that node. In other words, if the size of the errors[] array within the FileStruct is not zero.
 	The file map will be rendered within its own div using the vis.js library ‘Network' module. The Library by default includes the rendering, panning and zooming functionality.
 	
-	\subsubsection {Error List}
+	\subsubsection{Error List}
 	Type: Interface
 	Description: 
 	The error list will display all errors currently in the project directory in the form of a vertical list. 
@@ -263,17 +262,15 @@ instances of types in outlining design ideas.
 	When an error in the list is clicked, the extension will open the file in Visual Studio Code's text editor and scroll to line where the error exists.
 	The error list will be in its own div and scrolling functionality will be achieved through the use of Jquerey Advanced news Ticker.
 
-	
-	
-	
-
-	datahandling (datstructure, saving)
-
-
-
-
-
-
+	\subsubsection{Data Handling}
+	Data handling within the Postal Extension consists of three main entities or processes: the Datastructure, serialization of the Datastructure and the storage of the Datastructure in a JSON file.
+	The Datastructure is a dictionary of file nodes, stored as JavaScript objects. These JavaScript objects come from the Parser parsing the currently loaded project for links and errors.
+	The Datastructure can be considered the live version of the project data, as its dictionary is updated by the parser every time the project is saved. 
+	Once the Datastructure is updated, its data will be compared with the now out-of-date JSON file to identify which file nodes were changed.
+	The comparison of JSON and JavaScript object will be done with the Lodash library's deep object compare function.
+	The information concerning which nodes were changed will be passed to the UI elements, once it has been serialized to the file.
+	The nodes changed in the Datastructure will then be serialized into JSON using the JSON.stringify function built into JavaScript.
+	This JSON will be saved to a file, which can further be read by the UI functions for updating.
 
 % 5.10
 \section{Interaction Viewpoints}
@@ -316,6 +313,14 @@ When the a parsing of the files happens it is important for the extension to kno
 >>>>>>> 757893940a66d4d9e78a6b80fbfbda17b8d8d62f
 	
 	-----Open error object
+
+	\subsubsection{Data Handling}
+	Most major actions within the data handling entities and functions are reliant on the Parser being called and providing updated data.
+	The Datastructure is updated when files are saved and reparsed. 
+	Information on which file nodes within the Datastructure dictionary were changed is also identified when a reparse occurs.
+	The likewise is true with serialization of the Datastructure to the JSON.
+	Each Parser call results in each data handling function taking place. 
+	Other components that rely on information within the data handling scope are then also reliant on the Parser for updates.
 	
 	
 \section{Information Viewpoint}
