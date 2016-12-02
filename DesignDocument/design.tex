@@ -298,13 +298,42 @@ functionality.
 The Interaction viewpoint defines strategies for interaction among entities, regarding why, where, how, and
 at what level actions occur. 
 \subsubsection{Design Concerns}
+The concern that come with using these events is that we might not be the correct events that the extension needs to be listening to. 
+It could be that doing the parse on every save will slow down the developement process too much. 
+If that were the case there would have a specific command that the user would need to input every time that they would want to use the Postal Extension.
+This senario would greatly decrease the usability of the extension by adding an unnessesary step to the process.
+
 \subsubsection{Design Elements}
+<<<<<<< HEAD
 	Parse Files on savefile
 		step 1 ....
 		step 2 ...
 	open UI vs code command
+=======
+	-----Parse Files on savebox
 	
-	'Open' error object
+There are several actions that occur within VSCode that will initiate the extension parcing and interpretting process.
+These events will be specific events that will have specific listeners. 
+Each event will trigger a specific type of the same process.
+These events are when the user starts the use of the extension, when the user explicitly saves one or all the files, and when the user closes the application.
+When the user starts the extension the extension will the first initial parsing and create the datastructer that will serve as a reference for the next continuation of the extension.
+This first parsing will be set in motion by the built-in activate function. 
+After the initialization whenever the user saves the files the extension is planned to parse the files and get the nessesary information to parse once again. 
+The extension will only continue on the explicit saves, meaning only when the user to saves the files, rather then when VSC auto saves. 
+Once the user saves the files the inPerSaveDocument listener will be acted upon.
+This should trigger the parser and continue the extension process, but it will continue it before it has actually saved the documents. 
+This will allow for possible formatting of the user's code before it is saved.
+Then when the user closes the VSC application or kills the extension then the deactivate listener will do one last parse of the files so that the user will be where they left next time they comeback to the project.
+These three events should be able cover the major of instances when the extension is expected to be iterated.
+
+
+	-----open UI vs code command
+	
+When the a parsing of the files happens it is important for the extension to know what has change in the user current work space. 
+	
+>>>>>>> 757893940a66d4d9e78a6b80fbfbda17b8d8d62f
+	
+	-----Open error object
 
 % Annex A  Bibliography
 % Annex B  Conforming design language description
