@@ -150,9 +150,15 @@ These viewpoints are as follows:
 \end {itemize}
 
 % 4.6
-\subsection{Design Overlays}
+\subsection{Design Elements}
+The chief design elements present in the Postal extension can be summed into the following categories: the IDE/extension functions, the UI entities and functions, the Parser and data handling.
+Many of the attributes of the IDE and extension are related to functionality provided by VSC or functionality that this extension will provide. 
+The UI is broken down into the File Map and Error List viewer, which provide the user with relevant information on their project.
+The Parser acquires data from the user's files and transfers that information to the data handler functions.
+The data handler entities and functions provide the UI with up to date information for the user to view.
+These design elements will be described within the context of specific design viewpoints.
 
-% 4.7
+% 4.8
 \subsection{Design Rationale}
 The Postal Extension project will attempt a pseudo agile design style focusing on incremental releases and feature implementation.
 As this project has a very short time line, it is important to release and mature key features before lower priority features. 
@@ -161,22 +167,20 @@ We hope that by setting this restriction, we can guarantee at minimal feature re
 The current minimal features are (as of 12/01/2016) already under implementation and are expected to be completed before January of 2017.
 
 
-% 4.8
+% 4.9
 \subsection{Design Languages}
-The following document makes us of ER diagrams to represent information and data structures and UML diagrams for displaying system components. 
+The following document makes us of Entity-Relationship (ER) diagrams to represent information and data structures and UML diagrams for displaying system components. 
 
-
-
-
-% 5.2
-
-% 5.3
+% 5.1
+\section{Introduction of Design Viewpoints}
+The design components of the Postal Extension will each be addressed and detailed by at least one of the following design viewpoints: Composition Viewpoint, Logical Viewpoint, Interaction Viewpoint, Information Viewpoint and Interface Viewpoint.
+In each of the following sections, each viewpoint will be briefly described, the design concerns of that viewpoint introduced, then the design elements discussed.
 
 \section{Composition Viewpoint}
 The Composition viewpoint describes the way the design subject is (recursively) structured into constituent
 parts and establishes the roles of those parts. 
 \subsection{Design Concerns}
-
+Show the major components of the extension and their general, high-level functions.
 \subsection{Design Elements}
 
 	\subsubsection{Extension}
@@ -232,6 +236,7 @@ The purpose of the Logical viewpoint is to elaborate existing and designed types
 as classes and interfaces with their structural static relationships. This viewpoint also uses examples of
 instances of types in outlining design ideas. 
 \subsection{Design Concerns}
+Show the abstractions at the class and datatype level that are required for each component. 
 \subsection{Design Elements}
 
 
