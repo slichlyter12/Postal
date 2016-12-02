@@ -14,6 +14,24 @@
 % C: I added this package for the definitions portion of the document
 \usepackage{amsthm}
 
+\newcommand{\namesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+\newcommand{\studentnamesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+
 \hypersetup{
     bookmarks=false,    % show bookmarks bar?
     pdftitle={Design Document},    % title
@@ -505,5 +523,8 @@ functionality.
 \pagebreak
 \bibliographystyle{IEEEtran}
 \bibliography{design}
+\pagebreak
 
+\namesigdate{Client Signature} \hfill 
+\studentnamesigdate[4cm]{Student Signatures}
 \end{document}
