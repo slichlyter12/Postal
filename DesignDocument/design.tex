@@ -188,33 +188,52 @@ instances of types in outlining design ideas.
 	Parser
 
 	\subsection{File Map and Error List UI}
-			The User Interface system will consist of two main components: The File Map and the Error List. 
+	The User Interface system will consist of two main components: The File Map and the Error List. 
 	Both of these components will be bundled together into a single screen. 
 	This screen will implemented in an electron application window. 
 	Electron is a platform used to create desktop applications as if they were websites.
 	The user interface will then be implemented using JavaScript, HTML and CSS.
 	\subsection{Design Concerns}
 	\subsection{Design Elements}
-	
-
-	
-	
+	\subsubsection{FileMap}
+	Type: Interface
+	\\
+	Description: 
 	The file map will be a graphic representation of the of the user's project solution. 
 	It will appear as a web or graph of interconnected nodes where the nodes represent a file in the user's project directory and an edge represents some link (defined in the parser section) between the two files. 
 	This web will feature nodes of different sizes and will allow the user to zoom and pan the view.
 	The file map will be generated from the above mentioned data structure. 
 	On execution of a Visual Studio Code command, the Electron application will fetch the data structure and generate the file map by traversing the ‘FileStruct' graph structure. 
 	When a Node is generated it will have several visual attributes which will be acquired from the data structure:
-		The size of the node will be based on the number of links to that object (size of the links[] array). 
-		A color corresponding to the type of file. See Table #?.
+	\\
+	\begin{itemize}
+	\item The size of the node will be based on the number of links to that object (size of the links[] array). 
+	\item A color corresponding to the type of file. See below table.
+	\end{itemize}
+	\begin{tabular}{| c | c |}
+	\hline
+	Color & File Type\\
+	\hline
+	Blue & HTML \\
+	Green & CSS \\
+	Purple & JavaScript \\
+	Yellow & Image \\
+	Red & PHP \\
+	Grey & Undefined \\
+	\hline
+	\end{tabular}
+	
 	The name of the node will be retrieved from the file struct name field and will be displayed as text inside of the node.
 	An asterisk will appear next to the name text within the rendered node if there are errors within the FileStruct for that node. In other words, if the size of the errors[] array within the FileStruct is not zero.
 	The file map will be rendered within its own div using the vis.js library ‘Network' module. The Library by default includes the rendering, panning and zooming functionality.
-	Error List:
+	
+	\subsubsection {Error List}
+	Type: Interface
+	Description: 
 	The error list will display all errors currently in the project directory in the form of a vertical list. 
 	These errors will be retrieved when the UI opens from the same data structure is being generated. 
 	These errors will be retrieved in a per node fashion and will also be grouped in the error list in the same order. 
-	
+	\\
 	The error list will exist to the side of the file map in the same electron application screen. 
 	The list will allow the user to scroll when the number of error result in the list exceeding the electron window height. 
 	When an error in the list is hovered over, these errors will highlight the corresponding node in the file map by changing the color value of said node. 
@@ -299,9 +318,9 @@ The Interaction viewpoint defines strategies for interaction among entities, reg
 at what level actions occur. 
 \subsubsection{Design Concerns}
 The concern that come with using these events is that we might not be the correct events that the extension needs to be listening to. 
-It could be that doing the parse on every save will slow down the developement process too much. 
+It could be that doing the parse on every save will slow down the development process too much. 
 If that were the case there would have a specific command that the user would need to input every time that they would want to use the Postal Extension.
-This senario would greatly decrease the usability of the extension by adding an unnessesary step to the process.
+This senario would greatly decrease the usability of the extension by adding an unnecessary step to the process.
 
 \subsubsection{Design Elements}
 <<<<<<< HEAD
