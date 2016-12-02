@@ -14,6 +14,24 @@
 % C: I added this package for the definitions portion of the document
 \usepackage{amsthm}
 
+\newcommand{\namesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+\newcommand{\studentnamesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+
 \hypersetup{
     bookmarks=false,    % show bookmarks bar?
     pdftitle={Design Document},    % title
@@ -49,6 +67,15 @@
 \pagebreak
 
 \tableofcontents
+
+A note for grading: Each major component and their subcomponents was covered by a different member of the team in this document. 
+\begin{itemize}
+\item IDE/Extension -- Cramer Smith
+\item Parser -- Sam Lichlyter
+\item UI -- Eric Winkler
+\item Data Handling -- Zach Schneider
+\end{itemize}
+The majority of the design details on these components takes place in section 5 of this document. The preceding details and introductions were distributed amongst the team.
 
 \pagebreak
 
@@ -499,5 +526,8 @@ functionality.
 \pagebreak
 \bibliographystyle{IEEEtran}
 \bibliography{design}
+\pagebreak
 
+\namesigdate{Client Signature} \hfill 
+\studentnamesigdate[4cm]{Student Signatures}
 \end{document}
