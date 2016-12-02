@@ -136,7 +136,6 @@ These viewpoints are as follows:
 \item Interaction Viewpoint
 \item Information Viewpoint
 \item Interface Viewpoint
-
 \end {itemize}
 
 % 4.6
@@ -198,10 +197,10 @@ parts and establishes the roles of those parts.
 	
 	\subsubsection{Data Handling} 
 	Type: component
-	Description: The information source from which the UI derives its data will be called the Datastructure. 
-	The Datastructure is a dictionary of file nodes and links collected by the Parser for the project currently loaded into VSC. 
-	The file nodes within the Datastructure will contain information related to all the files in the projects, as well as error data detected by the parser.
-	The Datastructure will be serialized into structured JSON objects by the JSON.stringify function and saved to a file. 
+	Description: The information source from which the UI derives its data will be called the data structure. 
+	The data structure is a dictionary of file nodes and links collected by the Parser for the project currently loaded into VSC. 
+	The file nodes within the data structure will contain information related to all the files in the projects, as well as error data detected by the parser.
+	The data structure will be serialized into structured JSON objects by the JSON.stringify function and saved to a file. 
 	This JSON file will be the direct source from which the UI obtains its data.
 
 	
@@ -216,7 +215,10 @@ instances of types in outlining design ideas.
 
 
 	\subsubsection{Parser}
-
+	The Parser will be implemented using Perl and the HTMLTokeParserSimple library.
+	This library tokenizes HTML files into their basic parts such as the tags in it as well as the various attributes within each tag.
+	The parser will use this information to grab links from the pages and determine which pages are linked to each other.
+	It will also look at a higher level of the users code structure and determine if they are violating any best practice thus creating Broken Rules. 
 
 	\subsubsection{File Map and Error List UI}
 	The User Interface system will consist of two main components: The File Map and the Error List. 
@@ -233,7 +235,7 @@ instances of types in outlining design ideas.
 	It will appear as a web or graph of interconnected nodes where the nodes represent a file in the user's project directory and an edge represents some link (defined in the parser section) between the two files. 
 	This web will feature nodes of different sizes and will allow the user to zoom and pan the view.
 	The file map will be generated from the above mentioned data structure. 
-	On execution of a Visual Studio Code command, the Electron application will fetch the data structure and generate the file map by traversing the ‘FileStruct' graph structure. 
+	On execution of a Visual Studio Code command, the Electron application will fetch the data structure and generate the file map by traversing the 'FileStruct' graph structure. 
 	When a Node is generated it will have several visual attributes which will be acquired from the data structure:
 	\\
 	\begin{itemize}
@@ -255,7 +257,7 @@ instances of types in outlining design ideas.
 	
 	The name of the node will be retrieved from the file struct name field and will be displayed as text inside of the node.
 	An asterisk will appear next to the name text within the rendered node if there are errors within the FileStruct for that node. In other words, if the size of the errors[] array within the FileStruct is not zero.
-	The file map will be rendered within its own div using the vis.js library ‘Network' module. The Library by default includes the rendering, panning and zooming functionality.
+	The file map will be rendered within its own div using the vis.js library 'Network' module. The Library by default includes the rendering, panning and zooming functionality.
 	
 	\subsubsection{Error List}
 	Type: Interface
@@ -271,13 +273,13 @@ instances of types in outlining design ideas.
 	The error list will be in its own div and scrolling functionality will be achieved through the use of Jquerey Advanced news Ticker.
 
 	\subsubsection{Data Handling}
-	Data handling within the Postal Extension consists of three main entities or processes: the Datastructure, serialization of the Datastructure and the storage of the Datastructure in a JSON file.
-	The Datastructure is a dictionary of file nodes, stored as JavaScript objects. These JavaScript objects come from the Parser parsing the currently loaded project for links and errors.
-	The Datastructure can be considered the live version of the project data, as its dictionary is updated by the parser every time the project is saved. 
-	Once the Datastructure is updated, its data will be compared with the now out-of-date JSON file to identify which file nodes were changed.
+	Data handling within the Postal Extension consists of three main entities or processes: the data structure, serialization of the data structure and the storage of the data structure in a JSON file.
+	The data structure is a dictionary of file nodes, stored as JavaScript objects. These JavaScript objects come from the Parser parsing the currently loaded project for links and errors.
+	The data structure can be considered the live version of the project data, as its dictionary is updated by the parser every time the project is saved. 
+	Once the data structure is updated, its data will be compared with the now out-of-date JSON file to identify which file nodes were changed.
 	The comparison of JSON and JavaScript object will be done with the Lodash library's deep object compare function.
 	The information concerning which nodes were changed will be passed to the UI elements, once it has been serialized to the file.
-	The nodes changed in the Datastructure will then be serialized into JSON using the JSON.stringify function built into JavaScript.
+	The nodes changed in the data structure will then be serialized into JSON using the JSON.stringify function built into JavaScript.
 	This JSON will be saved to a file, which can further be read by the UI functions for updating.
 
 % 5.10
@@ -323,9 +325,9 @@ When the a parsing of the files happens it is important for the extension to kno
 
 	\subsubsection{Data Handling}
 	Most major actions within the data handling entities and functions are reliant on the Parser being called and providing updated data.
-	The Datastructure is updated when files are saved and reparsed. 
-	Information on which file nodes within the Datastructure dictionary were changed is also identified when a reparse occurs.
-	The likewise is true with serialization of the Datastructure to the JSON.
+	The data structure is updated when files are saved and reparsed. 
+	Information on which file nodes within the data structure dictionary were changed is also identified when a reparse occurs.
+	The likewise is true with serialization of the data structure to the JSON.
 	Each Parser call results in each data handling function taking place. 
 	Other components that rely on information within the data handling scope are then also reliant on the Parser for updates.
 	
@@ -384,23 +386,23 @@ functionality.
 			Parse 
 		Requires
 			Save File (IDE)
-			Get Data (Datastructure)
+			Get Data (data structure)
 	
-\subsection{Datastructure}
+\subsection{Data Structure}
 		\subsubsection{Exposes}
 		\begin{itemize}
 			\item Get Data
 			\\
-			The Datastructure has its dictionary of file nodes updated when the Parser reparses the loaded project. 
-			The Datastructure gets its data from the parser when Get Data is called.
+			The data structure has its dictionary of file nodes updated when the Parser reparses the loaded project. 
+			The data structure gets its data from the parser when Get Data is called.
 		\subsubsection{Requires}
 			\item Load Data (Files)
 			\\
-			The Datastructure will compare its updated data with the data stored in the JSON file. 
-			In order for this to occur, the Datastructure must make use of JSON.parse and the deep object compare as part of the Load Data function.
+			The data structure will compare its updated data with the data stored in the JSON file. 
+			In order for this to occur, the data structure must make use of JSON.parse and the deep object compare as part of the Load Data function.
 			\item Parse (Parsers)
 			\\
-			The Datastructure will only have its data updated when the Parse function is called.
+			The data structure will only have its data updated when the Parse function is called.
 \subsection{UI}
 		\subsubsection{Exposes}
 		\begin{itemize}
@@ -420,7 +422,7 @@ functionality.
                  \end{figure}
 		\subsubsection{Requires}
 		\begin{itemize}
-			\item Get Data (Datastructure)
+			\item Get Data (data structure)
 			\item Open GUI (IDE)
 		\end{itemize}
 		
@@ -430,15 +432,15 @@ functionality.
 			\item Load Data
 			\\
 			The JSON.parse function will be utilized to pull data from the JSON file.
-			Once the information about the file nodes from the Datastructure are pulled from the JSON file, it will be compared to the current Datastructure values to identify which links or errors have changed.
+			Once the information about the file nodes from the data structure are pulled from the JSON file, it will be compared to the current data structure values to identify which links or errors have changed.
 			\item Save Data
 			\\
-			Once parsed data from the Parser is transfered to the Datastructure using the Get Data functionality, this data will be serialized into a JSON file with the JSON.stringify function built into JavaScript.
+			Once parsed data from the Parser is transfered to the data structure using the Get Data functionality, this data will be serialized into a JSON file with the JSON.stringify function built into JavaScript.
 		\subsubsection{Requires}
 		\begin{itemize}
-			\item Get Data (Datastructure)
+			\item Get Data (data structure)
 			\\
-			It is necessary for the Datastructure to obtain data from the Parser each time it parses so that this data can, in turn, be saved to the JSON file.
+			It is necessary for the data structure to obtain data from the Parser each time it parses so that this data can, in turn, be saved to the JSON file.
 
 
 % Annex A  Bibliography
