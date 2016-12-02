@@ -277,14 +277,16 @@ Show the abstractions at the class and datatype level that are required for each
 	The parser will use this information to grab links from the pages and determine which pages are linked to each other.
 	It will also look at a higher level of the users code structure and determine if they are violating any best practice thus creating Broken Rules. 
 	
-	The Broken Rules will be determined by going through the W3C best practices list and determining what types of things should exist in each file type. For example having only the structure of the website in the HTML pages and having all the styling in the CSS pages. We will then format rules in which our parser will interpret and return error messages to the user if they broke a best practice thus generating a Broken Rule.\cite{w3c}
+	The Broken Rules will be determined by going through the W3C best practices list and determining what types of things should exist in each file type. 
+	For example having only the structure of the website in the HTML pages and having all the styling in the CSS pages. 
+	We will then format rules in which our parser will interpret and return error messages to the user if they broke a best practice thus generating a Broken Rule.\cite{w3c}
 	
 
 	\subsubsection{File Map and Error List UI}
 	The User Interface system will consist of two main components: The File Map and the Error List. 
 	Both of these components will be bundled together into a single screen. 
 	This screen will implemented in an electron application window. 
-	Electron is a platform used to create desktop applications as if they were websites.
+	Electron is a platform used to create desktop applications as if they were websites. \cite{Electron}
 	The user interface will then be implemented using JavaScript, HTML and CSS.
 	
 	\subsubsection{FileMap}
@@ -294,7 +296,7 @@ Show the abstractions at the class and datatype level that are required for each
 	It will appear as a web or graph of interconnected nodes where the nodes represent a file in the user's project directory and an edge represents some link (defined in the parser section) between the two files. 
 	This web will feature nodes of different sizes and will allow the user to zoom and pan the view.
 	The file map will be generated from the above mentioned data structure. 
-	On execution of a Visual Studio Code command, the Electron application will fetch the data structure and generate the file map by traversing the 'FileStruct' graph structure. 
+	On execution of a Visual Studio Code command, the Electron application will fetch the data structure and generate the file map by traversing the 'FileStruct' graph structure.
 	When a Node is generated it will have several visual attributes which will be acquired from the data structure:
 	\begin{itemize}
 	\item The size of the node will be based on the number of links to that object (size of the links[] array). 
@@ -315,7 +317,8 @@ Show the abstractions at the class and datatype level that are required for each
 	
 	The name of the node will be retrieved from the file struct name field and will be displayed as text inside of the node.
 	An asterisk will appear next to the name text within the rendered node if there are errors within the FileStruct for that node. In other words, if the size of the errors[] array within the FileStruct is not zero.
-	The file map will be rendered within its own div using the vis.js library 'Network' module. The Library by default includes the rendering, panning and zooming functionality.
+	The file map will be rendered within its own div using the vis.js library 'Network' module. 
+	The Library by default includes the rendering, panning and zooming functionality. \cite{visjs}
 	
 	\subsubsection{Error List}
 	Type: Interface
@@ -328,7 +331,7 @@ Show the abstractions at the class and datatype level that are required for each
 	The list will allow the user to scroll when the number of error result in the list exceeding the electron window height. 
 	When an error in the list is hovered over, these errors will highlight the corresponding node in the file map by changing the color value of said node. 
 	When an error in the list is clicked, the extension will open the file in Visual Studio Code's text editor and scroll to line where the error exists.
-	The error list will be in its own div and scrolling functionality will be achieved through the use of JQuery Advanced News Ticker.
+	The error list will be in its own div and scrolling functionality will be achieved through the use of JQuery Advanced News Ticker. \cite{newst}
 	
 	\subsubsection{Data Handling}
 	Data handling within the Postal Extension consists of three main entities or processes: the data structure, serialization of the data structure and the storage of the data structure in a JSON file.
