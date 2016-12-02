@@ -80,20 +80,28 @@ The teams supervisors being the people grading the project on the implementation
 The document conforms to the IEEE Std 1016-2009.
 
 % 2
-\section{Definitions}
+\section{Definitions, Acronyms, and Abbreviations}
+\subsection{Defenitions}
+\newtheorem{Model-View-Controller (MVC)}{Is a design pattern assigns objects in an application one of three roles: model, view, or controller. The pattern defines not only the roles objects play in the application, it defines the way objects communicate with each other. Each of the three types of objects is separated from the others by abstract boundaries and communicates with objects of the other types across those boundaries. The collection of objects of a certain MVC type in an application is sometimes referred to as a layer—for example, model layer.\cite{appleMVC}}
+\newtheorm{Integrated Developement Environment}{}
+
+\subsection{Acronyms}
 \newtheorem{VSC}{An acronym of Visual Studio Code. Visaul Studio Code is the IDE for which the postal extension is being built.}
 \newtheorem{IDE}{An acronym of Integrated Development Environment.}
 \newtheorem{UI}{An acronym of User Interface}
-\newtheorem{MVC}{Model-View-Controller (MVC) design pattern assigns objects in an application one of three roles: model, view, or controller. The pattern defines not only the roles objects play in the application, it defines the way objects communicate with each other. Each of the three types of objects is separated from the others by abstract boundaries and communicates with objects of the other types across those boundaries. The collection of objects of a certain MVC type in an application is sometimes referred to as a layer—for example, model layer.\cite{appleMVC}}
+\newtheorem{Model-View-Controller (MVC)}{Is a design pattern assigns objects in an application one of three roles: model, view, or controller. The pattern defines not only the roles objects play in the application, it defines the way objects communicate with each other. Each of the three types of objects is separated from the others by abstract boundaries and communicates with objects of the other types across those boundaries. The collection of objects of a certain MVC type in an application is sometimes referred to as a layer—for example, model layer.\cite{appleMVC}}
+
+\subsection{Abbreviations}
+
 
 % 3
 \section{Conceptual Model for Software Design Descriptions}
 The software will be loosely written with a model view control design pattern.
-It is loosely MVC because it is an extension and some of the view will be out of the control of the extension, but the main parts of the extension will fill these roles .
+It is loosely MVC because it is an extension and some of the view will be out of the control of the extension, but the main parts of the extension will fill these MVC roles.
 The model will be the data structure that we will use to represent the parsed files. 
 The view will be the user interface and the integrated development environment.
 The IDE and the user interface that the extension creates will be the view and act dependent of each other.
-The control will be the event handlers that are 
+The control will be the event handlers and the IDE are the controller that are the 
 
 % 3.1
 \subsection{Software Design in Context}
