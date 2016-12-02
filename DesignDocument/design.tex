@@ -86,7 +86,7 @@ This document conforms to the IEEE Std 1016-2009.
 
 % 2.1
 \subsection{Definitions}
-\newtheorem{Model-View-Controller (MVC)}{A design pattern assigns objects in an application one of three roles: model, view, or controller. The pattern defines not only the roles objects play in the application, it defines the way objects communicate with each other. Each of the three types of objects is separated from the others by abstract boundaries and communicates with objects of the other types across those boundaries. The collection of objects of a certain MVC type in an application is sometimes referred to as a layerâ€”for example, model layer.\cite{appleMVC}}
+\newtheorem{Model-View-Controller (MVC)}{A design pattern assigns objects in an application one of three roles: model, view, or controller. The pattern defines not only the roles objects play in the application, it defines the way objects communicate with each other. Each of the three types of objects is separated from the others by abstract boundaries and communicates with objects of the other types across those boundaries. The collection of objects of a certain MVC type in an application is sometimes referred to as a layer €”for example, model layer.\cite{appleMVC}}
 \newtheorem{Integrated Development Environment}{A software application that provides comprehensive facilities to computer programmers for software development}
 \newtheorem{dictionary}{An abstract data type composed of a collection of (key, value) pairs, such that each possible key appears at most once in the collection.}
 
@@ -262,7 +262,6 @@ Show the abstractions at the class and datatype level that are required for each
 	
 	\subsubsection{FileMap}
 	Type: Interface
-	\\
 	Description: 
 	The file map will be a graphic representation of the of the user's project solution. 
 	It will appear as a web or graph of interconnected nodes where the nodes represent a file in the user's project directory and an edge represents some link (defined in the parser section) between the two files. 
@@ -270,7 +269,6 @@ Show the abstractions at the class and datatype level that are required for each
 	The file map will be generated from the above mentioned data structure. 
 	On execution of a Visual Studio Code command, the Electron application will fetch the data structure and generate the file map by traversing the 'FileStruct' graph structure. 
 	When a Node is generated it will have several visual attributes which will be acquired from the data structure:
-	\\
 	\begin{itemize}
 	\item The size of the node will be based on the number of links to that object (size of the links[] array). 
 	\item A color corresponding to the type of file. See below table.
@@ -279,12 +277,12 @@ Show the abstractions at the class and datatype level that are required for each
 	\hline
 	Color & File Type\\
 	\hline
-	Blue & HTML \\
-	Green & CSS \\
-	Purple & JavaScript \\
-	Yellow & Image \\
-	Red & PHP \\
-	Grey & Undefined \\
+	Blue & HTML\\
+	Green & CSS\\
+	Purple & JavaScript\\
+	Yellow & Image\\
+	Red & PHP\\
+	Grey & Undefined\\
 	\hline
 	\end{tabular}
 	
@@ -338,7 +336,7 @@ at what level actions occur. Most of these interactions are between predefined e
 	This specific event will allow the extension parser to read the files contents before the file is actually saved.
 	This will allow for the extension to possibly format the user's code before it is saved.
 	The third even is when the user closes the VSC application or kills the extension then the deactivate listener will do one last parse of the files so that the user will be where they left next time they 	comeback to the project.
-	These three events should be able cover the major of instances when the extension is expected to be iterated.\\
+	These three events should be able cover the major of instances when the extension is expected to be iterated.
 	
 	The extensions custom UI will open on several events. 
 	The first event that will bring up the UI will be the user using the open UI command. 
@@ -346,7 +344,7 @@ at what level actions occur. Most of these interactions are between predefined e
 	Unless the parsing operations has not been invoked on the current working directory this command will just bring up the UI using information that was created from previous parsing. 
 	This will ensure give the user access to the UI at any moment, and the UI won't become a bother to the user popping up after every save. 
 	The other event that will cause the UI to be brought up will be when the parser identifies a new error in the code.	
-	This will make it to the user can quickly identify the errors that they are creating before there become too many that the user is overwhelmed by the error table once they check the UI. \\
+	This will make it to the user can quickly identify the errors that they are creating before there become too many that the user is overwhelmed by the error table once they check the UI.
 
 	An error object is the location of what the extension finds and identifies as an error.
 	These error will consist of improper HTML and CSS practices. 
@@ -464,7 +462,7 @@ functionality.
 		\begin{figure}
                  \includegraphics[width=300px]{UIMockupEPS.eps}
                  \caption{Mockup of the user interface}
-      \end{figure}
+      		\end{figure}
 		
 		\subsubsection{Requires}
 		\begin{itemize}
@@ -476,17 +474,16 @@ functionality.
 		\subsubsection{Exposes}
 		\begin{itemize}
 			\item Load Data
-			\\
 			The JSON.parse function will be utilized to pull data from the JSON file. 
 			Once the information about the file nodes from the data structure are pulled from the JSON file, it will be compared to the current data structure values to identify which links or errors have changed. \cite{stringify}
 			\item Save Data
-			\\
 			Once parsed data from the Parser is transferred to the data structure using the Get Data functionality, this data will be serialized into a JSON file with the JSON.stringify function built into JavaScript.
+		\end{itemize}
 		\subsubsection{Requires}
 		\begin{itemize}
 			\item Get Data (data structure)
-			\\
 			It is necessary for the data structure to obtain data from the Parser each time it parses so that this data can, in turn, be saved to the JSON file.
+		\end{itemize}
 
 
 % Annex A  Bibliography
