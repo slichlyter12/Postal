@@ -81,20 +81,37 @@ The teams supervisors being the people grading the project on the implementation
 The document conforms to the IEEE Std 1016-2009.
 
 % 2
+<<<<<<< HEAD
+\section{Definitions, Acronyms, and Abbreviations}
+
+% 2.1
+\subsection{Defenitions}
+\newtheorem{Model-View-Controller (MVC)}{Is a design pattern assigns objects in an application one of three roles: model, view, or controller. The pattern defines not only the roles objects play in the application, it defines the way objects communicate with each other. Each of the three types of objects is separated from the others by abstract boundaries and communicates with objects of the other types across those boundaries. The collection of objects of a certain MVC type in an application is sometimes referred to as a layer—for example, model layer.\cite{appleMVC}}
+\newtheorm{Integrated Developement Environment}{}
+
+% 2.2
+\subsection{Acronyms}
+\newtheorem{VSC}{An acronym of Visual Studio Code. Visaul Studio Code is the IDE for which the postal extension is being built.}
+=======
 \section{Definitions}
 \newtheorem{VSC}{An acronym of Visual Studio Code. Visual Studio Code is the IDE for which the postal extension is being built.}
+>>>>>>> 3f30a71fbe461b5e8bb906b86ef5abceea8fb55d
 \newtheorem{IDE}{An acronym of Integrated Development Environment.}
 \newtheorem{UI}{An acronym of User Interface}
-\newtheorem{MVC}{Model-View-Controller (MVC) design pattern assigns objects in an application one of three roles: model, view, or controller. The pattern defines not only the roles objects play in the application, it defines the way objects communicate with each other. Each of the three types of objects is separated from the others by abstract boundaries and communicates with objects of the other types across those boundaries. The collection of objects of a certain MVC type in an application is sometimes referred to as a layer—for example, model layer.\cite{appleMVC}}
+\newtheorem{MVC}{Model-View-Controller}
+
+% 2.3
+\subsection{Abbreviations}
+
 
 % 3
 \section{Conceptual Model for Software Design Descriptions}
 The software will be loosely written with a model view control design pattern.
-It is loosely MVC because it is an extension and some of the view will be out of the control of the extension, but the main parts of the extension will fill these roles .
+It is loosely MVC because it is an extension and some of the view will be out of the control of the extension, but the main parts of the extension will fill these MVC roles.
 The model will be the data structure that we will use to represent the parsed files. 
 The view will be the user interface and the integrated development environment.
 The IDE and the user interface that the extension creates will be the view and act dependent of each other.
-The control will be the event handlers that are 
+The control will be the event handlers and the IDE are the controller that are the 
 
 % 3.1
 \subsection{Software Design in Context}
@@ -169,7 +186,16 @@ parts and establishes the roles of those parts.
 
 	\subsubsection{Extension}
 	Type: system
-	Description:
+	Description: The design of the extension is meant to help new web developers make better design desicions when writing HTML and CSS code.
+	The extension is to be built on top of the Visual Studio Code IDE and the extension will be the compelation of the all the parts that are described within this document. 
+	The parts of the extension are as follows:
+	\begin{itemize}
+	\item Visual Studio Code and how it interacts with the extension.
+	\item The parsers that take the language and parse the languages and find errors.
+	\item The data structure that is used to store the information that the parser finds.
+	\item The UI that the extension adds to the users. 
+	\end{itemize}
+	All of these components make up the entirety of the extension, and they will be described more entirely within this document. 
 	
 	\subsubsection{Parser}
 	Type: component
@@ -271,7 +297,7 @@ instances of types in outlining design ideas.
 	When an error in the list is hovered over, these errors will highlight the corresponding node in the file map by changing the color value of said node. 
 	When an error in the list is clicked, the extension will open the file in Visual Studio Code's text editor and scroll to line where the error exists.
 	The error list will be in its own div and scrolling functionality will be achieved through the use of Jquerey Advanced news Ticker.
-
+	
 	\subsubsection{Data Handling}
 	Data handling within the Postal Extension consists of three main entities or processes: the data structure, serialization of the data structure and the storage of the data structure in a JSON file.
 	The data structure is a dictionary of file nodes, stored as JavaScript objects. These JavaScript objects come from the Parser parsing the currently loaded project for links and errors.
@@ -281,47 +307,46 @@ instances of types in outlining design ideas.
 	The information concerning which nodes were changed will be passed to the UI elements, once it has been serialized to the file.
 	The nodes changed in the data structure will then be serialized into JSON using the JSON.stringify function built into JavaScript.
 	This JSON will be saved to a file, which can further be read by the UI functions for updating.
-
+	
 % 5.10
 \section{Interaction Viewpoints}
-The Interaction viewpoint defines strategies for interaction among entities, regarding why, where, how, and
-at what level actions occur. 
+
 \subsubsection{Design Concerns}
-The concern that come with using these events is that we might not be the correct events that the extension needs to be listening to. 
-It could be that doing the parse on every save will slow down the development process too much. 
-If that were the case there would have a specific command that the user would need to input every time that they would want to use the Postal Extension.
-This scenario would greatly decrease the usability of the extension by adding an unnecessary step to the process.
+The Interaction viewpoint defines strategies for interaction among entities, regarding why, where, how, and
+at what level actions occur. Most of these interactions are between predefined events and event listeners.
 
-\subsubsection{Design Elements}
-
-	Parse Files on savefile
-		step 1 ....
-		step 2 ...
-	open UI vs code command
-
-	-----Parse Files on savebox
+\subsubsection{Design Elements}	
+	There are three main interactions that happens on the specific IDE events; the parsing of the files ,the opening of the custom extension UI, and the opening of an error object.
+	The first of these events is the parsing of files. 
+	There are several actions that occur within VSCode that will initiate the extension parsing and interpreting process.
+	These specific events that will have specific event listeners. 
+	Each event will trigger a specific type of the same parsing process.
+	These events are when the user starts the extension, when the user explicitly saves one or all the files, and when the user closes the application.
+	When the user starts Postal the extension will first initial parsing and create the data structures that will serve as a reference for the next continuation of the extension processing.
+	The first parsing will be set in motion by the built-in activate function with the extension initializaion. 
+	After the initialization whenever the user saves the files the extension is going to parse the files and get the necessary information from the new parse. 
+	This will continue after every manual save.
+	The extension will only continue on the explicit manual saves, meaning only when the user to saves the files, rather then when VSC auto saves. 
+	Once the user saves the files the inPerSaveDocument listener will be acted upon.
+	This specific event will allow the extension parser to read the files contents before the file is actually saved.
+	This will allow for the extension to possibly format the user's code before it is saved.
+	The third even is when the user closes the VSC application or kills the extension then the deactivate listener will do one last parse of the files so that the user will be where they left next time they 	comeback to the project.
+	These three events should be able cover the major of instances when the extension is expected to be iterated.\\
 	
-There are several actions that occur within VSCode that will initiate the extension parsing and interpreting process.
-These events will be specific events that will have specific listeners. 
-Each event will trigger a specific type of the same process.
-These events are when the user starts the use of the extension, when the user explicitly saves one or all the files, and when the user closes the application.
-When the user starts the extension the extension will the first initial parsing and create the data structures that will serve as a reference for the next continuation of the extension.
-This first parsing will be set in motion by the built-in activate function. 
-After the initialization whenever the user saves the files the extension is planned to parse the files and get the necessary information to parse once again. 
-The extension will only continue on the explicit saves, meaning only when the user to saves the files, rather then when VSC auto saves. 
-Once the user saves the files the inPerSaveDocument listener will be acted upon.
-This should trigger the parser and continue the extension process, but it will continue it before it has actually saved the documents. 
-This will allow for possible formatting of the user's code before it is saved.
-Then when the user closes the VSC application or kills the extension then the deactivate listener will do one last parse of the files so that the user will be where they left next time they comeback to the project.
-These three events should be able cover the major of instances when the extension is expected to be iterated.
+	The extensions custom UI will open on several events. 
+	The first event that will bring up the UI will be the user using the open UI command. 
+	The user will be able to use the VSC command to open the UI. 
+	Unless the parsing operations has not been invoked on the current working directory this command will just bring up the UI using information that was created from previous parsing. 
+	This will ensure give the user access to the UI at any moment, and the UI won't become a bother to the user popping up after every save. 
+	The other event that will cause the UI to be brought up will be when the parser identifies a new error in the code.	
+	This will make it to the user can quickly identify the errors that they are creating before there become too many that the user is overwhelmed by the error table once they check the UI. \\
 
-
-	-----open UI vs code command
-	
-When the a parsing of the files happens it is important for the extension to know what has change in the user current work space. 
-	
-	
-	-----Open error object
+	An error object is the location of what the extension finds and identifies as an error.
+	These error will consist of improper HTML and CSS practices. 
+	These errors will be listed in the cutsom UI, and if the user interacts with the error object the extension should navigate the user to the location of the error.
+	The extension will do this with openTextDocument, to first open the document that has the error. 
+	Once the extension opens the file it can then get the specific words that are part of the error and change the background color using the background color property.
+	This will hopefully give the user a good idea of where the user has created the error and the errors information text will give the user an idea of what mistake they made and how it can be fixed.
 
 	\subsubsection{Data Handling}
 	Most major actions within the data handling entities and functions are reliant on the Parser being called and providing updated data.
@@ -331,6 +356,7 @@ When the a parsing of the files happens it is important for the extension to kno
 	Each Parser call results in each data handling function taking place. 
 	Other components that rely on information within the data handling scope are then also reliant on the Parser for updates.
 	
+
 	
 \section{Information Viewpoint}
 The Information viewpoint is applicable when there is a substantial persistent data content expected with
@@ -375,11 +401,13 @@ functionality.
 \subsection{Design Elements}
 
 
-	IDE
-		Exposes
-			Open GUI
-			Save File
-		Requires
+	\subsections{IDE}
+		\subsubsection{Exposes}
+			Opening the GUI give the user an interface in which they can interact and see the information that they are looking for from the Postal extension.
+			That information includes the file structure and how they relate to eachother, as well as the possible errors. 
+			The parsing of the file is the process that populates the information that is displayed in the UI.
+		\subsubsection{Requires}
+			These actions taken by the IDE require the use of the parser, the custom UI, and the event listeners.
 	
 	Parsers
 		Exposes
@@ -407,11 +435,10 @@ functionality.
 		\subsubsection{Exposes}
 		\begin{itemize}
 			\item Error Navigation 
-			\\
 			When the user clicks on an error item in the error list, The UI component will interface with the VS Code IDE API in order to navigate the user's screen to the file and line number of the error.
 			\item User-FileMap Interaction
 			The User has several options to interface with the FIle Map. 
-			When the user scrolls a mouse wheel, the file map will 'zoom' and expand the size of the file nodes.
+			When the user scrolls a mouse wheel, the file map will zoom and expand the size of the file nodes.
 			If the user clicks and drags on the white space in the background of the file map, the GUI view will pan and render/discard file nodes that are off screen.
 			If the user clicks on a file node and drags, the UI will simulate two dimensional physics and will warp the file map in response to the users movements.
 			The three above features can all be achieved through the use of the vis.js API.
