@@ -76,9 +76,10 @@ The design stake holders include the team implementing the extension, their clie
 The teams supervisors being the people grading the project on the implementation of the designs described within this document.
 
 
+
 % 1.4 
 \subsection{Conformance}
-The document conforms to the IEEE Std 1016-2009.
+This document conforms to the IEEE Std 1016-2009.
 
 % 2
 \section{Definitions, Acronyms, and Abbreviations}
@@ -99,18 +100,18 @@ The document conforms to the IEEE Std 1016-2009.
 
 % 3
 \section{Conceptual Model for Software Design Descriptions}
-The software will be loosely written with a model view control design pattern.
+This software will be loosely written with a model view control design pattern.
 It is loosely MVC because it is an extension and some of the view will be out of the control of the extension, but the main parts of the extension will fill these MVC roles.
-The model will be the data structure that we will use to represent the parsed files. 
-The IDE and the user interface that the extension creates will be the view and act dependent of each other.
-The control will be the event handlers and the IDE, as these parts are what is taking and interpretting the users actions that affect the data structure and in turn the UI.
+The model will be the data structure that will be used to represent the parsed files. 
+The IDE and the user interface that the extension creates will be the view and be dependent on each other.
+The control will be the event handlers and the IDE, as these parts take and interpret the users actions that affect the data structure and in turn the UI.
 
 % 3.1
 \subsection{Software Design in Context}
-The extension is supposed to help novice web developer with organizing and create cleaner HTML and CSS code. 
-To accomplish this the design of the extension it will contain a UI, a number of parsers for the different languages, and a data structure to save it all in.
+The extension is designed to help novice web developer with organizing and create cleaner HTML and CSS code. 
+To accomplish this, the design of the extension will contain a UI, a number of parsers for different languages, and a data structure to keep track of relevant information from the user's files..
 The parsers and the extension's UI will need to communicate between each other and VSC.
-The communication between the VSC and the parser will go though the data structure as VSC passes text to the parser and the parser populates information within the data structure.
+The communication between VSC and the parser will go though the data structure as VSC passes text to the parser and the parser populates information within the data structure.
 
 % 3.2
 \subsection{Software Design Descriptions Within the Life Cycle}
