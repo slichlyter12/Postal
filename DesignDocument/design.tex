@@ -342,12 +342,15 @@ Show the abstractions at the class and datatype level that are required for each
 	
 % 5.10
 \section{Interaction Viewpoints}
-
-\subsubsection{Design Concerns}
-The Interaction viewpoint defines strategies for interaction among entities, regarding why, where, how, and
+The interaction viewpoint defines strategies for interaction among entities, regarding why, where, how, and
 at what level actions occur. Most of these interactions are between predefined events and event listeners.
+\subsection{Design Concerns}
+The primary design concerns from an interaction viewpoint in the Postal Extension are within the IDE and its interactions with the rest of the components of the software.
+Additionally, within the data handling elements of this extension, how the data passes from the Datastructure to JSON files is also an important interection.
 
-\subsubsection{Design Elements}	
+\subsection{Design Elements}
+
+\subsubsection{IDE}	
 	There are three main interactions that happens on the specific IDE events; the parsing of the files ,the opening of the custom extension UI, and the opening of an error object.
 	The first of these events is the parsing of files. 
 	There are several actions that occur within VSCode that will initiate the extension parsing and interpreting process.
