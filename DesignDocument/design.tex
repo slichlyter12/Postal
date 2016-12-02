@@ -177,7 +177,7 @@ In each of the following sections, each viewpoint will be briefly described, the
 The Composition viewpoint describes the way the design subject is (recursively) structured into constituent
 parts and establishes the roles of those parts. 
 \subsection{Design Concerns}
-
+Show the major components of the extension and their general, high-level functions.
 \subsection{Design Elements}
 
 	\subsubsection{Extension}
@@ -233,6 +233,7 @@ The purpose of the Logical viewpoint is to elaborate existing and designed types
 as classes and interfaces with their structural static relationships. This viewpoint also uses examples of
 instances of types in outlining design ideas. 
 \subsection{Design Concerns}
+Show the abstractions at the class and datatype level that are required for each component. 
 \subsection{Design Elements}
 
 
@@ -399,20 +400,24 @@ functionality.
 
 	\subsection{IDE}
 		\subsubsection{Exposes}
-			Opening the GUI give the user an interface in which they can interact and see the information that they are looking for from the Postal extension.
-			That information includes the file structure and how they relate to eachother, as well as the possible errors. 
-			The parsing of the file is the process that populates the information that is displayed in the UI.
+			\begin{itemize}
+			\item Opening the GUI give the user an interface in which they can interact and see the information that they are looking for from the Postal extension.
+			\item That information includes the file structure and how they relate to eachother, as well as the possible errors. 
+			\end{itemize}
 		\subsubsection{Requires}
-			These actions taken by the IDE require the use of the parser, the custom UI, and the event listeners.
-	
+			\begin{itemize}
+			\item The parsing of the file is the process that populates the information that is displayed in the UI.
+			\item The operations are signalled to start on certain event listeners.
+			\end{itemize}
+			
 	Parsers
 		Exposes
 			Parse 
 		Requires
-			Save File (IDE)
+			The Parser will be triggered on the saves, the extension initialization and when the extension is killed.
 			Get Data (data structure)
 	
-\subsection{Data Structure}
+	\subsection{Data Structure}
 		\subsubsection{Exposes}
 		\begin{itemize}
 			\item Get Data
@@ -427,7 +432,8 @@ functionality.
 			\item Parse (Parsers)
 			\\
 			The data structure will only have its data updated when the Parse function is called.
-\subsection{UI}
+
+	\subsection{UI}
 		\subsubsection{Exposes}
 		\begin{itemize}
 			\item Error Navigation 
@@ -439,14 +445,16 @@ functionality.
 			If the user clicks on a file node and drags, the UI will simulate two dimensional physics and will warp the file map in response to the users movements.
 			The three above features can all be achieved through the use of the vis.js API.
 		\end{itemize}
+		
 		\begin{figure}
                  \includegraphics[width=300px]{UIMockupEPS.eps}
                  \caption{Mockup of the user interface}
-                 \end{figure}
+      \end{figure}
+		
 		\subsubsection{Requires}
 		\begin{itemize}
 			\item Get Data (data structure)
-			\item Open GUI (IDE)
+			\item The UI will need to use the command that is used by the user to view the file map and the GUI.
 		\end{itemize}
 		
 	\subsection{Files}
