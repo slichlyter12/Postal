@@ -128,16 +128,6 @@ This communication will be facilitated by a datastructer that will also allow fo
 % 4.5
 \subsection{Design viewpoints}
 
-% 4.5
-\subsection{Design elements}
-\subsubsection{Design Entities}
-\subsubsection{Design Attributes}
-\paragraph{Name Attribute}
-\paragraph{Type Attribute}
-\paragraph{Purpose Attribute}
-\paragraph{Author Attribute}
-\subsubsection{Design Relationships}
-\subsubsection{Design Constraints}
 
 % 4.6
 \subsection{Design Overlays}
@@ -148,87 +138,92 @@ This communication will be facilitated by a datastructer that will also allow fo
 % 4.8
 \subsection{Design Languages}
 
-% 5
-\section{Design Viewpoints}
 
-% 5.1
-\subsection{Introduction}
+
 
 % 5.2
-\subsection{Context Viewpoint}
-\subsubsection{Design Concerns}
-\subsubsection{Design Elements}
-\subsubsection{Example Languages}
 
 % 5.3
-\subsection{Composition Viewpoint}
+
+\section{Composition Viewpoint}
 \subsubsection{Design Concerns}
 \subsubsection{Design Elements}
-\subsubsection{Function Attribute}
-\subsubsection{Example Languages}
-
+	Extension
+	type: system
+	
+	Parser
+	type: component
+	
+	Ui
+	type: component
+	
+	data handling (datstructure, saving)
+	type: component
+	
 % 5.4
-\subsection{Logical Viewpoint}
+\section{Logical Viewpoint}
+	logical thigns like classes
 \subsubsection{Design Concerns}
 \subsubsection{Design Elements}
+	Parser
 
-% 5.5
-\subsection{Dependency Viewpoint}
-\subsubsection{Design Concerns}
-\subsubsection{Design Elements}
-\paragraph{Dependency Attribute}
-\subsubsection{Example Languages}
+	Ui
+
+	datahandling (datstructure, saving)
+
 
 % 5.6
-\subsection{Information Viewpoint}
+\section{Information Viewpoint}
 \subsubsection{Design Concerns}
 \subsubsection{Design Elements}
-\paragraph{Dependency Attribute}
-\subsubsection{Example Languages}
+	Dictionary
+	
+	FileNodes
+		fileName
+		file type ect.
+		
+	Errors
+		line number
+		error string.
 
-% 5.7
-\subsection{Patterns Use Viewpoints}
-\subsubsection{Design Concerns}
-\subsubsection{Design Elements}
-\subsubsection{Example Languages}
+
+
 
 % 5.8
-\subsection{Interface Viewpoints}
+\section{Interface Viewpoints}
 \subsubsection{Design Concerns}
 \subsubsection{Design Elements}
-\subsubsection{Example Languages}
+	IDE
+		exposes
+		requires
+	
+	Parsers
+		exposes
+		requires
+	
+	DataStructure
+		exposes
+		requires
+	
+	UI
+		exposes
+		requires
+		
+	Files
+		exposes
+		requires
 
-% 5.9
-\subsection{Structure Viewpoints}
-\subsubsection{Design Concerns}
-\subsubsection{Design Elements}
-\subsubsection{Example Languages}
 
 % 5.10
-\subsection{Interaction Viewpoints}
+\section{Interaction Viewpoints}
 \subsubsection{Design Concerns}
 \subsubsection{Design Elements}
-\subsubsection{Example Languages}
-
-% 5.11
-\subsection{State Dynamics Viewpoint}
-\subsubsection{Design Concerns}
-\subsubsection{Design Elements}
-\subsubsection{Example Languages}
-
-% 5.12
-\subsection{Algorithms Viewpoints}
-\subsubsection{Design Concerns}
-\subsubsection{Design Elements}
-\subsubsection{Process Attribute}
-\subsubsection{Example}
-
-% 5.13
-\subsection{Resource Viewpoint}
-\subsubsection{Design Concerns}
-\subsubsection{Design Elements}
-\paragraph{Resource Attribute}
-\subsubsection{Examples}
+	Parse Files on savebox
+		step 1 ....
+		step 2 ...
+	open UI vs code command
+	
+	'Open' error object
 
 % Annex A  Bibliography
 % Annex B  Conforming design language description
