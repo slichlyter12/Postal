@@ -241,7 +241,10 @@ instances of types in outlining design ideas.
 
 
 	\subsubsection{Parser}
-	
+	The Parser will be implemented using Perl and the HTMLTokeParserSimple library.
+	This library tokenizes HTML files into their basic parts such as the tags in it as well as the various attributes within each tag.
+	The parser will use this information to grab links from the pages and determine which pages are linked to each other.
+	It will also look at a higher level of the users code structure and determine if they are violating any best practice thus creating Broken Rules. 
 
 	\subsubsection{File Map and Error List UI}
 	The User Interface system will consist of two main components: The File Map and the Error List. 
@@ -258,7 +261,7 @@ instances of types in outlining design ideas.
 	It will appear as a web or graph of interconnected nodes where the nodes represent a file in the user's project directory and an edge represents some link (defined in the parser section) between the two files. 
 	This web will feature nodes of different sizes and will allow the user to zoom and pan the view.
 	The file map will be generated from the above mentioned data structure. 
-	On execution of a Visual Studio Code command, the Electron application will fetch the data structure and generate the file map by traversing the ‘FileStruct' graph structure. 
+	On execution of a Visual Studio Code command, the Electron application will fetch the data structure and generate the file map by traversing the 'FileStruct' graph structure. 
 	When a Node is generated it will have several visual attributes which will be acquired from the data structure:
 	\\
 	\begin{itemize}
@@ -280,7 +283,7 @@ instances of types in outlining design ideas.
 	
 	The name of the node will be retrieved from the file struct name field and will be displayed as text inside of the node.
 	An asterisk will appear next to the name text within the rendered node if there are errors within the FileStruct for that node. In other words, if the size of the errors[] array within the FileStruct is not zero.
-	The file map will be rendered within its own div using the vis.js library ‘Network' module. The Library by default includes the rendering, panning and zooming functionality.
+	The file map will be rendered within its own div using the vis.js library 'Network' module. The Library by default includes the rendering, panning and zooming functionality.
 	
 	\subsubsection{Error List}
 	Type: Interface
@@ -358,26 +361,35 @@ at what level actions occur. Most of these interactions are between predefined e
 \section{Information Viewpoint}
 The Information viewpoint is applicable when there is a substantial persistent data content expected with
 the design subject. 
-\subsubsection{Design Concerns}
-\subsubsection{Design Elements}
-	Dictionary
-	
-	FileNodes
-		fileName
-		file type ect.
+\subsection{Design Concerns}
+The primary element of concern from an Information Viewport in the Postal Extension is the Datastructure data layout. 
+The main objects contained in the Datastructure are detailed below.
+\subsection{Design Elements}
+
+	\subsubsection{Dictionary}
+	The overall format of the Datastructure is as a dictionary, that is, a collection of key-value pairs. 
+	The keys will be identifiers and the values will be specific file nodes. 
+	At this point in time, the exact implementation of the dictionary keys has not been determined, but it will likely be some sort of hash table.
+	The values, the file nodes, will contain the relationship and error data for all files in the loaded project.
+	\subsubsection{File Nodes}
+		A file node will be representative of an individual file in the loaded project. 
+		Each file node will contain the name of the file it represents, as well as a numberical identifier for lookups.
+		File nodes will be linked to each other according when one file in the project references another. 
+		Many files may be linked to many other files.
+		The files supported by default will be HTML, CSS and JavaScript files.
 		
-	Errors
-		line number
-		error string.
+	\subsubsection{Errors}
+		File nodes will also contain any and all errors present in their respective files.
+		These errors will have a unique identifier, the error message or type of error occuring, and the line number the error occurs on.
+		File nodes may have multiple errors, but each error is only linked to one file node.
 
-	
-
+	\begin{figure}
+        \includegraphics[width=300px]{InformationERDEPS.eps}
+        \caption{A visual representation of the Datastructure.}
+    \end{figure}
 		
 		
 		
-
-
-
 \section{Interface Viewpoints}
 The Interface viewpoint provides information designers, programmers, and testers the means to know how
 to correctly use the services provided by a design subject. This description includes the details of external
