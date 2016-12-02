@@ -87,6 +87,7 @@ The document conforms to the IEEE Std 1016-2009.
 \subsection{Defenitions}
 \newtheorem{Model-View-Controller (MVC)}{Is a design pattern assigns objects in an application one of three roles: model, view, or controller. The pattern defines not only the roles objects play in the application, it defines the way objects communicate with each other. Each of the three types of objects is separated from the others by abstract boundaries and communicates with objects of the other types across those boundaries. The collection of objects of a certain MVC type in an application is sometimes referred to as a layer—for example, model layer.\cite{appleMVC}}
 \newtheorem{Integrated Development Environment}{a software application that provides comprehensive facilities to computer programmers for software development}
+\newtheorem{dictionary}{An abstract data type composed of a collection of (key, value) pairs, such that each possible key appears at most once in the collection.}
 
 % 2.2
 \subsection{Acronyms}
@@ -222,7 +223,7 @@ parts and establishes the roles of those parts.
 	Description: The information source from which the UI derives its data will be called the data structure. 
 	The data structure is a dictionary of file nodes and links collected by the Parser for the project currently loaded into VSC. 
 	The file nodes within the data structure will contain information related to all the files in the projects, as well as error data detected by the parser.
-	The data structure will be serialized into structured JSON objects by the JSON.stringify function and saved to a file. 
+	The data structure will be serialized into structured JSON objects by the JSON.stringify function and saved to a file. \cite{stringify}
 	This JSON file will be the direct source from which the UI obtains its data.
 
 	
@@ -302,7 +303,7 @@ instances of types in outlining design ideas.
 	The comparison of JSON and JavaScript object will be done with the Lodash library's deep object compare function.
 	The information concerning which nodes were changed will be passed to the UI elements, once it has been serialized to the file.
 	The nodes changed in the data structure will then be serialized into JSON using the JSON.stringify function built into JavaScript.
-	This JSON will be saved to a file, which can further be read by the UI functions for updating.
+	This JSON will be saved to a file, which can further be read by the UI functions for updating. \cite{stringify} \cite{lodash}
 	
 % 5.10
 \section{Interaction Viewpoints}
@@ -423,7 +424,7 @@ functionality.
 			\item Load Data (Files)
 			\\
 			The data structure will compare its updated data with the data stored in the JSON file. 
-			In order for this to occur, the data structure must make use of JSON.parse and the deep object compare as part of the Load Data function.
+			In order for this to occur, the data structure must make use of JSON.parse and the deep object compare as part of the Load Data function. \cite{stringify}
 			\item Parse (Parsers)
 			\\
 			The data structure will only have its data updated when the Parse function is called.
@@ -454,8 +455,8 @@ functionality.
 		\begin{itemize}
 			\item Load Data
 			\\
-			The JSON.parse function will be utilized to pull data from the JSON file.
-			Once the information about the file nodes from the data structure are pulled from the JSON file, it will be compared to the current data structure values to identify which links or errors have changed.
+			The JSON.parse function will be utilized to pull data from the JSON file. 
+			Once the information about the file nodes from the data structure are pulled from the JSON file, it will be compared to the current data structure values to identify which links or errors have changed. \cite{stringify}
 			\item Save Data
 			\\
 			Once parsed data from the Parser is transfered to the data structure using the Get Data functionality, this data will be serialized into a JSON file with the JSON.stringify function built into JavaScript.
