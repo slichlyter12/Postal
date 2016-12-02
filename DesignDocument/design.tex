@@ -333,26 +333,35 @@ When the a parsing of the files happens it is important for the extension to kno
 \section{Information Viewpoint}
 The Information viewpoint is applicable when there is a substantial persistent data content expected with
 the design subject. 
-\subsubsection{Design Concerns}
-\subsubsection{Design Elements}
-	Dictionary
-	
-	FileNodes
-		fileName
-		file type ect.
+\subsection{Design Concerns}
+The primary element of concern from an Information Viewport in the Postal Extension is the Datastructure data layout. 
+The main objects contained in the Datastructure are detailed below.
+\subsection{Design Elements}
+
+	\subsubsection{Dictionary}
+	The overall format of the Datastructure is as a dictionary, that is, a collection of key-value pairs. 
+	The keys will be identifiers and the values will be specific file nodes. 
+	At this point in time, the exact implementation of the dictionary keys has not been determined, but it will likely be some sort of hash table.
+	The values, the file nodes, will contain the relationship and error data for all files in the loaded project.
+	\subsubsection{File Nodes}
+		A file node will be representative of an individual file in the loaded project. 
+		Each file node will contain the name of the file it represents, as well as a numberical identifier for lookups.
+		File nodes will be linked to each other according when one file in the project references another. 
+		Many files may be linked to many other files.
+		The files supported by default will be HTML, CSS and JavaScript files.
 		
-	Errors
-		line number
-		error string.
+	\subsubsection{Errors}
+		File nodes will also contain any and all errors present in their respective files.
+		These errors will have a unique identifier, the error message or type of error occuring, and the line number the error occurs on.
+		File nodes may have multiple errors, but each error is only linked to one file node.
 
-	
-
+	\begin{figure}
+        \includegraphics[width=300px]{InformationERDEPS.eps}
+        \caption{A visual representation of the Datastructure.}
+    \end{figure}
 		
 		
 		
-
-
-
 \section{Interface Viewpoints}
 The Interface viewpoint provides information designers, programmers, and testers the means to know how
 to correctly use the services provided by a design subject. This description includes the details of external
