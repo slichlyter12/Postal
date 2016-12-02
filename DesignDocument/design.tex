@@ -85,7 +85,7 @@ This document conforms to the IEEE Std 1016-2009.
 \section{Definitions, Acronyms, and Abbreviations}
 
 % 2.1
-\subsection{Defenitions}
+\subsection{Definitions}
 \newtheorem{Model-View-Controller (MVC)}{A design pattern assigns objects in an application one of three roles: model, view, or controller. The pattern defines not only the roles objects play in the application, it defines the way objects communicate with each other. Each of the three types of objects is separated from the others by abstract boundaries and communicates with objects of the other types across those boundaries. The collection of objects of a certain MVC type in an application is sometimes referred to as a layer—for example, model layer.\cite{appleMVC}}
 \newtheorem{Integrated Development Environment}{A software application that provides comprehensive facilities to computer programmers for software development}
 \newtheorem{dictionary}{An abstract data type composed of a collection of (key, value) pairs, such that each possible key appears at most once in the collection.}
@@ -130,9 +130,9 @@ The communication between VSC and the parser will go though the data structure a
 
 % 4.3
 \subsection{Design Stakeholders and Their Concerns}
-The design stakeholder for this design are the developement team, the client, and the supervisors.
-The developement team will be using this as a blueprint for the implementation of the postal extension. 
-The client will use this to check that the developement team is headed in the right direction as to what the client is hoping for a final product.
+The design stakeholder for this design are the development team, the client, and the supervisors.
+The development team will be using this as a blueprint for the implementation of the postal extension. 
+The client will use this to check that the development team is headed in the right direction as to what the client is hoping for a final product.
 The supervisors will use this document to grade how we implement and design the project.
 
 % 4.4
@@ -186,8 +186,8 @@ Show the major components of the extension and their general, high-level functio
 
 	\subsubsection{Extension}
 	Type: system
-	Description: The design of the extension is meant to help new web developers make better design desicions when writing HTML and CSS code.
-	The extension is to be built on top of the Visual Studio Code IDE and the extension will be the compelation of the all the parts that are described within this document. 
+	Description: The design of the extension is meant to help new web developers make better design decisions when writing HTML and CSS code.
+	The extension is to be built on top of the Visual Studio Code IDE and the extension will be the completion of the all the parts that are described within this document. 
 	The parts of the extension are as follows:
 	\begin{itemize}
 	\item Visual Studio Code and how it interacts with the extension.
@@ -303,7 +303,7 @@ Show the abstractions at the class and datatype level that are required for each
 	The list will allow the user to scroll when the number of error result in the list exceeding the electron window height. 
 	When an error in the list is hovered over, these errors will highlight the corresponding node in the file map by changing the color value of said node. 
 	When an error in the list is clicked, the extension will open the file in Visual Studio Code's text editor and scroll to line where the error exists.
-	The error list will be in its own div and scrolling functionality will be achieved through the use of Jquerey Advanced news Ticker.
+	The error list will be in its own div and scrolling functionality will be achieved through the use of JQuery Advanced News Ticker.
 	
 	\subsubsection{Data Handling}
 	Data handling within the Postal Extension consists of three main entities or processes: the data structure, serialization of the data structure and the storage of the data structure in a JSON file.
@@ -330,7 +330,7 @@ at what level actions occur. Most of these interactions are between predefined e
 	Each event will trigger a specific type of the same parsing process.
 	These events are when the user starts the extension, when the user explicitly saves one or all the files, and when the user closes the application.
 	When the user starts Postal the extension will first initial parsing and create the data structures that will serve as a reference for the next continuation of the extension processing.
-	The first parsing will be set in motion by the built-in activate function with the extension initializaion. 
+	The first parsing will be set in motion by the built-in activate function with the extension initialization. 
 	After the initialization whenever the user saves the files the extension is going to parse the files and get the necessary information from the new parse. 
 	This will continue after every manual save.
 	The extension will only continue on the explicit manual saves, meaning only when the user to saves the files, rather then when VSC auto saves. 
@@ -350,7 +350,7 @@ at what level actions occur. Most of these interactions are between predefined e
 
 	An error object is the location of what the extension finds and identifies as an error.
 	These error will consist of improper HTML and CSS practices. 
-	These errors will be listed in the cutsom UI, and if the user interacts with the error object the extension should navigate the user to the location of the error.
+	These errors will be listed in the custom UI, and if the user interacts with the error object the extension should navigate the user to the location of the error.
 	The extension will do this with openTextDocument, to first open the document that has the error. 
 	Once the extension opens the file it can then get the specific words that are part of the error and change the background color using the background color property. \cite{VSCodeDocumentation}
 	This will hopefully give the user a good idea of where the user has created the error and the errors information text will give the user an idea of what mistake they made and how it can be fixed.
@@ -380,14 +380,14 @@ The main objects contained in the data structure are detailed below.
 	The values, the file nodes, will contain the relationship and error data for all files in the loaded project.
 	\subsubsection{File Nodes}
 		A file node will be representative of an individual file in the loaded project. 
-		Each file node will contain the name of the file it represents, as well as a numberical identifier for lookups.
+		Each file node will contain the name of the file it represents, as well as a numerical identifier for lookups.
 		File nodes will be linked to each other according when one file in the project references another. 
 		Many files may be linked to many other files.
 		The files supported by default will be HTML, CSS JavaScript, PHP and image files.
 		
 	\subsubsection{Errors}
 		File nodes will also contain any and all errors present in their respective files.
-		These errors will have a unique identifier, the error message or type of error occuring, and the line number the error occurs on.
+		These errors will have a unique identifier, the error message or type of error occurring, and the line number the error occurs on.
 		File nodes may have multiple errors, but each error is only linked to one file node.
 
 	\begin{figure}
@@ -412,12 +412,12 @@ functionality.
 		\subsubsection{Exposes}
 			\begin{itemize}
 			\item Opening the GUI give the user an interface in which they can interact and see the information that they are looking for from the Postal extension.
-			\item That information includes the file structure and how they relate to eachother, as well as the possible errors. 
+			\item That information includes the file structure and how they relate to each other, as well as the possible errors. 
 			\end{itemize}
 		\subsubsection{Requires}
 			\begin{itemize}
 			\item The parsing of the file is the process that populates the information that is displayed in the UI.
-			\item The operations are signalled to start on certain event listeners.
+			\item The operations are signaled to start on certain event listeners.
 			\end{itemize}
 			
 	\subsection{Parser}
@@ -454,7 +454,7 @@ functionality.
 			\item Error Navigation 
 			When the user clicks on an error item in the error list, The UI component will interface with the VS Code IDE API in order to navigate the user's screen to the file and line number of the error.
 			\item User-FileMap Interaction
-			The User has several options to interface with the FIle Map. 
+			The User has several options to interface with the File Map. 
 			When the user scrolls a mouse wheel, the file map will zoom and expand the size of the file nodes.
 			If the user clicks and drags on the white space in the background of the file map, the GUI view will pan and render/discard file nodes that are off screen.
 			If the user clicks on a file node and drags, the UI will simulate two dimensional physics and will warp the file map in response to the users movements.
@@ -481,7 +481,7 @@ functionality.
 			Once the information about the file nodes from the data structure are pulled from the JSON file, it will be compared to the current data structure values to identify which links or errors have changed. \cite{stringify}
 			\item Save Data
 			\\
-			Once parsed data from the Parser is transfered to the data structure using the Get Data functionality, this data will be serialized into a JSON file with the JSON.stringify function built into JavaScript.
+			Once parsed data from the Parser is transferred to the data structure using the Get Data functionality, this data will be serialized into a JSON file with the JSON.stringify function built into JavaScript.
 		\subsubsection{Requires}
 		\begin{itemize}
 			\item Get Data (data structure)
