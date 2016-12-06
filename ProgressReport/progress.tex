@@ -1,0 +1,91 @@
+\documentclass[letterpaper,10pt,titlepage,draftclsnofoot,onecolumn,onesided] {IEEEtran}
+\usepackage{listings}
+\usepackage{underscore}
+\usepackage[bookmarks=true]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{titling}
+\usepackage{graphicx}
+\usepackage[noadjust]{cite}
+\nocite{*}
+\graphicspath{ {img/} }
+\usepackage{abstract}
+
+% C: I added this package for the definitions portion of the document
+\usepackage{amsthm}
+
+\newcommand{\namesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+\newcommand{\studentnamesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+
+\hypersetup{
+    bookmarks=false,    % show bookmarks bar?
+    pdftitle={Progress Report},    % title
+    pdfauthor={Cramer Smith, Sam Lichlyter, Eric Winkler, Zach Schneider},                     % author
+    pdfsubject={Progress Report},                        % subject of the document
+    pdfkeywords={IFT, Report, Postal}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=black,       % color of internal links
+    citecolor=black,       % color of links to bibliography
+    filecolor=black,        % color of file links
+    urlcolor=blue,        % color of external links
+    linktoc=page            % only page is linked
+} 
+
+% Document Title:
+\def\doctitle{A Tool to Automatically Organize the Structure of a Codebase Using Information Foraging Theory Design Patterns}
+\def\doctype{Progress Report}
+\def\team{Team Postal | Group \#38}
+
+\markboth{Oregon State University}{\doctitle}
+
+\begin{document}
+
+\title{\Huge{\bfseries{\textsf{\doctitle}}}\\\textsf{\Large{\doctype}}\\\textsf{\large{\team}}}
+\author{Cramer Smith, Sam Lichlyter, Eric Winkler, Zach Schneider}
+
+\maketitle
+\vfill
+%\begin{abstract}
+%\end{abstract}
+\vfill
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+
+\pagebreak
+
+% 1
+\section{Overview}
+
+
+
+
+
+
+\pagebreak
+\bibliographystyle{IEEEtran}
+\bibliography{progress}
+\pagebreak
+
+\namesigdate{Client Signature} \hfill 
+\studentnamesigdate[4cm]{Student Signatures}
+\end{document}
