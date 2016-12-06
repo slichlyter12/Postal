@@ -6,7 +6,9 @@
 \usepackage[english]{babel}
 \usepackage{titling}
 \usepackage{graphicx}
+\usepackage{xcolor}
 \usepackage[noadjust]{cite}
+\usepackage{setspace}
 \nocite{*}
 \graphicspath{ {img/} }
 \usepackage{abstract}
@@ -45,6 +47,23 @@
     urlcolor=blue,        % color of external links
     linktoc=page            % only page is linked
 } 
+
+\lstdefinestyle{customperl}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=Perl,
+  columns=fullflexible,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+  numbers=left
+}
+\lstset{escapechar=@, style=customperl}
 
 % Document Title:
 \def\doctitle{A Tool to Automatically Organize the Structure of a Codebase Using Information Foraging Theory Design Patterns}
@@ -133,7 +152,11 @@ The data structure is defined below in the ERD (Figure 2).
 
 	\subsection{HTML Parser}
 	\begin{lstlisting}
-
+my $anchor_parser = HTML::TokeParser::Simple->new(handle => *DATA);
+while (my $anchor = $anchor_parser->get_tag('a')) {
+    next unless defined(my $href = $anchor->get_attr('href'));
+    say $href;
+}
 	\end{lstlisting}
 	
 \pagebreak
