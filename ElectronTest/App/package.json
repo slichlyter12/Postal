@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
+    "electron-prebuilt": "^0.35.6",
     "pretty-bytes": "^2.0.1"
   },
   "devDependencies": {
