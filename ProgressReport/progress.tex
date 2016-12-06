@@ -75,6 +75,18 @@
 \section{Project Purpose and Goals}
 
 \section{Current Status}
+\subsection{Parsers}
+The current implementation of the extension has one parser which parses HTML.
+This parser is implemented in Perl using the Simple TokeParser which looks for specific tags and a specific attribute from that tag.
+For example, this HTML parser specifically looks for the anchor (\verb|a|) tag and the hyperlink reference (\verb|href|) attribute and returns those values which are the links to either outside websites or internal pages.
+
+\subsection{User Interface}
+The user interface is currently running off of dummy, static data. 
+It opens up in a new window using a program called Electron as opposed to a web browser to cut down on the overhead associated with all the complexities of the web browser.
+It shows each web page as a node and each link from one page to another as an edge in a graph. See Figure 1.
+
+\subsection{Data Layer}
+
 
 \section{Problems and Solutions}
 	\subsection{Pre-Week 3}
