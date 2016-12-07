@@ -117,7 +117,7 @@ Model-View-Controller\\
 A design pattern assigns objects in an application one of three roles: model, view, or controller. 
 The pattern defines not only the roles objects play in the application, it defines the way objects communicate with each other. 
 Each of the three types of objects is separated from the others by abstract boundaries and communicates with objects of the other types across those boundaries. 
-The collection of objects of a certain MVC type in an application is sometimes referred to as a layer ��for example, model layer.\cite{appleMVC}} \\
+The collection of objects of a certain MVC type in an application is sometimes referred to as a layer for example, model layer.\cite{appleMVC} \\
 Integrated Development Environment\\
 A software application that provides comprehensive facilities to computer programmers for software development. \\
 dictionary \\
@@ -150,17 +150,13 @@ To accomplish this, the design of the extension will contain a UI, a number of p
 The parsers and the extension's UI will need to communicate between each other and VSC.
 The communication between VSC and the parser will go though the data structure as VSC passes text to the parser and the parser populates information within the data structure.
 
-% 3.2
-\subsection{Software Design Descriptions Within the Life Cycle}
-\subsubsection{Influences on SDD Preparation}
-\subsubsection{Influences on Software Life Cycle Products}
-\subsubsection{Design Verification and Design Role in Validation}
-
 % 4
 \section{Design Description Information Content}
 
 % 4.1
 \subsection{Introduction}
+The following paragraphs will detail all primary pieces of this design document and the design of the Postal Extension. 
+Information concerning who is responsible for the various facets of this piece of software, the major components of the software, the viewpoints from which these components will be designed, and the languages with which the components will be described will be detailed in the following sections.
 
 % 4.2
 \subsection{SDD Identification}
@@ -178,9 +174,6 @@ The design stakeholder for this design are the development team, the client, and
 The development team will be using this as a blueprint for the implementation of the postal extension. 
 The client will use this to check that the development team is headed in the right direction as to what the client is hoping for a final product.
 The supervisors will use this document to grade how we implement and design the project.
-
-% 4.4
-\subsection{Design views}
 
 % 4.5
 \subsection{Design viewpoints}
@@ -227,7 +220,10 @@ parts and establishes the roles of those parts.
 \subsection{Design Concerns}
 Show the major components of the extension and their general, high-level functions.
 \subsection{Design Elements}
-
+	\begin{figure}
+                 \includegraphics[width=300px]{CompositionUMLEPS.eps}
+                 \caption{Components of the Postal Extension}
+      		\end{figure}
 	\subsubsection{Extension}
 	Type: system
 	Description: The design of the extension is meant to help new web developers make better design decisions when writing HTML and CSS code.
@@ -331,6 +327,7 @@ Show the abstractions at the class and datatype level that are required for each
 	Grey & Undefined\\
 	\hline
 	\end{tabular}
+	\\
 	
 	The name of the node will be retrieved from the file struct name field and will be displayed as text inside of the node.
 	An asterisk will appear next to the name text within the rendered node if there are errors within the FileStruct for that node. In other words, if the size of the errors[] array within the FileStruct is not zero.
@@ -366,7 +363,7 @@ The interaction viewpoint defines strategies for interaction among entities, reg
 at what level actions occur. Most of these interactions are between predefined events and event listeners.
 \subsection{Design Concerns}
 The primary design concerns from an interaction viewpoint in the Postal Extension are within the IDE and its interactions with the rest of the components of the software.
-Additionally, within the data handling elements of this extension, how the data passes from the Datastructure to JSON files is also an important interection.
+Additionally, within the data handling elements of this extension, how the data passes from the data structure to JSON files is also an important interaction.
 
 \subsection{Design Elements}
 
@@ -455,6 +452,10 @@ Identifies the interfaces that the components of the framework expose or require
 functionality. 
 \subsection{Design Elements}
 
+		\begin{figure}
+                 \includegraphics[width=300px]{InterfaceUMLEPS.eps}
+                 \caption{Exposed interfaces}
+      		\end{figure}
 
 	\subsection{IDE}
 		\subsubsection{Exposes}
@@ -487,7 +488,9 @@ functionality.
 			\\
 			The data structure has its dictionary of file nodes updated when the Parser reparses the loaded project. 
 			The data structure gets its data from the parser when Get Data is called.
+		\end{itemize}
 		\subsubsection{Requires}
+		\begin{itemize}
 			\item Load Data (Files)
 			\\
 			The data structure will compare its updated data with the data stored in the JSON file. 
@@ -495,8 +498,8 @@ functionality.
 			\item Parse (Parsers)
 			\\
 			The data structure will only have its data updated when the Parse function is called.
-
-	\subsection{UI}
+			\end{itemize}
+	\subsection{User Interface}
 		\subsubsection{Exposes}
 		\begin{itemize}
 			\item Error Navigation 
