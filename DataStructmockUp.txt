@@ -1,6 +1,9 @@
 FileStruct{ //Node in the file map
     int id;
+    int level; //0 == top == most zoomed out, 1 == next level down, 2 ...
     string name; //file name with extension
+    
+    int subFileStructs[];
     int links[]; //links to other file structs by id?
     int errors[]; //links to errors by id?
 }
