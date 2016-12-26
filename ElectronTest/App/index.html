@@ -28,17 +28,30 @@
   
   
   var fs = [];
-  fs.push({id: '0', name: 'Home.html', type: 'html', links: ['1', '2', '49', '57']});
-  fs.push({id: '1', name: 'About.html', type: 'html', links: ['0']});
-  fs.push({id: '2', name: 'Contact.html', type: 'html', links: ['0', '50']});
-  fs.push({id: '49', name: 'Image.png', type: 'png', links: []});
-  fs.push({id: '50', name: 'Image2.png', type: 'png', links: []});
-  fs.push({id: '57', name: 'App.js', type: 'js', links: []});
-  fs.push({id: '58', name: 'ReallyReallyLongFileName.js', type: 'js', links: []});
+  fs.push({id: '0', name: 'Home.html', type: 'html', hasErrors: '0', links: ['1', '2', '49', '57', '59']});
+  fs.push({id: '1', name: 'About.html', type: 'html',hasErrors: '1', links: ['0']});
+  fs.push({id: '2', name: 'Contact.html', type: 'html', hasErrors: '0', links: ['0', '50']});
+  fs.push({id: '49', name: 'Image.png', type: 'png', hasErrors: '0', links: []});
+  fs.push({id: '50', name: 'Image2.png', type: 'png', hasErrors: '0', links: []});
+  fs.push({id: '57', name: 'App.js', type: 'js', hasErrors: '0', links: []});
+  fs.push({id: '58', name: 'ReallyReallyLongFileName.js', type: 'js', hasErrors: '1', links: []});
+  fs.push({id: '59', name: 'Picturefile.php', type: 'php', hasErrors: '1', links: ['0', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72']});
+  fs.push({id: '63', name: 'Image3.jpeg', type: 'jpeg', hasErrors: '0', links: []});
+  fs.push({id: '64', name: 'Image4.jpeg', type: 'jpeg', hasErrors: '0', links: []});
+  fs.push({id: '65', name: 'Image5.jpeg', type: 'jpeg', hasErrors: '0', links: []});
+  fs.push({id: '66', name: 'Image6.jpeg', type: 'jpeg', hasErrors: '0', links: []});
+  fs.push({id: '67', name: 'Image7.jpeg', type: 'jpeg', hasErrors: '0', links: []});
+  fs.push({id: '68', name: 'Image8.jpeg', type: 'jpeg', hasErrors: '0', links: []});
+  fs.push({id: '69', name: 'Image9.jpeg', type: 'jpeg', hasErrors: '0', links: []});
+  fs.push({id: '70', name: 'Image10.jpeg', type: 'jpeg', hasErrors: '0', links: []});
+  fs.push({id: '71', name: 'Image11.jpeg', type: 'jpeg', hasErrors: '0', links: []});
+  fs.push({id: '72', name: 'Image12.jpeg', type: 'jpeg', hasErrors: '0', links: []});
   
   // create network arrays
   nodesArray = [];
   edgesArray = [];
+  errorsArray = [];
+  errorsSizeRefArray = [];
   for(var i = 0; i < fs.length; i++){
     
     var varColor;
@@ -46,22 +59,31 @@
       case "html":
         varColor = 'rgb(150,150,255)';
         break;
-      case "png":
-        varColor = 'rgb(255, 200, 150)';
+      case "php":
+        varColor = 'rgb(150,150,215)';
         break;
       case "js":
         varColor = 'rgb(150, 230, 150)';
         break;
+      case "png":
+        varColor = 'rgb(255, 200, 150)';
+        break;
+      case "jpeg":
+        varColor = 'rgb(255, 175, 150)';
+        break;
     }
-    
-    
-
+        
     var varSize = 12 + (6 * (fs[i].links.length));
 
     nodesArray.push({id: fs[i].id, label: fs[i].name, size: varSize, font:{size: 10}, color: varColor, shape: 'dot'});
     
     for(var j = 0; j < fs[i].links.length; j++){
       edgesArray.push({to: fs[i].links[j], from: fs[i].id, arrows:{to:{scaleFactor:0.3}}, color: 'rgb(200, 200, 200)'});
+    }
+
+    if(fs[i].hasErrors == '1'){
+      errorsArray.push(fs[i].id)
+      errorsSizeRefArray.push(varSize);
     }
   }
   
@@ -75,6 +97,22 @@
   };
   var options = {};
   network = new vis.Network(container, data, options);
+
+
+
+  network.on("afterDrawing", function (ctx) {
+    for(i = 0; i < errorsArray.length; i++){
+      var nodeId = errorsArray[i];
+      var nodePosition = network.getPositions([nodeId]);
+      ctx.fillStyle = '#FF0000';
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 1 + (errorsSizeRefArray[i]/40);
+      ctx.circle(nodePosition[nodeId].x + (errorsSizeRefArray[i] * 11 / 16), nodePosition[nodeId].y - (errorsSizeRefArray[i] * 11 / 16), 4 + (errorsSizeRefArray[i]/20));
+      ctx.fill();
+      ctx.stroke();
+    }
+    
+  });
 
 </script>
 
