@@ -15,7 +15,6 @@
     #mynetwork {
       width: 1800x;
       height: 1000px;
-      border: 1px solid lightgray;
     }
   </style>
 </head>
@@ -35,6 +34,7 @@
   fs.push({id: '49', name: 'Image.png', type: 'png', links: []});
   fs.push({id: '50', name: 'Image2.png', type: 'png', links: []});
   fs.push({id: '57', name: 'App.js', type: 'js', links: []});
+  fs.push({id: '58', name: 'ReallyReallyLongFileName.js', type: 'js', links: []});
   
   // create network arrays
   nodesArray = [];
@@ -54,13 +54,14 @@
         break;
     }
     
-    var varSize = 10 + (2 * (fs[i].links.length));
-
     
-    nodesArray.push({id: fs[i].id, label: fs[i].name, font:{size: varSize}, color: varColor, shape: 'circle'});
+
+    var varSize = 12 + (6 * (fs[i].links.length));
+
+    nodesArray.push({id: fs[i].id, label: fs[i].name, size: varSize, font:{size: 10}, color: varColor, shape: 'dot'});
     
     for(var j = 0; j < fs[i].links.length; j++){
-      edgesArray.push({to: fs[i].links[j], from: fs[i].id, arrows:{to:{scaleFactor:0.3}}});
+      edgesArray.push({to: fs[i].links[j], from: fs[i].id, arrows:{to:{scaleFactor:0.3}}, color: 'rgb(200, 200, 200)'});
     }
   }
   
