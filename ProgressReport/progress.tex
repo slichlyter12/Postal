@@ -4,17 +4,14 @@
 \usepackage[bookmarks=true]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage{titling}
+%\usepackage{titling}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage[noadjust]{cite}
 \usepackage{setspace}
 \nocite{*}
 \graphicspath{ {img/} }
-\usepackage{abstract}
-
-% C: I added this package for the definitions portion of the document
-\usepackage{amsthm}
+%\usepackage{abstract}
 
 \newcommand{\namesigdate}[2][4cm]{%
   \begin{tabular}{@{}p{#1}@{}}
@@ -100,8 +97,14 @@ The Postal extension is being designed to allow developers to more quickly searc
 This extension will also help developers create clearer and cleaner code structure by offering reminders and suggestions about the best coding practices in the programming language they are currently using.
 Any major errors or incompatibilities within the project or its files will be reported to the developer as well.
 
-
 \section{Current Status}
+
+As of the end of Fall term, the Postal team has completed all documents and preliminary requirements needed to move forward with the creation of the Postal extension. 
+Initial prototypes for both UI elements and file parsing components of the extension exist and are beginning to be further developed. 
+The team aims to have a fully working prototype by the end of Winter break that is able to parse and display any web development project.
+Current and prior progress indicates that the Postal team is on track to meet this self and client imposed deadline.
+Below are current descriptions and functionalities provided by the major components within the Postal extension.
+
 \subsection{Parsers}
 The current implementation of the extension has one parser which parses HTML.
 This parser is implemented in Perl using the Simple TokeParser which looks for specific tags and a specific attribute from that tag.
@@ -126,23 +129,65 @@ The data structure is defined below in the ERD (Figure 2).
 
 \section{Problems and Solutions}
 	\subsection{Pre-Week 3}
-
+	The beginning of our project was back in August when Sam told the rest of the team about an opportunity that he had to work with Prof. Chirs Scaffidi on a senior design project. 
+	The members of the team all jumped on the opportunity to work together for a professor all of us had had previously and throughly enjoyed.
+	Prof. Scaffidi tasked the team with coming up with project proposals.
+	The only requirements for the project is that it had to be a tool that used information foraging theory to do anything.
+	The first problem was that none of the team knew what IFT was so the team took a week to brainstorm seperately and research IFT and come up with project ideas.
+	After that week the team met and decided on two ideas to give to the client.
+	Scaffidi chose a code base organization tool that would be an extension for Visual Studio Code.
+	
 	\subsection{Week 3}
-
+	After the first couple weeks of class while other teams were just meeting the Postal team was able to start meeting and thinking about functionality as well as begin to work on the problem statement.
+	The problem statement was the first document of the project and it was a challenge to create an official document and learn how to use the IEEE standard. 
+	This problem was not really solved.
+	The team ended up creating what they thought was a good document, and there was feedback on the document that came later in the quarter helped tremendously for the next draft of the document.
+	
 	\subsection{Week 4}
-
+	During the fourth week, our client had challenged the team with accelerating the development process past the class.
+	In response to this request the team started developing basic "hello world" extensions with very limited to no functionality.
+	These programs served as a learning experience for the team as we develop more complex extensions these examples gave us a framework of understanding of what the code of an extension looks like.
+	These small programs were good but not up to par with our clients expectations.	
+	
 	\subsection{Week 5}
-
+	In week five the team revised the problem statement.
+	This task was fairly easy as the team had received feedback on the first draft and therefore had a knowledge of what was expected of them.
+	This week we also started work on the Requirements Document. 
+	The requirements document was much more daunting than the problem statement as it was more technical, and made the team think more the project as a piece of software an not just a problem to be solved.
+	The team wrote a first draft of the requirements document and made a plan to finish it the next week.
+	
 	\subsection{Week 6}
-
+	With the completion of the requirements document the team had some solid ideas as to what the project was going to look like.
+	This was a big step forward for the project as the team had only a fuzzy idea as to what the project really looked like at this moment.
+	Now the team knew that it was going to be a web development tool instead of a general code organizer.
+	This was great for the development of the project, but this narrowing of scope was not communicated to the client. 
+	The team thought that they had communicated this in a meeting but apparently either our client did not understand or the idea was not stated clearly.
+	This caused problems later in the process.
+	
 	\subsection{Week 7}
-
+	This week we thought was a big step for the team. 
+ 	By this time there was a working prototype of the user interface, and a simple parser for HTML.
+	The only thing was that these programs were not actually a Visual Studio Code extension but separately compiled programs.
+	The team needed to figure out how to combine the program UI with Visual Studio Code.
+	
 	\subsection{Week 8}
-
+	The eighth week the team finished the tech document.
+	The tech document made the team look at alternatives for parts that each member had decided to focus on.
+	This was eye opening as we researched alternatives to pieces of the project that the team members had never thought of before.
+	
 	\subsection{Week 9}
+	This week was Thanksgiving week. 
+	With the extra time Sam and Eric were able to further the prototype and make some small improvements.
+	These small improvements still had not added the UI to the extension but the team thought that it would be good enough to show to the client. 
 
 	\subsection{Week 10}
-
+	Week ten was a big week as the design document was due that week. 
+	This document proved to be the most confusing as the team had a particularly difficult time figuring out the IEEE standard of the software design document. 
+	The team was able to struggle through the design document and create what the team thought was good document. 
+	The team also was able to show to the client what we had done with the prototype so far. 
+	The client was happy with the prototype, but encouraged the team to reconsider the reduction in scope that had occured previously.
+	This will be factored into the work going forward.
+	
 \section{Prototype Code Samples}
 	
 	\subsection{FileMap UI}
@@ -255,8 +300,5 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 \pagebreak
 \bibliographystyle{IEEEtran}
 \bibliography{progress}
-\pagebreak
 
-\namesigdate{Client Signature} \hfill 
-\studentnamesigdate[4cm]{Student Signatures}
 \end{document}
