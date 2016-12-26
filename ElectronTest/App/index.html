@@ -24,7 +24,60 @@
 <div id="mynetwork"></div>
 
 <script type="text/javascript">
+  
+  
+  
+  
+  var fs = [];
+  fs.push({id: '0', name: 'Home.html', type: 'html', links: ['1', '2']});
+  fs.push({id: '1', name: 'About.html', type: 'html', links: []});
+  fs.push({id: '2', name: 'Contact.html', type: 'html', links: []});
+  
+        shadowState = false;
+
+        // create an array with nodes
+        nodesArray = [];
+        edgesArray = [];
+        for(var i = 0; i < fs.length; i++){
+          nodesArray.push({id: fs[i].id, label: fs[i].name});
+
+          for(var j = 0; j < fs[i].links.length; j++){
+            edgesArray.push({to: fs[i].links[j], from: fs[i].id});
+          }
+        }
+        nodes = new vis.DataSet(nodesArray);
+        edges = new vis.DataSet(edgesArray);
+        // create an array with edges 
+        
+        
+
+        // create a network
+        var container = document.getElementById('mynetwork');
+        var data = {
+            nodes: nodes,
+            edges: edges
+        };
+        var options = {};
+        network = new vis.Network(container, data, options);
+
+  /*var nodes, edges;
   // create an array with nodes
+  var nodeArray = [];
+  nodesArray.push({id: 1, label: 'Home.html'});
+  nodesArray.push({id: 2, label: 'About.html'});
+
+  nodes = new vis.DataSet(nodesArray);
+
+  // create an array with edges
+  var edgesArray = [];
+  edgesArray.push({from: 1, to: 2});
+  edges = new vis.DataSet(edgesArray);
+
+
+  /*
+  
+  
+  
   var nodes = new vis.DataSet([
     {id: 1, label: 'Index.php'},
     {id: 2, label: 'Styles.css'},
@@ -38,8 +91,6 @@
   var edges = new vis.DataSet([
     {from: 1, to: 3},
     {from: 1, to: 2},
-    {from: 1, to: 4},
-    {from: 3, to: 5}
   ]);
 
   // create a network
@@ -49,7 +100,12 @@
     edges: edges
   };
   var options = {};
-  var network = new vis.Network(container, data, options);
+  var network = new vis.Network(container, data, options);*/
+
+
+
+
+
 </script>
 
 
