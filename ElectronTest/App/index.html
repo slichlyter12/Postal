@@ -29,82 +29,51 @@
   
   
   var fs = [];
-  fs.push({id: '0', name: 'Home.html', type: 'html', links: ['1', '2']});
-  fs.push({id: '1', name: 'About.html', type: 'html', links: []});
-  fs.push({id: '2', name: 'Contact.html', type: 'html', links: []});
+  fs.push({id: '0', name: 'Home.html', type: 'html', links: ['1', '2', '49', '57']});
+  fs.push({id: '1', name: 'About.html', type: 'html', links: ['0']});
+  fs.push({id: '2', name: 'Contact.html', type: 'html', links: ['0', '50']});
+  fs.push({id: '49', name: 'Image.png', type: 'png', links: []});
+  fs.push({id: '50', name: 'Image2.png', type: 'png', links: []});
+  fs.push({id: '57', name: 'App.js', type: 'js', links: []});
   
-        shadowState = false;
+  // create network arrays
+  nodesArray = [];
+  edgesArray = [];
+  for(var i = 0; i < fs.length; i++){
+    
+    var varColor;
+    switch (fs[i].type){
+      case "html":
+        varColor = 'rgb(150,150,255)';
+        break;
+      case "png":
+        varColor = 'rgb(255, 200, 150)';
+        break;
+      case "js":
+        varColor = 'rgb(150, 230, 150)';
+        break;
+    }
+    
+    var varSize = 10 + (2 * (fs[i].links.length));
 
-        // create an array with nodes
-        nodesArray = [];
-        edgesArray = [];
-        for(var i = 0; i < fs.length; i++){
-          nodesArray.push({id: fs[i].id, label: fs[i].name});
-
-          for(var j = 0; j < fs[i].links.length; j++){
-            edgesArray.push({to: fs[i].links[j], from: fs[i].id});
-          }
-        }
-        nodes = new vis.DataSet(nodesArray);
-        edges = new vis.DataSet(edgesArray);
-        // create an array with edges 
-        
-        
-
-        // create a network
-        var container = document.getElementById('mynetwork');
-        var data = {
-            nodes: nodes,
-            edges: edges
-        };
-        var options = {};
-        network = new vis.Network(container, data, options);
-
-  /*var nodes, edges;
-  // create an array with nodes
-  var nodeArray = [];
-  nodesArray.push({id: 1, label: 'Home.html'});
-  nodesArray.push({id: 2, label: 'About.html'});
-
+    
+    nodesArray.push({id: fs[i].id, label: fs[i].name, font:{size: varSize}, color: varColor, shape: 'circle'});
+    
+    for(var j = 0; j < fs[i].links.length; j++){
+      edgesArray.push({to: fs[i].links[j], from: fs[i].id, arrows:{to:{scaleFactor:0.3}}});
+    }
+  }
+  
+  // create network
   nodes = new vis.DataSet(nodesArray);
-
-  // create an array with edges
-  var edgesArray = [];
-  edgesArray.push({from: 1, to: 2});
   edges = new vis.DataSet(edgesArray);
-
-
-  /*
-  
-  
-  
-  var nodes = new vis.DataSet([
-    {id: 1, label: 'Index.php'},
-    {id: 2, label: 'Styles.css'},
-    {id: 3, label: 'Image.jpg'},
-    {id: 4, label: 'Image.png'},
-    {id: 5, label: 'AboutPage.HTML'},
-    {id: 6, label: 'DisconectedPage.HTML'}
-  ]);
-
-  // create an array with edges
-  var edges = new vis.DataSet([
-    {from: 1, to: 3},
-    {from: 1, to: 2},
-  ]);
-
-  // create a network
   var container = document.getElementById('mynetwork');
   var data = {
     nodes: nodes,
     edges: edges
   };
   var options = {};
-  var network = new vis.Network(container, data, options);*/
-
-
-
-
+  network = new vis.Network(container, data, options);
 
 </script>
 
