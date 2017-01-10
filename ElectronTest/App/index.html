@@ -21,98 +21,339 @@
 <body>
 
 <div id="mynetwork"></div>
-
+<pre id="eventSpan"></pre>
 <script type="text/javascript">
   
   
   
-  
-  var fs = [];
-  fs.push({id: '0', name: 'Home.html', type: 'html', hasErrors: '0', links: ['1', '2', '49', '57', '59']});
-  fs.push({id: '1', name: 'About.html', type: 'html',hasErrors: '1', links: ['0']});
-  fs.push({id: '2', name: 'Contact.html', type: 'html', hasErrors: '0', links: ['0', '50']});
-  fs.push({id: '49', name: 'Image.png', type: 'png', hasErrors: '0', links: []});
-  fs.push({id: '50', name: 'Image2.png', type: 'png', hasErrors: '0', links: []});
-  fs.push({id: '57', name: 'App.js', type: 'js', hasErrors: '0', links: []});
-  fs.push({id: '58', name: 'ReallyReallyLongFileName.js', type: 'js', hasErrors: '1', links: []});
-  fs.push({id: '59', name: 'Picturefile.php', type: 'php', hasErrors: '1', links: ['0', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72']});
-  fs.push({id: '63', name: 'Image3.jpeg', type: 'jpeg', hasErrors: '0', links: []});
-  fs.push({id: '64', name: 'Image4.jpeg', type: 'jpeg', hasErrors: '0', links: []});
-  fs.push({id: '65', name: 'Image5.jpeg', type: 'jpeg', hasErrors: '0', links: []});
-  fs.push({id: '66', name: 'Image6.jpeg', type: 'jpeg', hasErrors: '0', links: []});
-  fs.push({id: '67', name: 'Image7.jpeg', type: 'jpeg', hasErrors: '0', links: []});
-  fs.push({id: '68', name: 'Image8.jpeg', type: 'jpeg', hasErrors: '0', links: []});
-  fs.push({id: '69', name: 'Image9.jpeg', type: 'jpeg', hasErrors: '0', links: []});
-  fs.push({id: '70', name: 'Image10.jpeg', type: 'jpeg', hasErrors: '0', links: []});
-  fs.push({id: '71', name: 'Image11.jpeg', type: 'jpeg', hasErrors: '0', links: []});
-  fs.push({id: '72', name: 'Image12.jpeg', type: 'jpeg', hasErrors: '0', links: []});
-  
+  ////TEST DATA/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /*var fs = [];
+  fs.push({id: '0', name: 'Home.html', type: 'html', hasErrors: '0', level: '0', links: ['1', '2', '49', '57', '59'], subFileStructs: ['100', '101']});
+    fs.push({id: '100', name: 'HomeDIV1', type: 'html', hasErrors: '0', level: '1', links: ['0', '1', '2'], subFileStructs: []});
+    fs.push({id: '101', name: 'HomeDIV2', type: 'html', hasErrors: '0', level: '1', links: ['0', '49', '57'], subFileStructs: []});
+  //fs.push({id: '1324', name: 'THING.php', type: 'php', hasErrors: '1', level: '0', links: ['0', '1'], subFileStructs: []});
+  fs.push({id: '1', name: 'About.html', type: 'html',hasErrors: '1', level: '0', links: ['0'], subFileStructs: []});
+  fs.push({id: '2', name: 'Contact.html', type: 'html', hasErrors: '0', level: '0', links: ['0', '50'], subFileStructs: []});
+  fs.push({id: '49', name: 'Image.png', type: 'png', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '50', name: 'Image2.png', type: 'png', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '57', name: 'App.js', type: 'js', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '58', name: 'ReallyReallyLongFileName.js', type: 'js', hasErrors: '1', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '59', name: 'Picturefile.php', type: 'php', hasErrors: '1', level: '0', links: ['0', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72'], subFileStructs: []});
+  fs.push({id: '63', name: 'Image3.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '64', name: 'Image4.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '65', name: 'Image5.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '66', name: 'Image6.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '67', name: 'Image7.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '68', name: 'Image8.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '69', name: 'Image9.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '70', name: 'Image10.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '71', name: 'Image11.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '72', name: 'Image12.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  ////TEST DATA/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+*/
+
+
+//NEED TO GO ThROugH AN BUILD ALL LINKS FIRST
+
+
+  //Globals
   // create network arrays
   nodesArray = [];
   edgesArray = [];
+  edgesIDArray = [];
   errorsArray = [];
   errorsSizeRefArray = [];
-  for(var i = 0; i < fs.length; i++){
-    
-    var varColor;
-    switch (fs[i].type){
+  //globalJSON;
+
+
+  function ReadStructs(id){
+    fs = require('fs');
+    fs.readFile('DataStruct.json', 'utf8', function (err,data) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      var DataStruct = JSON.parse(data);
+      var FileStructByID = DataStruct.FileData.FileStructs;
+      for (var i = 0; i < FileStructByID.length; i++) {
+        if (FileStructByID[i].id == id) {
+           ReturnStruct(FileStructByID[i]);
+           alert("returned");
+           return 1;
+        }
+      }
+    });
+  };
+
+  function ReturnStruct(FileStructByID){
+    //alert(JSON.stringify(FileStructByID));
+    alert("in Return Struct");
+    return (FileStructByID);
+  };
+
+
+  /*function ReadAllStructs(){
+    fs = require('fs')
+    fs.readFile('DataStruct.json', 'utf8', function (err,data) {
+      if (err) {
+        return console.log(err);
+      }
+      var DataStruct = JSON.parse(data);
+      console.log(DataStruct.FileData); //return this for all DataStruct info
+    });
+  }*/
+
+
+
+  function PickColor(type){
+    switch (type){
       case "html":
-        varColor = 'rgb(150,150,255)';
+        return('rgb(150,150,255)');
         break;
       case "php":
-        varColor = 'rgb(150,150,215)';
+        return('rgb(150,150,215)');
         break;
       case "js":
-        varColor = 'rgb(150, 230, 150)';
+        return('rgb(150, 230, 150)');
         break;
       case "png":
-        varColor = 'rgb(255, 200, 150)';
+        return('rgb(255, 200, 150)');
         break;
       case "jpeg":
-        varColor = 'rgb(255, 175, 150)';
+        return('rgb(255, 175, 150)');
         break;
     }
-        
-    var varSize = 12 + (6 * (fs[i].links.length));
-
-    nodesArray.push({id: fs[i].id, label: fs[i].name, size: varSize, font:{size: 10}, color: varColor, shape: 'dot'});
-    
-    for(var j = 0; j < fs[i].links.length; j++){
-      edgesArray.push({to: fs[i].links[j], from: fs[i].id, arrows:{to:{scaleFactor:0.3}}, color: 'rgb(200, 200, 200)'});
-    }
-
-    if(fs[i].hasErrors == '1'){
-      errorsArray.push(fs[i].id)
-      errorsSizeRefArray.push(varSize);
-    }
-  }
-  
-  // create network
-  nodes = new vis.DataSet(nodesArray);
-  edges = new vis.DataSet(edgesArray);
-  var container = document.getElementById('mynetwork');
-  var data = {
-    nodes: nodes,
-    edges: edges
   };
-  var options = {};
-  network = new vis.Network(container, data, options);
 
-
-
-  network.on("afterDrawing", function (ctx) {
-    for(i = 0; i < errorsArray.length; i++){
-      var nodeId = errorsArray[i];
-      var nodePosition = network.getPositions([nodeId]);
-      ctx.fillStyle = '#FF0000';
-      ctx.strokeStyle = '#FFFFFF';
-      ctx.lineWidth = 1 + (errorsSizeRefArray[i]/40);
-      ctx.circle(nodePosition[nodeId].x + (errorsSizeRefArray[i] * 11 / 16), nodePosition[nodeId].y - (errorsSizeRefArray[i] * 11 / 16), 4 + (errorsSizeRefArray[i]/20));
-      ctx.fill();
-      ctx.stroke();
+  function GetEdgeID(to, from){
+    for(var i = 0; i < edgesIDArray.length; i++){
+        if(edgesIDArray[i].to == to && edgesIDArray[i].from == from){
+          return i;
+        }
     }
+  };
+
+  function AddNode(id){
+    var Struct = ReadStructs(id);
     
-  });
+    var varColor = PickColor(struct.type);
+    var varSize = 12 + (6 * (struct.links.length));
+    nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10}, color: varColor, shape: 'dot'});
+    
+  };
+
+
+
+
+
+
+  function MainUI(){
+   
+    var edgeIDCounter = 0;
+    var lastZoomedNode = -1;
+    var edgeIterator = 0;
+
+    globalJSON = ReadAllStructs();
+  
+    //create edge ID tacking array
+    for(var i = 0; i < globalJSON.length; i++){
+      for(var j = 0; j < globalJSON[i].links.length; j++){
+        edgesIDArray.push({id: edgeIDCounter, to: globalJSON[i].links[j], from: globalJSON[i].id});
+        edgeIDCounter++;
+      }
+    }
+
+    //create node arrays
+
+    for(var i = 0; i < globalJSON.length; i++){
+      if(globalJSON[i].level > 0){
+        continue;
+      }
+      else{
+        AddNode(globalJSON[i].id);
+        
+        if(globalJSON[i].errors.length > 0){
+          errorsArray.push(globalJSON[i].id)
+          errorsSizeRefArray.push(varSize);
+        }
+
+        for(var j = 0; j < globalJSON[i].links.length; j++){
+          edgeIterator = GetEdgeID(globalJSON[i].links[j], globalJSON[i].id);
+          edgesArray.push({id: edgeIterator, to: globalJSON[i].links[j], from: globalJSON[i].id, arrows:{to:{scaleFactor:0.3}}, color: 'rgb(200, 200, 200)'});
+        }
+      }
+    }
+  
+    // create network
+    nodes = new vis.DataSet(nodesArray);
+    edges = new vis.DataSet(edgesArray);
+    var container = document.getElementById('mynetwork');
+    var data = {
+      nodes: nodes,
+      edges: edges
+    };
+    var options = {};
+    network = new vis.Network(container, data, options);
+
+
+    //Error bubbles
+    network.on("afterDrawing", function (ctx) {
+      for(i = 0; i < errorsArray.length; i++){
+        var nodeId = errorsArray[i];
+        var nodePosition = network.getPositions([nodeId]);
+        ctx.fillStyle = '#FF0000';
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 1 + (errorsSizeRefArray[i]/40);
+        ctx.circle(nodePosition[nodeId].x + (errorsSizeRefArray[i] * 11 / 16), nodePosition[nodeId].y - (errorsSizeRefArray[i] * 11 / 16), 4 + (errorsSizeRefArray[i]/20));
+        ctx.fill();
+        ctx.stroke();
+      }
+    
+    });
+
+
+    /*network.on("doubleClick", function (params) {
+        params.event = "[original event]";
+        if(lastZoomedNode == -1){
+          lastZoomedNode = params.nodes;
+          var i;
+          var tempIterator;
+          for(i = 0; i < fs.length; i++){
+            if(fs[i].id == params.nodes){
+              tempIterator = i;
+            }
+            else if(fs[i].level == 0 && fs[i].id != params.nodes){
+              try {
+                  nodes.update({
+                      id: fs[i].id,
+                      color: 'rgb(220,220,220)'
+                  });
+              }
+              catch (err) {
+                  alert(err);
+              }
+            }
+          }
+          
+          i = tempIterator;
+          
+          for(var j = 0; j < fs[i].subFileStructs.length; j++){
+            for(var k = 0; k < fs.length; k++){
+              if(fs[k].id == fs[i].subFileStructs[j]){
+                
+                //add new node
+                try {
+                  nodes.add({id: fs[k].id, label: fs[k].name, size: varSize, font:{size: 10}, color: '#FF0000', shape: 'dot'});
+                }
+                catch (err) {
+                  //alert(err)
+                  continue;
+                }
+
+                //update edges
+                for(var l = 0; l < fs[k].links.length; l++){
+                  for(var m = 0; m < edgesIDArray.length; m++){
+                    if(edgesIDArray[m].to == fs[k].links[l] && edgesIDArray[m].from == fs[k].id){
+                      break;
+                    }
+                  }
+                  try {
+                    edges.add({
+                        id: edgesIDArray[m].id,
+                        from: fs[k].id,
+                        to: fs[k].links[l],
+                        arrows:{to:{scaleFactor:0.3}}, 
+                        color: 'rgb(200, 200, 200)'
+                    });
+                    //edgesIDArray.push({id: edgeIDCounter, to: fs[k].links[l], from: fs[k].id});
+                    //edgeIDCounter++;
+                  }
+                  catch (err) {
+                    alert(err);
+                  }
+                  
+                  //remove edges from higher up level
+                  for(var m = 0; m < edgesIDArray.length; m++){
+                    if(edgesIDArray[m].to == fs[k].links[l] && edgesIDArray[m].from == fs[i].id){
+                      break;
+                    }
+                  }
+                  try {
+                    edges.remove({
+                        id: m
+                    });
+                  }
+                  catch (err) {
+                    alert(err);
+                  }
+                }
+
+              }
+            }
+          }
+        }
+        else{
+          //zoom out
+          alert("smoll");
+          lastZoomedNode = -1;
+          
+          for(var i = 0; i < fs.length; i++){
+            if(fs[i].level != 0){
+                for(var j = 0; j < fs[i].links.length; j++){
+                  for(var k = 0; k < edgesIDArray.length; k++){
+                    if(edgesIDArray[k].to == fs[i].links[j] && edgesIDArray[k].from == fs[i].id){
+                      try {
+                        edges.remove({
+                          id: edgesIDArray[k].id
+                        });
+                      }
+                      catch (err) {
+                        alert(err);
+                      }
+                      break;
+                    }
+                  }
+                  
+              }
+              
+              try {
+                  nodes.remove({
+                      id: fs[i].id
+                  });
+                }
+                catch (err) {
+                  alert(err);
+                }
+
+            }
+            else{
+              varColor = PickColor(fs[i].type)
+               try {
+                  nodes.update({
+                      id: fs[i].id,
+                      color: varColor
+                  });
+              }
+              catch (err) {
+                  alert(err);
+              }
+            }
+          }
+        
+        
+        }
+   
+        
+        
+    });*/
+  }
+
+  //readStructs(0);
+  alert("running");
+  //readStructs(0);
+  var temp = ReadStructs(0);
+  alert("temp:" + temp);
+  //alert(temp.id);
 
 </script>
 

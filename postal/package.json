@@ -11,7 +11,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.postal"
+    "onCommand:extension.parse"
   ],
   "main": "./out/src/extension",
   "contributes": {
@@ -19,6 +19,10 @@
       {
         "command": "extension.postal",
         "title": "Postal"
+      },
+      {
+        "command": "extension.parse",
+        "title": "Postal Parse"
       }
     ]
   },
@@ -35,6 +39,7 @@
     "@types/mocha": "^2.2.32"
   },
   "dependencies": {
+    "cwd": "^0.10.0",
     "file-system": "^2.2.1",
     "open": "0.0.5"
   }
