@@ -1,24 +1,29 @@
-var id = 0;
-readStructs(id);
+var id = 7;
+var struct;
+readStructs();
 
-function readStructs(id){
+function readStructs(){
     fs = require('fs');
-    fs.readFile('DataStruct.json', 'utf8', function (err,data) {
+    struct = JSON.parse(fs.readFileSync('DataStruct.json', 'utf8', function (err,data) {
         if (err) {
             console.log(err);
             return;
         }
-        var DataStruct = JSON.parse(data);
-        var FileStructByID = DataStruct.FileData.FileStructs;
-        for (var i = 0; i < FileStructByID.length; i++) {
-            if (FileStructByID[i].id == id) {
-                returnStruct(FileStructByID[i]);
-            }
-        }
-    });
-};
 
-function returnStruct(FileStructByID){
-    console.log(FileStructByID);
-    return FileStructByID;
+         var DataStruct = JSON.parse(data);
+    
+    }));
 }
+
+function getByID(id){
+    var FileStructByID = struct.FileData.FileStructs;
+
+    for (var i = 0; i < FileStructByID.length; i++) {
+        if (FileStructByID[i].id == id) {
+            struct = FileStructByID[i];
+            return struct;
+        }
+    }
+}
+getByID(id);
+console.log(struct);
