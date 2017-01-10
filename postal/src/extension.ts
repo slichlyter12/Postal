@@ -6,6 +6,7 @@ import { ContentProv } from './ContentProv';
 
 var open = require('open');
 var fs = require('file-system');
+var cwd = require('cwd');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -69,8 +70,37 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(disposable);
+
+    let parse = vscode.commands.registerCommand('extension.parse', () => {
+
+        // GET GRAMMARS
+        var grammarsObject;
+        var grammars = [];
+        var grammarsFile = fs.readFile(cwd() + "/src/grammars.json", "utf8", function(err, data) {
+            if (err) {
+                console.log("Error: " + err);
+                return;
+            } else {
+                grammarsObject = JSON.parse(data);
+            }
+        });
+
+        //GET FILES TO PARSE
+        var files = vscode.workspace.findFiles("*.php", '');
+
+        //PARSE FILES
+        files.then(function(foundFiles) {
+            for (var i = 0; i < foundFiles.length; i++) {
+                var linksRegex = new RegExp(grammarsObject.html.links, 'g');
+                var content = fs.readFileSync(foundFiles[i].path, 'utf8');
+                var links = content.match(linksRegex);
+                console.log(links);
+            }
+        });
+    });
+
+    context.subscriptions.push(parse);
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {
-}
+export function deactivate() {}
