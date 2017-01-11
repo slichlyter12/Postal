@@ -90,11 +90,18 @@ export function activate(context: vscode.ExtensionContext) {
         for (var a = 0; a < files.length; a++) {
             files[a].then(function(foundFiles) {
                 for (var i = 0; i < grammars.grammars.length; i++) {
-                    //console.log(grammars.grammars[i]);
                     for (var k = 0; k < grammars.grammars[i].regex.length; k++) {
                         for (var key in grammars.grammars[i].regex[k]) {
                             if (grammars.grammars[i].regex[k].hasOwnProperty(key)) {
-                                console.log(grammars.grammars[i].regex[k][key] + " -> " + key);
+                                //console.log(grammars.grammars[i].regex[k][key] + " -> " + key);
+                                
+                                for (var b = 0; b < foundFiles.length; b++) {
+                                    var regexString = grammars.grammars[i].regex[k][key];
+                                    var regex = new RegExp(regexString, 'g');
+                                    var content = nodefs.readFileSync(foundFiles[i].path, 'utf8');
+                                    var found = content.match(regex);
+                                    console.log(found);
+                                }
                             }
                         }
                     }
@@ -102,14 +109,6 @@ export function activate(context: vscode.ExtensionContext) {
                 return 0;
             });
         }
-
-        //FIXME: REGEX LOGIC
-        // var specificRegex = categoryRegex[k];
-        // console.log(specificRegex);
-        // var regex = new RegExp(specificRegex, 'g');
-        // var content = fs.readFileSync(foundFiles[i].path, 'utf8');
-        // var links = content.match(regex);
-        // console.log(links);
     });
 
 
