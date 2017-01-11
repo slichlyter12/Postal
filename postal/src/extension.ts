@@ -79,7 +79,7 @@ export function activate(context: vscode.ExtensionContext) {
         var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
         var grammars = JSON.parse(grammarsFile);
 
-        //GET FILES TO PARSE AND PARSE
+        //GET FILES TO PARSE
         var files = [];
         for (var i = 0; i < grammars.grammars.length; i++) {
             for (var j = 0; j < grammars.grammars[i].filetypes.length; j++) {
