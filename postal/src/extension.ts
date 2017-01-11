@@ -78,7 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
         var grammarsFile = nodefs.readFileSync(cwd() + "/src/grammars.json", "utf8");
         var grammars = JSON.parse(grammarsFile);
 
-        //GET FILES TO PARSE
+        //GET FILES TO PARSE AND PARSE
         var files = [];
         for (var i = 0; i < grammars.grammars.length; i++) {
             for (var j = 0; j < grammars.grammars[i].filetypes.length; j++) {
@@ -86,7 +86,18 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
 
-        console.log(files);
+        // PARSE LOGIC
+        for (var i = 0; i < files.length; i++) {
+            files[i].then(function(foundFiles) {
+                for (var k = 0; k < grammars.grammars[i].regex.length; k++) {
+                    for (var key in grammars.grammars[i].regex[k]) {
+                        if (grammars.grammars[i].regex[k].hasOwnProperty(key)) {
+                            console.log(key + " -> " + grammars.grammars[i].regex[k](key));
+                        }
+                    }
+                }
+            });
+        }
 
         //TODO: PARSE FILES
         // files.then(function(foundFiles) {
