@@ -86,45 +86,22 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
 
-        console.log("extension.parse success!");
-
-        // PARSE LOGIC
-        // for (var i = 0; i < files.length; i++) {
-        //     files[i].then(function(foundFiles) {
-        //         for (var k = 0; k < grammars.grammars[i].regex.length; k++) {
-        //             for (var key in grammars.grammars[i].regex[k]) {
-        //                 if (grammars.grammars[i].regex[k].hasOwnProperty(key)) {
-        //                     console.log(key + " -> " + grammars.grammars[i].regex[k](key));
-        //                 }
-        //             }
-        //         }
-        //     });
-        // }
-
-        //TODO: PARSE FILES
-        // files.then(function(foundFiles) {
-        //     for (var i = 0; i < foundFiles.length; i++) {
-        //         for (var catKey in grammarsObject) {
-        //             if (grammarsObject.hasOwnProperty(catKey)) {
-        //                 for (var specKey in grammarsObject[catKey]) {
-        //                     if (grammarsObject[catKey].hasOwnProperty(specKey)) {
-        //                         console.log(specKey + " -> " + grammarsObject[catKey][specKey]);
-        //                         var content = nodefs.readFileSync(foundFiles[i].path, 'utf8', function(err, data) {
-        //                             console.log("entered readfile");
-        //                             if (err) {
-        //                                 console.log("Error parsing files on read");
-        //                                 return;
-        //                             } else {
-        //                                 var matches = data.text.match(grammarsObject[catKey][specKey]);
-        //                                 console.log(matches);
-        //                             }
-        //                         });
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // });
+        // FIXME: PARSE LOGIC
+        for (var a = 0; a < files.length; a++) {
+            files[a].then(function(foundFiles) {
+                for (var i = 0; i < grammars.grammars.length; i++) {
+                    //console.log(grammars.grammars[i]);
+                    for (var k = 0; k < grammars.grammars[i].regex.length; k++) {
+                        for (var key in grammars.grammars[i].regex[k]) {
+                            if (grammars.grammars[i].regex[k].hasOwnProperty(key)) {
+                                console.log(grammars.grammars[i].regex[k][key] + " -> " + key);
+                            }
+                        }
+                    }
+                }
+                return 0;
+            });
+        }
 
         //FIXME: REGEX LOGIC
         // var specificRegex = categoryRegex[k];
