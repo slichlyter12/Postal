@@ -6,6 +6,7 @@ import { ContentProv } from './ContentProv';
 
 var open = require('open');
 var fs = require('file-system');
+var nodefs = require('fs');
 var cwd = require('cwd');
 
 // this method is called when your extension is activated
@@ -74,30 +75,53 @@ export function activate(context: vscode.ExtensionContext) {
     let parse = vscode.commands.registerCommand('extension.parse', () => {
 
         // GET GRAMMARS
-        var grammarsObject;
-        var grammars = [];
-        var grammarsFile = fs.readFile(cwd() + "/src/grammars.json", "utf8", function(err, data) {
-            if (err) {
-                console.log("Error: " + err);
-                return;
-            } else {
-                grammarsObject = JSON.parse(data);
-            }
-        });
+        var grammarsFile = nodefs.readFileSync(cwd() + "/src/grammars.json", "utf8");
+        var grammars = JSON.parse(grammarsFile);
 
         //GET FILES TO PARSE
-        var files = vscode.workspace.findFiles("*.php", '');
-
-        //PARSE FILES
-        files.then(function(foundFiles) {
-            for (var i = 0; i < foundFiles.length; i++) {
-                var linksRegex = new RegExp(grammarsObject.html.links, 'g');
-                var content = fs.readFileSync(foundFiles[i].path, 'utf8');
-                var links = content.match(linksRegex);
-                console.log(links);
+        var files = [];
+        for (var i = 0; i < grammars.grammars.length; i++) {
+            for (var j = 0; j < grammars.grammars[i].filetypes.length; j++) {
+                files.push(vscode.workspace.findFiles("*" + grammars.grammars[i].filetypes[j], ''));
             }
-        });
+        }
+
+        console.log(files);
+
+        //TODO: PARSE FILES
+        // files.then(function(foundFiles) {
+        //     for (var i = 0; i < foundFiles.length; i++) {
+        //         for (var catKey in grammarsObject) {
+        //             if (grammarsObject.hasOwnProperty(catKey)) {
+        //                 for (var specKey in grammarsObject[catKey]) {
+        //                     if (grammarsObject[catKey].hasOwnProperty(specKey)) {
+        //                         console.log(specKey + " -> " + grammarsObject[catKey][specKey]);
+        //                         var content = nodefs.readFileSync(foundFiles[i].path, 'utf8', function(err, data) {
+        //                             console.log("entered readfile");
+        //                             if (err) {
+        //                                 console.log("Error parsing files on read");
+        //                                 return;
+        //                             } else {
+        //                                 var matches = data.text.match(grammarsObject[catKey][specKey]);
+        //                                 console.log(matches);
+        //                             }
+        //                         });
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
+
+        //FIXME: REGEX LOGIC
+        // var specificRegex = categoryRegex[k];
+        // console.log(specificRegex);
+        // var regex = new RegExp(specificRegex, 'g');
+        // var content = fs.readFileSync(foundFiles[i].path, 'utf8');
+        // var links = content.match(regex);
+        // console.log(links);
     });
+
 
     context.subscriptions.push(parse);
 }

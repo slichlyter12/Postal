@@ -19,8 +19,7 @@
       {
         "command": "extension.postal",
         "title": "Postal"
-      },
-      {
+      }, {
         "command": "extension.parse",
         "title": "Postal Parse"
       }

@@ -1,5 +1,21 @@
 {
-    "html": {
-        "links" : "href=[\"](.+?)[\"]"
-    }
+    "grammars" : [
+        {
+            "id" : 0,
+            "title" : "html",
+            "filetypes" : [".html", ".php"],
+            "regex" : [{
+                "links" :  "href=[\"](.+?)[\"]"
+            }, {
+                "includes" : "include=[\"](.+?)[\"]"
+            }]
+        }, {
+            "id" : 1,
+            "title" : "javascript",
+            "filetypes" : [".js"],
+            "regex" : [{
+                "requires" : ""
+            }]
+        }
+    ]
 }
