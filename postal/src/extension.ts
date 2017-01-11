@@ -9,6 +9,8 @@ var fs = require('file-system');
 var nodefs = require('fs');
 var cwd = require('cwd');
 
+var isWin = /^win/.test(process.platform);
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -74,7 +76,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     let parse = vscode.commands.registerCommand('extension.parse', () => {
         // GET GRAMMARS
-        console.log(__dirname + "\\..\\..\\src\\grammars.json");
         var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
         var grammars = JSON.parse(grammarsFile);
 
@@ -89,6 +90,7 @@ export function activate(context: vscode.ExtensionContext) {
         // FIXME: PARSE LOGIC
         for (var a = 0; a < files.length; a++) {
             files[a].then(function(foundFiles) {
+
                 for (var i = 0; i < grammars.grammars.length; i++) {
                     for (var k = 0; k < grammars.grammars[i].regex.length; k++) {
                         for (var key in grammars.grammars[i].regex[k]) {
@@ -98,7 +100,12 @@ export function activate(context: vscode.ExtensionContext) {
                                 for (var b = 0; b < foundFiles.length; b++) {
                                     var regexString = grammars.grammars[i].regex[k][key];
                                     var regex = new RegExp(regexString, 'g');
-                                    var content = nodefs.readFileSync(foundFiles[b].path, 'utf8');
+                                    var content;
+                                    if (isWin) {
+                                        content = nodefs.readFileSync(foundFiles[b].path.slice(1), 'utf8');
+                                    } else {
+                                        content = nodefs.readFileSync(foundFiles[b].path, 'utf8');
+                                    }
                                     var found = content.match(regex);
                                     console.log(found);
                                 }
