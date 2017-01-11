@@ -5,6 +5,8 @@ const vscode = require('vscode');
 const ContentProv_1 = require('./ContentProv');
 var open = require('open');
 var fs = require('file-system');
+var nodefs = require('fs');
+var cwd = require('cwd');
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
@@ -56,10 +58,44 @@ function activate(context) {
         });
     });
     context.subscriptions.push(disposable);
+    let parse = vscode.commands.registerCommand('extension.parse', () => {
+        // GET GRAMMARS
+        var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
+        var grammars = JSON.parse(grammarsFile);
+        //GET FILES TO PARSE
+        var files = [];
+        for (var i = 0; i < grammars.grammars.length; i++) {
+            for (var j = 0; j < grammars.grammars[i].filetypes.length; j++) {
+                files.push(vscode.workspace.findFiles("*" + grammars.grammars[i].filetypes[j], ''));
+            }
+        }
+        // FIXME: PARSE LOGIC
+        for (var a = 0; a < files.length; a++) {
+            files[a].then(function (foundFiles) {
+                for (var i = 0; i < grammars.grammars.length; i++) {
+                    for (var k = 0; k < grammars.grammars[i].regex.length; k++) {
+                        for (var key in grammars.grammars[i].regex[k]) {
+                            if (grammars.grammars[i].regex[k].hasOwnProperty(key)) {
+                                //console.log(grammars.grammars[i].regex[k][key] + " -> " + key);
+                                for (var b = 0; b < foundFiles.length; b++) {
+                                    var regexString = grammars.grammars[i].regex[k][key];
+                                    var regex = new RegExp(regexString, 'g');
+                                    var content = nodefs.readFileSync(foundFiles[b].path, 'utf8');
+                                    var found = content.match(regex);
+                                    console.log(found);
+                                }
+                            }
+                        }
+                    }
+                }
+                return 0;
+            });
+        }
+    });
+    context.subscriptions.push(parse);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated
-function deactivate() {
-}
+function deactivate() { }
 exports.deactivate = deactivate;
 //# sourceMappingURL=extension.js.map
