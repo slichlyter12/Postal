@@ -58,6 +58,8 @@
 
   //Globals
   // create network arrays
+
+  DFS = [];
   nodesArray = [];
   edgesArray = [];
   edgesIDArray = [];
@@ -65,45 +67,18 @@
   errorsSizeRefArray = [];
   //globalJSON;
 
-
-  function ReadStructs(id){
+function Init(){
     fs = require('fs');
     fs.readFile('DataStruct.json', 'utf8', function (err,data) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      var DataStruct = JSON.parse(data);
-      var FileStructByID = DataStruct.FileData.FileStructs;
-      for (var i = 0; i < FileStructByID.length; i++) {
-        if (FileStructByID[i].id == id) {
-           ReturnStruct(FileStructByID[i]);
-           alert("returned");
-           return 1;
+        if (err) {
+          alert(err);
+          return;
         }
-      }
+        var DataStruct = JSON.parse(data);
+        DFS = DataStruct.FileData.FileStructs;
+        Main();
     });
-  };
-
-  function ReturnStruct(FileStructByID){
-    //alert(JSON.stringify(FileStructByID));
-    alert("in Return Struct");
-    return (FileStructByID);
-  };
-
-
-  /*function ReadAllStructs(){
-    fs = require('fs')
-    fs.readFile('DataStruct.json', 'utf8', function (err,data) {
-      if (err) {
-        return console.log(err);
-      }
-      var DataStruct = JSON.parse(data);
-      console.log(DataStruct.FileData); //return this for all DataStruct info
-    });
-  }*/
-
-
+};
 
   function PickColor(type){
     switch (type){
@@ -133,57 +108,81 @@
     }
   };
 
+  function GetStruct(id){
+    for(var i = 0; i < DFS.length; i++){
+      if(DFS[i].id == id){
+        var struct = DFS[i];
+        return struct;
+      }
+    }
+  }
+
   function AddNode(id){
-    var Struct = ReadStructs(id);
-    
+    var struct = GetStruct(id);
     var varColor = PickColor(struct.type);
     var varSize = 12 + (6 * (struct.links.length));
     nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10}, color: varColor, shape: 'dot'});
-    
+    //alert("added node: " + nodesArray[(nodesArray.length-1)].id);
+    return;
   };
 
 
+  function DrawError(id){
+
+  }
+
+  function IsNodeDrawn(id){
+    for(var i = 0; i < nodesArray.length; i++){
+      if(nodesArray[i].id == id){
+        return 1;
+      }
+    }
+    return 0;
+  }
 
 
 
 
-  function MainUI(){
-   
+function Main(){
+    //alert("in main");
+    //alert("Structure length: " + DFS.length);
+
     var edgeIDCounter = 0;
     var lastZoomedNode = -1;
     var edgeIterator = 0;
-
-    globalJSON = ReadAllStructs();
-  
+    
     //create edge ID tacking array
-    for(var i = 0; i < globalJSON.length; i++){
-      for(var j = 0; j < globalJSON[i].links.length; j++){
-        edgesIDArray.push({id: edgeIDCounter, to: globalJSON[i].links[j], from: globalJSON[i].id});
+    for(var i = 0; i < DFS.length; i++){
+      for(var j = 0; j < DFS[i].links.length; j++){
+        edgesIDArray.push({id: edgeIDCounter, to: DFS[i].links[j], from: DFS[i].id});
         edgeIDCounter++;
       }
     }
-
+    
     //create node arrays
 
-    for(var i = 0; i < globalJSON.length; i++){
-      if(globalJSON[i].level > 0){
+    for(var i = 0; i < DFS.length; i++){
+      if(DFS[i].level > 0){
         continue;
       }
       else{
-        AddNode(globalJSON[i].id);
         
-        if(globalJSON[i].errors.length > 0){
-          errorsArray.push(globalJSON[i].id)
-          errorsSizeRefArray.push(varSize);
+        AddNode(DFS[i].id);
+        
+        if(DFS[i].errors.length > 0){
+          
+          errorsArray.push(DFS[i].id)
+          errorsSizeRefArray.push((DFS[i].links.length * 6) + 12);
         }
 
-        for(var j = 0; j < globalJSON[i].links.length; j++){
-          edgeIterator = GetEdgeID(globalJSON[i].links[j], globalJSON[i].id);
-          edgesArray.push({id: edgeIterator, to: globalJSON[i].links[j], from: globalJSON[i].id, arrows:{to:{scaleFactor:0.3}}, color: 'rgb(200, 200, 200)'});
+        for(var j = 0; j < DFS[i].links.length; j++){
+          edgeIterator = GetEdgeID(DFS[i].links[j], DFS[i].id);
+          //alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
+          edgesArray.push({id: edgeIterator, to: DFS[i].links[j].FileStructid, from: DFS[i].id, arrows:{to:{scaleFactor:0.3}}, color: 'rgb(200, 200, 200)'});
         }
       }
     }
-  
+    //alert("thing");
     // create network
     nodes = new vis.DataSet(nodesArray);
     edges = new vis.DataSet(edgesArray);
@@ -208,9 +207,13 @@
         ctx.fill();
         ctx.stroke();
       }
-    
     });
 
+
+}
+
+
+Init();
 
     /*network.on("doubleClick", function (params) {
         params.event = "[original event]";
@@ -346,14 +349,7 @@
         
         
     });*/
-  }
 
-  //readStructs(0);
-  alert("running");
-  //readStructs(0);
-  var temp = ReadStructs(0);
-  alert("temp:" + temp);
-  //alert(temp.id);
 
 </script>
 

@@ -10,14 +10,12 @@
 
                 "subFileStructs":
                     [
-                        {"FileStructid": 1},
-                        {"FileStructid": 2}
+                        {"FileStructid": 1}
                     ],
 
                 "links":
                     [
-                        {"FileStructid": 7},
-                        {"FileStructid": 11}
+                        {"FileStructid": 7}
                     ],
 
                 "errors":
@@ -36,8 +34,6 @@
 
                 "subFileStructs":
                     [
-                        {"FileStructid": 22},
-                        {"FileStructid": 42}
                     ],
 
                 "links":
@@ -51,6 +47,25 @@
                         {"ErrorStructid": "e42"},
                         {"ErrorStructid": "e43"},
                         {"ErrorStructid": "e44"}
+                    ]
+            },
+
+            {
+                "id": 11,
+                "level": 0,
+                "name": "Thing.jpeg",
+                "type": "jpeg",
+
+                "subFileStructs":
+                    [
+                    ],
+
+                "links":
+                    [
+                    ],
+
+                "errors":
+                    [
                     ]
             }
        ],
