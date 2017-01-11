@@ -75,7 +75,8 @@ export function activate(context: vscode.ExtensionContext) {
     let parse = vscode.commands.registerCommand('extension.parse', () => {
 
         // GET GRAMMARS
-        var grammarsFile = nodefs.readFileSync(__dirname + "\\..\\..\\src\\grammars.json", "utf8");
+        console.log(__dirname + "\\..\\..\\src\\grammars.json");
+        var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
         var grammars = JSON.parse(grammarsFile);
 
         //GET FILES TO PARSE AND PARSE
@@ -98,7 +99,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 for (var b = 0; b < foundFiles.length; b++) {
                                     var regexString = grammars.grammars[i].regex[k][key];
                                     var regex = new RegExp(regexString, 'g');
-                                    var content = nodefs.readFileSync(foundFiles[i].path, 'utf8');
+                                    var content = nodefs.readFileSync(foundFiles[b].path, 'utf8');
                                     var found = content.match(regex);
                                     console.log(found);
                                 }
