@@ -14,7 +14,7 @@
             "title" : "javascript",
             "filetypes" : [".js"],
             "regex" : [{
-                "requires" : ""
+                "requires" : "requires=[\"](.+?)[\"]"
             }]
         }
     ]
