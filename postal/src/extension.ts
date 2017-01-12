@@ -8,6 +8,8 @@ var open = require('open');
 var fs = require('file-system');
 var nodefs = require('fs');
 var cwd = require('cwd');
+var npm = require('npm');
+const electroner = require("electroner");
 
 var isWin = /^win/.test(process.platform);
 
@@ -107,7 +109,7 @@ export function activate(context: vscode.ExtensionContext) {
                                         content = nodefs.readFileSync(foundFiles[b].path, 'utf8');
                                     }
                                     var found = content.match(regex);
-                                    console.log(found);
+                                    //console.log(found);
                                 }
                             }
                         }
@@ -116,6 +118,19 @@ export function activate(context: vscode.ExtensionContext) {
                 return 0;
             });
         }
+
+        // Start the Electron app
+        console.log(`${__dirname}/../../main.js`);
+        var e = electroner(`${__dirname}/../../main.js`, function(err, data) {
+            if (err) {
+                console.log("Error: " + err);
+            } else {
+                console.log("here");
+                console.log(data);
+                console.log("end data");
+            }
+        });
+        console.log(e);
     });
 
 
