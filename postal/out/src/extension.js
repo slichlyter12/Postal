@@ -117,7 +117,7 @@ function activate(context) {
                 var jsonHolder = {};
                 var FileData = {};
                 var FileStructs = [];
-                var ErrorStucts = [];
+                var ErrorStructs = [];
                 for (var x = 0; x < nameHolderUnique.length; x++) {
                     FileStructs.push({
                         id: x,
@@ -127,9 +127,9 @@ function activate(context) {
                         links: []
                     });
                 }
-                FileData = { FileStructs, ErrorStucts };
+                FileData = { FileStructs, ErrorStructs };
                 jsonHolder = JSON.stringify({ FileData });
-                nodefs.writeFileSync(__dirname + "/../../src/DataStruct.json", jsonHolder, 'utf8');
+                nodefs.writeFileSync(__dirname + "/../../postal.json", jsonHolder, 'utf8');
                 console.log(JSON.stringify(nameHolder.filter(onlyUnique)));
                 //console.log(JSON.stringify(linkHolder));
                 return 0;
@@ -144,7 +144,7 @@ function activate(context) {
             filePath = `${__dirname}/../../`;
         }
         //console.log(filePath);
-        var p = childProcess.spawn(electronp, [filePath + 'main.js']);
+        //var p = childProcess.spawn(electronp, [filePath + 'main.js']);
         //console.log(p);
         //console.log("children");
         // exec('electron main.js', (error, stdout, stderr) => {

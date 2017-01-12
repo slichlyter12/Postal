@@ -138,7 +138,7 @@ export function activate(context: vscode.ExtensionContext) {
                 var jsonHolder = {};
                 var FileData = {};
                 var FileStructs = [];
-                var ErrorStucts = [];
+                var ErrorStructs = [];
                 
                 for(var x = 0; x < nameHolderUnique.length; x++){
                     FileStructs.push({
@@ -150,7 +150,7 @@ export function activate(context: vscode.ExtensionContext) {
                     })
                 }
 
-                FileData = {FileStructs, ErrorStucts};
+                FileData = {FileStructs, ErrorStructs};
                 jsonHolder = JSON.stringify({FileData});
                 
                 nodefs.writeFileSync(__dirname + "/../../postal.json", jsonHolder, 'utf8');
