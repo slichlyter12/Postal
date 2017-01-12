@@ -75,7 +75,6 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(disposable);
 
     let parse = vscode.commands.registerCommand('extension.parse', () => {
-
         // GET GRAMMARS
         var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
         var grammars = JSON.parse(grammarsFile);

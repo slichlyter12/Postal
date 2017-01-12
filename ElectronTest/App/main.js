@@ -1,4 +1,5 @@
-var app = require('app');  // Module to control application life.
+var electron = require('electron');  // Module to control application life.
+var app = electron.app;
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 
 // Keep a global reference of the window object, if you don't, the window will

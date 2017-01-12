@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+  <title>Network | Basic usage</title>
+
+  <script type="text/javascript" src="../../ElectronTest/App/node_modules/vis/dist/vis.js"></script>
+  <link href="./../ElectronTest/App/node_modules/vis/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+  <style type="text/css">
+    #mynetwork {
+      width: 1800x;
+      height: 1000px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="mynetwork"></div>
+<pre id="eventSpan"></pre>
+<script type="text/javascript">
+  
+  
+  
+  ////TEST DATA/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /*var fs = [];
+  fs.push({id: '0', name: 'Home.html', type: 'html', hasErrors: '0', level: '0', links: ['1', '2', '49', '57', '59'], subFileStructs: ['100', '101']});
+    fs.push({id: '100', name: 'HomeDIV1', type: 'html', hasErrors: '0', level: '1', links: ['0', '1', '2'], subFileStructs: []});
+    fs.push({id: '101', name: 'HomeDIV2', type: 'html', hasErrors: '0', level: '1', links: ['0', '49', '57'], subFileStructs: []});
+  //fs.push({id: '1324', name: 'THING.php', type: 'php', hasErrors: '1', level: '0', links: ['0', '1'], subFileStructs: []});
+  fs.push({id: '1', name: 'About.html', type: 'html',hasErrors: '1', level: '0', links: ['0'], subFileStructs: []});
+  fs.push({id: '2', name: 'Contact.html', type: 'html', hasErrors: '0', level: '0', links: ['0', '50'], subFileStructs: []});
+  fs.push({id: '49', name: 'Image.png', type: 'png', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '50', name: 'Image2.png', type: 'png', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '57', name: 'App.js', type: 'js', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '58', name: 'ReallyReallyLongFileName.js', type: 'js', hasErrors: '1', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '59', name: 'Picturefile.php', type: 'php', hasErrors: '1', level: '0', links: ['0', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72'], subFileStructs: []});
+  fs.push({id: '63', name: 'Image3.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '64', name: 'Image4.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '65', name: 'Image5.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '66', name: 'Image6.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '67', name: 'Image7.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '68', name: 'Image8.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '69', name: 'Image9.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '70', name: 'Image10.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '71', name: 'Image11.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  fs.push({id: '72', name: 'Image12.jpeg', type: 'jpeg', hasErrors: '0', level: '0', links: [], subFileStructs: []});
+  ////TEST DATA/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+*/
+
+
+//NEED TO GO ThROugH AN BUILD ALL LINKS FIRST
+
+  vis = require('vis');
+  //Globals
+  // create network arrays
+  DFS = [];
+  nodesArray = [];
+  edgesArray = [];
+  edgesIDArray = [];
+  errorsArray = [];
+  errorsSizeRefArray = [];
+  //globalJSON;
+
+function Init(){
+    fs = require('fs');
+    fs.readFile('DataStruct.json', 'utf8', function (err,data) {
+        if (err) {
+          alert(err);
+          return;
+        }
+        var DataStruct = JSON.parse(data);
+        DFS = DataStruct.FileData.FileStructs;
+        Main();
+    });
+};
+
+  function PickColor(type){
+    switch (type){
+      case "html":
+        return('rgb(150,150,255)');
+        break;
+      case "php":
+        return('rgb(150,150,215)');
+        break;
+      case "js":
+        return('rgb(150, 230, 150)');
+        break;
+      case "png":
+        return('rgb(255, 200, 150)');
+        break;
+      case "jpeg":
+        return('rgb(255, 175, 150)');
+        break;
+    }
+  };
+
+  function GetEdgeID(to, from){
+    for(var i = 0; i < edgesIDArray.length; i++){
+        if(edgesIDArray[i].to == to && edgesIDArray[i].from == from){
+          return i;
+        }
+    }
+  };
+
+  function GetStruct(id){
+    for(var i = 0; i < DFS.length; i++){
+      if(DFS[i].id == id){
+        var struct = DFS[i];
+        return struct;
+      }
+    }
+  }
+
+  function AddNode(id){
+    var struct = GetStruct(id);
+    var varColor = PickColor(struct.type);
+    var varSize = 12 + (6 * (struct.links.length));
+    nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10}, color: varColor, shape: 'dot'});
+    alert("added node: " + nodesArray[(nodesArray.length-1)].id);
+    return;
+  };
+
+
+  function DrawError(id){
+
+  }
+
+  function IsNodeDrawn(id){
+    for(var i = 0; i < nodesArray.length; i++){
+      if(nodesArray[i].id == id){
+        return 1;
+      }
+    }
+    return 0;
+  }
+
+
+
+
+function Main(){
+    alert("in main");
+    alert("Structure length: " + DFS.length);
+
+    var edgeIDCounter = 0;
+    var lastZoomedNode = -1;
+    var edgeIterator = 0;
+    
+    //create edge ID tacking array
+    for(var i = 0; i < DFS.length; i++){
+      for(var j = 0; j < DFS[i].links.length; j++){
+        edgesIDArray.push({id: edgeIDCounter, to: DFS[i].links[j], from: DFS[i].id});
+        edgeIDCounter++;
+      }
+    }
+    
+    //create node arrays
+
+    for(var i = 0; i < DFS.length; i++){
+      if(DFS[i].level > 0){
+        continue;
+      }
+      else{
+        
+        AddNode(DFS[i].id);
+        
+        if(DFS[i].errors.length > 0){
+          
+          errorsArray.push(DFS[i].id)
+          errorsSizeRefArray.push((DFS[i].links.length * 6) + 12);
+        }
+
+        for(var j = 0; j < DFS[i].links.length; j++){
+          edgeIterator = GetEdgeID(DFS[i].links[j], DFS[i].id);
+          alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
+          edgesArray.push({id: edgeIterator, to: DFS[i].links[j].FileStructid, from: DFS[i].id, arrows:{to:{scaleFactor:0.3}}, color: 'rgb(200, 200, 200)'});
+        }
+      }
+    }
+    alert("Creating Netork");
+    // create network
+    try{
+      nodes = new vis.DataSet(nodesArray);
+    }
+    catch(err){
+      alert("Error:"+ err);
+    }
+    alert("created DataSet");
+    edges = new vis.DataSet(edgesArray);
+    var container = document.getElementById('mynetwork');
+    var data = {
+      nodes: nodes,
+      edges: edges
+    };
+    var options = {};
+    network = new vis.Network(container, data, options);
+    alert("Created Netork");
+
+    //Error bubbles
+    network.on("afterDrawing", function (ctx) {
+      for(i = 0; i < errorsArray.length; i++){
+        var nodeId = errorsArray[i];
+        var nodePosition = network.getPositions([nodeId]);
+        ctx.fillStyle = '#FF0000';
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 1 + (errorsSizeRefArray[i]/40);
+        ctx.circle(nodePosition[nodeId].x + (errorsSizeRefArray[i] * 11 / 16), nodePosition[nodeId].y - (errorsSizeRefArray[i] * 11 / 16), 4 + (errorsSizeRefArray[i]/20));
+        ctx.fill();
+        ctx.stroke();
+      }
+    });
+
+
+}
+
+
+Init();
+
+    /*network.on("doubleClick", function (params) {
+        params.event = "[original event]";
+        if(lastZoomedNode == -1){
+          lastZoomedNode = params.nodes;
+          var i;
+          var tempIterator;
+          for(i = 0; i < fs.length; i++){
+            if(fs[i].id == params.nodes){
+              tempIterator = i;
+            }
+            else if(fs[i].level == 0 && fs[i].id != params.nodes){
+              try {
+                  nodes.update({
+                      id: fs[i].id,
+                      color: 'rgb(220,220,220)'
+                  });
+              }
+              catch (err) {
+                  alert(err);
+              }
+            }
+          }
+          
+          i = tempIterator;
+          
+          for(var j = 0; j < fs[i].subFileStructs.length; j++){
+            for(var k = 0; k < fs.length; k++){
+              if(fs[k].id == fs[i].subFileStructs[j]){
+                
+                //add new node
+                try {
+                  nodes.add({id: fs[k].id, label: fs[k].name, size: varSize, font:{size: 10}, color: '#FF0000', shape: 'dot'});
+                }
+                catch (err) {
+                  //alert(err)
+                  continue;
+                }
+
+                //update edges
+                for(var l = 0; l < fs[k].links.length; l++){
+                  for(var m = 0; m < edgesIDArray.length; m++){
+                    if(edgesIDArray[m].to == fs[k].links[l] && edgesIDArray[m].from == fs[k].id){
+                      break;
+                    }
+                  }
+                  try {
+                    edges.add({
+                        id: edgesIDArray[m].id,
+                        from: fs[k].id,
+                        to: fs[k].links[l],
+                        arrows:{to:{scaleFactor:0.3}}, 
+                        color: 'rgb(200, 200, 200)'
+                    });
+                    //edgesIDArray.push({id: edgeIDCounter, to: fs[k].links[l], from: fs[k].id});
+                    //edgeIDCounter++;
+                  }
+                  catch (err) {
+                    alert(err);
+                  }
+                  
+                  //remove edges from higher up level
+                  for(var m = 0; m < edgesIDArray.length; m++){
+                    if(edgesIDArray[m].to == fs[k].links[l] && edgesIDArray[m].from == fs[i].id){
+                      break;
+                    }
+                  }
+                  try {
+                    edges.remove({
+                        id: m
+                    });
+                  }
+                  catch (err) {
+                    alert(err);
+                  }
+                }
+
+              }
+            }
+          }
+        }
+        else{
+          //zoom out
+          alert("smoll");
+          lastZoomedNode = -1;
+          
+          for(var i = 0; i < fs.length; i++){
+            if(fs[i].level != 0){
+                for(var j = 0; j < fs[i].links.length; j++){
+                  for(var k = 0; k < edgesIDArray.length; k++){
+                    if(edgesIDArray[k].to == fs[i].links[j] && edgesIDArray[k].from == fs[i].id){
+                      try {
+                        edges.remove({
+                          id: edgesIDArray[k].id
+                        });
+                      }
+                      catch (err) {
+                        alert(err);
+                      }
+                      break;
+                    }
+                  }
+                  
+              }
+              
+              try {
+                  nodes.remove({
+                      id: fs[i].id
+                  });
+                }
+                catch (err) {
+                  alert(err);
+                }
+
+            }
+            else{
+              varColor = PickColor(fs[i].type)
+               try {
+                  nodes.update({
+                      id: fs[i].id,
+                      color: varColor
+                  });
+              }
+              catch (err) {
+                  alert(err);
+              }
+            }
+          }
+        
+        
+        }
+   
+        
+        
+    });*/
+
+
+</script>
+
+
+
+<script>window.$ = window.jQuery = require('./js/jquery.min.js');</script>
+</body>
+</html>
