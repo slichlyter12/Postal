@@ -8,8 +8,7 @@ var open = require('open');
 var fs = require('file-system');
 var nodefs = require('fs');
 var cwd = require('cwd');
-var npm = require('npm');
-const electroner = require("electroner");
+const exec = require('child_process').exec;
 
 var isWin = /^win/.test(process.platform);
 
@@ -135,21 +134,19 @@ export function activate(context: vscode.ExtensionContext) {
         // Start the Electron app
         var filePath;
         if (isWin) {
-            filePath = `${__dirname}/../../main.js`.slice(1);
+            filePath = `${__dirname}/../../`.slice(1);
         } else {
-            filePath = `${__dirname}/../../main.js`;
+            filePath = `${__dirname}/../../`;
         }
         console.log(filePath);
-        var e = electroner(filePath, function(err, data) {
-            if (err) {
-                console.log("Error: " + err);
-            } else {
-                console.log("here");
-                console.log(data);
-                console.log("end data");
+        exec('electron main.js', (error, stdout, stderr) => {
+            if (error) {
+                console.error(`exec error: ${error}`);
+                return;
             }
+            console.log(`stdout: ${stdout}`);
+            console.log(`stderr: ${stderr}`);
         });
-        console.log(e);
     });
 
 

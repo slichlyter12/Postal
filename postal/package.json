@@ -42,11 +42,11 @@
   },
   "dependencies": {
     "browser-window": "^0.4.0",
+    "child_process": "^1.0.2",
     "cwd": "^0.10.0",
     "electron": "^1.4.14",
-    "electroner": "^4.0.2",
+    "electron-prebuilt": "^1.4.13",
     "file-system": "^2.2.1",
-    "npm": "^4.0.5",
     "open": "0.0.5",
     "vis": "^4.17.0"
   }
