@@ -127,8 +127,14 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         // Start the Electron app
-        console.log(`${__dirname}/../../main.js`);
-        var e = electroner(`${__dirname}/../../main.js`, function(err, data) {
+        var filePath;
+        if (isWin) {
+            filePath = `${__dirname}/../../main.js`.slice(1);
+        } else {
+            filePath = `${__dirname}/../../main.js`;
+        }
+        console.log(filePath);
+        var e = electroner(filePath, function(err, data) {
             if (err) {
                 console.log("Error: " + err);
             } else {
