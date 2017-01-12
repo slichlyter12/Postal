@@ -88,6 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
 
+        var jsonHolder = [];
         // FIXME: PARSE LOGIC
         for (var a = 0; a < files.length; a++) {
             files[a].then(function(foundFiles) {
@@ -108,15 +109,22 @@ export function activate(context: vscode.ExtensionContext) {
                                         content = nodefs.readFileSync(foundFiles[b].path, 'utf8');
                                     }
                                     var found = content.match(regex);
-                                    console.log(found);
+                                    if(found != null){
+                                        jsonHolder.push(foundFiles[b].path.slice(foundFiles[b].path.lastIndexOf("/")+1));
+                                        jsonHolder.push(found);
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                console.log(JSON.stringify(jsonHolder));
+
                 return 0;
             });
         }
+
+
     });
 
 
