@@ -153,7 +153,7 @@ export function activate(context: vscode.ExtensionContext) {
                 FileData = {FileStructs, ErrorStucts};
                 jsonHolder = JSON.stringify({FileData});
                 
-                nodefs.writeFileSync(__dirname + "/../../src/DataStruct.json", jsonHolder, 'utf8');
+                nodefs.writeFileSync(__dirname + "/../../postal.json", jsonHolder, 'utf8');
 
                 console.log(JSON.stringify(nameHolder.filter( onlyUnique )));
                 //console.log(JSON.stringify(linkHolder));
@@ -171,7 +171,7 @@ export function activate(context: vscode.ExtensionContext) {
             filePath = `${__dirname}/../../`;
         }
         //console.log(filePath);
-        var p = childProcess.spawn(electronp, [filePath + 'main.js']);
+        //var p = childProcess.spawn(electronp, [filePath + 'main.js']);
         //console.log(p);
         //console.log("children");
         // exec('electron main.js', (error, stdout, stderr) => {
