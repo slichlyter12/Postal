@@ -1,0 +1,81 @@
+{"FileData":
+    {
+        "FileStructs":
+       [ 
+           {
+                "id": 0,
+                "level": 0,
+                "name": "index.html",
+                "type": "html",
+
+                "subFileStructs":
+                    [
+                        {"FileStructid": 1}
+                    ],
+
+                "links":
+                    [
+                        {"FileStructid": 7}
+                    ],
+
+                "errors":
+                    [
+                        {"ErrorStructid": "e11"},
+                        {"ErrorStructid": "e16"},
+                        {"ErrorStructid": "e17"}
+                    ]
+            },
+
+            {
+                "id": 7,
+                "level": 0,
+                "name": "test.html",
+                "type": "html",
+
+                "subFileStructs":
+                    [
+                    ],
+
+                "links":
+                    [
+                        {"FileStructid": 0},
+                        {"FileStructid": 11}
+                    ],
+
+                "errors":
+                    [
+                        {"ErrorStructid": "e42"},
+                        {"ErrorStructid": "e43"},
+                        {"ErrorStructid": "e44"}
+                    ]
+            },
+
+            {
+                "id": 11,
+                "level": 0,
+                "name": "Thing.jpeg",
+                "type": "jpeg",
+
+                "subFileStructs":
+                    [
+                    ],
+
+                "links":
+                    [
+                    ],
+
+                "errors":
+                    [
+                    ]
+            }
+       ],
+
+    
+        "ErrorStruct":
+        {
+            "id": "e11",
+            "lineNumber": 254,
+            "message": "You forgot a closing bracket: >"
+        }
+    }
+}

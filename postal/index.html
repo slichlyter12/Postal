@@ -55,10 +55,9 @@
 
 //NEED TO GO ThROugH AN BUILD ALL LINKS FIRST
 
-
+  vis = require('vis');
   //Globals
   // create network arrays
-
   DFS = [];
   nodesArray = [];
   edgesArray = [];
@@ -122,7 +121,7 @@ function Init(){
     var varColor = PickColor(struct.type);
     var varSize = 12 + (6 * (struct.links.length));
     nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10}, color: varColor, shape: 'dot'});
-    //alert("added node: " + nodesArray[(nodesArray.length-1)].id);
+    alert("added node: " + nodesArray[(nodesArray.length-1)].id);
     return;
   };
 
@@ -144,8 +143,8 @@ function Init(){
 
 
 function Main(){
-    //alert("in main");
-    //alert("Structure length: " + DFS.length);
+    alert("in main");
+    alert("Structure length: " + DFS.length);
 
     var edgeIDCounter = 0;
     var lastZoomedNode = -1;
@@ -177,14 +176,20 @@ function Main(){
 
         for(var j = 0; j < DFS[i].links.length; j++){
           edgeIterator = GetEdgeID(DFS[i].links[j], DFS[i].id);
-          //alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
+          alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
           edgesArray.push({id: edgeIterator, to: DFS[i].links[j].FileStructid, from: DFS[i].id, arrows:{to:{scaleFactor:0.3}}, color: 'rgb(200, 200, 200)'});
         }
       }
     }
-    //alert("thing");
+    alert("Creating Netork");
     // create network
-    nodes = new vis.DataSet(nodesArray);
+    try{
+      nodes = new vis.DataSet(nodesArray);
+    }
+    catch(err){
+      alert("Error:"+ err);
+    }
+    alert("created DataSet");
     edges = new vis.DataSet(edgesArray);
     var container = document.getElementById('mynetwork');
     var data = {
@@ -193,7 +198,7 @@ function Main(){
     };
     var options = {};
     network = new vis.Network(container, data, options);
-
+    alert("Created Netork");
 
     //Error bubbles
     network.on("afterDrawing", function (ctx) {
