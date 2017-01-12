@@ -1,12 +1,15 @@
 'use strict';
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-const vscode = require('vscode');
-const ContentProv_1 = require('./ContentProv');
+const vscode = require("vscode");
+const ContentProv_1 = require("./ContentProv");
 var open = require('open');
 var fs = require('file-system');
 var nodefs = require('fs');
 var cwd = require('cwd');
+var npm = require('npm');
+const electroner = require("electroner");
+var isWin = /^win/.test(process.platform);
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
@@ -69,6 +72,7 @@ function activate(context) {
                 files.push(vscode.workspace.findFiles("*" + grammars.grammars[i].filetypes[j], ''));
             }
         }
+        var jsonHolder = [];
         // FIXME: PARSE LOGIC
         for (var a = 0; a < files.length; a++) {
             files[a].then(function (foundFiles) {
@@ -80,17 +84,47 @@ function activate(context) {
                                 for (var b = 0; b < foundFiles.length; b++) {
                                     var regexString = grammars.grammars[i].regex[k][key];
                                     var regex = new RegExp(regexString, 'g');
-                                    var content = nodefs.readFileSync(foundFiles[b].path, 'utf8');
+                                    var content;
+                                    if (isWin) {
+                                        content = nodefs.readFileSync(foundFiles[b].path.slice(1), 'utf8');
+                                    }
+                                    else {
+                                        content = nodefs.readFileSync(foundFiles[b].path, 'utf8');
+                                    }
                                     var found = content.match(regex);
-                                    console.log(found);
+                                    if (found != null) {
+                                        jsonHolder.push(foundFiles[b].path.slice(foundFiles[b].path.lastIndexOf("/") + 1));
+                                        jsonHolder.push(found);
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                console.log(JSON.stringify(jsonHolder));
                 return 0;
             });
         }
+        // Start the Electron app
+        var filePath;
+        if (isWin) {
+            filePath = `${__dirname}/../../main.js`.slice(1);
+        }
+        else {
+            filePath = `${__dirname}/../../main.js`;
+        }
+        console.log(filePath);
+        var e = electroner(filePath, function (err, data) {
+            if (err) {
+                console.log("Error: " + err);
+            }
+            else {
+                console.log("here");
+                console.log(data);
+                console.log("end data");
+            }
+        });
+        console.log(e);
     });
     context.subscriptions.push(parse);
 }

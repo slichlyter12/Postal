@@ -1,5 +1,5 @@
 'use strict';
-const vscode = require('vscode');
+const vscode = require("vscode");
 var fs = require('file-system');
 class ContentProv {
     constructor() {
