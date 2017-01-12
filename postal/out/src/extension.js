@@ -7,7 +7,8 @@ var open = require('open');
 var fs = require('file-system');
 var nodefs = require('fs');
 var cwd = require('cwd');
-const exec = require('child_process').exec;
+var childProcess = require('child_process');
+var electronp = require('electron-prebuilt');
 var isWin = /^win/.test(process.platform);
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -118,14 +119,17 @@ function activate(context) {
             filePath = `${__dirname}/../../`;
         }
         console.log(filePath);
-        exec('electron main.js', (error, stdout, stderr) => {
-            if (error) {
-                console.error(`exec error: ${error}`);
-                return;
-            }
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
-        });
+        var p = childProcess.spawn(electronp, [filePath + 'main.js']);
+        console.log(p);
+        console.log("children");
+        // exec('electron main.js', (error, stdout, stderr) => {
+        //     if (error) {
+        //         console.error(`exec error: ${error}`);
+        //         return;
+        //     }
+        //     console.log(`stdout: ${stdout}`);
+        //     console.log(`stderr: ${stderr}`);
+        // });
     });
     context.subscriptions.push(parse);
 }
