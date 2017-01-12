@@ -69,6 +69,7 @@ function activate(context) {
         var allFiles = vscode.workspace.findFiles('*', '');
         allFiles.then(function (foundFiles) {
             //DO STUFF WITH ALL FILES
+            //console.log(JSON.stringify(allFiles));
         });
         //GET FILES TO PARSE
         var files = [];
@@ -77,7 +78,11 @@ function activate(context) {
                 files.push(vscode.workspace.findFiles("*" + grammars.grammars[i].filetypes[j], ''));
             }
         }
-        var jsonHolder = [];
+        var nameHolder = [];
+        var linkHolder = [];
+        function onlyUnique(value, index, self) {
+            return self.indexOf(value) === index;
+        }
         // FIXME: PARSE LOGIC
         for (var a = 0; a < files.length; a++) {
             files[a].then(function (foundFiles) {
@@ -97,16 +102,36 @@ function activate(context) {
                                         content = nodefs.readFileSync(foundFiles[b].path, 'utf8');
                                     }
                                     var found = content.match(regex);
+                                    nameHolder.push(foundFiles[b].path.slice(foundFiles[b].path.lastIndexOf("/") + 1));
                                     if (found != null) {
-                                        jsonHolder.push(foundFiles[b].path.slice(foundFiles[b].path.lastIndexOf("/") + 1));
-                                        jsonHolder.push(found);
+                                        linkHolder.push(foundFiles[b].path.slice(foundFiles[b].path.lastIndexOf("/") + 1));
+                                        linkHolder.push(found);
                                     }
                                 }
                             }
                         }
                     }
                 }
-                console.log(JSON.stringify(jsonHolder));
+                //Writing to DataStruct.json
+                var nameHolderUnique = nameHolder.filter(onlyUnique);
+                var jsonHolder = {};
+                var FileData = {};
+                var FileStructs = [];
+                var ErrorStucts = [];
+                for (var x = 0; x < nameHolderUnique.length; x++) {
+                    FileStructs.push({
+                        id: x,
+                        level: 0,
+                        name: nameHolderUnique[x],
+                        type: nameHolderUnique[x].slice(nameHolderUnique[x].lastIndexOf(".") + 1),
+                        links: []
+                    });
+                }
+                FileData = { FileStructs, ErrorStucts };
+                jsonHolder = JSON.stringify({ FileData });
+                nodefs.writeFileSync(__dirname + "/../../src/DataStruct.json", jsonHolder, 'utf8');
+                console.log(JSON.stringify(nameHolder.filter(onlyUnique)));
+                //console.log(JSON.stringify(linkHolder));
                 return 0;
             });
         }
@@ -118,10 +143,10 @@ function activate(context) {
         else {
             filePath = `${__dirname}/../../`;
         }
-        console.log(filePath);
+        //console.log(filePath);
         var p = childProcess.spawn(electronp, [filePath + 'main.js']);
-        console.log(p);
-        console.log("children");
+        //console.log(p);
+        //console.log("children");
         // exec('electron main.js', (error, stdout, stderr) => {
         //     if (error) {
         //         console.error(`exec error: ${error}`);
