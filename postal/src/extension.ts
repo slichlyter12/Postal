@@ -140,7 +140,10 @@ export function activate(context: vscode.ExtensionContext) {
                 var FileData = {};
                 var FileStructs = [];
                 var ErrorStructs = [];
+<<<<<<< HEAD
                 var matchedLinks = [];
+=======
+>>>>>>> c7d611fbf6df8058d9afa2347a5f728d90bad4f0
                 
 
                 for(var x = 0; x < nameHolderUnique.length; x++){

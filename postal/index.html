@@ -8,8 +8,8 @@
 <head>
   <title>Network | Basic usage</title>
 
-  <script type="text/javascript" src="../../ElectronTest/App/node_modules/vis/dist/vis.js"></script>
-  <link href="./../ElectronTest/App/node_modules/vis/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/node_modules/vis/dist/vis.js"></script>
+  <link href="node_modules/vis/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
 
   <style type="text/css">
     #mynetwork {
@@ -168,7 +168,7 @@ function Main(){
         
         AddNode(DFS[i].id);
         
-        if(DFS[i].errors.length > 0){
+        if(DFS[i].ErrorStructs.length != null){
           
           errorsArray.push(DFS[i].id)
           errorsSizeRefArray.push((DFS[i].links.length * 6) + 12);
