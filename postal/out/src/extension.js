@@ -65,6 +65,11 @@ function activate(context) {
         // GET GRAMMARS
         var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
         var grammars = JSON.parse(grammarsFile);
+        // GET ALL FILES:
+        var allFiles = vscode.workspace.findFiles('*', '');
+        allFiles.then(function (foundFiles) {
+            //DO STUFF WITH ALL FILES
+        });
         //GET FILES TO PARSE
         var files = [];
         for (var i = 0; i < grammars.grammars.length; i++) {
