@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
     let previewUri = vscode.Uri.parse("Files://" + htmlFilePath);
 
     let provider = new ContentProv();
-    
+
     let registration = vscode.workspace.registerTextDocumentContentProvider('Files', provider);
 
     // The command has been defined in the package.json file
@@ -98,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
         var nameHolder = [];
         var linkHolder = [];
 
-        function onlyUnique(value, index, self) { 
+        function onlyUnique(value, index, self) {
             return self.indexOf(value) === index;
         }
         // FIXME: PARSE LOGIC
@@ -110,7 +110,7 @@ export function activate(context: vscode.ExtensionContext) {
                         for (var key in grammars.grammars[i].regex[k]) {
                             if (grammars.grammars[i].regex[k].hasOwnProperty(key)) {
                                 //console.log(grammars.grammars[i].regex[k][key] + " -> " + key);
-                                
+
                                 for (var b = 0; b < foundFiles.length; b++) {
                                     var regexString = grammars.grammars[i].regex[k][key];
                                     var regex = new RegExp(regexString, 'g');
@@ -135,27 +135,41 @@ export function activate(context: vscode.ExtensionContext) {
                 //Writing to DataStruct.json
                 var nameHolderUnique = nameHolder.filter( onlyUnique );
 
+
                 var jsonHolder = {};
                 var FileData = {};
                 var FileStructs = [];
-                var ErrorStucts = [];
+                var ErrorStructs = [];
+                var matchedLinks = [];
                 
+
                 for(var x = 0; x < nameHolderUnique.length; x++){
+                    for(var y = 0; y < linkHolder.length; y++){
+                        if(nameHolderUnique[x] == linkHolder[y]){
+                            matchedLinks[x] = linkHolder[y+1];
+                            /*if(matchedLinks[x].includes(nameHolderUnique[x])){
+                                matchedLinks[x].push({FileStructsid: x})
+                            }*/
+                            y++;
+                        }
+                    }  
+                    console.log(JSON.stringify(matchedLinks));
                     FileStructs.push({
-                        id: x,
-                        level: 0,
-                        name: nameHolderUnique[x],
-                        type: nameHolderUnique[x].slice(nameHolderUnique[x].lastIndexOf(".")+1),
-                        links: []
+                            id: x,
+                            level: 0,
+                            name: nameHolderUnique[x],
+                            type: nameHolderUnique[x].slice(nameHolderUnique[x].lastIndexOf(".")+1),
+                            links: [matchedLinks[x]]
+     
                     })
                 }
 
-                FileData = {FileStructs, ErrorStucts};
+                FileData = {FileStructs, ErrorStructs};
                 jsonHolder = JSON.stringify({FileData});
-                
+
                 nodefs.writeFileSync(__dirname + "/../../postal.json", jsonHolder, 'utf8');
 
-                console.log(JSON.stringify(nameHolder.filter( onlyUnique )));
+                //console.log(JSON.stringify(nameHolder.filter( onlyUnique )));
                 //console.log(JSON.stringify(linkHolder));
 
 
