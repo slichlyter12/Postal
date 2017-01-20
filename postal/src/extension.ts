@@ -176,7 +176,7 @@ export function activate(context: vscode.ExtensionContext) {
                             level: 0,
                             name: nameHolderUnique[x],
                             type: nameHolderUnique[x].slice(nameHolderUnique[x].lastIndexOf(".")+1),
-                            links: [linkHolder[x]],
+                            links: linkHolder[x],
                             errors: []
      
                     })
