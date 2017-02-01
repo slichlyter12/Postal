@@ -4,6 +4,9 @@
 import * as vscode from 'vscode';
 import { ContentProv } from './ContentProv';
 
+import * as path from 'path';
+import {spawn} from 'child_process';
+
 var open = require('open');
 var fs = require('file-system');
 var nodefs = require('fs');
@@ -72,6 +75,20 @@ export function activate(context: vscode.ExtensionContext) {
 
             return vscode.commands.executeCommand('vscode.previewHtml', previewUri, vscode.ViewColumn.Two);
         });
+
+        var command = './node_modules/.bin/electron.cmd';
+        var cwd = path.join(__dirname, '../lib/app');
+        
+        command = command.replace(/\//g, path.sep);
+        cwd = cwd.replace(/\//g, path.sep);
+        
+        var spawn_env = JSON.parse(JSON.stringify(process.env));
+        
+        // remove those env vars
+        delete spawn_env.ATOM_SHELL_INTERNAL_RUN_AS_NODE;
+        delete spawn_env.ELECTRON_RUN_AS_NODE;
+
+        var sp = spawn(command, ['.'], {cwd: cwd, env: spawn_env});
     });
 
     context.subscriptions.push(disposable);
