@@ -80,6 +80,7 @@ function activate(context) {
         }
         var nameHolder = [];
         var linkHolder = [];
+        var foundLinks = [];
         function onlyUnique(value, index, self) {
             return self.indexOf(value) === index;
         }
@@ -103,34 +104,58 @@ function activate(context) {
                                     }
                                     var found = content.match(regex);
                                     nameHolder.push(foundFiles[b].path.slice(foundFiles[b].path.lastIndexOf("/") + 1));
-                                    if (found != null) {
-                                        linkHolder.push(foundFiles[b].path.slice(foundFiles[b].path.lastIndexOf("/") + 1));
-                                        linkHolder.push(found);
+                                    for (var c = 0; c < foundFiles.length; c++) {
+                                        if (found != null) {
+                                            foundLinks.push(c);
+                                        }
                                     }
+                                    if (found != null) {
+                                        //linkHolder.push(foundFiles[b].path.slice(foundFiles[b].path.lastIndexOf("/")+1));
+                                        console.log(JSON.stringify(foundLinks));
+                                        linkHolder.push(foundLinks);
+                                    }
+                                    else {
+                                        linkHolder.push([]);
+                                    }
+                                    foundLinks = [];
                                 }
                             }
                         }
                     }
                 }
+                console.log(JSON.stringify(linkHolder));
                 //Writing to DataStruct.json
                 var nameHolderUnique = nameHolder.filter(onlyUnique);
                 var jsonHolder = {};
                 var FileData = {};
                 var FileStructs = [];
                 var ErrorStructs = [];
+                var matchedLinks = [];
                 for (var x = 0; x < nameHolderUnique.length; x++) {
+                    for (var y = 0; y < linkHolder.length; y++) {
+                        if (nameHolderUnique[x] == linkHolder[y]) {
+                            matchedLinks[x] = linkHolder[y + 1];
+                            /*if(matchedLinks[x].includes(nameHolderUnique[x])){
+                                matchedLinks[x].push({FileStructsid: x})
+                            }*/
+                            y++;
+                        }
+                    }
+                    //console.log(JSON.stringify(matchedLinks));
                     FileStructs.push({
                         id: x,
                         level: 0,
                         name: nameHolderUnique[x],
                         type: nameHolderUnique[x].slice(nameHolderUnique[x].lastIndexOf(".") + 1),
-                        links: []
+                        links: linkHolder[x],
+                        errors: []
                     });
+                    ErrorStructs.push({});
                 }
                 FileData = { FileStructs, ErrorStructs };
                 jsonHolder = JSON.stringify({ FileData });
                 nodefs.writeFileSync(__dirname + "/../../postal.json", jsonHolder, 'utf8');
-                console.log(JSON.stringify(nameHolder.filter(onlyUnique)));
+                //console.log(JSON.stringify(nameHolder.filter( onlyUnique )));
                 //console.log(JSON.stringify(linkHolder));
                 return 0;
             });

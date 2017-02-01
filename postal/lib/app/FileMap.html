@@ -145,8 +145,8 @@ function Main(){
 
         for(var j = 0; j < DFS[i].links.length; j++){
           edgeIterator = GetEdgeID(DFS[i].links[j], DFS[i].id);
-          alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
-          edgesArray.push({id: edgeIterator, to: DFS[i].links[j].FileStructid, from: DFS[i].id, arrows:{to:{scaleFactor:0.3}}, color: 'rgb(200, 200, 200)'});
+          alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j]);
+          edgesArray.push({id: edgeIterator, to: DFS[i].links[j], from: DFS[i].id, arrows:{to:{scaleFactor:0.3}}, color: 'rgb(200, 200, 200)'});
         }
       }
     }
