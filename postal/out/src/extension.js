@@ -2,6 +2,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require("vscode");
+const path = require("path");
+const child_process_1 = require("child_process");
 const ContentProv_1 = require("./ContentProv");
 var open = require('open');
 var fs = require('file-system');
@@ -180,6 +182,20 @@ function activate(context) {
         //     console.log(`stdout: ${stdout}`);
         //     console.log(`stderr: ${stderr}`);
         // });
+        try {
+            var command = './node_modules/.bin/electron';
+            var cwd = path.join(__dirname, '../../lib/app');
+            command = command.replace(/\//g, path.sep);
+            cwd = cwd.replace(/\//g, path.sep);
+            var spawn_env = JSON.parse(JSON.stringify(process.env));
+            // remove those env vars
+            delete spawn_env.ATOM_SHELL_INTERNAL_RUN_AS_NODE;
+            delete spawn_env.ELECTRON_RUN_AS_NODE;
+            var sp = child_process_1.spawn(command, ['.'], { cwd: cwd, env: spawn_env });
+        }
+        catch (error) {
+            console.log("Electron Error: " + error);
+        }
     });
     context.subscriptions.push(parse);
 }
