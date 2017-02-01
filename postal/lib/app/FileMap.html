@@ -41,7 +41,7 @@ function Init(){
     fs = require('fs');
     fs.readFile('./../../postal.json', 'utf8', function (err,data) {
         if (err) {
-          alert(err);
+          //alert(err);
           return;
         }
         var DataStruct = JSON.parse(data);
@@ -92,7 +92,7 @@ function Init(){
     var varColor = PickColor(struct.type);
     var varSize = 12 + (6 * (struct.links.length));
     nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10}, color: varColor, shape: 'dot'});
-    alert("added node: " + nodesArray[(nodesArray.length-1)].id);
+    //alert("added node: " + nodesArray[(nodesArray.length-1)].id);
     return;
   };
 
@@ -114,8 +114,8 @@ function Init(){
 
 
 function Main(){
-    alert("in main");
-    alert("Structure length: " + DFS.length);
+    //alert("in main");
+    //alert("Structure length: " + DFS.length);
 
     var edgeIDCounter = 0;
     var lastZoomedNode = -1;
@@ -147,20 +147,20 @@ function Main(){
 
         for(var j = 0; j < DFS[i].links.length; j++){
           edgeIterator = GetEdgeID(DFS[i].links[j], DFS[i].id);
-          alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
+          //alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
           edgesArray.push({id: edgeIterator, to: DFS[i].links[j].FileStructid, from: DFS[i].id, arrows:{to:{scaleFactor:0.3}}, color: 'rgb(200, 200, 200)'});
         }
       }
     }
-    alert("Creating Netork");
+    //alert("Creating Netork");
     // create network
     try{
       nodes = new vis.DataSet(nodesArray);
     }
     catch(err){
-      alert("Error:"+ err);
+      //alert("Error:"+ err);
     }
-    alert("created DataSet");
+    //alert("created DataSet");
     edges = new vis.DataSet(edgesArray);
     var container = document.getElementById('mynetwork');
     var data = {
@@ -169,7 +169,7 @@ function Main(){
     };
     var options = {};
     network = new vis.Network(container, data, options);
-    alert("Created Netork");
+    //alert("Created Netork");
 
     //Error bubbles
     network.on("afterDrawing", function (ctx) {
@@ -209,7 +209,7 @@ Init();
                   });
               }
               catch (err) {
-                  alert(err);
+                  //alert(err);
               }
             }
           }
@@ -225,7 +225,7 @@ Init();
                   nodes.add({id: fs[k].id, label: fs[k].name, size: varSize, font:{size: 10}, color: '#FF0000', shape: 'dot'});
                 }
                 catch (err) {
-                  //alert(err)
+                  ////alert(err)
                   continue;
                 }
 
@@ -248,7 +248,7 @@ Init();
                     //edgeIDCounter++;
                   }
                   catch (err) {
-                    alert(err);
+                    //alert(err);
                   }
                   
                   //remove edges from higher up level
@@ -263,7 +263,7 @@ Init();
                     });
                   }
                   catch (err) {
-                    alert(err);
+                    //alert(err);
                   }
                 }
 
@@ -273,7 +273,7 @@ Init();
         }
         else{
           //zoom out
-          alert("smoll");
+          //alert("smoll");
           lastZoomedNode = -1;
           
           for(var i = 0; i < fs.length; i++){
@@ -287,7 +287,7 @@ Init();
                         });
                       }
                       catch (err) {
-                        alert(err);
+                        //alert(err);
                       }
                       break;
                     }
@@ -301,7 +301,7 @@ Init();
                   });
                 }
                 catch (err) {
-                  alert(err);
+                  //alert(err);
                 }
 
             }
@@ -314,7 +314,7 @@ Init();
                   });
               }
               catch (err) {
-                  alert(err);
+                  //alert(err);
               }
             }
           }

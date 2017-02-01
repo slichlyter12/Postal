@@ -236,7 +236,7 @@ export function activate(context: vscode.ExtensionContext) {
         // });
 
         try {
-            var command = './node_modules/.bin/electron.cmd';
+            var command = './node_modules/.bin/electron';
             var cwd = path.join(__dirname, '../../lib/app');
 
             command = command.replace(/\//g, path.sep);
