@@ -183,7 +183,7 @@ function activate(context) {
         //     console.log(`stderr: ${stderr}`);
         // });
         try {
-            var command = './node_modules/.bin/electron';
+            var command = './node_modules/.bin/electron.cmd';
             var cwd = path.join(__dirname, '../../lib/app');
             command = command.replace(/\//g, path.sep);
             cwd = cwd.replace(/\//g, path.sep);

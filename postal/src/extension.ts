@@ -6,8 +6,6 @@ import * as path from 'path';
 import { spawn } from 'child_process'
 import { ContentProv } from './ContentProv';
 
-import * as path from 'path';
-import {spawn} from 'child_process';
 
 var open = require('open');
 var fs = require('file-system');
@@ -238,7 +236,7 @@ export function activate(context: vscode.ExtensionContext) {
         // });
 
         try {
-            var command = './node_modules/.bin/electron';
+            var command = './node_modules/.bin/electron.cmd';
             var cwd = path.join(__dirname, '../../lib/app');
 
             command = command.replace(/\//g, path.sep);
