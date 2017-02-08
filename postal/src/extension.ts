@@ -38,61 +38,6 @@ export function activate(context: vscode.ExtensionContext) {
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.postal', () => {
-        // The code you place here will be executed every time your command is executed
-
-        // generate html list of files
-        var files = vscode.workspace.findFiles('*', '');
-        files.then(function(foundFiles) {
-
-            // start/create file
-            var htmlOpen = "<!DOCTYPE html><html><head><title>Files</title></head><body><ul>\n";
-            fs.writeFile(htmlFilePath, htmlOpen, function(error) {
-                if (error) {
-                    console.error("Failed to write opening HTML\nerror: " + error);
-                }
-            });
-
-            // add file names to list
-            foundFiles.forEach(function(file) {
-                if (file.path != htmlFilePath) {
-                    let html = "<li>" + file + "</li>\n";
-                    fs.appendFile(htmlFilePath, html, function(error) {
-                        if (error) {
-                            console.error("Failed to write " + file + ", html: " + html + "\nerror: " + error);
-                        }
-                    });
-                }
-            });
-
-            // end file
-            var htmlClose = "</ul></body></html>\n";
-            fs.appendFile(htmlFilePath, htmlClose, function(error) {
-                if (error) {
-                    console.error("Failed to write closing HTML\nerror: " + error);
-                }
-            });
-
-            return vscode.commands.executeCommand('vscode.previewHtml', previewUri, vscode.ViewColumn.Two);
-        });
-
-        var command = './node_modules/.bin/electron.cmd';
-        var cwd = path.join(__dirname, '../lib/app');
-        
-        command = command.replace(/\//g, path.sep);
-        cwd = cwd.replace(/\//g, path.sep);
-        
-        var spawn_env = JSON.parse(JSON.stringify(process.env));
-        
-        // remove those env vars
-        delete spawn_env.ATOM_SHELL_INTERNAL_RUN_AS_NODE;
-        delete spawn_env.ELECTRON_RUN_AS_NODE;
-
-        var sp = spawn(command, ['.'], {cwd: cwd, env: spawn_env});
-    });
-
-    context.subscriptions.push(disposable);
-
     let parse = vscode.commands.registerCommand('extension.parse', () => {
         // GET GRAMMARS
         var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");

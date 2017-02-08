@@ -11,7 +11,6 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.postal",
     "onCommand:extension.parse"
   ],
   "main": "./out/src/extension",
@@ -19,12 +18,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.postal",
-        "title": "Postal"
-      },
-      {
         "command": "extension.parse",
-        "title": "Postal Parse"
+        "title": "Postal"
       }
     ]
   },
