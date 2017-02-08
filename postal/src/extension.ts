@@ -68,13 +68,15 @@ export function activate(context: vscode.ExtensionContext) {
         for (var a = 0; a < files.length; a++) {
             files[a].then(function(foundFiles) {
 
-                for (var i = 0; i < grammars.grammars.length; i++) {
-                    for (var k = 0; k < grammars.grammars[i].regex.length; k++) {
-                        for (var key in grammars.grammars[i].regex[k]) {
-                            if (grammars.grammars[i].regex[k].hasOwnProperty(key)) {
+                for (var i = 0; i < grammars.grammars.length; i++) { // loop through grammars
+                    for (var k = 0; k < grammars.grammars[i].regex.length; k++) { // loop through regular expressions within each grammar
+                        for (var key in grammars.grammars[i].regex[k]) { // trick to use a key-value pair in the JSON, utilizes a loop: always 1 run through
+                            if (grammars.grammars[i].regex[k].hasOwnProperty(key)) { // continuation of trick; see line above ^^
                                 //console.log(grammars.grammars[i].regex[k][key] + " -> " + key);
 
-                                for (var b = 0; b < foundFiles.length; b++) {
+                                for (var b = 0; b < foundFiles.length; b++) { // loop through each file, should be of a set of specific filetypes defined in grammar
+
+                                    // get regular expression and run it
                                     var regexString = grammars.grammars[i].regex[k][key];
                                     var regex = new RegExp(regexString, 'g');
                                     var content;
@@ -85,6 +87,9 @@ export function activate(context: vscode.ExtensionContext) {
                                     }
                                     var found = content.match(regex);
 
+                                    // add files to name holder array
+                                    // FIXME ??
+                                    //
                                     nameHolder.push(foundFiles[b].path.slice(foundFiles[b].path.lastIndexOf("/")+1));
                                     for(var c = 0; c < foundFiles.length; c++){
                                         if(found != null){
