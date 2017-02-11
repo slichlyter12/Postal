@@ -129,12 +129,65 @@ export function activate(context: vscode.ExtensionContext) {
                 var allNamesHolder = dirHolder.concat(nameHolder, hrefNameHolder); //Combine directory, file, and discovered href names
                 console.log(JSON.stringify(allNamesHolder));
 
+                //Get LINKS
+                linkHolder = linkHolder.slice(0, nameHolder.length);
+                var catLinkHolder = []; //Same as link Holder but each internal string is reduced to filename and extension
+                var idLinkHolder = []; //Contains ids of catLinkHolder
+                var fakeDirLinkHolder = [];
+                var fakeHrefLinkHolder = [];
+
+                for(i = 0; i <linkHolder.length; i++ ){
+                    for(j = 0; j < linkHolder[i].length; j++){
+                        catLinkHolder.push([]);
+                        idLinkHolder.push([]);
+
+                    }
+                }
+                //1 Too many empty arrays
+                catLinkHolder.shift();
+                idLinkHolder.shift();
+
+
+                for(i = 0; i <linkHolder.length; i++ ){
+                    for(j = 0; j < linkHolder[i].length; j++){
+                        if(linkHolder[i] != null){
+                            linkHolder[i][j] = linkHolder[i][j].slice(linkHolder[i][j].indexOf("\"")+1, linkHolder[i][j].lastIndexOf(".")+4);
+                            catLinkHolder[i] = linkHolder[i].filter( onlyUnique );
+
+                            if(nameHolder.includes(catLinkHolder[i][j])){
+                                
+                                idLinkHolder[i][j] = nameHolder.indexOf(catLinkHolder[i][j]);
+                            }
+                            else{
+                                //Create Node
+                                idLinkHolder[i].shift();
+                            }
+                        }
+                        else{
+                            catLinkHolder[i].push([]);
+                        }
+                    }
+                } 
+                
+
+                dirHolder.forEach(function(name, index){
+                    fakeDirLinkHolder.push([]);
+                });
+
+                hrefNameHolder.forEach(function(name, index){
+                    fakeHrefLinkHolder.push([]);
+                });
+                //idLinkHolder.slice(0, nameHolder.length);
+                var allLinksHolder = fakeDirLinkHolder.concat(idLinkHolder, fakeHrefLinkHolder);
+                console.log(JSON.stringify(catLinkHolder));
+                console.log(JSON.stringify(allLinksHolder));
+
                 //Get IDS from the list of allNamesHolder
                 var idHolder = [];
                 allNamesHolder.forEach(function(name, index) {
                     idHolder.push(index);
                 });
-                console.log(JSON.stringify(idHolder));
+                //console.log(JSON.stringify(idHolder));
 
                 //Get LEVELS from pathHolderU and allNamesHolder
                 var dirLevelsHolder = [];
@@ -151,31 +204,15 @@ export function activate(context: vscode.ExtensionContext) {
                 });
 
                 var allLevelsHolder = dirLevelsHolder.concat( nameLevelsHolder, hrefLevelsHolder); //Combine directory, file, and discovered href levels
-                console.log(JSON.stringify(allLevelsHolder));
+                //console.log(JSON.stringify(allLevelsHolder));
                                                  
                 //Get TYPES from allNamesHolder
                 var typeHolder = [];
                 allNamesHolder.forEach(function(name, index) {
                     typeHolder.push(name.slice(name.lastIndexOf(".")+1));
                 });
-                console.log(JSON.stringify(typeHolder));
+                //console.log(JSON.stringify(typeHolder));
 
-                //Get LINKS
-                linkHolder = linkHolder.slice(0, idHolder.length);
-                var fakeDirLinkHolder = [];
-                var fakeHrefLinkHolder = [];
-
-                dirHolder.forEach(function(name, index){
-                    fakeDirLinkHolder.push([]);
-                });
-
-                hrefNameHolder.forEach(function(name, index){
-                    fakeHrefLinkHolder.push([]);
-                });
-            
-                var allLinksHolder = fakeDirLinkHolder.concat(linkHolder, fakeHrefLinkHolder);
-
-                console.log(JSON.stringify(allLinksHolder));
 
                 var jsonHolder = {};
                 var FileData = {};
@@ -233,7 +270,7 @@ export function activate(context: vscode.ExtensionContext) {
         //     console.log(`stderr: ${stderr}`);
         // });
 
-    /*    try {
+        try {
             var command;
             if (isWin) {
                 command = './node_modules/.bin/electron.cmd';
@@ -255,7 +292,7 @@ export function activate(context: vscode.ExtensionContext) {
         } catch (error) {
             console.log("Electron Error: " + error);
         }
-*/
+
     });
 
 
