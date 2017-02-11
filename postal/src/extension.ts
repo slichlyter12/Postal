@@ -159,8 +159,8 @@ export function activate(context: vscode.ExtensionContext) {
                                 idLinkHolder[i][j] = nameHolder.indexOf(catLinkHolder[i][j]);
                             }
                             else{
-                                //Create Node
-                                idLinkHolder[i].shift();
+                                //Create Node Here
+                                idLinkHolder[i].shift(); //WROOOONG
                             }
                         }
                         else{
