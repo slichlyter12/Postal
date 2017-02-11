@@ -50,6 +50,8 @@ export function activate(context: vscode.ExtensionContext) {
             //console.log(JSON.stringify(allFiles));
         });
 
+        
+
         //GET FILES TO PARSE
         var files = [];
         for (var i = 0; i < grammars.grammars.length; i++) {
@@ -57,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
                 files.push(vscode.workspace.findFiles("*" + grammars.grammars[i].filetypes[j], ''));
             }
         }
-        var nameHolder = [];
+        var pathHolder = [];
         var linkHolder = [];
         var foundLinks = [];
 
@@ -86,23 +88,21 @@ export function activate(context: vscode.ExtensionContext) {
                                         content = nodefs.readFileSync(foundFiles[b].path, 'utf8');
                                     }
                                     var found = content.match(regex);
-
-                                    // add files to name holder array
-                                    // FIXME ??
-                                    //
-                                    nameHolder.push(foundFiles[b].path.slice(foundFiles[b].path.lastIndexOf("/")+1));
-                                    for(var c = 0; c < foundFiles.length; c++){
+                                    
+                                    //Store array of all paths of files in current directory
+                                    pathHolder.push(foundFiles[b].path);
+                                    
+                                   /* for(var c = 0; c < foundFiles.length; c++){
                                         if(found != null){
                                             foundLinks.push(c)
                                         }
                                     }
-                                    
+                                    */
                                     if(found != null){
                                         //linkHolder.push(foundFiles[b].path.slice(foundFiles[b].path.lastIndexOf("/")+1));
                                         
-                                        console.log(JSON.stringify(foundLinks));
-                                        linkHolder.push(foundLinks);
-                                        
+                                        //console.log(JSON.stringify(foundLinks));
+                                        linkHolder.push(found);
                                     }
                                     else{
                                         linkHolder.push([]);
@@ -113,11 +113,69 @@ export function activate(context: vscode.ExtensionContext) {
                         }
                     }
                 }
-                console.log(JSON.stringify(linkHolder));
-                //Writing to DataStruct.json
 
-                var nameHolderUnique = nameHolder.filter( onlyUnique );
+                //Setting up DataStruct data
+                var pathHolderU = pathHolder.filter( onlyUnique ); //remove duplicate path names from when parser ran multiple times
 
+                //Get NAMES from end of path string
+                var dirHolder = []; //This will receive all folders in cwd
+                var nameHolder = []; //All names from end of pathHolderU
+                var hrefNameHolder = []; //Contains all found href link names that aren't in cwd
+
+                pathHolderU.forEach(function(path, index){
+                    nameHolder.push(pathHolderU[index].slice(pathHolderU[index].lastIndexOf("/")+1));
+                });
+
+                var allNamesHolder = dirHolder.concat(nameHolder, hrefNameHolder); //Combine directory, file, and discovered href names
+                console.log(JSON.stringify(allNamesHolder));
+
+                //Get IDS from the list of allNamesHolder
+                var idHolder = [];
+                allNamesHolder.forEach(function(name, index) {
+                    idHolder.push(index);
+                });
+                console.log(JSON.stringify(idHolder));
+
+                //Get LEVELS from pathHolderU and allNamesHolder
+                var dirLevelsHolder = [];
+                var nameLevelsHolder = [];
+                var hrefLevelsHolder = [];
+                var topSlashCounter = (pathHolderU[0].match(/\//g) || []).length; //Finds the number of backslashes in the path of the first files, ie number of slashes in top directory
+                /*****************************/
+                ////////CHANGE WHEN DIRECTORIES ARE WORKING. Can't assume names are top level, have to compare names and directories for which has fewest slashes
+                /*****************************/
+
+                pathHolderU.forEach(function(path, index){
+                    var currSlashCounter = (pathHolderU[index].match(/\//g) || []).length; //If same as topSlashCounter, at level 0
+                    nameLevelsHolder.push(currSlashCounter - topSlashCounter);
+                });
+
+                var allLevelsHolder = dirLevelsHolder.concat( nameLevelsHolder, hrefLevelsHolder); //Combine directory, file, and discovered href levels
+                console.log(JSON.stringify(allLevelsHolder));
+                                                 
+                //Get TYPES from allNamesHolder
+                var typeHolder = [];
+                allNamesHolder.forEach(function(name, index) {
+                    typeHolder.push(name.slice(name.lastIndexOf(".")+1));
+                });
+                console.log(JSON.stringify(typeHolder));
+
+                //Get LINKS
+                linkHolder = linkHolder.slice(0, idHolder.length);
+                var fakeDirLinkHolder = [];
+                var fakeHrefLinkHolder = [];
+
+                dirHolder.forEach(function(name, index){
+                    fakeDirLinkHolder.push([]);
+                });
+
+                hrefNameHolder.forEach(function(name, index){
+                    fakeHrefLinkHolder.push([]);
+                });
+            
+                var allLinksHolder = fakeDirLinkHolder.concat(linkHolder, fakeHrefLinkHolder);
+
+                console.log(JSON.stringify(allLinksHolder));
 
                 var jsonHolder = {};
                 var FileData = {};
@@ -127,30 +185,20 @@ export function activate(context: vscode.ExtensionContext) {
 
                 
 
-                for(var x = 0; x < nameHolderUnique.length; x++){
-                    for(var y = 0; y < linkHolder.length; y++){
-                        if(nameHolderUnique[x] == linkHolder[y]){
-                            matchedLinks[x] = linkHolder[y+1];
-                            /*if(matchedLinks[x].includes(nameHolderUnique[x])){
-                                matchedLinks[x].push({FileStructsid: x})
-                            }*/
-                            y++;
-                        }
-                    }  
-                    //console.log(JSON.stringify(matchedLinks));
+                idHolder.forEach(function(id, index) {
                     FileStructs.push({
-                            id: x,
-                            level: 0,
-                            name: nameHolderUnique[x],
-                            type: nameHolderUnique[x].slice(nameHolderUnique[x].lastIndexOf(".")+1),
-                            links: linkHolder[x],
+                            id: idHolder[index],
+                            level: allLevelsHolder[index],
+                            name: allNamesHolder[index],
+                            type: typeHolder[index],
+                            links: allLinksHolder[index],
                             errors: []
      
                     })
                     ErrorStructs.push({
 
                     })
-                }
+                });
 
                 FileData = {FileStructs, ErrorStructs};
                 jsonHolder = JSON.stringify({FileData});
@@ -185,7 +233,7 @@ export function activate(context: vscode.ExtensionContext) {
         //     console.log(`stderr: ${stderr}`);
         // });
 
-        try {
+    /*    try {
             var command;
             if (isWin) {
                 command = './node_modules/.bin/electron.cmd';
@@ -207,7 +255,7 @@ export function activate(context: vscode.ExtensionContext) {
         } catch (error) {
             console.log("Electron Error: " + error);
         }
-
+*/
     });
 
 
