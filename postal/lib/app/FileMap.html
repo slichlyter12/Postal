@@ -4,21 +4,22 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<head>
   <title>Network | Basic usage</title>
 
   <script type="text/javascript" src="/node_modules/vis/dist/vis.js"></script>
   <link href="node_modules/vis/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
-
+  <link href="css/FileMap.css" rel="StyleSheet" type="text/css">
   <style type="text/css">
     #mynetwork {
-      width: 1800x;
-      height: 1000px;
+      width: 1250px;
+      height: 800px;
     }
   </style>
 </head>
 <body>
+<div id="toolbar">
+  
+</div>
 <div id="mynetwork"></div>
 <pre id="eventSpan"></pre>
 <script type="text/javascript">
@@ -167,7 +168,17 @@ function Main(){
       nodes: nodes,
       edges: edges
     };
-    var options = {};
+    var options = {
+      layout: {
+        hierarchical: {
+          direction: "UD",
+          sortMethod: "directed"
+        }
+      },
+      physics: {
+        enabled: false
+      }
+    };
     network = new vis.Network(container, data, options);
     //alert("Created Netork");
 
