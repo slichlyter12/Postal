@@ -12,7 +12,7 @@ var fs = require('file-system');
 var nodefs = require('fs');
 var cwd = require('cwd');
 var childProcess = require('child_process');
-var electronp = require('electron-prebuilt');
+var electronp = require('electron');
 
 var isWin = /^win/.test(process.platform);
 
