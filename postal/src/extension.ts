@@ -246,18 +246,6 @@ export function activate(context: vscode.ExtensionContext) {
         } else {
             filePath = `${__dirname}/../../`;
         }
-        //console.log(filePath);
-        //var p = childProcess.spawn(electronp, [filePath + 'main.js']);
-        //console.log(p);
-        //console.log("children");
-        // exec('electron main.js', (error, stdout, stderr) => {
-        //     if (error) {
-        //         console.error(`exec error: ${error}`);
-        //         return;
-        //     }
-        //     console.log(`stdout: ${stdout}`);
-        //     console.log(`stderr: ${stderr}`);
-        // });
 
         try {
             var command;
