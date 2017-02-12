@@ -20,17 +20,6 @@ var isWin = /^win/.test(process.platform);
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-    // get filepath and create file
-    var htmlFilePath = vscode.workspace.rootPath;
-    htmlFilePath += "/dirStructure.html";
-    fs.writeFile(htmlFilePath, "\n", function(error) {
-        if (error) {
-            console.error("Error creating dirStructure.html");
-        }
-    });
-
-    let previewUri = vscode.Uri.parse("Files://" + htmlFilePath);
-
     let provider = new ContentProv();
 
     let registration = vscode.workspace.registerTextDocumentContentProvider('Files', provider);
