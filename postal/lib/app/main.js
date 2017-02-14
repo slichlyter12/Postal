@@ -12,7 +12,6 @@ const url = require('url')
 
 
 const ipc = electron.ipcMain;
-const processBridge = require('process-bridge');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -20,9 +19,14 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1800, height: 1000})
-
-  // and load the index.html of the app.
+  mainWindow = new BrowserWindow(
+    {
+      width: 1200, 
+      height: 800,
+      frame: false,
+      resizable: false
+    }
+  )// and load the index.html of the app.
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'FileMap.html'),
     protocol: 'file:',
