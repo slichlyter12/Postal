@@ -1,11 +1,14 @@
 Container{ //Node in the file map or sub container of file
     int id;
-    int level; //0 == top == most zoomed out, 1 == next level down, 2 ...
-    string name; //file name with extension or subFileStruct name. 
-    string type; //file type
+    int level; //0 == top level directory, 1 next level down
     
-    int subContainers[]; links to containers of level > 0
-    int links[]; //links to other file containers with level = 0
+    bool isSubContainer; //is this a file/directory or a subcontainer (div, class, ect.)
+    
+    string name; //file name with file extension or subFileStruct name. 
+    string type; //file type (html, png, directory, external reference...
+    
+    int subContainers[]; links to subcontainers belonging to this node
+    int links[]; //links to other file containers.
     int errors[]; //links to errors by id?
 }
 
