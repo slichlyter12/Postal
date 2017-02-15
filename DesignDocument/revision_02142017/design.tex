@@ -238,12 +238,15 @@ Show the major components of the extension and their general, high-level functio
 	All of these components make up the entirety of the extension, and they will be described more entirely within this document. 
 	
 	\subsubsection{Parser}
+	
 	Type: component
-	Description: 
+	
 	The parser is the primary logic of the Postal extension. 
 	It is responsible for gathering and analyzing all the data from the user and generating the data that will go into the data structure.
-	It will parse through each file and check if the user's code violates any best practices of HTML, CSS, JavaScript, or PHP. 
-	It will also generate the file map by looking at what HTML pages are linked to other HTML pages.
+	It will parse through each file and check if the user's code includes any of the things that are included in the grammars.json file.
+	This grammars.json file will include the grammars (i.e. regular expressions) for each thing the user wants displayed as a node.
+	This is a user editable file.
+	It will also generate the file map by looking at what nodes, defined by the grammars, are connected to other nodes.
 	The parser will update the data structure with only the data that was changed most recently.
 	For example if a user saves a file, only that file be parsed again and its new data sent to the data structure.
 	Similarly if a user saves multiple files at the same time then only those file would be parsed and sent to the data structure.
@@ -285,6 +288,11 @@ Show the abstractions at the class and datatype level that are required for each
 
 
 	\subsubsection{Parser}
+	
+	The parser will be implemented using a combination of functions built into VSC as well as our own custom code using NodeJS.
+	The built in functions in VSC will mainly involve getting all the files in the user's current working directory as well as figuring out which files were changed most recently.
+	
+	
 	The Parser will be implemented using Perl and the HTMLTokeParserSimple library\cite{htmltokeparser}.
 	This library tokenizes HTML files into their basic parts such as the tags in it as well as the various attributes within each tag.
 	The parser will use this information to grab links from the pages and determine which pages are linked to each other.
