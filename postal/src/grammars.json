@@ -8,14 +8,16 @@
                 "links" :  "href=[\"](.+?)[\"]"
             }, {
                 "includes" : "include=[\"](.+?)[\"]"
-            }]
+            }],
+            "nodecolor" : "blue"
         }, {
             "id" : 1,
             "title" : "javascript",
             "filetypes" : [".js"],
             "regex" : [{
                 "requires" : "requires=[\"](.+?)[\"]"
-            }]
+            }],
+            "nodecolor" : "blue"
         }
     ]
 }

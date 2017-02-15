@@ -32,15 +32,6 @@ export function activate(context: vscode.ExtensionContext) {
         var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
         var grammars = JSON.parse(grammarsFile);
 
-        // GET ALL FILES:
-        var allFiles = vscode.workspace.findFiles('*', '');
-        allFiles.then(function(foundFiles) {
-            //DO STUFF WITH ALL FILES
-            //console.log(JSON.stringify(allFiles));
-        });
-
-        
-
         //GET FILES TO PARSE
         var files = [];
         for (var i = 0; i < grammars.grammars.length; i++) {
