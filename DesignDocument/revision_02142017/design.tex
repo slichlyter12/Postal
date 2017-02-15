@@ -247,10 +247,6 @@ Show the major components of the extension and their general, high-level functio
 	This grammars.json file will include the grammars (i.e. regular expressions) for each thing the user wants displayed as a node.
 	This is a user editable file.
 	It will also generate the file map by looking at what nodes, defined by the grammars, are connected to other nodes.
-	The parser will update the data structure with only the data that was changed most recently.
-	For example if a user saves a file, only that file be parsed again and its new data sent to the data structure.
-	Similarly if a user saves multiple files at the same time then only those file would be parsed and sent to the data structure.
-	
 		
 	
 	\subsubsection{File Map and Error List UI}
@@ -289,18 +285,15 @@ Show the abstractions at the class and datatype level that are required for each
 
 	\subsubsection{Parser}
 	
-	The parser will be implemented using a combination of functions built into VSC as well as our own custom code using NodeJS.
+	The parser will be implemented using a combination of functions built into VSC as well as our some custom code using NodeJS.
 	The built in functions in VSC will mainly involve getting all the files in the user's current working directory as well as figuring out which files were changed most recently.
+	The custom code will be the bulk of the parser.
+	It will be responsible for checking the file for the things specified within the grammars supplied by the user as well as generating a file map based on links between files or whatever the user specifies within the grammars.
 	
-	
-	The Parser will be implemented using Perl and the HTMLTokeParserSimple library\cite{htmltokeparser}.
-	This library tokenizes HTML files into their basic parts such as the tags in it as well as the various attributes within each tag.
-	The parser will use this information to grab links from the pages and determine which pages are linked to each other.
-	It will also look at a higher level of the users code structure and determine if they are violating any best practice thus creating Broken Rules. 
-	
-	The Broken Rules will be determined by going through the W3C best practices list and determining what types of things should exist in each file type. 
-	For example having only the structure of the website in the HTML pages and having all the styling in the CSS pages. 
-	We will then format rules in which our parser will interpret and return error messages to the user if they broke a best practice thus generating a Broken Rule.\cite{w3c}
+	The parser will also be able to check the users code for certain violations that can be set by the user.
+	For example if the user is writing a web project, their project can be checked against the W3C's best practices and the parser will alert the UI to highlight those sections of the user's code that violate these rules.
+	These rules will by dynamic enough for the user to write their own.
+	This would be useful for teams trying to enforce certain coding styles.\cite{w3c}
 	
 
 	\subsubsection{File Map and Error List UI}
@@ -480,11 +473,11 @@ functionality.
 	\subsection{Parser}
 		\subsubsection{Exposes}
 			\begin{itemize}
-			\item Parsing for links and Broken Rules
+			\item Parsing for things specified within the grammars.
 			\end{itemize}
 		\subsubsection{Requires}
 			\begin{itemize}
-			\item The parser will be triggered when the user saves files, and only those files will be parsed. 
+			\item The parser will be triggered when the user saves files. 
 			It will also parse on first launch of the extension.
 			\item Get Data from the Data Structure
 			\end{itemize}
