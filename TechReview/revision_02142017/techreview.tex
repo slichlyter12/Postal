@@ -447,26 +447,33 @@ There is also a major advantage of using the HTML Preview however.
 The first is that, by using built in functionality, the extension can remain more compact and not have to support itself.
 
 \subsubsection{In Browser Window}
-Through the use of some Visual Studio Code API Calls, we can have the IDE launch the user’s default browser and load our rendered file map into it.
+Through the use of some Visual Studio Code API Calls, we can have the IDE launch the user's default browser and load our rendered file map into it.
 The advantage of this methodology is that the UI can be constructed entirely as a webpage. 
 This provides us with many simple to implement options for creating an interactive UI. 
 The down side however is that the web application UI will have to support multiple browsers and additionally the use of an external program for the extension will make usability inconvenient. 
 
 \subsubsection{Electron}
 Electron is a framework for creating desktop applications through the use of HTML, CSS and JavaScript. 
-It is kind of like a lightweight browser that doesn’t browse but instead servers as a container for applications made with web based technologies. 
+It is kind of like a lightweight browser that doesn't browse but instead servers as a container for applications made with web based technologies. 
 Interestingly enough, Electron was used to create visual studio code. 
-Using Electron would allow us some freedoms for the UI that might otherwise be restricted by Visual Studio Code’s preview HTML Option. 
+Using Electron would allow us some freedoms for the UI that might otherwise be restricted by Visual Studio Code's preview HTML Option. 
 As mentioned above, testing the preview option led to some slightly bizarre behavior. 
 Electron could potentially fix those issues. 
 The primary disadvantage would again be that the extension has to include the entirety of the electron framework, making it significantly larger.
 
 \pagebreak
 
-\section{February 2017 Revisions}
+\section{Revisions}
 
 \subsection{Sam Lichlyter}
+\subsubsection{Parser Class}
+The parser class we ended up using was a  custom implementation. 
 
+\subsubsection{Parsing Language}
+Because we used a custom parser class, it was easiest to use JavaScript because the entire extension is written in JavaScript using NodeJS.
+
+\subsubsection{Perl Parsing Class}
+This section is now irrelevant since we are using JavaScript for our custom parser.
 
 \subsection{Zach Schneider}
 
