@@ -476,7 +476,28 @@ Because we used a custom parser class, it was easiest to use JavaScript because 
 This section is now irrelevant since we are using JavaScript for our custom parser.
 
 \subsection{Zach Schneider}
+\subsubsection{Data Structure Storage Medium}
+The team has continued to use JSON files as the single storage medium for the data structure. 
+This is unchanged from the original justifications above.
 
+\subsubsection{Data Structure Storage Serialization}
+The project has exclusively used JSON.stringify as the method of serialization from the data structure to our JSON file storage. 
+This is unchanged from the original justifications above.
+
+\subsubsection{Comparing the Data Structure to the Serialized JSON}
+Throughout the development of this extension, the team has realized that reading and writing a relatively small JSON file in its entirety causes minimal if any delay in the function of the extension.
+As such, the decision was made to remove to compare functionality from our parser and data structure. 
+The write to the JSON file by the parser and the read of the file by the UI cause very little taxation of the CPU/RAM of each of our test systems.
+Therefore, both components will just read/write the entire file each time a node is changed, instead of only reading/writing the changed portion of the file.
+Subsequently, the Lodash library has been removed from this project.
+
+\subsubsection{Switch to ECMAScript 7 from ECMAScript 6}
+The team decided to update the version of JavaScript that the extension will use.
+The version is described by the ECMAScript 2016 specification and is known both as ES7 and ES2016.
+The previous version we used was ES6/ES2015.
+This will not affect the end user in any way to our knowledge.
+The reason behind the switch is that ES7 includes extended array manipulation functions built in to the language, helping simplify some of the logic between the parser and the data structure.
+The switch was executed by changed an extension dependency from ES6 to ES7 in a configuration file. \cite{ES7}
 
 \subsection{Cramer Smith}
 
