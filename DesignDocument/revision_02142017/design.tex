@@ -248,10 +248,12 @@ The parts of the extension are as follows:
 All of these components make up the entirety of the extension, and they will be described more entirely within this document. 
 	
 \subsubsection{Visual Studio Code}
-%TODO: My bad -Cramer	
 \hfill \\
-\bolditin{Type}{:} component \\
-\bolditin{Description}{:} 	
+\bolditin{Type}{:} Interface \\
+\bolditin{Description}{:} 
+Visual Studio Code is the IDE in which the Extension will be build around.
+The IDE is responsible for being the launch point for the user to access the tools that the extension will offer.
+If a user wants to user our extension they will need to use Visual Studio Code it is the only way to interface with the extension.
 
 \subsubsection{Parser}
 \hfill \\
@@ -291,13 +293,13 @@ This JSON file will be the direct source from which the UI obtains its data.
 The purpose of the Logical viewpoint is to elaborate existing and designed types and their implementations
 as classes and interfaces with their structural static relationships. This viewpoint also uses examples of
 instances of types in outlining design ideas. 
+
 \subsection{Design Concerns}
 Show the abstractions at the class and datatype level that are required for each component. 
+
 \subsection{Design Elements}
 
-
-\subsubsection{Parser}
-	
+\subsubsection{Parser}	
 The parser will be implemented using a combination of functions built into VSC as well as our some custom code using NodeJS.
 The built in functions in VSC will mainly involve getting all the files in the user's current working directory as well as figuring out which files were changed most recently.
 The custom code will be the bulk of the parser.
