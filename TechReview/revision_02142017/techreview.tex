@@ -213,14 +213,11 @@ For these reasons, our team opted not to use deepEqual. \cite{deep}
 
 
 \section{Cramer Smith}
-%  ___ ___  ___ 
-% |_ _|   \| __|___
-%  | || |) | _|(_-<
-% |___|___/|___/__/  	Please keep this I have trouble keeping where I am
-%
-\subsection{The Best Base Integrate Development Environment} 
-It is necessary to look all the possible integrated development environments for the postal project to see what would be the best fit for this specific extension, both development wise and release wise.
-To this purpose this review will examine three similiar IDEs that could all be used as the base of the extension that is planned to be implemented.
+
+% IDE
+\subsection{The Best Base Integrated Development Environment} 
+It is necessary to look all the possible integrated development environments (IDE) for the postal project to see what would be the best fit for this specific extension, both development wise and release wise.
+To this purpose this review will examine three similar IDEs that could all be used as the base of the extension that is planned to be implemented.
 Those IDEs are Brackets, Atom, and Visual Studio Code (VSCode) all of which have there advantages and disadvantages.
 
 \subsubsection{Brackets}
@@ -246,7 +243,7 @@ Atom is actually what VSCode from, but VSCode added TypeScript to the languages 
 While atom is a good has a editor and auto completion it does not stand out when compared to the other IDEs. 
 In fact it seems as though Atom uses extensions as a crutch not implementing built in functionality requiring the user to get extensions in order to complete their tasks. 
 While this does make the initial learning curve of using Atom a bit larger it does keep the editor light and running very fast.
-What Atom gains in speed it loses in ease of use as a new user has to do a good amount of initial set up and for the audience that Postal is targetting would be put off by the confusing intial set up of Atom.
+What Atom gains in speed it loses in ease of use as a new user has to do a good amount of initial set up and for the audience that Postal is targeting would be put off by the confusing initial set up of Atom.
 
 \subsubsection{Visual Studio Code}
 Visual Studio Code, like the other IDEs, is a text editor by Microsoft, that is currently in development as an open source project. \cite{VSCode}
@@ -270,11 +267,7 @@ This is important for the integrity of the development of the extension in the l
 Visual Studio Code has a extension creation guides the developer through the process of making the extension and creates all the helper files that the developer will need in their extension.
 The other benefit is that the built in extension manager will be easy for the user to manage than the other IDEs. 
 
-%  ___             _      
-% | __|_ _____ _ _| |_ ___
-% | _|\ V / -_) ' \  _(_-<
-% |___|\_/\___|_||_\__/__/ 		The events that the IDE will be listening 
-%
+% event handling
 \subsection{Event Handling Within A Separate Window of the IDE}
 Visual Studio Code is going to interface with the user and our extension will need to know what the user is doing.
 The specific instance that this portion focuses on the the event handler that the IDE is actively listening for from it's extension.
@@ -303,23 +296,27 @@ This is the intended way that exertions are supposed to create and the event han
 There are also built in events that the these event listeners will need to be initialized before the user actually interfaces with the extension and to do that the extension will need to use the activation events. 
 An activation event is set in the package.json of the extension and these activation events are sent from the IDE to the extensions.
 These events can be onLanguage, onCommand, onDebug, workspaceContains or a star (*) signifying that the extension should always be running. 
-When the extension recieves one of these events that it is listening for it will start the extension operations. 
+When the extension receives one of these events that it is listening for it will start the extension operations. 
 Setting these custom eventEmitters and event listeners should be the first thing that the extension sets up as they will be very important for the interface that the user will interacet with. \cite{VSCodeDocumentation}
 
-\subsubsection{Decision}
-For the purpose of this project the eventEmmiter and Listener will be used for obvious reasons. 
-The first being that it is the standard of Visual Studio extensions, and this is what extensiona are expected to implement. 
-The other proposed option could work but would be improper and irresponsible.
-The HTML preview method would be extremely limited, tedious and impractical, and the built in events would go against the design of the IDE and would cause conflicts that would be extremely problematic.
-Make custom eventEmitters will allow for greater flexibility and better design in general. 
+\subsubsection{Process Bridge}
+The process bridge is a way of connecting VSC to the electron GUI that we use to draw the nodes. 
+With the process bridge we will be able to set up event listeners for the user interacting with the GUI elements.
+This way we will be able to have the extension and VSCode react to the users actions in the electron window. 
+The process bridge will be able to communicate those actions to the IDE. 
 
-%  _                                         
-% | |   __ _ _ _  __ _ _  _ __ _ __ _ ___ ___
-% | |__/ _` | ' \/ _` | || / _` / _` / -_|_-<
-% |____\__,_|_||_\__, |\_,_\__,_\__, \___/__/ 		The Languages that the Visual Studio uses. 
-%				      |___/          |___/        
-\subsection{Languages Extensions Written in}
-All the possible IDEs that could be used for this project are written in HTML, CSS, and JavaScript, but the bulk of the logic is JavaScript. 
+\subsubsection{Decision}
+For the purpose of this project the eventEmmiter and Listener will be used for anything that is contained within VSCode for obvious reasons, but we will also need a process bridge that will send messages back and forth to the GUI and VSCode. 
+The first reason that eventEmmiter was chosen was that it is the standard of Visual Studio extensions, and this is what extensions are expected to implement. 
+The HTML preview method would be extremely limited, tedious, and impractical, and the built in events would go against the design of the IDE and would cause conflicts that would be extremely problematic.
+Make custom eventEmitters will allow for greater flexibility and better design in general. 
+The reason for the process bridge is that it is the only way for the GUI and VSCode to properly communicate users actions taken on the GUI.
+Having the process bridge will make the GUI actually respond like a proper GUI.
+ 
+% Languages  
+\subsection{The Language The Extensions Written In}
+All the possible IDEs that could be used for this project are written in HTML, CSS, and JavaScript, but the bulk of the logic is JavaScript.
+They all use these languages because they are the best for creating beautiful and consistant cross platform applications.  
 This means that the extensions use mainly Javascript. 
 With Visual Studio Code there is the option to use either JavaScript or TypeScript. 
 This portion will look at JavaScript and TypeScript looking at each language's pros and cons in terms of the development of the Postal extension.
@@ -344,10 +341,10 @@ Another major advantage of using TypeScript is that all the VSCode examples are 
 TypeScript also allows for the use of JavaScript within TypeScript files and that flexibility will be nice to have while developing an extension.
 
 \subsubsection{Decision}
-For the postal extension the developement will be done with TypeScript as its main programming language. 
-The main reason for this decision is that the documentation for VSCode extension developement is written with TypeScript examples making for a smoother developement experience. 
-The other reasons for chosing TypeScript over JavaScript is that TypeScript will allow for the use of both JavaScript and TypeScript. 
-Have the flexability to chose either depending on the circumstance will make for faster developement with more possible solutions to some problems that the developers may face. 
+For the postal extension the development will be done with TypeScript as its main programming language. 
+The main reason for this decision is that the documentation for VSCode extension development is written with TypeScript examples making for a smoother development experience. 
+The other reasons for choosing TypeScript over JavaScript is that TypeScript will allow for the use of both JavaScript and TypeScript. 
+Have the flexibility to chose either depending on the circumstance will make for faster development with more possible solutions to some problems that the developers may face. 
 
 
 \section{Eric Winkler}
