@@ -199,15 +199,15 @@ These design elements will be described within the context of specific design vi
 % 4.8
 \subsection{Design Rationale}
 The Postal Extension project will attempt a pseudo agile design style focusing on incremental releases and feature implementation.
-As this project has a very short time line, it is important to release and mature key features before lower priority features. 
-It an attempt to avoid over-engineering and feature creep, the project has set relatively simple minimal goals that must all be completed before the project can move on to more complex ones.
-We hope that by setting this restriction, we can guarantee at minimal feature release and meet our time line goals.
-The current minimal features are (as of 12/01/2016) already under implementation and are expected to be completed before January of 2017.
+As this project has a very short timeline, it is important to release and mature key features before lower priority features. 
+In an attempt to avoid over-engineering and feature creep, the project has set relatively simple minimal goals that must all be completed before more complex feature development can begin.
+By setting this restriction, the project can meet its minimum feature release according to the development timeline
+The current minimal features are (as of 12/01/2016) already being implemented and are expected to be completed before February 2017.
 
 
 % 4.9
 \subsection{Design Languages}
-The following document makes us of Entity-Relationship (ER) diagrams to represent information and data structures and UML diagrams for displaying system components. 
+The following document makes use of Entity-Relationship (ER) diagrams to represent information and data structures/UML diagrams for displaying system components. 
 
 % 5.1
 \section{Introduction of Design Viewpoints}
@@ -220,13 +220,13 @@ parts and establishes the roles of those parts.
 \subsection{Design Concerns}
 Show the major components of the extension and their general, high-level functions.
 \subsection{Design Elements}
-	\begin{figure}
+	\begin{figure}[h!]
                  \includegraphics[width=300px]{CompositionUMLEPS.eps}
                  \caption{Components of the Postal Extension}
       		\end{figure}
 	\subsubsection{Extension}
 	Type: system
-	Description: The design of the extension is meant to help new web developers make better design decisions when writing HTML and CSS code.
+	Description: The design of the extension is meant to help new web developers make better design decisions when writing HTML, CSS, PHP and JavaScript code.
 	The extension is to be built on top of the Visual Studio Code IDE and the extension will be the completion of the all the parts that are described within this document. 
 	The parts of the extension are as follows:
 	\begin{itemize}
@@ -301,7 +301,7 @@ Show the abstractions at the class and datatype level that are required for each
 	Both of these components will be bundled together into a single screen. 
 	This screen will implemented in an electron application window. 
 	Electron is a platform used to create desktop applications as if they were websites. \cite{Electron}
-	The user interface will then be implemented using JavaScript, HTML and CSS.
+	The user interface will then be implemented using JavaScript, PHP, HTML and CSS.
 	
 	\subsubsection{FileMap}
 	Type: Interface
@@ -352,11 +352,8 @@ Show the abstractions at the class and datatype level that are required for each
 	Data handling within the Postal Extension consists of three main entities or processes: the data structure, serialization of the data structure and the storage of the data structure in a JSON file.
 	The data structure is a dictionary of file nodes, stored as JavaScript objects. These JavaScript objects come from the Parser parsing the currently loaded project for links and errors.
 	The data structure can be considered the live version of the project data, as its dictionary is updated by the parser every time the project is saved. 
-	Once the data structure is updated, its data will be compared with the now out-of-date JSON file to identify which file nodes were changed.
-	The comparison of JSON and JavaScript object will be done with the Lodash library's deep object compare function.
-	The information concerning which nodes were changed will be passed to the UI elements, once it has been serialized to the file.
 	The nodes changed in the data structure will then be serialized into JSON using the JSON.stringify function built into JavaScript.
-	This JSON will be saved to a file, which can further be read by the UI functions for updating. \cite{stringify} \cite{lodash}
+	This JSON will be saved to a file, which can further be read by the Electron UI functions for updating the project node and error visualization. \cite{stringify}
 	
 % 5.10
 \section{Interaction Viewpoints}
@@ -395,7 +392,7 @@ Additionally, within the data handling elements of this extension, how the data 
 	This will make it to the user can quickly identify the errors that they are creating before there become too many that the user is overwhelmed by the error table once they check the UI.
 
 	An error object is the location of what the extension finds and identifies as an error.
-	These error will consist of improper HTML and CSS practices. 
+	These errors will consist of improper HTML and CSS practices. 
 	These errors will be listed in the custom UI, and if the user interacts with the error object the extension should navigate the user to the location of the error.
 	The extension will do this with openTextDocument, to first open the document that has the error. 
 	Once the extension opens the file it can then get the specific words that are part of the error and change the background color using the background color property. \cite{VSCodeDocumentation}
@@ -426,7 +423,7 @@ The main objects contained in the data structure are detailed below.
 	The values, the file nodes, will contain the relationship and error data for all files in the loaded project.
 	\subsubsection{File Nodes}
 		A file node will be representative of an individual file in the loaded project. 
-		Each file node will contain the name of the file it represents, as well as a numerical identifier for lookups.
+		Each file node will contain the name of the file it represents, as well as a numerical identifier for lookups, a file type, a directory level, a list of files it links to, an indicator of type file or folder, and a list of sub files if the node is a folder.
 		File nodes will be linked to each other according when one file in the project references another. 
 		Many files may be linked to many other files.
 		The files supported by default will be HTML, CSS JavaScript, PHP and image files.
@@ -492,10 +489,6 @@ functionality.
 		\end{itemize}
 		\subsubsection{Requires}
 		\begin{itemize}
-			\item Load Data (Files)
-			\\
-			The data structure will compare its updated data with the data stored in the JSON file. 
-			In order for this to occur, the data structure must make use of JSON.parse and the deep object compare as part of the Load Data function. \cite{stringify}
 			\item Parse (Parsers)
 			\\
 			The data structure will only have its data updated when the Parse function is called.
@@ -528,10 +521,9 @@ functionality.
 		\subsubsection{Exposes}
 		\begin{itemize}
 			\item Load Data
-			The JSON.parse function will be utilized to pull data from the JSON file. 
-			Once the information about the file nodes from the data structure are pulled from the JSON file, it will be compared to the current data structure values to identify which links or errors have changed. \cite{stringify}
+			Once the information about the file nodes from the data structure are pulled from the JSON file, it will be updated in the project visualization UI to identify which links or errors have changed. 
 			\item Save Data
-			Once parsed data from the Parser is transferred to the data structure using the Get Data functionality, this data will be serialized into a JSON file with the JSON.stringify function built into JavaScript.
+			Once parsed data from the Parser is transferred to the data structure using the Get Data functionality, this data will be serialized into a JSON file with the JSON.stringify function built into JavaScript. \cite{stringify}
 		\end{itemize}
 		\subsubsection{Requires}
 		\begin{itemize}
