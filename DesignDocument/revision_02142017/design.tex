@@ -383,7 +383,7 @@ Additionally, within the data handling elements of this extension, how the data 
 \subsection{Design Elements}
 
 \subsubsection{IDE}	
-There are three main interactions that happens on the specific IDE events; the parsing of the files ,the opening of the custom extension UI, and the opening of an error object.
+There are three main interactions that happens on the specific IDE events; the parsing of the files, the opening of the custom extension UI, and the opening of an error object.
 The first of these events is the parsing of files. 
 There are several actions that occur within VSCode that will initiate the extension parsing and interpreting process.
 These specific events that will have specific event listeners. 
@@ -394,6 +394,7 @@ The first parsing will be set in motion by the built-in activate function with t
 After the initialization whenever the user saves the files the extension is going to parse the files and get the necessary information from the new parse. 
 This will continue after every manual save.	
 The extension will only continue on the explicit manual saves, meaning only when the user to saves the files, rather then when VSC auto saves. 
+
 Once the user saves the files the inPerSaveDocument listener will be acted upon.\cite{VSCodeDocumentation}
 This specific event will allow the extension parser to read the files contents before the file is actually saved.
 This will allow for the extension to possibly format the user's code before it is saved.
@@ -407,6 +408,11 @@ Unless the parsing operations has not been invoked on the current working direct
 This will ensure give the user access to the UI at any moment, and the UI won't become a bother to the user popping up after every save. 
 The other event that will cause the UI to be brought up will be when the parser identifies a new error in the code.	
 This will make it to the user can quickly identify the errors that they are creating before there become too many that the user is overwhelmed by the error table once they check the UI.
+
+The custom UI will need to have a way of interacting with VSC and since it is not a dedicated part of VSC it will have to have a specially designed way of sending event information to VSC. 
+This system is called a process bridge. 
+This process bridge will facilitate the communication between the custom UI and VSC.
+If the user is to click on an element in the custom GUI the process bridge will send VSC a message and VSC will respond accordingly to that message. 
 
 An error object is the location of what the extension finds and identifies as an error.
 These errors will consist of improper HTML and CSS practices. 
