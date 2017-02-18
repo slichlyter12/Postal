@@ -471,13 +471,13 @@ The primary disadvantage would again be that the extension has to include the en
 \subsection{Sam Lichlyter}
 \subsubsection{Parser Class}
 The parser class we ended up using was a custom implementation. 
-We did this for the exact reasons I mentioned above, it has allowed us to only parse what we needed instead of using a third-party parser which might parse for a ton of stuff.
+We did this for the exact reasons mentioned previously, it has allowed us to only parse what we needed instead of using a third-party parser which might parse for a ton of stuff.
 This reduces the overhead in terms of dependencies as well as increasing the speed of the parser.
 
 \subsubsection{Parsing Language}
 Because we used a custom parser class, it was easiest to use JavaScript because the entire extension is written in JavaScript using Node.js.
-This was also helpful because we didn't have to go to an outside tool to do the parsing.
-For example if we had used Perl, we would have had to call our Perl script from JavaScript. 
+This was also helpful because we didn't have to use an outside tool to do the parsing.
+For example if we had used Perl, we would have had to call our Perl script from within our JavaScript extension.
 Using JavaScript allowed us to greatly reduce the complexity of our code and has allowed us to keep most of the code in one area, i.e. the extension itself within VSCode.
 
 \subsubsection{Perl Parsing Class}
@@ -519,19 +519,19 @@ The need for this process bridge along with eventEmmiters comes from the way tha
 The eventEmmiters will be used if there are any events that happen within any of GUI built into Visual Studio Code. 
 
 \subsubsection{The Languages}
-The team is still using mainly Typescript.
-This has allowed us to use both typescript and javascript in the development process, which was stated in the original justification for the use of Typescript. 
-This also allows the development team to use NodeJS and its many useful libraries. 
+The team is still using mainly TypeScript.
+This has allowed us to use both TypeScript and JavaScript in the development process, which was stated in the original justification for the use of TypeScript. 
+This also allows the development team to use Node.js and its many useful libraries. 
 
 \subsection{Eric Winkler}
 
 \subsubsection{Rendering the Filemap, Displaying Broken Rules, displaying the Filemap}
 No changes have been made to the above mentioned technologies. Vis.js has worked well for creating the Filemap and will be used for the foreseeable duration of this project.
-While not in use yet, the plan is to use the Jquerey advanced newsticker for displaying the list of errors.
+While not in use yet, the plan is to use the jQuery advanced newsticker for displaying the list of errors.
 Electron is currently being used to display the vis.js created Filemap. 
 Because they're both node technologies, they work together quite well.
 
-\subsubsection{Additional technology: IPC node package.}
+\subsubsection{Additional technology: IPC node package}
 As our design evolved, we realised that there was a need to re-factor our overall architecture into more of a model-view-controller design.
 To facilitate this, we incorporated the use of the node module IPC.
 IPC is an interprocess communication API for node threads.
