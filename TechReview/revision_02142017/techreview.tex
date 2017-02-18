@@ -364,6 +364,7 @@ Additionally, the module appears to be highly customizable in terms of aesthetic
 Vis.js claims to ``run fine on Chrome, Opera, Safari and IE9+.'' However as the project is being developed with the intent to within visual studio code, Its ability to run in that environment is questionable. This is currently the primary concern with this option.
 
 Vis.js  is open source and is dual licensed under both Apache 2.0 and MIT.
+\cite{vis}
 
 \subsubsection{d3js}
 Similar to vis.js, d3js is another javascript library designed to visualize arbitrary data. 
@@ -379,6 +380,7 @@ This option has the potential benefit of being more efficient, but will likely b
 
 D3.js supports ``modern browsers'' ( Firefox, Chrome, Safari, Opera, IE9+, etc.) and also runs on node. 
 The library is available under the BSD License.
+\cite{d3js}
 
 
 \subsubsection{Custom Code}
@@ -401,6 +403,7 @@ It claims to provide several callbacks and methods to allow maximum flexibility 
 It is called through CSS classes and does feature an API hook for triggering a JavaScript event on clicking an object. 
 It being a JQuery plug in should allow it to work within Visual Studio Code. 
 It features a relatively through API guide and install instructions.
+\cite{jant}
 
 The example news tickers it displays an aesthetically pleasing and varied, indicating that customizing the displays is possible. 
 It features a standard vertical list which will suit this projects needs but also an interesting call out version. 
@@ -421,6 +424,7 @@ This is to be expected as it is basically just a div class but it will still be 
 Documentation is fairly thorough and the website offers a website compression file which will help keep the extension size to a minimum. 
 
 NanoScroller.js is available under the MIT license. 
+\cite{nanoscroller}
 
 \subsubsection{Custom Code}
 The final option is to create our own div class. 
@@ -442,6 +446,7 @@ A downside to this is that the team has already noticed some slightly unusual be
 Additionally, the size of the window that is used to render the HTML is slightly difficult to control. 
 There is also a major advantage of using the HTML Preview however. 
 The first is that, by using built in functionality, the extension can remain more compact and not have to support itself.
+\cite{VSCode}
 
 \subsubsection{In Browser Window}
 Through the use of some Visual Studio Code API Calls, we can have the IDE launch the user's default browser and load our rendered file map into it.
@@ -457,6 +462,7 @@ Using Electron would allow us some freedoms for the UI that might otherwise be r
 As mentioned above, testing the preview option led to some slightly bizarre behavior. 
 Electron could potentially fix those issues. 
 The primary disadvantage would again be that the extension has to include the entirety of the electron framework, making it significantly larger.
+\cite{electron}
 
 \pagebreak
 
@@ -509,11 +515,25 @@ The eventEmmiters will be used if there are any events that happen within any of
 
 \subsubsection{The Languages}
 The team is still using mainly Typescript.
-This has allowed us to use both typescript and javascript in the development process, which was stated in the original justification for the use of Typesrcipt. 
+This has allowed us to use both typescript and javascript in the development process, which was stated in the original justification for the use of Typescript. 
 This also allows the development team to use NodeJS and its many useful libraries. 
 
 \subsection{Eric Winkler}
 
+\subsubsection{Rendering the Filemap, Displaying Broken Rules, displaying the Filemap}
+No changes have been made to the above mentioned technologies. Vis.js has worked well for creating the Filemap and will be used for the foreseeable duration of this project.
+While not in use yet, the plan is to use the Jquerey advanced newsticker for displaying the list of errors.
+Electron is currently being used to display the vis.js created Filemap. 
+Because they're both node technologies, they work together quite well.
+
+\subsubsection{Additional technology: IPC node package.}
+As our design evolved, we realised that there was a need to re-factor our overall architecture into more of a model-view-controller design.
+To facilitate this, we incorporated the use of the node module IPC.
+IPC is an interprocess communication API for node threads.
+It allows users to send data between multiple node processes over defined channels.
+It is a widely used node technology that is frequently updated.
+It is available for free under the DBAD license. 
+\cite{ipc}
 
 
 \pagebreak
