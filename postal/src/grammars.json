@@ -3,7 +3,7 @@
         {
             "id" : 0,
             "title" : "html",
-            "filetypes" : [".html", ".php"],
+            "filetypes" : ["html", "php"],
             "rules" : [{
                     "title": "div",
                     "type": "tagged",
@@ -33,7 +33,7 @@
         }, {
             "id" : 1,
             "title" : "javascript",
-            "filetypes" : [".js"],
+            "filetypes" : ["js"],
             "rules" : [{
                 "title": "javascript requires",
                 "type": "link",
