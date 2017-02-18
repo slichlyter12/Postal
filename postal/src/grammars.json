@@ -4,20 +4,44 @@
             "id" : 0,
             "title" : "html",
             "filetypes" : [".html", ".php"],
-            "regex" : [{
-                "links" :  "href=[\"](.+?)[\"]"
-            }, {
-                "includes" : "include=[\"](.+?)[\"]"
-            }],
-            "nodecolor" : "blue"
+            "rules" : [{
+                    "title": "div",
+                    "type": "tagged",
+                    "options" : {
+                        "tagStart": "<div",
+                        "namedOption" : "id=\"(.+)\"",
+                        "tagEnd": ">",
+                        "closingTag": "</div>",
+                        "nodeColor": "blue"
+                    }
+                }, {
+                    "title": "href link",
+                    "type" : "link",
+                    "options" : {
+                        "link": "href=[\"](.+?)[\"]",
+                        "nodeColor": "blue"
+                    }
+                }, {
+                    "title": "includes link",
+                    "type": "link",
+                    "options": {
+                        "link": "include=[\"](.+?)[\"]",
+                        "nodeColor": "blue"
+                    }
+                }
+            ]
         }, {
             "id" : 1,
             "title" : "javascript",
             "filetypes" : [".js"],
-            "regex" : [{
-                "requires" : "requires=[\"](.+?)[\"]"
-            }],
-            "nodecolor" : "blue"
+            "rules" : [{
+                "title": "javascript requires",
+                "type": "link",
+                "options": {
+                    "link": "requires=[\"](.+?)[\"]",
+                    "nodeColor": "blue"
+                }
+            }]
         }
     ]
 }
