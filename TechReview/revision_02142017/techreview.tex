@@ -470,10 +470,15 @@ The primary disadvantage would again be that the extension has to include the en
 
 \subsection{Sam Lichlyter}
 \subsubsection{Parser Class}
-The parser class we ended up using was a  custom implementation. 
+The parser class we ended up using was a custom implementation. 
+We did this for the exact reasons I mentioned above, it has allowed us to only parse what we needed instead of using a third-party parser which might parse for a ton of stuff.
+This reduces the overhead in terms of dependencies as well as increasing the speed of the parser.
 
 \subsubsection{Parsing Language}
-Because we used a custom parser class, it was easiest to use JavaScript because the entire extension is written in JavaScript using NodeJS.
+Because we used a custom parser class, it was easiest to use JavaScript because the entire extension is written in JavaScript using Node.js.
+This was also helpful because we didn't have to go to an outside tool to do the parsing.
+For example if we had used Perl, we would have had to call our Perl script from JavaScript. 
+Using JavaScript allowed us to greatly reduce the complexity of our code and has allowed us to keep most of the code in one area, i.e. the extension itself within VSCode.
 
 \subsubsection{Perl Parsing Class}
 This section is now irrelevant since we are using JavaScript for our custom parser.
