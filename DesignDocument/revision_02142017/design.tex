@@ -317,44 +317,46 @@ Electron is a platform used to create desktop applications as if they were websi
 The user interface will then be implemented using JavaScript, PHP, HTML and CSS.
 	
 \subsubsection{FileMap}
-The file map will be a graphic representation of the user's project solution. 
-It will appear as a hierarchy of interconnected nodes where the nodes represent a file in the user's project directory and an edge represents some link (defined in the parser section) between the two files. 
+The file map will be a graphic representation of the of the user's project solution. 
+It will appear as a hierarchical graph of interconnected nodes where the nodes represent a file or directory in the user's project directory and an edge represents some link (defined in the parser section) between the two files.
+The location of the nodes in the hierarchy will reflect its position in the project's directory.
 This web will feature nodes of different sizes and will allow the user to zoom and pan the view.
 The file map will be generated from the above mentioned data structure. 
 On execution of a Visual Studio Code command, the Electron application will fetch the data structure and generate the file map by traversing the 'FileStruct' graph structure.
 When a Node is generated it will have several visual attributes which will be acquired from the data structure:
-\begin{itemize}
+	\begin{itemize}
 	\item The size of the node will be based on the number of links to that object (size of the links[] array). 
-	\item A color corresponding to the type of file. See below table.
-\end{itemize}
-\hfill \\
-\begin{tabular}{| c | c |}
+	\item A color corresponding to the type of file. Color values will be based on the VSC color scheme for aesthetic reasons. 
+	See below table.
+	\end{itemize}
+	\begin{tabular}{| c | c |}
 	\hline
 	Color & File Type\\
 	\hline
 	Blue & HTML\\
-	Green & CSS\\
-	Purple & JavaScript\\
+	Purple & CSS\\
+	Green & JavaScript\\
 	Yellow & Image\\
-	Red & PHP\\
+	Light Blue & PHP\\
 	Grey & Undefined\\
 	\hline
-\end{tabular}
+	\end{tabular}
+	\\
 	
-The name of the node will be retrieved from the file struct name field and will be displayed as text inside of the node.
-An asterisk will appear next to the name text within the rendered node if there are errors within the FileStruct for that node. In other words, if the size of the errors[] array within the FileStruct is not zero.
-The file map will be rendered within its own div using the vis.js library 'Network' module. 
-The Library by default includes the rendering, panning and zooming functionality. \cite{visjs}
+	The name of the node will be retrieved from the file struct name field and will be displayed as text inside of the node.
+	An red circle will appear on the node if there are errors within the FileStruct for that node. In other words, if the size of the errors[] array within the FileStruct is not zero.
+	The file map will be rendered within its own div using the vis.js library 'Network' module. 
+	The Library by default includes the rendering, panning and zooming functionality. \cite{visjs}
 	
 \subsubsection{Error List}
 The error list will display all errors currently in the project directory in the form of a vertical list. 
-These errors will be retrieved when the UI opens from the same data structure that is being generated. 
+These errors will be retrieved when the UI opens from the same data structure is being generated. 
 These errors will be retrieved in a per node fashion and will also be grouped in the error list in the same order. 
-	
-The error list will exist to the side of the file map in the same Electron application screen. 
-The list will allow the user to scroll when the number of error result in the list exceeding the Electron window height. 
+
+The error list will exist to the side of the file map in the same electron application screen. 
+The list will allow the user to scroll when the number of errors result in the list exceeding the electron window height. 
 When an error in the list is hovered over, these errors will highlight the corresponding node in the file map by changing the color value of said node. 
-When an error in the list is clicked, the extension will open the file in Visual Studio Code's text editor and scroll to the line where the error exists.
+When an error in the list is clicked, the extension will open the file in Visual Studio Code's text editor and scroll to line where the error exists.
 The error list will be in its own div and scrolling functionality will be achieved through the use of jQuery Advanced News Ticker. \cite{newst}
 	
 \subsubsection{Data Handling}
@@ -399,11 +401,11 @@ This process bridge will facilitate the communication between the custom UI and 
 If the user is to click on an element in the custom GUI the process bridge will send VSC a message and VSC will respond accordingly to that message. 
 
 An error object is the location of what the extension finds and identifies as an error.
-The extension will ship with error checking of HTML and CSS practices, but the user will also be able to define their own errors. 
+The extension will ship with error checking of HTML and CSS best practices, but the user will also be able to define their own errors. 
 These errors will be listed in the custom UI, and if the user interacts with the error object the extension should navigate the user to the location of the error.
 The extension will do this with openTextDocument, to first open the document that has the error. 
 Once the extension opens the file it can then get the specific words that are part of the error and change the background color using the background color property. \cite{VSCodeDocumentation}
-This will hopefully give the user a good idea of where the user has created the error and the errors information text will give the user an idea of what mistake they made and how it can be fixed.
+This will give the user a good idea of where they created an error and the errors information text will give them an idea of what mistake they made and how it can be fixed.
 
 \subsubsection{Data Handling}
 Most major actions within the data handling entities and functions are reliant on the Parser being called and providing updated data.
