@@ -23,6 +23,8 @@ export class Parser {
 
         // get filetype
         var filetype = this.getFiletype(filepath);
+
+        
     }
 
     private getFiletype(filepath: string): string {
