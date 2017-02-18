@@ -428,10 +428,9 @@ The main objects contained in the data structure are detailed below.
 \subsubsection{Dictionary}
 The overall format of the data structure is as a dictionary, that is, a collection of key-value pairs. 
 The keys will be identifiers and the values will be specific file nodes. 
-At this point in time, the exact implementation of the dictionary keys has not been determined, but it will likely be some sort of hash table.
 The values, the file nodes, will contain the relationship and error data for all files in the loaded project.
 
-\subsubsection{Grammar} A self-defined datatype that allows the user to create their own nodes and connections between those nodes.
+\subsubsection{Grammar} A self-defined datatype that allows the user to create their own connections between nodes.
 A grammar includes parameters such as a regular expression to define what that file is connected to.
 For example, shipped with the extension, there will be grammars for HTML and PHP which look for "href=" and create links between the files that have those links and the ones to which they are linked.
 
@@ -453,13 +452,12 @@ File nodes may have multiple errors, but each error is only linked to one file n
 \end{figure}
 				
 \section{Interface Viewpoints}
-The Interface viewpoint provides information designers, programmers, and testers the means to know how
-to correctly use the services provided by a design subject. This description includes the details of external
-and internal interfaces not provided in the SRS. This viewpoint consists of a set of interface specifications
-for each entity. 
+The Interface viewpoint provides information for designers, programmers, and testers to know how to correctly use the services provided by a design subject. 
+This description includes the details of external and internal interfaces not provided in the SRS. This viewpoint consists of a set of interface specifications for each entity. 
+
 \subsection{Design Concerns}
-Identifies the interfaces that the components of the framework expose or require to achieve their
-functionality. 
+Identifies the interfaces that the components of the framework expose or require to achieve their functionality. 
+
 \subsection{Design Elements}
 
 \begin{figure}
@@ -471,7 +469,7 @@ functionality.
 	
 \subsubsection{Exposes}
 \begin{itemize}
-	\item Opening the GUI give the user an interface in which they can interact and see the information that they are looking for from the Postal extension.
+	\item Opening the GUI to give the user an interface in which they can interact and see the information that they are looking for from the Postal extension.
 	\item That information includes the file structure and how they relate to each other, as well as the possible errors. 
 \end{itemize}
 		
@@ -492,7 +490,6 @@ functionality.
 \begin{itemize}
 	\item The parser will be triggered when the user saves files, and only those files will be parsed. 
 It will also parse on first launch of the extension.
-	\item Get Data from the Data Structure
 \end{itemize}
 	
 \subsection{Data Structure}
