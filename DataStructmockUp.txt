@@ -14,7 +14,7 @@ Container{ //Node in the file map or sub container of file
 
 ErrorStruct{
     id;
-    lineNumer;
+    lineNumber;
     fileName;
     Error message;
 }
