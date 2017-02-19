@@ -34,10 +34,8 @@ export function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     let parse = vscode.commands.registerCommand('extension.parse', () => {
-        //NEW PARSER STUFF
-        //Global ID counter
-        var idCounter:number;
 
+        //NEW PARSER STUFF
         controller.buildDataStructure();
 
     });

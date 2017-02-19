@@ -3,21 +3,54 @@
         {
             "id" : 0,
             "title" : "html",
-            "filetypes" : [".html", ".php"],
-            "regex" : [{
-                "links" :  "href=[\"](.+?)[\"]"
-            }, {
-                "includes" : "include=[\"](.+?)[\"]"
-            }],
-            "nodecolor" : "blue"
+            "filetypes" : ["html", "php"],
+            "rules" : [{
+                    "title": "div",
+                    "type": "tagged",
+                    "options" : {
+                        "tagStart": "<div",
+                        "namedOption" : "id=\"(.+)\"",
+                        "tagEnd": ">",
+                        "closingTag": "</div>",
+                        "nodeColor": "blue"
+                    }
+                }, {
+                    "title": "href link",
+                    "type" : "link",
+                    "options" : {
+                        "link": "href=[\"](.+?)[\"]",
+                        "nodeColor": "blue"
+                    }
+                }, {
+                    "title": "includes link",
+                    "type": "link",
+                    "options": {
+                        "link": "include=[\"](.+?)[\"]",
+                        "nodeColor": "blue"
+                    }
+                }, {
+                    "title": "body",
+                    "type": "tagged",
+                    "options" : {
+                        "tagStart": "<body",
+                        "tagEnd": ">",
+                        "closingTag": "</body>",
+                        "nodeColor": "blue"
+                    }
+                }
+            ]
         }, {
             "id" : 1,
             "title" : "javascript",
-            "filetypes" : [".js"],
-            "regex" : [{
-                "requires" : "requires=[\"](.+?)[\"]"
-            }],
-            "nodecolor" : "blue"
+            "filetypes" : ["js"],
+            "rules" : [{
+                "title": "javascript requires",
+                "type": "link",
+                "options": {
+                    "link": "requires=[\"](.+?)[\"]",
+                    "nodeColor": "blue"
+                }
+            }]
         }
     ]
 }
