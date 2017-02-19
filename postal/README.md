@@ -6,14 +6,8 @@ The Goal of Poastal is to help developers organize code by creating a visual rep
 
 The best feature of Postal is the ability to create a visual representation of the file and the way that they connect to one another.  
 
-\!\[feature 1: The file map.\]\(images/feature-x.png\)
 
 In the current build of postal is configured for small web projects consisting of mainly HTML CSS and JavaScript, but can be configured for different types of projects. 
-
-
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
 
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
