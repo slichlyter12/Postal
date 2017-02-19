@@ -2,7 +2,7 @@
 
 import * as vscode from 'vscode';
 import * as path from 'path';
-//import { Parser } from './parser'
+import { Parser } from './parser'
 
 // This is Node.js Code ...
 const readline = require('readline');
@@ -19,13 +19,18 @@ var isWin = /^win/.test(process.platform);
 
 export class Controller {
 
+    //parser: Parser;
     idCounter: number = 0;
+    parser: Parser;
+
+    constructor() {
+        var parser = new Parser();
+    }
 
     public buildDataStructure(){
         var FileStructs = this.buildFileStructs();
         var ErrorStructs = this.buildErrorStructs();
-        this.writeJSON(FileStructs, ErrorStructs);
-        
+        this.writeJSON(FileStructs, ErrorStructs);      
     }
 
     private levelCounter(path){
