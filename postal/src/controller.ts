@@ -43,6 +43,18 @@ export class Controller {
         return level;
     }
 
+    private nameSlicer(path){
+        var fileName;
+        if(isWin){
+            fileName = path.slice(path.lastIndexOf("\\")+1)
+        }
+        else{
+            fileName = path.slice(path.lastIndexOf("/")+1)
+        }
+
+        return fileName;
+    }
+
     private buildFileStructs(){
         var FileStructs = [];
 
@@ -54,7 +66,7 @@ export class Controller {
                 id: this.idCounter,
                 level: this.levelCounter(dirPaths[i]),
                 isSubContainer: false, //bool, Not files or dirs
-                name: dirPaths[i].slice(dirPaths[i].lastIndexOf("\\")+1),
+                name: this.nameSlicer(dirPaths[i]),
                 type: "dir",
                 path: dirPaths[i],
                 links: [],
