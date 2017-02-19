@@ -101,6 +101,8 @@ export class Controller {
         var dirPaths = find.dirSync(vscode.workspace.rootPath);
         var filePaths = find.fileSync(vscode.workspace.rootPath);
 
+        var dirCount = dirPaths.length;
+
         //Build Directory Nodes
         for(var i = 0; i < dirPaths.length; i++){
             FileStructs.push({
@@ -160,7 +162,7 @@ export class Controller {
                         isSubContainer: true,
                         name: tokens[i][j].value,
                         type: tokens[i][j].type,
-                        path: null,
+                        path: FileStructs[i + dirCount].path,
                         links: [],
                         subContainers: [],
                         errors: []
@@ -171,7 +173,6 @@ export class Controller {
             }
         }
 
-        var dirCount = dirPaths.length;
         for(i = dirCount; i < filePaths.length + dirCount; i++){
             for(j = 0; j < tokens[i - dirCount].length; j++){
                 if(tokens[i - dirCount][j].tokenType == "node"){
