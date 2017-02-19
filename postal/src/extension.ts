@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         //NEW PARSER STUFF
         controller.buildDataStructure();
-
+        controller.launchUI();
     });
 }
 
