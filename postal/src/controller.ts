@@ -22,8 +22,25 @@ export class Controller {
     idCounter: number = 0;
 
     public buildDataStructure(){
-        this.buildFileStructs();
+        var FileStructs = this.buildFileStructs();
+        var ErrorStructs = this.buildErrorStructs();
+        this.writeJSON(FileStructs, ErrorStructs);
         
+    }
+
+    private levelCounter(path){
+        var topSlashCounter;
+        var currSlashCounter;
+        if(isWin){
+            currSlashCounter = (path.match(/\\/g) || []).length;
+            topSlashCounter = (vscode.workspace.rootPath.match(/\\/g) || []).length;
+        }
+        else{
+            currSlashCounter = (path.match(/\//g) || []).length;
+            topSlashCounter = (vscode.workspace.rootPath.match(/\//g) || []).length;
+        }
+        var level = currSlashCounter - topSlashCounter - 1;
+        return level;
     }
 
     private buildFileStructs(){
@@ -33,20 +50,9 @@ export class Controller {
         var filePaths = find.fileSync(vscode.workspace.rootPath);
 
         for(var i = 0; i < dirPaths.length; i++){
-        var topSlashCounter;
-        var currSlashCounter;
-        if(isWin){
-            currSlashCounter = (dirPaths[i].match(/\\/g) || []).length;
-            topSlashCounter = (vscode.workspace.rootPath.match(/\\/g) || []).length;
-        }
-        else{
-            currSlashCounter = (dirPaths[i].match(/\//g) || []).length;
-            topSlashCounter = (vscode.workspace.rootPath.match(/\//g) || []).length;
-        }
-        var level = currSlashCounter - topSlashCounter - 1;
             FileStructs.push({
                 id: this.idCounter,
-                level: level,
+                level: this.levelCounter(dirPaths[i]),
                 isSubContainer: false, //bool, Not files or dirs
                 name: dirPaths[i].slice(dirPaths[i].lastIndexOf("\\")+1),
                 type: "dir",
@@ -59,6 +65,19 @@ export class Controller {
         }
 
         return FileStructs;
+    }
+
+    private buildErrorStructs(){
+        var ErrorStructs = {};
+
+        return ErrorStructs;
+    }
+
+    private writeJSON(FileStructs, ErrorStructs){
+        var FileData = {FileStructs, ErrorStructs};
+        var jsonHolder = JSON.stringify({FileData});
+
+        nodefs.writeFileSync(__dirname + "/../../postal.json", jsonHolder, 'utf8');
     }
 
 }
