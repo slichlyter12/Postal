@@ -21,6 +21,14 @@ For example if there is an image subfolder under your extension project workspac
 
 We have a lot of node dependencies. 
 
+* browser-window    ^0.4.0 
+* child process     ^1.0.2
+* cwd               ^0.10.0
+* electron          ^1.4.14
+* file-system       ^2.2.1
+* open              0.0.5
+* vis               ^4.17.0
+
 ## Extension Settings
 
 Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
