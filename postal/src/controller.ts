@@ -91,8 +91,8 @@ export class Controller {
         return foundLinks;
     }
 
-    private linkBuilder(){
-
+    private getNodeIDFromToken(){
+        
     }
 
     private buildFileStructs(){
@@ -171,11 +171,11 @@ export class Controller {
             }
         }
 
-        var dirNum = dirPaths.length;
-        for(i = dirNum; i < FileStructs[i]; i++){
-            for(j = 0; j < tokens[i - dirNum].length; j++){
-                if(tokens[i - dirNum][j].tokenType == "node"){
-                    if(tokens[i - dirNum][j].parentToken == null){
+        var dirCount = dirPaths.length;
+        for(i = dirCount; i < FileStructs[i]; i++){
+            for(j = 0; j < tokens[i - dirCount].length; j++){
+                if(tokens[i - dirCount][j].tokenType == "node"){
+                    if(tokens[i - dirCount][j].parentToken == null){
                         //FileStructs[i].links.push
                     }
                 }
