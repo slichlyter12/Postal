@@ -7,6 +7,7 @@ Container{ //Node in the file map or sub container of file
     string name; //file name with file extension or subFileStruct name. 
     string type; //file type (html, png, directory, external reference...
     
+    string path;
     int subContainers[]; links to subcontainers belonging to this node
     int links[]; //links to other file containers.
     int errors[]; //links to errors by id?
