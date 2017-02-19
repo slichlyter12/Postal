@@ -14,6 +14,7 @@ var nodefs = require('fs');
 var cwd = require('cwd');
 var childProcess = require('child_process');
 var electronp = require('electron');
+var find = require('find');
 var isWin = /^win/.test(process.platform);
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -27,6 +28,26 @@ function activate(context) {
         // GET GRAMMARS
         var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
         var grammars = JSON.parse(grammarsFile);
+        //NEW PARSER STUFF
+        //Get All Directory Paths
+        var dirsInfo = [];
+        var dirPaths = find.dirSync(vscode.workspace.rootPath);
+        for (var x = 0; x < dirPaths.length; x++) {
+            dirsInfo.push({
+                tokenType: "directory",
+                type: null,
+                value: dirPaths[x].slice(dirPaths[x].lastIndexOf("\\") + 1),
+                lineNumber: null,
+                parentToken: null
+            });
+        }
+        //console.log(JSON.stringify(dirsInfo));
+        //Send File Paths to Parser
+        var filesInfo = []; //Tokens from parser.ts
+        var filePaths = find.fileSync(vscode.workspace.rootPath);
+        for (var x = 0; x < filePaths.length; x++) {
+        }
+        //console.log(JSON.stringify(filesInfo));
         //GET FILES TO PARSE
         var files = [];
         for (var i = 0; i < grammars.grammars.length; i++) {
