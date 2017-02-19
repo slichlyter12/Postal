@@ -88,12 +88,14 @@ export class Parser {
     private taggedFound(line: string, lineNumber: number, rule: any, currentTokenID: number): any {
 
         // get title, if there is one
-        var name;
+        var name = null;
         if (rule.options.namedOption != null) {
             name = line.match(rule.options.namedOption);
-            name = name[1];
-        } else {
+        } 
+        if (name == null) {
             name = rule.title;
+        } else {
+            name = name[1];
         }
 
         // figure out parentToken
