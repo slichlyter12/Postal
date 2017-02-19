@@ -91,6 +91,7 @@ export class Parser {
         var name;
         if (rule.options.namedOption != null) {
             name = line.match(rule.options.namedOption);
+            name = name[1];
         } else {
             name = rule.title;
         }
