@@ -40,15 +40,17 @@
   //globalJSON;
 
 function Init(){
-  
+    alert("init");
     fs = require('fs');
     fs.readFile('./../../postal.json', 'utf8', function (err,data) {
         if (err) {
-          //alert(err);
+          alert(err);
+          console.log(err);
           return;
         }
         var DataStruct = JSON.parse(data);
         DFS = DataStruct.FileData.FileStructs;
+        alert("about to run main");
         Main();
     });
 };
@@ -121,7 +123,7 @@ function Init(){
 function Main(){
     //alert("in main");
     //alert("Structure length: " + DFS.length);
-
+    
     var edgeIDCounter = 0;
     var lastZoomedNode = -1;
     var edgeIterator = 0;
@@ -137,26 +139,22 @@ function Main(){
     //create node arrays
 
     for(var i = 0; i < DFS.length; i++){
-      if(DFS[i].level > 0){
-        continue;
-      }
-      else{
+      alert(140);
+      AddNode(DFS[i].id);
         
-        AddNode(DFS[i].id);
-        
-        if(DFS[i].errors.length != 0){
+      if(DFS[i].errors.length != 0){
           
-          errorsArray.push(DFS[i].id)
-          errorsSizeRefArray.push((DFS[i].links.length * 6) + 12);
-        }
-
-        for(var j = 0; j < DFS[i].links.length; j++){
-          edgeIterator = GetEdgeID(DFS[i].links[j], DFS[i].id);
-          //alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
-          var nodeColor = PickColor(DFS[i].type);
-          edgesArray.push({id: edgeIterator, to: DFS[i].links[j], from: DFS[i].id, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)', highlight: nodeColor}});
-        }
+        errorsArray.push(DFS[i].id)
+        errorsSizeRefArray.push((DFS[i].links.length * 6) + 12);
       }
+
+      for(var j = 0; j < DFS[i].links.length; j++){
+        edgeIterator = GetEdgeID(DFS[i].links[j], DFS[i].id);
+        //alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
+        var nodeColor = PickColor(DFS[i].type);
+        edgesArray.push({id: edgeIterator, to: DFS[i].links[j], from: DFS[i].id, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)', highlight: nodeColor}});
+      }
+      
     }
     //alert("Creating Netork");
     // create network
