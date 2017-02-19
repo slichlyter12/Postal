@@ -4,18 +4,23 @@ Container{ //Node in the file map or sub container of file
     
     bool isSubContainer; //is this a file/directory or a subcontainer (div, class, ect.)
     
-    string name; //file name with file extension or subFileStruct name. 
+    string name; //file name with file extension or subFileStruct name
     string type; //file type (html, png, directory, external reference...
     
     string path;
     int subContainers[]; links to subcontainers belonging to this node
-    int links[]; //links to other file containers.
-    int errors[]; //links to errors by id?
-}
-
-ErrorStruct{
-    id;
-    lineNumber;
-    fileName;
-    Error message;
+    
+    int links
+        [{
+            int GlobalId
+            int "to" NodeID
+            int lineNumber
+        }]; //links to other file containers
+    
+    int errors
+        [{
+                id;
+                lineNumber;
+                Error message;
+        }]; //links to errors by id?
 }

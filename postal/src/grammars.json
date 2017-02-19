@@ -9,7 +9,7 @@
                     "type": "tagged",
                     "options" : {
                         "tagStart": "<div",
-                        "namedOption" : "id=\"(.+)\"",
+                        "namedOption" : "id=\"(.+?)\"",
                         "tagEnd": ">",
                         "closingTag": "</div>",
                         "nodeColor": "blue"

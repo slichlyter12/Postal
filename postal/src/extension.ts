@@ -4,7 +4,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { spawn } from 'child_process'
-import { ContentProv } from './ContentProv';
 import { Controller } from './controller';
 
 // This is Node.js Code ...
@@ -25,10 +24,7 @@ var isWin = /^win/.test(process.platform);
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-    let provider = new ContentProv();
     let controller = new Controller();
-
-    let registration = vscode.workspace.registerTextDocumentContentProvider('Files', provider);
 
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
