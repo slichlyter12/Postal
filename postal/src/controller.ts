@@ -172,11 +172,11 @@ export class Controller {
         }
 
         var dirCount = dirPaths.length;
-        for(i = dirCount; i < FileStructs[i]; i++){
+        for(i = dirCount; i < filePaths.length + dirCount; i++){
             for(j = 0; j < tokens[i - dirCount].length; j++){
                 if(tokens[i - dirCount][j].tokenType == "node"){
-                    if(tokens[i - dirCount][j].parentToken == null){
-                        //FileStructs[i].links.push
+                    if(tokens[i - dirCount][j].parentToken == undefined){
+                        console.log("FileStructs[i].links.push");
                     }
                 }
             }
