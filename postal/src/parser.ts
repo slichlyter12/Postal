@@ -20,7 +20,7 @@ export class Parser {
      *      tokens: an array of tokens
      */
 
-    stack: any = [];
+    private stack: any = [];
 
     public parse(filepath: string): any {
 
