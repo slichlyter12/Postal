@@ -20,7 +20,7 @@ export class Parser {
      */
 
     public parse(filepath: string) {
-
+        
         // get filetype
         var filetype = this.getFiletype(filepath);
 
@@ -30,22 +30,6 @@ export class Parser {
 
     private getFiletype(filepath: string): string {
         return filepath.slice(filepath.lastIndexOf(".") + 1);
-    }
-
-    private buildRegex(rules: any): any {
-
-        var regex = [];
-        for (var i = 0; i < rules.length; i++) {
-            switch (rules[i].type) {
-                case "link":
-                    regex.push(rules[i].options.link)
-                    break;
-                case "tagged":
-
-            }
-        }
-
-        return regex;
     }
 
     private getGrammars(filetype: string): any {
@@ -64,22 +48,23 @@ export class Parser {
                         switch (rule.type) {
                             case "link": 
                                 rule.regex = rule.options.link; 
+                                rules.push(rule);
                                 break;
                             case "tagged":
-                                
-                                //rule.regex = 
+                                rule.regex = rule.options.tagStart;
+                                rules.push(rule);
+                                break;
+
+                            default: 
+                                console.log("Grammar Type Error");
                                 break;
                         }
-                        rules.push(rule);
                     }
                 }
             }
         }
 
-        // build regex from user
-        for (var i = 0; i < rules.length; i++) {
-
-        }
+        console.log(rules);
 
         return rules;
     }
