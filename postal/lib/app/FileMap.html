@@ -40,17 +40,17 @@
   //globalJSON;
 
 function Init(){
-    alert("init");
+    //alert("init");
     fs = require('fs');
     fs.readFile('./../../postal.json', 'utf8', function (err,data) {
         if (err) {
-          alert(err);
+          //alert(err);
           console.log(err);
           return;
         }
         var DataStruct = JSON.parse(data);
         DFS = DataStruct.FileData.FileStructs;
-        alert("about to run main");
+        //alert("about to run main");
         Main();
     });
 };
@@ -99,7 +99,7 @@ function Init(){
     var varColor = PickColor(struct.type);
     var varSize = 12 + (6 * (struct.links.length));
     nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10, color: ('rgb(232, 232, 232)')}, color: varColor, shape: 'dot'});
-    //alert("added node: " + nodesArray[(nodesArray.length-1)].id);
+    ////alert("added node: " + nodesArray[(nodesArray.length-1)].id);
     return;
   };
 
@@ -121,8 +121,8 @@ function Init(){
 
 
 function Main(){
-    //alert("in main");
-    //alert("Structure length: " + DFS.length);
+    ////alert("in main");
+    ////alert("Structure length: " + DFS.length);
     
     var edgeIDCounter = 0;
     var lastZoomedNode = -1;
@@ -139,7 +139,7 @@ function Main(){
     //create node arrays
 
     for(var i = 0; i < DFS.length; i++){
-      alert(140);
+      //alert(140);
       AddNode(DFS[i].id);
         
       if(DFS[i].errors.length != 0){
@@ -150,21 +150,21 @@ function Main(){
 
       for(var j = 0; j < DFS[i].links.length; j++){
         edgeIterator = GetEdgeID(DFS[i].links[j], DFS[i].id);
-        //alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
+        ////alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
         var nodeColor = PickColor(DFS[i].type);
         edgesArray.push({id: edgeIterator, to: DFS[i].links[j], from: DFS[i].id, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)', highlight: nodeColor}});
       }
       
     }
-    //alert("Creating Netork");
+    ////alert("Creating Netork");
     // create network
     try{
       nodes = new vis.DataSet(nodesArray);
     }
     catch(err){
-      //alert("Error:"+ err);
+      ////alert("Error:"+ err);
     }
-    //alert("created DataSet");
+    ////alert("created DataSet");
     edges = new vis.DataSet(edgesArray);
     var container = document.getElementById('mynetwork');
     var data = {
@@ -183,7 +183,7 @@ function Main(){
       },
     };
     network = new vis.Network(container, data, options);
-    //alert("Created Netork");
+    ////alert("Created Netork");
 
     //Error bubbles
     network.on("afterDrawing", function (ctx) {
@@ -225,7 +225,7 @@ Init();
                   });
               }
               catch (err) {
-                  //alert(err);
+                  ////alert(err);
               }
             }
           }
@@ -241,7 +241,7 @@ Init();
                   nodes.add({id: fs[k].id, label: fs[k].name, size: varSize, font:{size: 10}, color: '#FF0000', shape: 'dot'});
                 }
                 catch (err) {
-                  ////alert(err)
+                  //////alert(err)
                   continue;
                 }
 
@@ -264,7 +264,7 @@ Init();
                     //edgeIDCounter++;
                   }
                   catch (err) {
-                    //alert(err);
+                    ////alert(err);
                   }
                   
                   //remove edges from higher up level
@@ -279,7 +279,7 @@ Init();
                     });
                   }
                   catch (err) {
-                    //alert(err);
+                    ////alert(err);
                   }
                 }
 
@@ -289,7 +289,7 @@ Init();
         }
         else{
           //zoom out
-          //alert("smoll");
+          ////alert("smoll");
           lastZoomedNode = -1;
           
           for(var i = 0; i < fs.length; i++){
@@ -303,7 +303,7 @@ Init();
                         });
                       }
                       catch (err) {
-                        //alert(err);
+                        ////alert(err);
                       }
                       break;
                     }
@@ -317,7 +317,7 @@ Init();
                   });
                 }
                 catch (err) {
-                  //alert(err);
+                  ////alert(err);
                 }
 
             }
@@ -330,7 +330,7 @@ Init();
                   });
               }
               catch (err) {
-                  //alert(err);
+                  ////alert(err);
               }
             }
           }
