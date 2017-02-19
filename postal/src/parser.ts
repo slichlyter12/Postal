@@ -24,40 +24,14 @@ export class Parser {
 
     public parse(filepath: string): any {
 
-        var tokens = [];
-
         // get filetype
         var filetype = this.getFiletype(filepath);
 
         // get grammars
         var rules = this.getRules(filetype);
 
-        // read file
-        var file = nodefs.readFileSync(filepath, 'utf-8').split('\n');
-        var lineNumber = 0;
-        for (var j = 0; j < file.length; j++) {
-            var line = file[j];
-            lineNumber++;
-            for (var i = 0; i < rules.length; i++) {
-                var regex = rules[i].regex;
-                var match = line.match(regex);
-                if (match != null) {
-                    switch(rules[i].type) {
-                        case "link":
-                            tokens.push(this.linkFound(match[1], lineNumber));
-                            break;
-                        case "tagged":
-                            tokens.push(this.taggedFound(line, lineNumber, rules[i], tokens.length));
-                            break;
-                        case "closingTag":
-                            this.stack.pop();
-                            break;
-
-                        default: break;
-                    }
-                }
-            }
-        }
+        // get tokens
+        var tokens = this.getTokens(filepath, rules);
 
         return tokens;
     }
@@ -115,6 +89,37 @@ export class Parser {
         this.stack.push(currentTokenID);
 
         return token;
+    }
+
+    private getTokens(filepath: string, rules: any): any[] {
+        var tokens = [];
+        var file = nodefs.readFileSync(filepath, 'utf-8').split('\n');
+        var lineNumber = 0;
+        for (var j = 0; j < file.length; j++) {
+            var line = file[j];
+            lineNumber++;
+            for (var i = 0; i < rules.length; i++) {
+                var regex = rules[i].regex;
+                var match = line.match(regex);
+                if (match != null) {
+                    switch(rules[i].type) {
+                        case "link":
+                            tokens.push(this.linkFound(match[1], lineNumber));
+                            break;
+                        case "tagged":
+                            tokens.push(this.taggedFound(line, lineNumber, rules[i], tokens.length));
+                            break;
+                        case "closingTag":
+                            this.stack.pop();
+                            break;
+
+                        default: break;
+                    }
+                }
+            }
+        }
+
+        return tokens;
     }
 
     private getRules(filetype: string): any {
