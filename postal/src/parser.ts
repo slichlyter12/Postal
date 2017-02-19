@@ -20,9 +20,11 @@ export class Parser {
      *      tokens: an array of tokens
      */
 
-    public parse(filepath: string) {
+    stack: any = [];
 
-        var tokens;
+    public parse(filepath: string): any {
+
+        var tokens = [];
 
         // get filetype
         var filetype = this.getFiletype(filepath);
@@ -33,7 +35,8 @@ export class Parser {
         // read file
         var file = nodefs.readFileSync(filepath, 'utf-8').split('\n');
         var lineNumber = 0;
-        for (var line in file) {
+        for (var j = 0; j < file.length; j++) {
+            var line = file[j];
             lineNumber++;
             for (var i = 0; i < rules.length; i++) {
                 var regex = rules[i].regex;
@@ -44,7 +47,10 @@ export class Parser {
                             tokens.push(this.linkFound(match[1], lineNumber));
                             break;
                         case "tagged":
-                            
+                            tokens.push(this.taggedFound(line, lineNumber, rules[i], tokens.length));
+                            break;
+                        case "closingTag":
+                            this.stack.pop();
                             break;
 
                         default: break;
@@ -52,6 +58,8 @@ export class Parser {
                 }
             }
         }
+
+        return tokens;
     }
 
     private getFiletype(filepath: string): string {
@@ -59,13 +67,49 @@ export class Parser {
     }
 
     private linkFound(link: string, lineNumber: number): any {
+
+        // figure out parentToken
+        var parentToken = null;
+        if (this.stack != null) {
+            parentToken = this.stack[this.stack.length - 1];
+        }
+
         var token = {
             tokenType: "link",
             type: null,
             value: link,
             lineNumber: lineNumber,
-            subTokens: []
+            parentToken: parentToken
         }
+
+        return token;
+    }
+
+    private taggedFound(line: string, lineNumber: number, rule: any, currentTokenID: number): any {
+
+        // get title, if there is one
+        var name;
+        if (rule.options.namedOption != null) {
+            name = line.match(rule.options.namedOption);
+        } else {
+            name = rule.title;
+        }
+
+        // figure out parentToken
+        var parentToken = null;
+        if (this.stack != null) {
+            parentToken = this.stack[this.stack.length - 1];
+        }
+
+        var token = {
+            tokenType: "node",
+            type: rule.title,
+            value: name,
+            lineNumber: lineNumber,
+            parentToken: parentToken
+        }
+
+        this.stack.push(currentTokenID);
 
         return token;
     }
@@ -92,6 +136,15 @@ export class Parser {
                             case "tagged":
                                 rule.regex = rule.options.tagStart;
                                 rules.push(rule);
+
+                                // generate new rule for closing end
+                                var newRule = {
+                                    title: rule.title + "closing tag",
+                                    type: "closingTag",
+                                    regex: rule.options.closingTag
+                                }
+                                rules.push(newRule);
+
                                 break;
 
                             default: 
