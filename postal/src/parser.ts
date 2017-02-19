@@ -10,6 +10,7 @@ var nodefs = require('fs');
 var cwd = require('cwd');
 
 export class Parser {
+
     /**
      * parse
      * Parameters:
@@ -20,19 +21,56 @@ export class Parser {
      */
 
     public parse(filepath: string) {
-        
+
+        var tokens;
+
         // get filetype
         var filetype = this.getFiletype(filepath);
 
         // get grammars
-        var grammars = this.getGrammars(filetype);
+        var rules = this.getRules(filetype);
+
+        // read file
+        var file = nodefs.readFileSync(filepath, 'utf-8').split('\n');
+        var lineNumber = 0;
+        for (var line in file) {
+            lineNumber++;
+            for (var i = 0; i < rules.length; i++) {
+                var regex = rules[i].regex;
+                var match = line.match(regex);
+                if (match != null) {
+                    switch(rules[i].type) {
+                        case "link":
+                            tokens.push(this.linkFound(match[1], lineNumber));
+                            break;
+                        case "tagged":
+                            
+                            break;
+
+                        default: break;
+                    }
+                }
+            }
+        }
     }
 
     private getFiletype(filepath: string): string {
         return filepath.slice(filepath.lastIndexOf(".") + 1);
     }
 
-    private getGrammars(filetype: string): any {
+    private linkFound(link: string, lineNumber: number): any {
+        var token = {
+            tokenType: "link",
+            type: null,
+            value: link,
+            lineNumber: lineNumber,
+            subTokens: []
+        }
+
+        return token;
+    }
+
+    private getRules(filetype: string): any {
 
         // get entire grammars file
         var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
@@ -44,6 +82,7 @@ export class Parser {
             for (var j = 0; j < grammars.grammars[i].filetypes.length; j++) {
                 if (grammars.grammars[i].filetypes[j] == filetype) {
                     for (var k = 0; k < grammars.grammars[i].rules.length; k++) {
+                        
                         var rule = grammars.grammars[i].rules[k];
                         switch (rule.type) {
                             case "link": 
@@ -63,8 +102,6 @@ export class Parser {
                 }
             }
         }
-
-        console.log(rules);
 
         return rules;
     }
