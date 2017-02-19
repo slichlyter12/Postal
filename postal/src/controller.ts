@@ -81,6 +81,21 @@ export class Controller {
             this.idCounter++;
         }
 
+        for(var j = 0; j < filePaths.length; j++){
+            FileStructs.push({
+                id: this.idCounter,
+                level: this.levelCounter(filePaths[j]),
+                isSubContainer: false, //bool, Not files or dirs
+                name: this.nameSlicer(filePaths[j]),
+                type: "dir",
+                path: filePaths[j],
+                links: [],
+                subContainers: [],
+                errors: []
+            });
+            this.idCounter++;
+        }
+
         return FileStructs;
     }
 
