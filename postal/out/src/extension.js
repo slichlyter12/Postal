@@ -5,12 +5,16 @@ const vscode = require("vscode");
 const path = require("path");
 const child_process_1 = require("child_process");
 const ContentProv_1 = require("./ContentProv");
+// This is Node.js Code ...
+const readline = require('readline');
+const fileSystem = require('fs');
 var open = require('open');
 var fs = require('file-system');
 var nodefs = require('fs');
 var cwd = require('cwd');
 var childProcess = require('child_process');
 var electronp = require('electron');
+var find = require('find');
 var isWin = /^win/.test(process.platform);
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -24,6 +28,26 @@ function activate(context) {
         // GET GRAMMARS
         var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
         var grammars = JSON.parse(grammarsFile);
+        //NEW PARSER STUFF
+        //Get All Directory Paths
+        var dirsInfo = [];
+        var dirPaths = find.dirSync(vscode.workspace.rootPath);
+        for (var x = 0; x < dirPaths.length; x++) {
+            dirsInfo.push({
+                tokenType: "directory",
+                type: null,
+                value: dirPaths[x].slice(dirPaths[x].lastIndexOf("\\") + 1),
+                lineNumber: null,
+                parentToken: null
+            });
+        }
+        //console.log(JSON.stringify(dirsInfo));
+        //Send File Paths to Parser
+        var filesInfo = []; //Tokens from parser.ts
+        var filePaths = find.fileSync(vscode.workspace.rootPath);
+        for (var x = 0; x < filePaths.length; x++) {
+        }
+        //console.log(JSON.stringify(filesInfo));
         //GET FILES TO PARSE
         var files = [];
         for (var i = 0; i < grammars.grammars.length; i++) {
@@ -212,9 +236,40 @@ function activate(context) {
             console.log("Electron Error: " + error);
         }
     });
+    // This is how I am testing my code. -Cramer
+    let errorHighLight = vscode.commands.registerCommand('extension.error', () => {
+        LineParser('/Users/TheCmar7/Developer/random/maze-generator/mazegenerator.js', 'if');
+    });
+    context.subscriptions.push(errorHighLight);
     context.subscriptions.push(parse);
 }
 exports.activate = activate;
+var LineParser = function (filepath, regex) {
+    const rl = readline.createInterface({
+        input: fileSystem.createReadStream(filepath)
+    });
+    var linesFound = [];
+    var lineCount = 0;
+    rl.on('line', function (line) {
+        lineCount++;
+        var found = line.match(regex);
+        if (found != null) {
+            found.push(lineCount);
+            linesFound.push(found);
+            console.log(linesFound);
+        }
+    });
+    // // split on new line (will need different for UNIX or Windows)
+    // var split = '';
+    // if (isWin) {
+    //     split = "\Crlf";
+    // } else {
+    //     split = "\n";
+    // } 
+    // // loop through array of lines
+    //     // if line has regex add to ret dictionary
+    // // return ret dictionary
+};
 // this method is called when your extension is deactivated
 function deactivate() { }
 exports.deactivate = deactivate;
