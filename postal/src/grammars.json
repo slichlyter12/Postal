@@ -28,6 +28,15 @@
                         "link": "include=[\"](.+?)[\"]",
                         "nodeColor": "blue"
                     }
+                }, {
+                    "title": "body",
+                    "type": "tagged",
+                    "options" : {
+                        "tagStart": "<body",
+                        "tagEnd": ">",
+                        "closingTag": "</body>",
+                        "nodeColor": "blue"
+                    }
                 }
             ]
         }, {
