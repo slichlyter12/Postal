@@ -6,10 +6,7 @@ import * as path from 'path';
 import { spawn } from 'child_process'
 import { ContentProv } from './ContentProv';
 import { Controller } from './controller';
-
-// This is Node.js Code ...
-const readline = require('readline');
-const fileSystem = require('fs');
+import { tests_main } from '../testing/unitTesting'
 
 var open = require('open');
 var fs = require('file-system');
@@ -39,6 +36,16 @@ export function activate(context: vscode.ExtensionContext) {
         controller.buildDataStructure();
 
     });
+    
+    // We can get rid of this stuff later. I am testing shtuff -Cramer
+    let testing = vscode.commands.registerCommand('extension.error', () => {
+        tests_main();
+    });
+
+    // pushes the command to the interphase where the user will then be able to 
+    // use them. 
+    context.subscriptions.push(testing);
+    context.subscriptions.push(parse);
 }
 
         // Start the Electron app
@@ -120,6 +127,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 // } 
 //}
+
+
 
 // this method is called when your extension is deactivated
 export function deactivate() {}

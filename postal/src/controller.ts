@@ -4,10 +4,6 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 //import { Parser } from './parser'
 
-// This is Node.js Code ...
-const readline = require('readline');
-const fileSystem = require('fs');
-
 var open = require('open');
 var fs = require('file-system');
 var nodefs = require('fs');
