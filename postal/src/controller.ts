@@ -2,7 +2,7 @@
 
 import * as vscode from 'vscode';
 import * as path from 'path';
-//import { Parser } from './parser'
+import { Parser } from './parser'
 
 // This is Node.js Code ...
 const readline = require('readline');
@@ -69,6 +69,21 @@ export class Controller {
                 name: this.nameSlicer(dirPaths[i]),
                 type: "dir",
                 path: dirPaths[i],
+                links: [],
+                subContainers: [],
+                errors: []
+            });
+            this.idCounter++;
+        }
+
+        for(var j = 0; j < filePaths.length; j++){
+            FileStructs.push({
+                id: this.idCounter,
+                level: this.levelCounter(filePaths[j]),
+                isSubContainer: false, //bool, Not files or dirs
+                name: this.nameSlicer(filePaths[j]),
+                type: "dir",
+                path: filePaths[j],
                 links: [],
                 subContainers: [],
                 errors: []
