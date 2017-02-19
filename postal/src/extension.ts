@@ -34,7 +34,8 @@ export function activate(context: vscode.ExtensionContext) {
         var files = vscode.workspace.findFiles("*", "");
         files.then(function(foundFiles){
             for (var i = 0; i < foundFiles.length; i++) {
-                parser.parse(foundFiles[i].path);
+                var tokens = parser.parse(foundFiles[i].path);
+                console.log(tokens);
             }
         });
 
