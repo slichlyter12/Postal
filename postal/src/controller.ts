@@ -17,7 +17,8 @@ var isWin = /^win/.test(process.platform);
 export class Controller {
 
     //parser: Parser;
-    idCounter: number = 0;
+    nodeidCounter: number = 0;
+    linkidCounter: number = 0;
     parser: Parser;
     slash: string;
     constructor() {
@@ -67,12 +68,20 @@ export class Controller {
     private findLinks(filePath, FileStructs){
         var allNames = nodefs.readdirSync(filePath);
         var fullPath;
+        var link = {};
         var foundLinks = [];
         for(var i = 0; i < allNames.length; i++){
             fullPath = filePath + this.slash + allNames[i];
             for(var j = 0; j < FileStructs.length; j++){
                 if(FileStructs[j].path == fullPath){
-                    foundLinks.push(FileStructs[j].id)
+                    link = 
+                    {
+                        linkid: this.linkidCounter,
+                        to: FileStructs[j].id,
+                        lineNumber: null
+                    }
+                    foundLinks.push(link);
+                    this.linkidCounter++;
                 }
             }
         }
@@ -82,22 +91,20 @@ export class Controller {
         return foundLinks;
     }
 
+    private linkBuilder(){
+
+    }
+
     private buildFileStructs(){
         var FileStructs = [];
 
         var dirPaths = find.dirSync(vscode.workspace.rootPath);
         var filePaths = find.fileSync(vscode.workspace.rootPath);
 
-        var nodeTokens = [];
-
-        /*for(var x = 0; x < filePaths.length; x++){
-            nodeTokens.push(this.parser.parse(filePaths[x]));
-        }*/
-        //console.log(JSON.stringify(nodeTokens));
-
+        //Build Directory Nodes
         for(var i = 0; i < dirPaths.length; i++){
             FileStructs.push({
-                id: this.idCounter,
+                id: this.nodeidCounter,
                 level: this.levelCounter(dirPaths[i]),
                 isSubContainer: false, //bool, Not files or dirs
                 name: this.nameSlicer(dirPaths[i]),
@@ -107,12 +114,13 @@ export class Controller {
                 subContainers: [],
                 errors: []
             });
-            this.idCounter++;
+            this.nodeidCounter++;
         }
 
+        //Build File Nodes
         for(var j = 0; j < filePaths.length; j++){
             FileStructs.push({
-                id: this.idCounter,
+                id: this.nodeidCounter,
                 level: this.levelCounter(filePaths[j]),
                 isSubContainer: false, //bool, Not files or dirs
                 name: this.nameSlicer(filePaths[j]),
@@ -122,13 +130,55 @@ export class Controller {
                 subContainers: [],
                 errors: []
             });
-            this.idCounter++;
+            this.nodeidCounter++;
         }
+
+        //Add Directory-to-File links
         var foundLinks;
         for(var k = 0; k < FileStructs.length; k++){
             if(FileStructs[k].type == "dir"){
                 foundLinks = this.findLinks(FileStructs[k].path, FileStructs);
                 FileStructs[k].links = foundLinks;
+            }
+        }
+
+        //Get All tokens from Parser
+        var tokens = [];
+        for(i= 0; i < filePaths.length; i++){
+            tokens.push(this.parser.parse(filePaths[i]));
+        }
+
+        //Add all subContainer nodes to FileStructs
+        var FileStruct = {};
+        for(i = 0; i < tokens.length; i++){
+            for(j = 0; j < tokens[i].length; j++){
+                if(tokens[i][j].tokenType == "node"){
+                    FileStruct = 
+                    {
+                        id: this.nodeidCounter,
+                        level: null,
+                        isSubContainer: true,
+                        name: tokens[i][j].value,
+                        type: tokens[i][j].type,
+                        path: null,
+                        links: [],
+                        subContainers: [],
+                        errors: []
+                    }
+                    this.nodeidCounter++;
+                    FileStructs.push(FileStruct);
+                }
+            }
+        }
+
+        var dirNum = dirPaths.length;
+        for(i = dirNum; i < FileStructs[i]; i++){
+            for(j = 0; j < tokens[i - dirNum].length; j++){
+                if(tokens[i - dirNum][j].tokenType == "node"){
+                    if(tokens[i - dirNum][j].parentToken == null){
+                        //FileStructs[i].links.push
+                    }
+                }
             }
         }
 
