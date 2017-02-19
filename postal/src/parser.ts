@@ -91,7 +91,7 @@ export class Parser {
         return token;
     }
 
-    private getTokens(filepath: string, rules: any): any {
+    private getTokens(filepath: string, rules: any): any[] {
         var tokens = [];
         var file = nodefs.readFileSync(filepath, 'utf-8').split('\n');
         var lineNumber = 0;
