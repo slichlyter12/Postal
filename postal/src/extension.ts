@@ -6,7 +6,7 @@ import * as path from 'path';
 import { spawn } from 'child_process'
 import { ContentProv } from './ContentProv';
 import { Controller } from './controller';
-import { tests_main } from '../testing/unitTesting'
+import { tests_main } from '../test/unitTesting'
 
 var open = require('open');
 var fs = require('file-system');
