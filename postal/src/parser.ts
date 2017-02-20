@@ -48,10 +48,21 @@ export class Parser {
             parentToken = this.stack[this.stack.length - 1];
         }
 
+        // clean string for uri parameters
+        var cleanedArray = [];
+        for (var i = 0; i < link.length; i++) {
+            if (link[i] != '?') {
+                cleanedArray.push(link[i]);
+            } else {
+                break;
+            }
+        }
+        var cleanedValue = cleanedArray.join("");
+
         var token = {
             tokenType: "link",
             type: null,
-            value: link,
+            value: cleanedValue,
             lineNumber: lineNumber,
             parentToken: parentToken
         }
