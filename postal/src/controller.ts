@@ -76,8 +76,8 @@ export class Controller {
                 if(FileStructs[j].path == fullPath){
                     link = 
                     {
-                        linkid: this.linkidCounter,
-                        to: FileStructs[j].id,
+                        id: this.linkidCounter,
+                        toFileStructid: FileStructs[j].id,
                         lineNumber: null
                     }
                     foundLinks.push(link);
