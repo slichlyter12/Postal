@@ -44,7 +44,7 @@ export class Parser {
 
         // figure out parentToken
         var parentToken = null;
-        if (this.stack != null) {
+        if (this.stack != null && this.stack.legnth > 0) {
             parentToken = this.stack[this.stack.length - 1];
         }
 
@@ -74,7 +74,7 @@ export class Parser {
 
         // figure out parentToken
         var parentToken = null;
-        if (this.stack != null) {
+        if (this.stack != null && this.stack.legnth > 0) {
             parentToken = this.stack[this.stack.length - 1];
         }
 

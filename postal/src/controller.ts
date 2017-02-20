@@ -91,9 +91,11 @@ export class Controller {
         return foundLinks;
     }
 
-    private getNodeIDFromToken(){
-        
+
+    private getNodeIdFromPath(filePath){
+        console.log(filePath);
     }
+
 
     private buildFileStructs(){
         var FileStructs = [];
@@ -166,22 +168,54 @@ export class Controller {
                         links: [],
                         subContainers: [],
                         errors: []
-                    }
-                    this.nodeidCounter++;
+                    };
+                   
                     FileStructs.push(FileStruct);
+
+                   
+                    // push links between files and subcontainers
+                    var subContainer = {
+                        link : this.linkidCounter,
+                        to : this.nodeidCounter,
+                        lineNumber : tokens[i][j].lineNumber
+                    };
+                    FileStructs[i + dirCount].subContainers.push(subContainer);
+
+                    //create a composite key to tie node id to filenumber + token id
+                    tokens[i][j].nodeid = this.nodeidCounter;
+
+                    this.nodeidCounter++;
+                    this.linkidCounter++;
+
+                }
+            }
+        }
+        //linking subcontainers together, add betwen file links
+        for(i = dirCount; i < filePaths.length + dirCount; i++){
+            for(j = 0; j < tokens[i - dirCount].length; j++){
+                if(tokens[i - dirCount][j].tokenType == "node" && tokens[i - dirCount][j].parentToken != undefined){
+                    var parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
+                    
+                    subContainer = {
+                        link : this.linkidCounter,
+                        to : tokens[i - dirCount][j].nodeid,
+                        lineNumber : tokens[i - dirCount][tokens[i - dirCount][j].parentToken].lineNumber
+                    };
+                    
+                    FileStructs[parentNodeid].subContainers.push(subContainer);
+                }
+                else if(tokens[i - dirCount][j].tokenType == "link"){
+                    
+                    var linkDestination = this.getNodeIdFromPath(tokens[i - dirCount][j].value)
+                    var linkcontainer = {
+                        link : this.linkidCounter,
+                        to : linkDestination,
+                        lineNumber : tokens[i - dirCount][j].lineNumber
+                    }
                 }
             }
         }
 
-        for(i = dirCount; i < filePaths.length + dirCount; i++){
-            for(j = 0; j < tokens[i - dirCount].length; j++){
-                if(tokens[i - dirCount][j].tokenType == "node"){
-                    if(tokens[i - dirCount][j].parentToken == undefined){
-                        console.log("FileStructs[i].links.push");
-                    }
-                }
-            }
-        }
 
         return FileStructs;
     }
