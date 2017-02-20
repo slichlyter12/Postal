@@ -65,7 +65,7 @@ export class Controller {
         return fileName;
     }
 
-    private findLinks(filePath, FileStructs){
+    private findDirectoryLinks(filePath, FileStructs) {
         var allNames = nodefs.readdirSync(filePath);
         var fullPath;
         var link = {};
@@ -85,15 +85,40 @@ export class Controller {
                 }
             }
         }
-        
-
 
         return foundLinks;
     }
 
 
-    private getNodeIdFromPath(filePath){
-        console.log(filePath);
+    private getNodeIdFromPath(filename: string, FileStructs: any): number {
+        var filepath = vscode.workspace.rootPath + this.slash + filename;
+        var id;
+        
+        // check for file in project
+        for (var i = 0; i < FileStructs.length; i++) {
+            if (FileStructs[i].path == filepath) {
+                return FileStructs[i].id;
+            }
+        }
+
+        // no file found in project, create new node
+        var FileStruct = {
+            id: this.nodeidCounter,
+            level: 0,
+            isSubContainer: false, //bool, Not files or dirs
+            name: filename,
+            type: "external",
+            path: filepath,
+            links: [],
+            subContainers: [],
+            errors: []
+        }
+
+        FileStructs.push(FileStruct);
+        id = this.nodeidCounter;
+        this.nodeidCounter++;
+
+        return id;
     }
 
 
@@ -141,7 +166,7 @@ export class Controller {
         var foundLinks;
         for(var k = 0; k < FileStructs.length; k++){
             if(FileStructs[k].type == "dir"){
-                foundLinks = this.findLinks(FileStructs[k].path, FileStructs);
+                foundLinks = this.findDirectoryLinks(FileStructs[k].path, FileStructs);
                 FileStructs[k].links = foundLinks;
             }
         }
@@ -175,8 +200,8 @@ export class Controller {
                    
                     // push links between files and subcontainers
                     var subContainer = {
-                        link : this.linkidCounter,
-                        to : this.nodeidCounter,
+                        id : this.linkidCounter,
+                        toFileStructid : this.nodeidCounter,
                         lineNumber : tokens[i][j].lineNumber
                     };
                     FileStructs[i + dirCount].subContainers.push(subContainer);
@@ -190,15 +215,15 @@ export class Controller {
                 }
             }
         }
-        //linking subcontainers together, add betwen file links
+        //linking subcontainers together, add between file links
         for(i = dirCount; i < filePaths.length + dirCount; i++){
             for(j = 0; j < tokens[i - dirCount].length; j++){
                 if(tokens[i - dirCount][j].tokenType == "node" && tokens[i - dirCount][j].parentToken != undefined){
                     var parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
                     
                     subContainer = {
-                        link : this.linkidCounter,
-                        to : tokens[i - dirCount][j].nodeid,
+                        id : this.linkidCounter,
+                        toFileStructid : tokens[i - dirCount][j].nodeid,
                         lineNumber : tokens[i - dirCount][tokens[i - dirCount][j].parentToken].lineNumber
                     };
                     
@@ -206,13 +231,23 @@ export class Controller {
                 }
                 else if(tokens[i - dirCount][j].tokenType == "link"){
                     
-                    var linkDestination = this.getNodeIdFromPath(tokens[i - dirCount][j].value)
+                    var linkDestination = this.getNodeIdFromPath(tokens[i - dirCount][j].value, FileStructs);
                     var linkcontainer = {
-                        link : this.linkidCounter,
-                        to : linkDestination,
+                        id : this.linkidCounter,
+                        toFileStructid : linkDestination,
                         lineNumber : tokens[i - dirCount][j].lineNumber
                     }
+
+                    if (tokens[i - dirCount][j].parentToken != undefined) {
+                        var parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
+                        FileStructs[parentNodeid].links.push(linkcontainer);
+                    } else {
+                        FileStructs[i].links.push(linkcontainer);
+                    }
                 }
+
+                // increment linkidCounter
+                this.linkidCounter++;
             }
         }
 
