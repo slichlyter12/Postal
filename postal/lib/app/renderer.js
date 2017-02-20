@@ -4,8 +4,17 @@ var vis = require('vis');
 var fs = require('fs');
 
 //Globals
+
+// create manager arrays
+var DFS = []; // Data File Structure
+var DLM = []; // Directory Link Manager
+var SLM = []; // SubContainer Link Manager
+var FLM = []; // File Link Manager
+
 // create network arrays
-var DFS = [];
+var nodesArray = [];
+var edgesArray = [];
+
 
 function Init() {
     //alert("init");
@@ -22,182 +31,129 @@ function Init() {
     });
 };
 
+function Main() {
 
+    // fill Directory Link Manager
+    fillDLM();
 
+    // append enabled (is node visible in UI) to Data File Structure
+    appendEnabledToDFS();
 
+    // add nodes
+    for (var i = 0; i < DFS.length; i++) {
+        if (DFS[i].isSubContainer == false || DFS[i].type == "external") {
+            var nodeID = DFS[i].id;
+            AddNode(nodeID);
+        }
+    }
 
+    // fill File Link Manager
+    fillFLM();
 
+    // fill SubContainer Link Manager
+    fillSLM();
 
+    var nodes;
+    var edges;
+    try{
+        nodes = new vis.DataSet(nodesArray);
+    } catch(err){
+        alert("Error:"+ err);
+    }
 
+    alert("created DataSet");
+    edges = new vis.DataSet(edgesArray);
+    var container = document.getElementById('mynetwork');
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
 
+    var options = {
+        layout: {
+            hierarchical: {
+                direction: "UD",
+                sortMethod: "directed"
+            }
+        },
+        physics: {
+            enabled: false
+        },
+    };
 
+    network = new vis.Network(container, data, options);
+}
 
+function fillDLM() {
+    for (var i = 0; i < DFS.length; i++) {
+        if (DFS[i].type == "dir") {
+            for (var j = 0; j < DFS[i].links.length; j++) {
+                var link = DFS[i].links[j];
+                link.from = DFS[i].id;
+                DLM.push(link);
+            }
+        } else {
+            break;
+        }
+    }
 
+    alert(JSON.stringify(DLM));
+}
 
+function appendEnabledToDFS() {
+    for (var i = 0; i < DFS.length; i++) {
+        if (DFS[i].isSubContainer == true) {
+            DFS[i].isEnabled = false;
+        } else {
+            DFS[i].isEnabled = true;
+        }
+    }
+}
 
+function fillFLM() {
 
+}
 
+function fillSLM() {
 
+}
 
-
-
-//NEED TO GO ThROugH AN BUILD ALL LINKS FIRST
-
-nodesArray = [];
-edgesArray = [];
-edgesIDArray = [];
-errorsArray = [];
-errorsSizeRefArray = [];
-//globalJSON;
+// TODO: remove magic numbers and define colors
+function AddNode(id){
+    var struct = DFS[id];
+    var varColor = PickColor(struct.type);
+    var varSize = 12 + (6 * (struct.links.length));
+    nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10, color: ('rgb(232, 232, 232)')}, color: varColor, shape: 'dot'});
+    ////alert("added node: " + nodesArray[(nodesArray.length-1)].id);
+    return;
+};
 
 function PickColor(type){
-switch (type){
-    case "html":
-    return('rgb(0,122,204)');
-    break;
-    case "php":
-    return('rgb(86,156,214)');
-    break;
-    case "js":
-    return('rgb(137, 209, 133)');
-    break;
-    case "png":
-    return('rgb(255, 200, 150)');
-    break;
-    case "jpeg":
-    return('rgb(255, 175, 150)');
-    break;
-    default:
-    return('rgb(150, 150, 150)');
-}
+    switch (type){
+        case "html":
+            return('rgb(0,122,204)');
+            break;
+        case "php":
+            return('rgb(86,156,214)');
+            break;
+        case "js":
+            return('rgb(137, 209, 133)');
+            break;
+        case "png":
+            return('rgb(255, 200, 150)');
+            break;
+        case "jpg":
+        case "jpeg":
+            return('rgb(255, 175, 150)');
+            break;
+        case "dir":
+            return('rgb(223, 223, 223)');
+            break;
+        default:
+            return('rgb(150, 150, 150)');
+            break;
+    }
 };
-
-function GetEdgeID(to, from){
-for(var i = 0; i < edgesIDArray.length; i++){
-    if(edgesIDArray[i].to == to && edgesIDArray[i].from == from){
-        return i;
-    }
-}
-};
-
-function GetStruct(id){
-for(var i = 0; i < DFS.length; i++){
-    if(DFS[i].id == id){
-    var struct = DFS[i];
-    return struct;
-    }
-}
-}
-
-function AddNode(id){
-var struct = GetStruct(id);
-var varColor = PickColor(struct.type);
-var varSize = 12 + (6 * (struct.links.length));
-nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10, color: ('rgb(232, 232, 232)')}, color: varColor, shape: 'dot'});
-////alert("added node: " + nodesArray[(nodesArray.length-1)].id);
-return;
-};
-
-
-function DrawError(id){
-
-}
-
-function IsNodeDrawn(id){
-for(var i = 0; i < nodesArray.length; i++){
-    if(nodesArray[i].id == id){
-    return 1;
-    }
-}
-return 0;
-}
-
-
-
-
-function Main(){
-////alert("in main");
-////alert("Structure length: " + DFS.length);
-
-var edgeIDCounter = 0;
-var lastZoomedNode = -1;
-var edgeIterator = 0;
-
-//create edge ID tacking array
-for(var i = 0; i < DFS.length; i++){
-    for(var j = 0; j < DFS[i].links.length; j++){
-    edgesIDArray.push({id: edgeIDCounter, to: DFS[i].links[j], from: DFS[i].id});
-    edgeIDCounter++;
-    }
-}
-
-//create node arrays
-
-for(var i = 0; i < DFS.length; i++){
-    //alert(140);
-    AddNode(DFS[i].id);
-    
-    if(DFS[i].errors.length != 0){
-        
-    errorsArray.push(DFS[i].id)
-    errorsSizeRefArray.push((DFS[i].links.length * 6) + 12);
-    }
-
-    for(var j = 0; j < DFS[i].links.length; j++){
-    edgeIterator = GetEdgeID(DFS[i].links[j], DFS[i].id);
-    ////alert("creating edge id: " + edgeIterator + "\nto: " + DFS[i].links[j].FileStructid);
-    var nodeColor = PickColor(DFS[i].type);
-    edgesArray.push({id: edgeIterator, to: DFS[i].links[j], from: DFS[i].id, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)', highlight: nodeColor}});
-    }
-    
-}
-////alert("Creating Netork");
-// create network
-try{
-    nodes = new vis.DataSet(nodesArray);
-}
-catch(err){
-    ////alert("Error:"+ err);
-}
-////alert("created DataSet");
-edges = new vis.DataSet(edgesArray);
-var container = document.getElementById('mynetwork');
-var data = {
-    nodes: nodes,
-    edges: edges
-};
-var options = {
-    layout: {
-    hierarchical: {
-        direction: "UD",
-        sortMethod: "directed"
-    }
-    },
-    physics: {
-    enabled: false
-    },
-};
-network = new vis.Network(container, data, options);
-////alert("Created Netork");
-
-//Error bubbles
-network.on("afterDrawing", function (ctx) {
-    for(i = 0; i < errorsArray.length; i++){
-    var nodeId = errorsArray[i];
-    var nodePosition = network.getPositions([nodeId]);
-    ctx.fillStyle = '#FF0000';
-    ctx.strokeStyle = '#1e1e1e';
-    ctx.lineWidth = 1 + (errorsSizeRefArray[i]/40);
-    ctx.circle(nodePosition[nodeId].x + (errorsSizeRefArray[i] * 11 / 16), nodePosition[nodeId].y - (errorsSizeRefArray[i] * 11 / 16), 4 + (errorsSizeRefArray[i]/20));
-    ctx.fill();
-    ctx.stroke();
-    }
-});
-
-var div = document.getElementById("")
-
-
-}
 
 
 Init();
