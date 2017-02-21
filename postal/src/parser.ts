@@ -33,6 +33,8 @@ export class Parser {
         // get tokens
         var tokens = this.getTokens(filepath, rules);
 
+        this.stack = [];
+
         return tokens;
     }
 
@@ -44,7 +46,7 @@ export class Parser {
 
         // figure out parentToken
         var parentToken = null;
-        if (this.stack != null && this.stack.legnth > 0) {
+        if (this.stack != null && this.stack.length > 0) {
             parentToken = this.stack[this.stack.length - 1];
         }
 
@@ -85,7 +87,7 @@ export class Parser {
 
         // figure out parentToken
         var parentToken = null;
-        if (this.stack != null && this.stack.legnth > 0) {
+        if (this.stack != null && this.stack.length > 0) {
             parentToken = this.stack[this.stack.length - 1];
         }
 

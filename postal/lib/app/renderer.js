@@ -2,14 +2,15 @@
 
 var vis = require('vis');
 var fs = require('fs');
+var LinkManager = require('./LinkManager.js');
 
 //Globals
 
 // create manager arrays
 var DFS = []; // Data File Structure
-var DLM = []; // Directory Link Manager
-var SLM = []; // SubContainer Link Manager
-var FLM = []; // File Link Manager
+var DLM; // Directory Link Manager
+var SLM; // SubContainer Link Manager
+var FLM; // File Link Manager
 
 // create network arrays
 var nodesArray = [];
@@ -40,18 +41,11 @@ function Main() {
     appendEnabledToDFS();
 
     // add nodes
-    for (var i = 0; i < DFS.length; i++) {
-        if (DFS[i].isSubContainer == false || DFS[i].type == "external") {
-            var nodeID = DFS[i].id;
-            AddNode(nodeID);
-        }
-    }
+    fillInitialNodes();
 
-    // fill File Link Manager
-    fillFLM();
+    // fill edges
+    fillInitialEdges();
 
-    // fill SubContainer Link Manager
-    fillSLM();
 
     var nodes;
     var edges;
@@ -81,23 +75,36 @@ function Main() {
         },
     };
 
-    network = new vis.Network(container, data, options);
+    var network = new vis.Network(container, data, options);
+
+    // fill File Link Manager
+    fillFLM();
+
+    // fill SubContainer Link Manager
+    fillSLM();
+
+    // MARK: - Event Listeners
+    network.on("doubleClick", nodeDoubleClick);
 }
 
 function fillDLM() {
+    var links = [];
     for (var i = 0; i < DFS.length; i++) {
         if (DFS[i].type == "dir") {
             for (var j = 0; j < DFS[i].links.length; j++) {
                 var link = DFS[i].links[j];
                 link.from = DFS[i].id;
-                DLM.push(link);
+                link.isEnabled = true;
+                links.push(link);
             }
         } else {
             break;
         }
     }
 
-    alert(JSON.stringify(DLM));
+    DLM = new LinkManager(links);
+
+    //alert(JSON.stringify(DLM));
 }
 
 function appendEnabledToDFS() {
@@ -111,22 +118,86 @@ function appendEnabledToDFS() {
 }
 
 function fillFLM() {
+    
+}
 
+// Recursive function to get all links from this and children
+function getAllLinksFromFileStructRecursive(FileStructID) {
+    var links = [];
+
+    // check parent
+    if (DFS[FileStructID].links.length > 0) {
+        for (var i = 0; i < DFS[FileStructID].links.length; i++) {
+            var link = DFS[FileStructID].links[i];
+            links.push(link);
+        }
+    }
+
+    // check children
+    if (DFS[FileStructID].subContainers.length > 0) {
+        var childLinks = [];
+        for (var i = 0; i < DFS[FileStructID].subContainers.length; i++) {
+            var childFileStructID = DFS[DFS[FileStructID].subContainers[i].toFileStructid].id;
+            childLinks = getAllLinksFromFileStructRecursive(childFileStructID);
+
+            // push what we found to parents link list
+            for (var j = 0; j < childLinks.length; j++) {
+                links.push(childLinks[j]);
+            }
+
+        }
+    } 
+
+    return links;
 }
 
 function fillSLM() {
+    // loop backwards to avoid directories, will never have SubContainers
+    var links = [];
+    for (var i = DFS.length - 1; i >= 0; i--) {
+        if (DFS[i].type != "dir") {
+            for (var j = 0; j < DFS[i].subContainers.length; j++) {
+                var subContainerLink = DFS[i].subContainers[j];
+                subContainerLink.from = DFS[i].id;
+                subContainerLink.isEnabled = false;
+                links.push(subContainerLink);
+            }
+        } else {
+            break;
+        }
+    }
 
+    SLM = new LinkManager(links);
 }
 
-// TODO: remove magic numbers and define colors
-function AddNode(id){
+function fillInitialNodes() {
+    for (var i = 0; i < DFS.length; i++) {
+        if (DFS[i].isSubContainer == false || DFS[i].type == "external") {
+            var nodeID = DFS[i].id;
+            addNodeToNodeArray(nodeID);
+        }
+    }
+}
+
+function fillInitialEdges() {
+    var condensedLinks = DLM.getCondensedLinks();
+    for (var i = 0; i < condensedLinks.length; i++) {
+        var link = condensedLinks[i];
+        edgesArray.push({id: link.id, to: link.toFileStructid, from: link.from, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)'}});
+    }
+}
+
+// TODO: remove magic numbers 
+// TODO: define colors
+// TODO: determin size
+function addNodeToNodeArray(id) {
     var struct = DFS[id];
     var varColor = PickColor(struct.type);
     var varSize = 12 + (6 * (struct.links.length));
     nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10, color: ('rgb(232, 232, 232)')}, color: varColor, shape: 'dot'});
     ////alert("added node: " + nodesArray[(nodesArray.length-1)].id);
     return;
-};
+}
 
 function PickColor(type){
     switch (type){
@@ -153,8 +224,37 @@ function PickColor(type){
             return('rgb(150, 150, 150)');
             break;
     }
-};
+}
 
+// MARK: - Event Listeners
+function nodeDoubleClick(params) {
+    params.event = "[original event]";
+    var clickedNodeID = params.nodes;
+
+    if (DFS[clickedNodeID].links.length > 0) {
+        for (var i = 0; i < DFS[clickedNodeID].links.length; i++) {
+            var childNodeID = DFS[clickedNodeID].links[i].toFileStructid;
+            if (DFS[childNodeID].isEnabled == true) {
+                // recursively close each child
+
+            } else {
+                // expand child nodes underneath parent, render links
+
+            }
+        }
+    } else {
+        return;
+    }
+
+    // try {
+    //     nodes.update({
+    //         id: fs[i].id,
+    //         color: 'rgb(220,220,220)'
+    //     });
+    // } catch (err) {
+    //     //alert(err);
+    // }
+}
 
 Init();
 
