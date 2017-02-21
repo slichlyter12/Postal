@@ -8,3 +8,5 @@ src/**
 tsconfig.json
 vsc-extension-quickstart.md
 *.tex
+node_modules/**
+lib/app/node_modules/**
