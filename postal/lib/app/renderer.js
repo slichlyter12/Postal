@@ -15,6 +15,8 @@ var FLM; // File Link Manager
 // create network arrays
 var nodesArray = [];
 var edgesArray = [];
+var nodes;
+var edges;
 
 
 function Init() {
@@ -47,15 +49,13 @@ function Main() {
     fillInitialEdges();
 
 
-    var nodes;
-    var edges;
     try{
         nodes = new vis.DataSet(nodesArray);
     } catch(err){
         alert("Error:"+ err);
     }
 
-    alert("created DataSet");
+    //alert("created DataSet");
     edges = new vis.DataSet(edgesArray);
     var container = document.getElementById('mynetwork');
     var data = {
@@ -103,8 +103,6 @@ function fillDLM() {
     }
 
     DLM = new LinkManager(links);
-
-    //alert(JSON.stringify(DLM));
 }
 
 function appendEnabledToDFS() {
@@ -118,7 +116,23 @@ function appendEnabledToDFS() {
 }
 
 function fillFLM() {
-    
+    var links = [];
+    var allLinks = [];
+    for (var i = 0; i < DFS.length; i++) {
+        if (DFS[i].type != "dir" && DFS[i].isSubContainer == false) {
+            links = getAllLinksFromFileStructRecursive(DFS[i].id);
+            for (var j = 0; j < links.length; j++) {
+                links[j].isEnabled = false;
+                links[j].from = DFS[i].id;
+
+                allLinks.push(links[j]);
+            }
+        } else if (DFS[i].isSubContainer == true) {
+            break;
+        }
+    }
+
+    FLM = new LinkManager(allLinks);
 }
 
 // Recursive function to get all links from this and children
@@ -149,6 +163,53 @@ function getAllLinksFromFileStructRecursive(FileStructID) {
     } 
 
     return links;
+}
+
+function closeAllSubcontainersRecursive(FileStructID) {
+
+    if (DFS[FileStructID].subContainers.length > 0) {
+        if (DFS[FileStructID].isEnabled == false) {
+            return;
+        }
+        for (var i = 0; i < DFS[FileStructID].subContainers.length; i++) {
+            var childNodeID = DFS[FileStructID].subContainers[i].toFileStructid;
+            
+            closeAllSubcontainersRecursive(childNodeID);
+
+            // at a node that has active children
+            // remove links between children and parent
+            var subContainerLinkID = DFS[FileStructID].subContainers[i].id;
+            try {
+                edges.remove({
+                    id: subContainerLinkID
+                });
+            } catch (err) {
+                alert("closing subcontainers error: " + err);
+                return;
+            }
+            SLM.setEnabledByID(subContainerLinkID, false);
+
+            // update FLM 
+            updateFromFileLinks(FileStructID);
+
+            // remove children nodes
+            //alert("about to remove: " + childNodeID);
+            try {
+                nodes.remove({
+                    id: childNodeID
+                });
+            } catch (err) {
+                alert("closing subcontainers error 2: " + err);
+                return;
+            }
+
+            //timout(10);
+
+            DFS[childNodeID].isEnabled = false;
+        }
+    } else {
+        return;
+    }
 }
 
 function fillSLM() {
@@ -199,6 +260,32 @@ function addNodeToNodeArray(id) {
     return;
 }
 
+function turnOffAllFileLinks() {
+    var fileLinks = FLM.getCondensedLinks();
+    for (var i = 0; i < fileLinks.length; i++) {
+        if (fileLinks[i].isEnabled == true) {
+            try {
+                edges.remove(fileLinks[i].id);
+            } catch (err) {
+                alert("turn off file link error: " + err);
+                return;
+            }
+
+            FLM.setEnabled(fileLinks[i].id, false);
+        }
+    }
+}
+
+function updateFromFileLinks(newFromID) {
+    var links = getAllLinksFromFileStructRecursive(newFromID);
+    if (links.length > 0) {
+        for (var i = 0; i < links.length; i++) {
+            var linkID = links[i].id;
+            FLM.setFromByID(linkID, newFromID);
+        }
+    }
+}
+
 function PickColor(type){
     switch (type){
         case "html":
@@ -231,29 +318,61 @@ function nodeDoubleClick(params) {
     params.event = "[original event]";
     var clickedNodeID = params.nodes;
 
-    if (DFS[clickedNodeID].links.length > 0) {
-        for (var i = 0; i < DFS[clickedNodeID].links.length; i++) {
-            var childNodeID = DFS[clickedNodeID].links[i].toFileStructid;
+    if (DFS[clickedNodeID].subContainers.length > 0) {
+        turnOffAllFileLinks();
+        for (var i = 0; i < DFS[clickedNodeID].subContainers.length; i++) {
+            var childNodeID = DFS[clickedNodeID].subContainers[i].toFileStructid;
             if (DFS[childNodeID].isEnabled == true) {
                 // recursively close each child
-
+                
+                closeAllSubcontainersRecursive(clickedNodeID);
             } else {
                 // expand child nodes underneath parent, render links
+                
+                // NODES
+                try {
+                    var varSize = 12 + (6 * (DFS[childNodeID].links.length));
+                    nodes.update({
+                        id: DFS[childNodeID].id,
+                        color: PickColor(DFS[childNodeID].type),
+                        label: DFS[childNodeID].name,
+                        size: varSize,
+                        font:{
+                            size: 10, 
+                            color: ('rgb(232, 232, 232)')
+                        }, 
+                        shape: 'dot'
+                    });
+                } catch (err) {
+                    alert("child node update error: " + err);
+                    return;
+                }
 
+                DFS[childNodeID].isEnabled = true;
+
+                // LINKS
+                updateFromFileLinks(childNodeID);
+                
+                var newSubContainerLink = SLM.getLinkByID(DFS[clickedNodeID].subContainers[i].id);
+                try {
+                    edges.add({
+                        id: newSubContainerLink.id,
+                        to: newSubContainerLink.toFileStructid,
+                        from: newSubContainerLink.from,
+                        arrows: {
+                            to: { scaleFactor:0.3 }
+                        }, 
+                        color: { color: 'rgb(52, 52, 52)' }
+                    });
+                } catch (err) {
+                    alert("update links error: " + err);
+                    return;
+                }             
             }
         }
     } else {
         return;
     }
-
-    // try {
-    //     nodes.update({
-    //         id: fs[i].id,
-    //         color: 'rgb(220,220,220)'
-    //     });
-    // } catch (err) {
-    //     //alert(err);
-    // }
 }
 
 Init();

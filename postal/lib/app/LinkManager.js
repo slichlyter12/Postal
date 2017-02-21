@@ -29,7 +29,7 @@ module.exports = class LinkManager {
     }
 
     getLinkByID(linkID) {
-        return this.randomAccessLinks[linkid];
+        return this.randomAccessLinks[linkID];
     }
 
     setFromByID(linkID, newFrom) {
