@@ -116,8 +116,8 @@ The user interface is currently running off of dummy, static data.
 It opens up in a new window using a program called Electron as opposed to a web browser to cut down on the overhead associated with all the complexities of the web browser.
 It shows each web page as a node and each link from one page to another as an edge in a graph. See Figure 1.
 \begin{figure}
-\includegraphics[width=300px]{UIMockupEPS}
-\caption{User Interface Example}
+	\includegraphics[width=300px]{UIMockupEPS}
+	\caption{User Interface Example}
 \end{figure}
 
 \subsection{Data Layer}
@@ -308,18 +308,47 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 
 \section{Problems and Solutions: Winter Midterm }
 	\subsection{Winter Break}
-
+	Winter break most of the members of the team got together and discussed the work that would need to be done over the winter quarter.
+	Once the schedule was put in place the team assigned work and continued the development of the extension, and trying to get the different pieces to function together properly. 
+	
 	\subsection{Week 1}
-
+	Week one there was a meeting scheduled with the client. 
+	There was an influx of work as this first meeting was when the team was planning to have the mostly functional extension, and we where still having some problems with launching the custom UI from within VSCode, and we were still working on with dumby data as we were having trouble parsing out the information to create the logical links between the files within the projects the extension was trying to visualize. 
+	We met with Chris Scaffidi and showed him the visual structure that our extension with the dumby data could create and he seemed really happy with the results.
+	Afterward he gave us a deadline for February to have a working alpha and even some users testing our extension. 
+	
 	\subsection{Week 2}
+	With the success of and many hours of work from week one we lulled into a much slower work flow. 
+	The team did not get a lot of major work done this week only some minor updates to the parsing the files. 
+	These changes were very minor and later deprecated.
 
 	\subsection{Week 3}
+	In week three we worked on more minor changes that were later deprecated.
 
 	\subsection{Week 4}
 
-	\subsection{Week 5}
 
+	\subsection{Week 5}
+	Week five we worked on redoing our tech and design document.
+	The main parts of the two documents stayed mostly the same. 
+	The main differences were the addition of the process bridge, no more use of the eventEmitter, and the more advanced details about the parser. 
+	
 	\subsection{Week 6}
+	The weekend before week six was a big jump for the development of the extension. 
+	The whole all got together and did a code review over the different parts of the extension.
+	The code review lead to the team realizing that each of the parts were functioning differently that the other part developers had thought. 
+	This confusion was the cause of the different parts not functioning correctly together. 
+	After this realization we decided to rework the main parts of the extension.
+	We started with the parser. 
+	Sitting down and creating a more concrete design that would break up the files more and get more pertinent data.
+	Using ideas that they had learned from studying compilers Sam and Eric were able to create a system for breaking up the files into more manageable token based data objects. 
+	These token objects made for a much easier time making the links between the files that we were having so much trouble with all quarter. 
+	But with the new token and links system we also had to redo the way that the UI used interpreted the data.
+	In total the whole rework took all weekend and a good part of Monday, but we now have a much better idea of the direction in which the extension should go.
+	We were even able to publish the extension on to the Visual Studio Code Extension Marketplace. 
+	This introduced our most recent problem being that our extension will run fine on our development machines, but if downloaded from the marketplace the extension crashes.
+	We 
+	
 
 \section{Prototype Code Samples}	
 
