@@ -7,7 +7,7 @@ import * as path from 'path';
 //var open = require('open');
 // var fs = require('file-system');
 var nodefs = require('fs');
-var cwd = require('cwd');
+//var cwd = require('cwd');
 
 export class Parser {
 

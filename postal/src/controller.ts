@@ -5,10 +5,10 @@ import * as path from 'path';
 import { Parser } from './parser'
 import { spawn } from 'child_process'
 
-var open = require('open');
-var fs = require('file-system');
+//var open = require('open');
+//var fs = require('file-system');
 var nodefs = require('fs');
-var cwd = require('cwd');
+//var cwd = require('cwd');
 var electronp = require('electron');
 var find = require('find');
 
