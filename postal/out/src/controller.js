@@ -3,12 +3,8 @@ const vscode = require("vscode");
 const path = require("path");
 const parser_1 = require("./parser");
 const child_process_1 = require("child_process");
-//var open = require('open');
-//var fs = require('file-system');
 var nodefs = require('fs');
-//var cwd = require('cwd');
-var electronp = require('electron');
-var find = require('find');
+var finder = require('find'); // this is where it breaks in the store. 
 var isWin = /^win/.test(process.platform);
 class Controller {
     constructor() {
@@ -102,8 +98,8 @@ class Controller {
     }
     buildFileStructs() {
         var FileStructs = [];
-        var dirPaths = find.dirSync(vscode.workspace.rootPath);
-        var filePaths = find.fileSync(vscode.workspace.rootPath);
+        var dirPaths = finder.dirSync(vscode.workspace.rootPath);
+        var filePaths = finder.fileSync(vscode.workspace.rootPath);
         var dirCount = dirPaths.length;
         //Build Directory Nodes
         for (var i = 0; i < dirPaths.length; i++) {

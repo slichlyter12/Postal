@@ -4,13 +4,6 @@
 const vscode = require("vscode");
 const controller_1 = require("./controller");
 const unitTesting_1 = require("../test/unitTesting");
-//var open = require('open');
-// var fs = require('file-system');
-//var nodefs = require('fs');
-//var cwd = require('cwd');
-var childProcess = require('child_process');
-var electronp = require('electron');
-var find = require('find');
 var isWin = /^win/.test(process.platform);
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed

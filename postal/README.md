@@ -26,6 +26,7 @@ Notes:
 
 * browser-window    ^0.4.0 
 * child process     ^1.0.2
+* find              ^0.2.7 
 * cwd               ^0.10.0
 * electron          ^1.4.14
 * file-system       ^2.2.1
