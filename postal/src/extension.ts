@@ -3,9 +3,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { spawn } from 'child_process'
+import { spawn } from 'child_process';
 import { Controller } from './controller';
-import { tests_main } from '../test/unitTesting'
 
 var isWin = /^win/.test(process.platform);
 
@@ -27,7 +26,6 @@ export function activate(context: vscode.ExtensionContext) {
     
     // We can get rid of this stuff later. I am testing shtuff -Cramer
     let testing = vscode.commands.registerCommand('extension.error', () => {
-        tests_main();
     });
 
     // pushes the command to the interphase where the user will then be able to 

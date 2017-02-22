@@ -3,7 +3,6 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require("vscode");
 const controller_1 = require("./controller");
-const unitTesting_1 = require("../test/unitTesting");
 var isWin = /^win/.test(process.platform);
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -19,7 +18,6 @@ function activate(context) {
     });
     // We can get rid of this stuff later. I am testing shtuff -Cramer
     let testing = vscode.commands.registerCommand('extension.error', () => {
-        unitTesting_1.tests_main();
     });
     // pushes the command to the interphase where the user will then be able to 
     // use them. 
