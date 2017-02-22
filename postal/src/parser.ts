@@ -5,7 +5,7 @@ import * as path from 'path';
 
 // Node Dependencies
 //var open = require('open');
-var fs = require('file-system');
+// var fs = require('file-system');
 var nodefs = require('fs');
 var cwd = require('cwd');
 

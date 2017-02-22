@@ -8,8 +8,8 @@ import { Controller } from './controller';
 import { tests_main } from '../test/unitTesting'
 
 //var open = require('open');
-var fs = require('file-system');
-var nodefs = require('fs');
+// var fs = require('file-system');
+//var nodefs = require('fs');
 var cwd = require('cwd');
 var childProcess = require('child_process');
 var electronp = require('electron');
