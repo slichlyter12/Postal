@@ -50,6 +50,6 @@
         "open": "0.0.5",
         "vis": "^4.17.0"
     },
-    "repository": "https://github.com/slichlyter12/Postal/postal",
+    "repository": "https://github.com/slichlyter12/Postal/tree/master/postal",
     "license": "AGPL-3.0"
 }
