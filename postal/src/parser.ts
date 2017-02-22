@@ -135,7 +135,7 @@ export class Parser {
     private getRules(filetype: string): any {
 
         // get entire grammars file
-        var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
+        var grammarsFile = nodefs.readFileSync(__dirname + "/../../lib/grammars.json", "utf8");
         var grammars = JSON.parse(grammarsFile);
 
         // pull out grammar rules for our filetype
