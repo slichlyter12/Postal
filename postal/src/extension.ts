@@ -12,8 +12,8 @@ import { tests_main } from '../test/unitTesting'
 //var nodefs = require('fs');
 //var cwd = require('cwd');
 var childProcess = require('child_process');
-var electronp = require('electron');
-var find = require('find');
+//var electronp = require('electron');
+//var find = require('find');
 
 var isWin = /^win/.test(process.platform);
 

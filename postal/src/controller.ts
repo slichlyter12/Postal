@@ -9,7 +9,7 @@ import { spawn } from 'child_process'
 //var fs = require('file-system');
 var nodefs = require('fs');
 //var cwd = require('cwd');
-var electronp = require('electron');
+//var electronp = require('electron');
 var find = require('find');
 
 var isWin = /^win/.test(process.platform);
