@@ -7,7 +7,7 @@ import { spawn } from 'child_process'
 import { Controller } from './controller';
 import { tests_main } from '../test/unitTesting'
 
-var open = require('open');
+//var open = require('open');
 var fs = require('file-system');
 var nodefs = require('fs');
 var cwd = require('cwd');

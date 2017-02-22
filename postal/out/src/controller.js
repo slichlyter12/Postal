@@ -52,7 +52,7 @@ class Controller {
         }
         return fileName;
     }
-    findLinks(filePath, FileStructs) {
+    findDirectoryLinks(filePath, FileStructs) {
         var allNames = nodefs.readdirSync(filePath);
         var fullPath;
         var link = {};
@@ -63,8 +63,8 @@ class Controller {
                 if (FileStructs[j].path == fullPath) {
                     link =
                         {
-                            linkid: this.linkidCounter,
-                            to: FileStructs[j].id,
+                            id: this.linkidCounter,
+                            toFileStructid: FileStructs[j].id,
                             lineNumber: null
                         };
                     foundLinks.push(link);
@@ -74,8 +74,31 @@ class Controller {
         }
         return foundLinks;
     }
-    getNodeIdFromPath(filePath) {
-        console.log(filePath);
+    getNodeIdFromPath(filename, FileStructs) {
+        var filepath = vscode.workspace.rootPath + this.slash + filename;
+        var id;
+        // check for file in project
+        for (var i = 0; i < FileStructs.length; i++) {
+            if (FileStructs[i].path == filepath) {
+                return FileStructs[i].id;
+            }
+        }
+        // no file found in project, create new node
+        var FileStruct = {
+            id: this.nodeidCounter,
+            level: 0,
+            isSubContainer: false,
+            name: filename,
+            type: "external",
+            path: filepath,
+            links: [],
+            subContainers: [],
+            errors: []
+        };
+        FileStructs.push(FileStruct);
+        id = this.nodeidCounter;
+        this.nodeidCounter++;
+        return id;
     }
     buildFileStructs() {
         var FileStructs = [];
@@ -116,7 +139,7 @@ class Controller {
         var foundLinks;
         for (var k = 0; k < FileStructs.length; k++) {
             if (FileStructs[k].type == "dir") {
-                foundLinks = this.findLinks(FileStructs[k].path, FileStructs);
+                foundLinks = this.findDirectoryLinks(FileStructs[k].path, FileStructs);
                 FileStructs[k].links = foundLinks;
             }
         }
@@ -144,12 +167,14 @@ class Controller {
                         };
                     FileStructs.push(FileStruct);
                     // push links between files and subcontainers
-                    var subContainer = {
-                        link: this.linkidCounter,
-                        to: this.nodeidCounter,
-                        lineNumber: tokens[i][j].lineNumber
-                    };
-                    FileStructs[i + dirCount].subContainers.push(subContainer);
+                    if (tokens[i][j].parentToken == undefined) {
+                        var subContainer = {
+                            id: this.linkidCounter,
+                            toFileStructid: this.nodeidCounter,
+                            lineNumber: tokens[i][j].lineNumber
+                        };
+                        FileStructs[i + dirCount].subContainers.push(subContainer);
+                    }
                     //create a composite key to tie node id to filenumber + token id
                     tokens[i][j].nodeid = this.nodeidCounter;
                     this.nodeidCounter++;
@@ -157,26 +182,45 @@ class Controller {
                 }
             }
         }
-        //linking subcontainers together, add betwen file links
+        //linking subcontainers together, add between file links
         for (i = dirCount; i < filePaths.length + dirCount; i++) {
-            for (j = 0; j < tokens[i - dirCount].length; j++) {
-                if (tokens[i - dirCount][j].tokenType == "node" && tokens[i - dirCount][j].parentToken != undefined) {
-                    var parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
-                    subContainer = {
-                        link: this.linkidCounter,
-                        to: tokens[i - dirCount][j].nodeid,
-                        lineNumber: tokens[i - dirCount][tokens[i - dirCount][j].parentToken].lineNumber
-                    };
-                    FileStructs[parentNodeid].subContainers.push(subContainer);
+            try {
+                for (j = 0; j < tokens[i - dirCount].length; j++) {
+                    if (tokens[i - dirCount][j].tokenType == "node" && tokens[i - dirCount][j].parentToken != undefined) {
+                        try {
+                            var parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
+                        }
+                        catch (err) {
+                            console.log(err);
+                        }
+                        subContainer = {
+                            id: this.linkidCounter,
+                            toFileStructid: tokens[i - dirCount][j].nodeid,
+                            lineNumber: tokens[i - dirCount][j].lineNumber
+                        };
+                        FileStructs[parentNodeid].subContainers.push(subContainer);
+                    }
+                    else if (tokens[i - dirCount][j].tokenType == "link") {
+                        var linkDestination = this.getNodeIdFromPath(tokens[i - dirCount][j].value, FileStructs);
+                        var linkcontainer = {
+                            id: this.linkidCounter,
+                            toFileStructid: linkDestination,
+                            lineNumber: tokens[i - dirCount][j].lineNumber
+                        };
+                        if (tokens[i - dirCount][j].parentToken != undefined) {
+                            var parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
+                            FileStructs[parentNodeid].links.push(linkcontainer);
+                        }
+                        else {
+                            FileStructs[i].links.push(linkcontainer);
+                        }
+                    }
+                    // increment linkidCounter
+                    this.linkidCounter++;
                 }
-                else if (tokens[i - dirCount][j].tokenType == "link") {
-                    var linkDestination = this.getNodeIdFromPath(tokens[i - dirCount][j].value);
-                    var linkcontainer = {
-                        link: this.linkidCounter,
-                        to: linkDestination,
-                        lineNumber: tokens[i - dirCount][j].lineNumber
-                    };
-                }
+            }
+            catch (err) {
+                console.log(err);
             }
         }
         return FileStructs;

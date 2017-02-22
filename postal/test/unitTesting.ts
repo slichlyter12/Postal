@@ -41,9 +41,19 @@ var isWin = /^win/.test(process.platform);
 
 export function tests_main() {
     //test_parse_empty();
-    for (var i = 0; i < 100; i++) {
-        generate_files_with_grammars();
+    var output = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (var i = 0; i < 300; i++) {
+        //output[random(1, output.length) - 1]++;
+        output[random(1, output.length / 2) + random(1, output.length / 2) - 2]++;
     }
+    for (var i = 0; i < output.length; i++) {
+        var outputs : string = (i + 1)  + " |";
+        for (var j = 0; j < output[i]; j++) {
+            outputs = outputs + "+";  
+        }
+        console.log(outputs);
+    } 
+    output[i]
 }
 
 function test_parse_empty() {
@@ -69,7 +79,6 @@ function generate_files_with_grammars() {
     var grammarsFile = nodefs.readFileSync(__dirname + "/../../src/grammars.json", "utf8");
     var g = JSON.parse(grammarsFile);
 
-    console.log(g);
     /* for each object grammar */
     for (var gram = 0; gram < g.grammars.length; gram++) {
         // for each rule
@@ -80,19 +89,33 @@ function generate_files_with_grammars() {
                 var rand = new RandExp(g.grammars[gram].rules[r].options.link).gen();
                 gen = rand; 
             } else if (g.grammars[gram].rules[r].type == "tagged") {
-                gen = g.grammars[gram].rules[r].options.tagStart;
                 if (g.grammars[gram].rules[r].options.namedOption != null) {
-                    var rand = new RandExp(g.grammars[gram].rules[r].options.namedOption).gen();
-                    gen = gen + " " + rand;
-                } 
-                gen = gen + g.grammars[gram].rules[r].options.tagEnd;
+                    gen = generate_recursive_tagged(g.grammars[gram].rules[r].options, 8);
+                } else {
+                    gen = g.grammars[gram].rules[r].options.tagStart;
+                    gen = gen + g.grammars[gram].rules[r].options.tagEnd;
+                    gen = gen + g.grammers[gram].rules[r].options.closingTag;
+                }
             }
             console.log(gen);
         }
     } 
 }
 
+function generate_recursive_tagged(obj, num: number) :string {
+    var ret :string  = ""
+    if (num == 0) {
+        return ret;
+    } else {
+        ret = obj.tagStart + " " + new RandExp(obj.namedOption).gen() + " " + obj.tagEnd;
+        ret = ret + "\n" + generate_recursive_tagged(obj, num - 1) + " " + obj.closingTag;
+    }
+    return ret;
+}
 
+function random(min: number, max: number) {
+    return Math.floor((Math.random() * max) + min);    
+}
 
 
 
