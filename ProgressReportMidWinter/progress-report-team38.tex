@@ -315,6 +315,14 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 	\end{figure}
 
 	\subsection{Data Layer}
+	The data layer has been redesigned to simply be a storage source for the most recently parsed project data.
+	It is still stored in a single JSON file, which is written to on each parse.
+	The actual arrangement and writing of the data occurs in a controller file which received file, node and link data from the parser.
+	The controller then takes this data, appends it in the correct order to a JavaScript object which holds all nodes and subsequently writes to the JSON file.
+	\begin{figure}
+		\includegraphics[width=300px]{UpdatedDataStruct}
+		\caption{Updated Data Structure}
+	\end{figure}
 
 \section{Problems and Solutions: Winter Midterm }
 	\subsection{Winter Break}
