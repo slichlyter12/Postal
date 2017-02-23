@@ -304,7 +304,9 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 	As of week seven, the parser is nearly complete.
 	It will need to be updated to support same line searching and comments.
 	For example when users have multiple divs defined on the same line, the parser will incorrectly parse this.
-	To solve this problem we will need to change the parser to look character by character instead of line by line.
+	To solve this problem we will need to change the parser to look character by character.
+	The current version of the parser looks line by line for specific strings specified by the user in a user-editable file, grammars.json.
+	The advantage of this was so that users could specify what they needed and the extension wouldn't have to have built-in support for a multitude of languages.
 	
 
 	\subsection{User Interface}
