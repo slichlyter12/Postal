@@ -124,8 +124,8 @@ It shows each web page as a node and each link from one page to another as an ed
 The data layer is comprised of a data structure and data access methods.
 The data structure is defined below in the ERD (Figure 2).
 \begin{figure}
-\includegraphics[width=300px]{InformationERDEPS}
-\caption{Data Structure ERD}
+	\includegraphics[width=300px]{InformationERDEPS}
+	\caption{Data Structure ERD}
 \end{figure}
 
 \section{Problems and Solutions: Fall Term}
@@ -310,10 +310,28 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 	Once the development process is completed the focus will change to doing formal user testing. 
 	
 	\subsection{Parser}
+	As of week seven, the parser is nearly complete.
+	It will need to be updated to support same line searching and comments.
+	For example when users have multiple divs defined on the same line, the parser will incorrectly parse this.
+	To solve this problem we will need to change the parser to look character by character instead of line by line.
+	
 
 	\subsection{User Interface}
 
+	\begin{figure}
+		\includegraphics[width=300px]{capstoneUI1}
+		\caption{Current User Interface}
+	\end{figure}
+
 	\subsection{Data Layer}
+	The data layer has been redesigned to simply be a storage source for the most recently parsed project data.
+	It is still stored in a single JSON file, which is written to on each parse.
+	The actual arrangement and writing of the data occurs in a controller file which received file, node and link data from the parser.
+	The controller then takes this data, appends it in the correct order to a JavaScript object which holds all nodes and subsequently writes to the JSON file.
+	\begin{figure}
+		\includegraphics[width=300px]{UpdatedDataStruct}
+		\caption{Updated Data Structure}
+	\end{figure}
 
 \section{Problems and Solutions: Winter Midterm }
 	\subsection{Winter Break}
