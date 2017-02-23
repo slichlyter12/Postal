@@ -336,49 +336,52 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 \section{Problems and Solutions: Winter Midterm }
 	\subsection{Winter Break}
 	Winter break most of the members of the team got together and discussed the work that would need to be done over the winter quarter.
-	Once the schedule was put in place the team assigned work and continued the development of the extension, and trying to get the different pieces to function together properly. 
+	Once the schedule was put in place the team assigned work and continued the development of the extension. 
+	The main focus of this work was trying to get the different pieces to function together properly. 
 	
 	\subsection{Week 1}
-	Week one there was a meeting scheduled with the client. 
-	There was an influx of work as this first meeting was when the team was planning to have the mostly functional extension. 
-	We where still having some problems with launching the custom UI from within VSCode, and we were still working with data that was not generated form project files.
-	This was because we were having trouble parsing out the information to create the logical links between the files within the projects the extension was trying to visualize. 
+	Week one there was a meeting scheduled with our client. 
+	With this hard deadline so close there was an influx of work as this first meeting was when the team was planning to have the mostly functional extension. 
+	We where still having some problems with launching the custom UI from within VSCode, and we were still working with data that was not generated from project files.
+	The reason we were not using generated data was because we were still having trouble parsing out the information to create the logical links between the files within the projects that the extension was trying to visualize. 
 	We met with Chris Scaffidi and showed him the visual structure that our extension could create with the non-generated data, and he seemed really happy with the results.
-	Afterward he gave us a deadline for February to have a working alpha and even some users testing our extension. 
+	Afterward he gave us a deadline for February to have a working alpha and even some of our friends testing our extension. 
 	
 	\subsection{Week 2}
-	With the success of and many hours of work from week one we lulled into a much slower work flow. 
-	The team did not get a lot of major work done this week only some minor updates to the parsing the files. 
-	These changes were very minor and later deprecated.
+	With the success from week one we lulled into a much slower work flow. 
+	The team did not get a lot of major work done this week only some minor updates to the parsing the files, and more work done on the custom UI. 
+	These changes were very minor and most of them were later deprecated.
 
 	\subsection{Week 3}
-	In week three we worked on more minor changes updating the UI, and basic error handling, these changes were later deprecated. 
+	In week three we worked on more minor changes updating the UI, and very basic error handling.
+	Once again these changes were later deprecated. 
 
 	\subsection{Week 4}
 	Week four we started to figure out what we needed to update in the design and tech documents as well as set up a simple OneNote engineering notebook to document our changes to these documents.
 	With the notebook started we started working on changing the documents. 
-	This week it the only changes we did were minor grammatical errors that we found in the documents that we had missed in the first publishing.
+	At first we only focused on the grammatical errors.
 
 	\subsection{Week 5}
 	Week five we worked on redoing our tech and design document.
-	The main parts of the two documents stayed mostly the same. 
-	The main differences were the addition of the process bridge, no more use of the eventEmitter, and the more advanced details about the parser. 
+	A majority of the parts of the two documents stayed the same. 
+	The main differences in the documents were the addition of the process bridge, no more use of the eventEmitter, and the more advanced details about the parser. 
 	
 	\subsection{Week 6}
 	The weekend before week six was a big jump for the development of the extension. 
-	The whole all got together and did a code review over the different parts of the extension.
-	The code review lead to the team realizing that each of the parts were functioning differently that the other part developers had thought. 
-	This confusion was the cause of the different parts not functioning correctly together. 
+	The whole team got together and did a code review over the different parts of the extension.
+	The code review led to the each members of the team realizing that the separate parts were functioning differently than the other developers had thought. 
+	This confusion of the different parts was the cause of the parts not functioning together correctly. 
 	After this realization we decided to rework the main parts of the extension.
 	We started with the parser. 
 	Sitting down and creating a more concrete design that would break up the files more and get more pertinent data.
 	Using ideas that they had learned from studying compilers Sam and Eric were able to create a system for breaking up the files into more manageable token based data objects. 
 	These token objects made for a much easier time making the links between the files that we were having so much trouble with all quarter. 
-	But with the new token and links system we also had to redo the way that the UI used interpreted the data.
-	In total the whole rework took all weekend and a good part of Monday, but we now have a much better idea of the direction in which the extension should go.
+	With the new token and links system we also had to redo UI because it was used to the old data model.
+	In total the whole rework took all weekend and a good part of Monday.
+	The result being we now have a much better idea of the direction in which the extension should go design wise, and the code is much cleaner.
 	We were even able to publish the extension on to the Visual Studio Code Extension Marketplace. 
-	This introduced a small problem that we expected in the beginning of fall term, and that was that the node packages might not auto install. 
-	This problem was not as bad as we had initially thought, and was actually introduced by a single semicolon in our publishing.
+	Publishing the extension did introduced a small problem that we expected in the beginning of fall term, and that was that the node packages might not auto install. 
+	We still are not sure how to resolve this on user's machines that do not have node installed.
 	
 \section{Prototype Code Samples}	
 
