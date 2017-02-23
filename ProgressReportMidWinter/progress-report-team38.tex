@@ -394,7 +394,88 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 	This introduced a small problem that we expected in the beginning of fall term, and that was that the node packages might not auto install. 
 	This problem was not as bad as we had initially thought, and was actually introduced by a single semicolon in our publishing.
 	
-\section{Prototype Code Samples}	
+\pagebreak
+\section{Prototype Code Samples}
+	\subsection{Example Grammar}
+	This is the default grammar that parses HTML and PHP files for divs and links.
+	
+	\begin{lstlisting}
+{
+    "id" : 0,
+    "title" : "html",
+    "filetypes" : ["html", "php"],
+    "rules" : [{
+            "title": "div",
+            "type": "tagged",
+            "options" : {
+                "tagStart": "<div",
+                "namedOption" : "id=\"(.+?)\"",
+                "tagEnd": ">",
+                "closingTag": "</div>",
+                "nodeColor": "blue"
+            }
+        }, {
+            "title": "href link",
+            "type" : "link",
+            "options" : {
+                "link": "href=[\"](.+?)[\"]",
+                "nodeColor": "blue"
+            }
+        }, {
+            "title": "includes link",
+            "type": "link",
+            "options": {
+                "link": "include=[\"](.+?)[\"]",
+                "nodeColor": "blue"
+            }
+        }, {
+            "title": "body",
+            "type": "tagged",
+            "options" : {
+                "tagStart": "<body",
+                "tagEnd": ">",
+                "closingTag": "</body>",
+                "nodeColor": "blue"
+            }
+        }
+    ]
+}
+	\end{lstlisting}
+
+	\pagebreak
+	\subsection{Recursive Get All Links}
+	This function grabs all the links from the data structure of a specified file struct and it's children.
+	\begin{lstlisting}
+// Recursive function to get all links from this and children
+function getAllLinksFromFileStructRecursive(FileStructID) {
+    var links = [];
+
+    // check parent
+    if (DFS[FileStructID].links.length > 0) {
+        for (var i = 0; i < DFS[FileStructID].links.length; i++) {
+            var link = DFS[FileStructID].links[i];
+            links.push(link);
+        }
+    }
+
+    // check children
+    if (DFS[FileStructID].subContainers.length > 0) {
+        var childLinks = [];
+        for (var i = 0; i < DFS[FileStructID].subContainers.length; i++) {
+            var childFileStructID = DFS[DFS[FileStructID].subContainers[i].toFileStructid].id;
+            childLinks = getAllLinksFromFileStructRecursive(childFileStructID);
+
+            // push what we found to parents link list
+            for (var j = 0; j < childLinks.length; j++) {
+                links.push(childLinks[j]);
+            }
+
+        }
+    } 
+
+    return links;
+}
+	\end{lstlisting}
 
 \pagebreak
 \section{Winter Midterm Retrospective}
