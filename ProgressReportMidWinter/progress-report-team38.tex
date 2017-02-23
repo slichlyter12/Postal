@@ -116,7 +116,7 @@ The user interface is currently running off of dummy, static data.
 It opens up in a new window using a program called Electron as opposed to a web browser to cut down on the overhead associated with all the complexities of the web browser.
 It shows each web page as a node and each link from one page to another as an edge in a graph. See Figure 1.
 \begin{figure}
-	\includegraphics[width=300px]{UIMockupEPS}
+	\includegraphics[width=450px]{UIMockupEPS}
 	\caption{User Interface Example}
 \end{figure}
 
@@ -124,7 +124,7 @@ It shows each web page as a node and each link from one page to another as an ed
 The data layer is comprised of a data structure and data access methods.
 The data structure is defined below in the ERD (Figure 2).
 \begin{figure}
-	\includegraphics[width=300px]{InformationERDEPS}
+	\includegraphics[width=450px]{InformationERDEPS}
 	\caption{Data Structure ERD}
 \end{figure}
 
@@ -313,13 +313,27 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 	As of week seven, the parser is nearly complete.
 	It will need to be updated to support same line searching and comments.
 	For example when users have multiple divs defined on the same line, the parser will incorrectly parse this.
-	To solve this problem we will need to change the parser to look character by character instead of line by line.
-	
+	To solve this problem we will need to change the parser to look character by character.
+	The current version of the parser looks line by line for specific strings specified by the user in a user-editable file, grammars.json.
+	The advantage of this was so that users could specify what they needed and the extension wouldn't have to have built-in support for a multitude of languages.
+	First the parser looks at all the users files and directories open in the project directory they have open in VSCode.
+	These files then get passed one-by-one to a parser class which tokenizes the file based on the grammars the user defined.
+	The tokens are then used to create subcontainers and links which are built into the data structure for each file.
+	Lastly the parser writes the data structure to the data layer by use of a controller.
 
 	\subsection{User Interface}
+	The users main interaction with the extension is via an Electron window that displays their project as a graph of nodes and edges, see figure 3.
+	The user launches this app by running ``Postal" from the command palette within VSCode.
+	This command calls the parser and then calls the UI to open once the parser has finished writing the data structure to the data layer.
+	Currently the UI represents the users project as a hierarchy view, this will later become user editable between the default hierarchy view and another ``web" view.
+	The user can interact with their project by double clicking on a node that has a subcontainer, for example a .html file that has divs in it.
+	This will expand the subcontainers underneath it.
+	Now the .html file they double clicked that had divs declared in it, those divs will now be displayed underneath it's parent.
+	This logic continues recursively, so that nested divs will be shown underneath their respective parents. 
+	Another feature of these nodes is that if they have an ``id" specified (this is more specifically targeted towards divs by default, but again, this is a user editable parameter), these ids or names will show up instead of the default ``div" (also specified in the grammars file).
 
 	\begin{figure}
-		\includegraphics[width=300px]{capstoneUI1}
+		\includegraphics[width=450px]{capstoneUI1}
 		\caption{Current User Interface}
 	\end{figure}
 
@@ -329,7 +343,7 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 	The actual arrangement and writing of the data occurs in a controller file which received file, node and link data from the parser.
 	The controller then takes this data, appends it in the correct order to a JavaScript object which holds all nodes and subsequently writes to the JSON file.
 	\begin{figure}
-		\includegraphics[width=300px]{UpdatedDataStruct}
+		\includegraphics[width=450px]{UpdatedDataStruct}
 		\caption{Updated Data Structure}
 	\end{figure}
 
@@ -383,7 +397,88 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 	Publishing the extension did introduced a small problem that we expected in the beginning of fall term, and that was that the node packages might not auto install. 
 	We still are not sure how to resolve this on user's machines that do not have node installed.
 	
-\section{Prototype Code Samples}	
+\pagebreak
+\section{Prototype Code Samples}
+	\subsection{Example Grammar}
+	This is the default grammar that parses HTML and PHP files for divs and links.
+	
+	\begin{lstlisting}
+{
+    "id" : 0,
+    "title" : "html",
+    "filetypes" : ["html", "php"],
+    "rules" : [{
+            "title": "div",
+            "type": "tagged",
+            "options" : {
+                "tagStart": "<div",
+                "namedOption" : "id=\"(.+?)\"",
+                "tagEnd": ">",
+                "closingTag": "</div>",
+                "nodeColor": "blue"
+            }
+        }, {
+            "title": "href link",
+            "type" : "link",
+            "options" : {
+                "link": "href=[\"](.+?)[\"]",
+                "nodeColor": "blue"
+            }
+        }, {
+            "title": "includes link",
+            "type": "link",
+            "options": {
+                "link": "include=[\"](.+?)[\"]",
+                "nodeColor": "blue"
+            }
+        }, {
+            "title": "body",
+            "type": "tagged",
+            "options" : {
+                "tagStart": "<body",
+                "tagEnd": ">",
+                "closingTag": "</body>",
+                "nodeColor": "blue"
+            }
+        }
+    ]
+}
+	\end{lstlisting}
+
+	\pagebreak
+	\subsection{Recursive Get All Links}
+	This function grabs all the links from the data structure of a specified file struct and it's children.
+	\begin{lstlisting}
+// Recursive function to get all links from this and children
+function getAllLinksFromFileStructRecursive(FileStructID) {
+    var links = [];
+
+    // check parent
+    if (DFS[FileStructID].links.length > 0) {
+        for (var i = 0; i < DFS[FileStructID].links.length; i++) {
+            var link = DFS[FileStructID].links[i];
+            links.push(link);
+        }
+    }
+
+    // check children
+    if (DFS[FileStructID].subContainers.length > 0) {
+        var childLinks = [];
+        for (var i = 0; i < DFS[FileStructID].subContainers.length; i++) {
+            var childFileStructID = DFS[DFS[FileStructID].subContainers[i].toFileStructid].id;
+            childLinks = getAllLinksFromFileStructRecursive(childFileStructID);
+
+            // push what we found to parents link list
+            for (var j = 0; j < childLinks.length; j++) {
+                links.push(childLinks[j]);
+            }
+
+        }
+    } 
+
+    return links;
+}
+	\end{lstlisting}
 
 \pagebreak
 \section{Winter Midterm Retrospective}
