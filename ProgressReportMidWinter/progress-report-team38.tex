@@ -298,13 +298,13 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 	\end{center}
 
 \section{Current Status: Winter Midterm Update}
-%%Add status as off week 7
 	
 	\subsection{Overall}
-	At the current time a working version of  the extension is being distributed on Visual Studio Code Extension Marketplace this is the beta release of our project showcasing the major functionality of our extension. 
-	The main feature of the extension being the code base visualization. 
+	Currently a working version of the extension is being distributed on Visual Studio Code Extension Marketplace.
+	This is the beta release of our project showcasing the major functionality of our extension. 
+	The main feature of the extension is the code base visualization. 
 	This was a significant milestone for the development team, but there are still features left to be added to the extension. 
-	The next big step in the development process are to add the process bridge to allow for user interaction within the custom UI to navigate the user to specific areas in VSCode.
+	The next big step in the development process is to add the process bridge to allow for user interaction within the custom UI to navigate to specific areas in VSCode.
 	After that we plan on adding defined errors for certain web languages.
 	We are aiming to meet these goals by the end to winter term. 
 	Once the development process is completed the focus will change to doing formal user testing. 
@@ -312,8 +312,8 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 	\subsection{Parser}
 	As of week seven, the parser is nearly complete.
 	It will need to be updated to support same line searching and comments.
-	For example when users have multiple divs defined on the same line, the parser will incorrectly parse this.
-	To solve this problem we will need to change the parser to look character by character.
+	For example, when users have multiple HTML divs defined on the same line, the parser currently incorrectly parses this.
+	To solve this problem we will need to change the parser to look at files character by character.
 	The current version of the parser looks line by line for specific strings specified by the user in a user-editable file, grammars.json.
 	The advantage of this was so that users could specify what they needed and the extension wouldn't have to have built-in support for a multitude of languages.
 	First the parser looks at all the users files and directories open in the project directory they have open in VSCode.
@@ -333,8 +333,13 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 	Another feature of these nodes is that if they have an ``id" specified (this is more specifically targeted towards divs by default, but again, this is a user editable parameter), these ids or names will show up instead of the default ``div" (also specified in the grammars file).
 
 	\begin{figure}
-		\includegraphics[width=450px]{capstoneUI1}
+		\includegraphics[width=400px]{capstoneUI1}
 		\caption{Current User Interface}
+	\end{figure}
+	
+	\begin{figure}
+		\includegraphics[width=400px]{UpdatedDataStruct}
+		\caption{Updated Data Structure}
 	\end{figure}
 
 	\subsection{Data Layer}
@@ -342,10 +347,7 @@ while (my $anchor = $anchor_parser->get_tag('a')) {
 	It is still stored in a single JSON file, which is written to on each parse.
 	The actual arrangement and writing of the data occurs in a controller file which received file, node and link data from the parser.
 	The controller then takes this data, appends it in the correct order to a JavaScript object which holds all nodes and subsequently writes to the JSON file.
-	\begin{figure}
-		\includegraphics[width=450px]{UpdatedDataStruct}
-		\caption{Updated Data Structure}
-	\end{figure}
+	
 
 \section{Problems and Solutions: Winter Midterm }
 	\subsection{Winter Break}
@@ -482,6 +484,7 @@ function getAllLinksFromFileStructRecursive(FileStructID) {
 
 \pagebreak
 \section{Winter Midterm Retrospective}
+\small{
 	\begin{center}
 	\begin{singlespace}
 		\begin{tabular}{ |  p{0.25\linewidth}  |  p{0.25\linewidth}  | p{0.25\linewidth} | p{0.25\linewidth} |}
@@ -572,7 +575,7 @@ function getAllLinksFromFileStructRecursive(FileStructID) {
 		\end{tabular}
 		\end{singlespace}
 	\end{center}
-
+}
 \pagebreak
 \bibliographystyle{IEEEtran}
 \bibliography{progress-report-team38}
