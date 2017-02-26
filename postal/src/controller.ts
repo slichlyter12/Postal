@@ -29,6 +29,8 @@ export class Controller {
     }
 
     public buildDataStructure(){
+        this.nodeidCounter = 0;
+        this.linkidCounter = 0;
         var FileStructs = this.buildFileStructs();
         var ErrorStructs = this.buildErrorStructs();
         this.writeJSON(FileStructs, ErrorStructs);      

@@ -7,7 +7,7 @@ var LinkManager = require('./LinkManager.js');
 //Globals
 
 // create manager arrays
-var DFS = []; // Data File Structure
+var DFS; // Data File Structure
 var DLM; // Directory Link Manager
 var SLM; // SubContainer Link Manager
 var FLM; // File Link Manager
@@ -29,13 +29,11 @@ function Init() {
         }
         var DataStruct = JSON.parse(data);
         DFS = DataStruct.FileData.FileStructs;
-        //alert("about to run main");
         Main();
     });
 };
 
 function Main() {
-
     // fill Directory Link Manager
     fillDLM();
 
@@ -54,7 +52,6 @@ function Main() {
     } catch(err){
         alert("Error:"+ err);
     }
-
     //alert("created DataSet");
     edges = new vis.DataSet(edgesArray);
     var container = document.getElementById('mynetwork');
@@ -253,10 +250,11 @@ function fillInitialEdges() {
 // TODO: determin size
 function addNodeToNodeArray(id) {
     var struct = DFS[id];
+    //alert("type: " + struct.type);
     var varColor = PickColor(struct.type);
     var varSize = 12 + (6 * (struct.links.length));
     nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10, color: ('rgb(232, 232, 232)')}, color: varColor, shape: 'dot'});
-    ////alert("added node: " + nodesArray[(nodesArray.length-1)].id);
+    //alert("added node: " + nodesArray[(nodesArray.length-1)].id);
     return;
 }
 

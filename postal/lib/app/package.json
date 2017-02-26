@@ -11,7 +11,8 @@
   "devDependencies": {
     "electron": "^1.4.1"    
   },
-  "dependencies": { 
+  "dependencies": {    
+    "electron": "^1.4.14",
     "process-bridge": "^0.3.6"
   },
   "author": "Winkleer",

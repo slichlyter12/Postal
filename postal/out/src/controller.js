@@ -1,4 +1,5 @@
 'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
 const vscode = require("vscode");
 const path = require("path");
 const parser_1 = require("./parser");
@@ -20,6 +21,8 @@ class Controller {
         }
     }
     buildDataStructure() {
+        this.nodeidCounter = 0;
+        this.linkidCounter = 0;
         var FileStructs = this.buildFileStructs();
         var ErrorStructs = this.buildErrorStructs();
         this.writeJSON(FileStructs, ErrorStructs);
