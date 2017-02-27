@@ -9,6 +9,8 @@ Expect new releases often within the following months of release.
 Our final goal of the project is to allow users to easily tune the visualization of their project through the use of the grammars.json file.
 We also plan to add functionality to display user-defined errors within the visualization window.
 
+![File Map Example](/images/postalLogo.png "File Map Example")
+
 ## Features
 
 ### Current Features:
