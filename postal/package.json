@@ -14,6 +14,7 @@
         "onCommand:extension.parse",
         "onCommand:extension.error"
     ],
+    "icon": "./images/postalLogo.png",
     "main": "./out/src/extension",
     "controllerMain": "./lib/controller",
     "contributes": {
