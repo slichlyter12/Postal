@@ -9,7 +9,7 @@ Expect new releases often within the following months of release.
 Our final goal of the project is to allow users to easily tune the visualization of their project through the use of the grammars.json file.
 We also plan to add functionality to display user-defined errors within the visualization window.
 
-![File Map Example](/images/postalLogo.png "File Map Example")
+![File Map Example](/images/filemap.png "File Map Example")
 
 ## Features
 
@@ -51,7 +51,7 @@ You may need to run `npm install` in the following directories provided they exi
 ## Release Notes
 
 ### 0.1.3
-* It now works if you run it more than once!
+* Fixed bug causing the file map to not appear after its first run
 
 ### 0.1.2
 * Fixed installation errors
