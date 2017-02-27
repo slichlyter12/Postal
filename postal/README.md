@@ -48,6 +48,10 @@ You may need to run `npm install` in the following directories provided they exi
 
 ## Release Notes
 
+### 0.1.3
+* It now works if you run it more than once!
+### 0.1.2
+* Fixed installation errors
 ### 0.1.0
 * Initial Release (have fun!)
 
