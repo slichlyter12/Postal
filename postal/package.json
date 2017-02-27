@@ -10,6 +10,22 @@
     "categories": [
         "Other"
     ],
+    "keywords": [
+        "postal",
+        "file",
+        "map",
+        "visual",
+        "link",
+        "hyperlink",
+        "ui",
+        "gui",
+        "web",
+        "hierarchy",
+        "visualization",
+        "grammar",
+        "parser",
+        "scanner"
+    ],
     "activationEvents": [
         "onCommand:extension.parse",
         "onCommand:extension.error"

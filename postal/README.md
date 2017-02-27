@@ -11,6 +11,7 @@ We also plan to add functionality to display user-defined errors within the visu
 
 ![File Map Example](./images/fileMap.png "File Map Example")
 
+
 ## Features
 * Generate a visualization of the users project directory
 * Generate subcomponents of files based on parsing behaviors defined in the user editable file grammars.json
@@ -42,7 +43,7 @@ You may need to run `npm install` in Terminal or PowerShell in the following dir
 ## Release Notes
 
 ### 0.1.3
-* It now works if you run it more than once!
+* Fixed bug causing the file map to not appear after its first run
 
 ### 0.1.2
 * Fixed installation errors
