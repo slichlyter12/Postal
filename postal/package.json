@@ -7,6 +7,25 @@
     "engines": {
         "vscode": "^1.9.0"
     },
+    // here are our settings for postal, to get them in the extension you just
+    // need to to vscode.workspace.getConfiguration('Postal'); 
+    // Then I think we can access the settings as they are.
+    "configuration": {
+        "type": "object",
+        "title": "Postal Configuration",
+        "properties": {
+            "Postal.mapType":{
+                "type": ["hierarchal", "nodal"],
+                "default": "hierarchal",
+                "description": "The way that the Map displays the nodes."
+            },
+            "Postal.physics": {
+                "type": "boolean",
+                "default": "false",
+                "description": "Whether or not physics are applied to the map."
+            }
+        }
+    },
     "categories": [
         "Other"
     ],
