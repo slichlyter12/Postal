@@ -48,6 +48,7 @@ export class Parser {
         }
 
         // clean string for uri parameters
+        //FIXME: not good for php parameters
         var cleanedArray = [];
         for (var i = 0; i < link.length; i++) {
             if (link[i] != '?') {
@@ -69,17 +70,14 @@ export class Parser {
         return token;
     }
 
-    private taggedFound(line: string, lineNumber: number, rule: any, currentTokenID: number): any {
+    private taggedFound(match: any, lineNumber: number, rule: any, currentTokenID: number): any {
 
         // get title, if there is one
         var name = null;
-        if (rule.options.namedOption != null) {
-            name = line.match(rule.options.namedOption);
-        } 
-        if (name == null) {
-            name = rule.title;
+        if (match[1] != undefined) {
+            name = match[1];
         } else {
-            name = name[1];
+            name = rule.title;
         }
 
         // figure out parentToken
@@ -108,26 +106,43 @@ export class Parser {
         for (var j = 0; j < file.length; j++) {
             var line = file[j];
             lineNumber++;
+            var matchObjects = [];
             for (var i = 0; i < rules.length; i++) {
                 var regex = rules[i].regex;
-                var match = line.match(regex);
-                if (match != null) {
-                    switch(rules[i].type) {
-                        case "link":
-                            tokens.push(this.linkFound(match[1], lineNumber));
-                            break;
-                        case "tagged":
-                            tokens.push(this.taggedFound(line, lineNumber, rules[i], tokens.length));
-                            break;
-                        case "closingTag":
-                            this.stack.pop();
-                            break;
 
-                        default: break;
+                var match;
+                while ((match = regex.exec(line)) != null) {
+                    var matchObject = {
+                        match: match,
+                        rule: rules[i]
                     }
+
+                    matchObjects.push(matchObject);
                 }
             }
+
+            matchObjects.sort(this.matchCompare);
+
+            for (var i = 0; i < matchObjects.length; i++) {
+                switch(matchObjects[i].rule.type) {
+                    case "link":
+                        tokens.push(this.linkFound(matchObjects[i].match[1], lineNumber));
+                        break;
+                    case "tagged":
+                        tokens.push(this.taggedFound(matchObjects[i].match, lineNumber, matchObjects[i].rule, tokens.length));
+                        break;
+                    case "closingTag":
+                        this.stack.pop();
+                        break;
+
+                    default: break;
+                }
+            }
+
+            matchObjects = [];
         }
+
+
 
         return tokens;
     }
@@ -148,18 +163,28 @@ export class Parser {
                         var rule = grammars.grammars[i].rules[k];
                         switch (rule.type) {
                             case "link": 
-                                rule.regex = rule.options.link; 
+                                rule.regex = new RegExp(rule.options.link, "g"); 
                                 rules.push(rule);
                                 break;
                             case "tagged":
-                                rule.regex = rule.options.tagStart;
+                                var tagStart = rule.options.tagStart;
+                                var tagEnd = rule.options.tagEnd;
+                                var namedOption = "";
+                                if (rule.options.namedOption) {
+                                    namedOption = rule.options.namedOption;
+                                }
+
+                                // regex101: https://regex101.com/r/OKd7Hv/1
+                                var regex = new RegExp(tagStart + ".*?(?:" + namedOption + ")?" + tagEnd, "g");
+                                rule.regex = regex;
                                 rules.push(rule);
 
                                 // generate new rule for closing end
+                                regex = new RegExp(rule.options.closingTag, "g");
                                 var newRule = {
                                     title: rule.title + "closing tag",
                                     type: "closingTag",
-                                    regex: rule.options.closingTag
+                                    regex: regex
                                 }
                                 rules.push(newRule);
 
@@ -175,5 +200,15 @@ export class Parser {
         }
 
         return rules;
+    }
+
+    private matchCompare(a, b) {
+        if (a.match.index > b.match.index) {
+            return 1;
+        } else if (a.match.index < b.match.index) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
