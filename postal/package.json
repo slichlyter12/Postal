@@ -7,36 +7,6 @@
     "engines": {
         "vscode": "^1.9.0"
     },
-    // here are our settings for postal, to get them in the extension you just
-    // need to to vscode.workspace.getConfiguration('Postal'); 
-    // Then I think we can access the settings as they are.
-    "contributes": {
-        "configuration": {
-            "type": "object",
-            "title": "Postal Configuration",
-            "properties": {
-                "Postal.mapType":{
-                    "type": "string",
-                    "default": "hierachal",
-                    "description": "Way that the mapping is done: hierachal, nodal"
-                },
-                "Postal.physics": {
-                    "type": "boolean",
-                    "default": "false",
-                    "description": "Whether or not physics are applied to the map."
-                },
-                "Posatl.ignore": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "regex of file you you want to ignore"
-                    },
-                    "default": ["*.git"],
-                    "description": "An array of regex that you want the map to ignore"
-                }
-            }
-        }
-    },
     "categories": [
         "Other"
     ],
@@ -72,7 +42,35 @@
                 "command": "extension.error",
                 "title": "Error"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Postal Configuration",
+            "properties": {
+                "Postal.mapType":{
+                    "type": "string",
+                    "default": "hierachal",
+                    "description": "Way that the mapping is done: hierachal, nodal"
+                },
+                "Postal.physics": {
+                    "type": "boolean",
+                    "default": "false",
+                    "description": "Whether or not physics are applied to the map."
+                },
+                "Postal.ignore": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "regex of file you you want to ignore"
+                    },
+                    "default": [
+                            "*.git",
+                            "shit"
+                        ],
+                    "description": "An array of regex that you want the map to ignore"
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./;",
