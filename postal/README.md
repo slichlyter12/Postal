@@ -9,36 +9,28 @@ Expect new releases often within the following months of release.
 Our final goal of the project is to allow users to easily tune the visualization of their project through the use of the grammars.json file.
 We also plan to add functionality to display user-defined errors within the visualization window.
 
-![File Map Example](/images/filemap.png "File Map Example")
+![File Map Example](./images/fileMap.png "File Map Example")
+
 
 ## Features
-
-### Current Features:
 * Generate a visualization of the users project directory
 * Generate subcomponents of files based on parsing behaviors defined in the user editable file grammars.json
 * Current options include tagged projects (i.e. HTML) and links (hrefs within HTML)
 
-Notes: 
+###Notes: 
 * This is an early release of Postal (alpha build)
 * Several features are not yet complete and we expect buggy behavior 
 * (Use at your own risk, and/or frustration)
 * We're just a humble group of wannabe college programmers, all feed-back and critisism welcome!
 
 ## Requirements
-
-* browser-window    ^0.4.0 
-* child process     ^1.0.2
-* find              ^0.2.7 
-* cwd               ^0.10.0
-* electron          ^1.4.14
-* file-system       ^2.2.1
-* open              0.0.5
-* vis               ^4.17.0
+* [NodeJS](https://nodejs.org/en/) (Version 6.10.0 or higher)
 
 ## Installation
-You may need to run `npm install` in the following directories provided they exist. 
-* `$extensionDirectory/Postal/postal/`
-* `$extensionDirectory/Postal/postal/lib/app`
+You may need to run `npm install` in Terminal or PowerShell in the following directories:
+
+* `~/.vscode/extensions/postal-team.postal-$version/`
+* `~/.vscode/extensions/postal-team.postal-$version/lib/app`
 
 ## Usage
 * Launch Postal by running Postal in the command pallette, this will parse the project directory you have open in VSCode. This will also open a UI.

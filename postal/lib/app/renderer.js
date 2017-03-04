@@ -82,6 +82,8 @@ function Main() {
 
     // MARK: - Event Listeners
     network.on("doubleClick", nodeDoubleClick);
+    network.on("selectNode", nodeSelect);
+    network.on("deselectNode", nodeDeselect);
 }
 
 function fillDLM() {
@@ -199,9 +201,6 @@ function closeAllSubcontainersRecursive(FileStructID) {
                 alert("closing subcontainers error 2: " + err);
                 return;
             }
-
-            //timout(10);
-
             DFS[childNodeID].isEnabled = false;
         }
     } else {
@@ -254,7 +253,6 @@ function addNodeToNodeArray(id) {
     var varColor = PickColor(struct.type);
     var varSize = 12 + (6 * (struct.links.length));
     nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10, color: ('rgb(232, 232, 232)')}, color: varColor, shape: 'dot'});
-    //alert("added node: " + nodesArray[(nodesArray.length-1)].id);
     return;
 }
 
@@ -269,7 +267,7 @@ function turnOffAllFileLinks() {
                 return;
             }
 
-            FLM.setEnabled(fileLinks[i].id, false);
+            FLM.setEnabledByID(fileLinks[i].id, false);
         }
     }
 }
@@ -371,6 +369,57 @@ function nodeDoubleClick(params) {
     } else {
         return;
     }
+}
+
+function nodeSelect(params) {
+    params.event = "[original event]";
+    var clickedNodeID = params.nodes;
+    //check to see if file links are first disabled
+    turnOffAllFileLinks();
+    //enable links for only this node
+    for(var i = 0; i < DFS[clickedNodeID].links.length; i ++){
+        var fileLink = FLM.getLinkByID(DFS[clickedNodeID].links[i].id);
+        if(fileLink.isEnabled == false){
+            try {
+                edges.add({
+                    id: fileLink.id,
+                    to: fileLink.toFileStructid,
+                    from: fileLink.from,
+                    arrows: {
+                        to: { scaleFactor:0.3 }
+                    }, 
+                    color: { color: 'rgb(225, 52, 52)' }
+                });
+            } catch (err) {
+                alert("update links error: " + err);
+                return;
+            }
+            FLM.setEnabledByID(fileLink.id, true);
+        }
+    }
+
+}
+
+function nodeDeselect(params) {
+    params.event = "[original event]";
+    var clickedNodeID = params.nodes;
+    //Turn off ONLY the file links for the selected node
+    for(var i = 0; i < DFS[clickedNodeID].links.length; i ++){
+        var fileLink = FLM.getLinkByID(DFS[clickedNodeID].links[i].id);
+        if(fileLink.isEnabled == true){
+            try {
+                edges.remove({
+                    id: fileLink.id
+                });
+            } catch (err) {
+                alert("update links error: " + err);
+                return;
+            }
+            FLM.setEnabledByID(fileLink.id, false);
+        }
+    }
+    
+
 }
 
 Init();
