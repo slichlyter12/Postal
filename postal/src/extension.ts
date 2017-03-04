@@ -8,6 +8,8 @@ import { Controller } from './controller';
 
 var isWin = /^win/.test(process.platform);
 
+
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -26,6 +28,11 @@ export function activate(context: vscode.ExtensionContext) {
     
     // We can get rid of this stuff later. I am testing shtuff -Cramer
     let testing = vscode.commands.registerCommand('extension.error', () => {
+        const settings = vscode.workspace.getConfiguration('');
+        console.log("mapType: " + settings.get<string>("Postal.mapType"));
+        console.log("Physics: " + settings.get<boolean>("Postal.physics"));
+        console.log(settings.get<string[]>("Postal.ignore"));
+
     });
 
     // pushes the command to the interphase where the user will then be able to 

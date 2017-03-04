@@ -42,7 +42,35 @@
                 "command": "extension.error",
                 "title": "Error"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Postal Configuration",
+            "properties": {
+                "Postal.mapType":{
+                    "type": "string",
+                    "default": "hierachal",
+                    "description": "Way that the mapping is done: hierachal, nodal"
+                },
+                "Postal.physics": {
+                    "type": "boolean",
+                    "default": "false",
+                    "description": "Whether or not physics are applied to the map."
+                },
+                "Postal.ignore": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "regex of file you you want to ignore"
+                    },
+                    "default": [
+                            "*.git",
+                            "shit"
+                        ],
+                    "description": "An array of regex that you want the map to ignore"
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./;",
