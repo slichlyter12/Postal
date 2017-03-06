@@ -1,5 +1,6 @@
 'use strict';
 
+var electron = require('electron');
 var vis = require('vis');
 var fs = require('fs');
 var LinkManager = require('./LinkManager.js');
@@ -73,6 +74,7 @@ function Main() {
     };
 
     var network = new vis.Network(container, data, options);
+    
 
     // fill File Link Manager
     fillFLM();
@@ -84,6 +86,19 @@ function Main() {
     network.on("doubleClick", nodeDoubleClick);
     network.on("selectNode", nodeSelect);
     network.on("deselectNode", nodeDeselect);
+
+    //Close Window Event Listener
+  document.getElementById("close-window").addEventListener("click", function (e) {
+       var window = electron.remote.getCurrentWindow();
+       window.close();
+       
+  }); 
+  document.getElementById("min-window").addEventListener("click", function (e) {
+       var window = electron.remote.getCurrentWindow();
+       window.minimize();
+       
+  }); 
+    
 }
 
 function fillDLM() {
