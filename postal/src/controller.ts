@@ -1,12 +1,14 @@
 'use strict';
 
 import * as vscode from 'vscode';
+import { Uri } from 'vscode';
 import * as path from 'path';
 import { Parser } from './parser'
 import { spawn } from 'child_process'
 
+
 var nodefs = require('fs');
-var finder = require('find');     // this is where it breaks in the store. 
+var finder = require('find');     
 
 var isWin = /^win/.test(process.platform);
 
@@ -118,7 +120,6 @@ export class Controller {
 
         return id;
     }
-
 
     private buildFileStructs(){
         var FileStructs = [];
@@ -309,6 +310,37 @@ export class Controller {
             console.log("Electron Error: " + error);
         }
 
+    }
+
+    // this opens a file and jumps to the given line
+    public jumpToFilesLine(filename: string, lineNum: number) {
+         let uri = Uri.parse("file:" + filename);
+        vscode.workspace.openTextDocument(uri).then( doc => {
+            console.log(doc);
+            vscode.window.showTextDocument(doc).then( poo => {
+                this.jumpToLine(lineNum);
+            }); 
+        }, reason => {
+            console.log(reason);
+        });
+    }
+
+    // this opens a given file name
+    public fileToEditor(fileName: string) {
+        let uri = Uri.parse("file:" + fileName);
+        vscode.workspace.openTextDocument(uri).then( doc => {
+            console.log(doc);
+            vscode.window.showTextDocument(doc);
+        }, reason => {
+            console.log(reason);
+        });
+    }
+ 
+    // this move to a line on the currently open file. 
+    public jumpToLine(lineNum: number) {
+        let sel = new vscode.Selection(lineNum - 1, 0, lineNum - 1, 0);
+        vscode.window.activeTextEditor.selection = sel;
+        vscode.window.activeTextEditor.revealRange(sel, vscode.TextEditorRevealType.Default);
     }
 
 

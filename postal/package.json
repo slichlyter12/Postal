@@ -64,8 +64,7 @@
                         "description": "regex of file you you want to ignore"
                     },
                     "default": [
-                            "*.git",
-                            "shit"
+                            "*.git"
                         ],
                     "description": "An array of regex that you want the map to ignore"
                 }

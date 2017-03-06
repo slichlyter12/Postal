@@ -28,12 +28,17 @@ export function activate(context: vscode.ExtensionContext) {
     
     // We can get rid of this stuff later. I am testing shtuff -Cramer
     let testing = vscode.commands.registerCommand('extension.error', () => {
+        // controller.jumpToFilesLine("/Users/TheCmar7/Developer/kingfish/footer.php", 20);
         const settings = vscode.workspace.getConfiguration('');
         console.log("mapType: " + settings.get<string>("Postal.mapType"));
         console.log("Physics: " + settings.get<boolean>("Postal.physics"));
-        console.log(settings.get<string[]>("Postal.ignore"));
+        var ignore1 = settings.get<string[]>("Postal.ignore")[0];
+        //console.log(ignore1.);
+        //var re = new RegExp(ignore1);
+
 
     });
+
 
     // pushes the command to the interphase where the user will then be able to 
     // use them. 
