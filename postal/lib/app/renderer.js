@@ -6,6 +6,8 @@ var fs = require('fs');
 var LinkManager = require('./LinkManager.js');
 
 //Globals
+var physics = "off";
+var structure = "hierarchy";
 
 // create manager arrays
 var DFS; // Data File Structure
@@ -66,7 +68,7 @@ function Main() {
             hierarchical: {
                 direction: "UD",
                 sortMethod: "directed"
-            }
+            } 
         },
         physics: {
             enabled: false
@@ -98,7 +100,52 @@ function Main() {
        window.minimize();
        
   }); 
+
+  physicsBtn(network, options);
+  structureBtn(network, options);
     
+}
+
+function physicsBtn(network, options) {
+    document.getElementById("physics-btn").addEventListener("click", function (e) {
+       if(physics === "off"){
+           physics = "on";
+           this.innerHTML = "Physics: On";
+           alert("on");
+           options.physics.enabled = true;
+           network.setOptions(options);
+       }
+       else if(physics === "on") {
+           physics = "off";
+           this.innerHTML = "Physics: Off";
+           alert("off");
+           options.physics.enabled = false;
+           network.setOptions(options);
+       }
+       
+    }); 
+}
+
+function structureBtn(network, options) {
+    document.getElementById("structure-btn").addEventListener("click", function (e) {
+       if(structure === "hierarchy"){
+           structure = "web";
+           this.innerHTML = "Structure: Web";
+           alert("web");
+           options.layout.hierarchical.enabled = false;
+           network.setOptions(options);
+       }
+       else if(structure === "web") {
+           structure = "hierarchy";
+           this.innerHTML = "Structure: Hierarchy";
+           alert("hierarchy");
+           options.layout.hierarchical.enabled = true;
+           options.layout.hierarchical.direction = "UD";
+           options.layout.hierarchical.sortMethod = "directed";
+            network.setOptions(options);
+       }
+       
+    }); 
 }
 
 function fillDLM() {
