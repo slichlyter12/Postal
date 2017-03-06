@@ -90,7 +90,15 @@ function Main() {
     network.on("deselectNode", nodeDeselect);
 
     //Close Window Event Listener
-  document.getElementById("close-window").addEventListener("click", function (e) {
+    toolbarBtns();
+
+    physicsBtn(network, options);
+    structureBtn(network, options);
+    
+}
+
+function toolbarBtns(){
+    document.getElementById("close-window").addEventListener("click", function (e) {
        var window = electron.remote.getCurrentWindow();
        window.close();
        
@@ -100,10 +108,6 @@ function Main() {
        window.minimize();
        
   }); 
-
-  physicsBtn(network, options);
-  structureBtn(network, options);
-    
 }
 
 function physicsBtn(network, options) {
@@ -111,14 +115,14 @@ function physicsBtn(network, options) {
        if(physics === "off"){
            physics = "on";
            this.innerHTML = "Physics: On";
-           alert("on");
            options.physics.enabled = true;
+           options.physics.stabalization.enabled = true;
            network.setOptions(options);
        }
        else if(physics === "on") {
            physics = "off";
            this.innerHTML = "Physics: Off";
-           alert("off");
+           options.physics.stabalization.enabled = false;
            options.physics.enabled = false;
            network.setOptions(options);
        }
@@ -131,14 +135,12 @@ function structureBtn(network, options) {
        if(structure === "hierarchy"){
            structure = "web";
            this.innerHTML = "Structure: Web";
-           alert("web");
            options.layout.hierarchical.enabled = false;
            network.setOptions(options);
        }
        else if(structure === "web") {
            structure = "hierarchy";
            this.innerHTML = "Structure: Hierarchy";
-           alert("hierarchy");
            options.layout.hierarchical.enabled = true;
            options.layout.hierarchical.direction = "UD";
            options.layout.hierarchical.sortMethod = "directed";
