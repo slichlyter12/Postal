@@ -48,6 +48,7 @@ export class Parser {
         }
 
         // clean string for uri parameters
+        //FIXME: not good for php parameters
         var cleanedArray = [];
         for (var i = 0; i < link.length; i++) {
             if (link[i] != '?') {
@@ -69,17 +70,14 @@ export class Parser {
         return token;
     }
 
-    private taggedFound(line: string, lineNumber: number, rule: any, currentTokenID: number): any {
+    private taggedFound(match: any, lineNumber: number, rule: any, currentTokenID: number): any {
 
         // get title, if there is one
         var name = null;
-        if (rule.options.namedOption != null) {
-            name = line.match(rule.options.namedOption);
-        } 
-        if (name == null) {
-            name = rule.title;
+        if (match[1] != undefined) {
+            name = match[1];
         } else {
-            name = name[1];
+            name = rule.title;
         }
 
         // figure out parentToken
@@ -101,31 +99,79 @@ export class Parser {
         return token;
     }
 
+    private clikeFound(match: any, lineNumber: number, rule: any, currentTokenID: number): any {
+        //get title
+        var type = match[1];
+        var name = match[2];
+        name = type + " " + name;
+
+        // figure out parentToken
+        var parentToken = null;
+        if (this.stack != null && this.stack.length > 0) {
+            parentToken = this.stack[this.stack.length - 1];
+        }
+
+        var token = {
+            tokenType: "node",
+            type: rule.title,
+            value: name,
+            lineNumber: lineNumber,
+            parentToken: parentToken
+        }
+
+        this.stack.push(currentTokenID);
+
+        return token;
+    }
+
+    private getLineNumber(file: string, charIndex: number): number {
+        var lineNumber = 0;
+        for (var i = 0; i < charIndex; i++) {
+            if (file[i] == '\n') {
+                lineNumber++;
+            }
+        }
+
+        return lineNumber + 1;
+    }
+
     private getTokens(filepath: string, rules: any): any[] {
         var tokens = [];
-        var file = nodefs.readFileSync(filepath, 'utf-8').split('\n');
-        var lineNumber = 0;
-        for (var j = 0; j < file.length; j++) {
-            var line = file[j];
-            lineNumber++;
-            for (var i = 0; i < rules.length; i++) {
-                var regex = rules[i].regex;
-                var match = line.match(regex);
-                if (match != null) {
-                    switch(rules[i].type) {
-                        case "link":
-                            tokens.push(this.linkFound(match[1], lineNumber));
-                            break;
-                        case "tagged":
-                            tokens.push(this.taggedFound(line, lineNumber, rules[i], tokens.length));
-                            break;
-                        case "closingTag":
-                            this.stack.pop();
-                            break;
+        var file = nodefs.readFileSync(filepath, 'utf-8');
+        var matchObjects = [];
+        for (var i = 0; i < rules.length; i++) {
+            var regex = rules[i].regex;
 
-                        default: break;
-                    }
+            var match;
+            while ((match = regex.exec(file)) != null) {
+                var matchObject = {
+                    match: match,
+                    rule: rules[i]
                 }
+
+                matchObjects.push(matchObject);
+            }
+        }
+
+        matchObjects.sort(this.matchCompare);
+
+        for (var i = 0; i < matchObjects.length; i++) {
+            var lineNumber = this.getLineNumber(file, matchObjects[i].match.index);
+            switch(matchObjects[i].rule.type) {
+                case "link":
+                    tokens.push(this.linkFound(matchObjects[i].match[1], lineNumber));
+                    break;
+                case "tagged":
+                    tokens.push(this.taggedFound(matchObjects[i].match, lineNumber, matchObjects[i].rule, tokens.length));
+                    break;
+                case "close":
+                    this.stack.pop();
+                    break;
+                case "c-like":
+                    tokens.push(this.clikeFound(matchObjects[i].match, lineNumber, matchObjects[i].rule, tokens.length));
+                    break;
+
+                default: break;
             }
         }
 
@@ -148,18 +194,57 @@ export class Parser {
                         var rule = grammars.grammars[i].rules[k];
                         switch (rule.type) {
                             case "link": 
-                                rule.regex = rule.options.link; 
+                                rule.regex = new RegExp(rule.options.link, "g"); 
                                 rules.push(rule);
                                 break;
                             case "tagged":
-                                rule.regex = rule.options.tagStart;
+                                var tagStart = rule.options.tagStart;
+                                var tagEnd = rule.options.tagEnd;
+                                var namedOption = "";
+                                if (rule.options.namedOption) {
+                                    namedOption = rule.options.namedOption;
+                                }
+
+                                // regex101: https://regex101.com/r/OKd7Hv/1
+                                var regex = new RegExp(tagStart + ".*?(?:" + namedOption + ")?" + tagEnd, "g");
+                                rule.regex = regex;
                                 rules.push(rule);
 
                                 // generate new rule for closing end
+                                regex = new RegExp(rule.options.closingTag, "g");
                                 var newRule = {
-                                    title: rule.title + "closing tag",
-                                    type: "closingTag",
-                                    regex: rule.options.closingTag
+                                    title: rule.title + " closing tag",
+                                    type: "close",
+                                    regex: regex
+                                }
+                                rules.push(newRule);
+
+                                break;
+
+                            case "c-like":
+                                var openParameterChar = rule.options.openParameterChar;
+                                var closeParameterChar = rule.options.closeParameterChar;
+                                var openLogicChar = rule.options.openLogicChar;
+                                var returnType;
+                                var regex:RegExp;
+
+                                // regex101: https://regex101.com/r/Prlgcn/1
+                                if (rule.options.returnType != undefined && rule.options.returnType != null && rule.options.returnType != "") {
+                                    returnType = rule.options.returnType;
+                                    regex = new RegExp("(" + returnType + ")" + "\s*(\w*)\s*" + openParameterChar + ".+?" + closeParameterChar + "\s*" + openLogicChar, "g");
+                                } else {
+                                    regex = new RegExp("(\\w+)\\s+(\\w+)\\s*\\" + openParameterChar + ".+?\\" + closeParameterChar + "\\s*\\" + openLogicChar, "g");
+                                }
+
+                                rule.regex = regex;
+                                rules.push(rule);
+
+                                // generate new rule for closing end
+                                regex = new RegExp(rule.options.closeLogicChar, "g");
+                                var newRule = {
+                                    title: rule.title + " closing bracket",
+                                    type: "close",
+                                    regex: regex
                                 }
                                 rules.push(newRule);
 
@@ -175,5 +260,15 @@ export class Parser {
         }
 
         return rules;
+    }
+
+    private matchCompare(a, b) {
+        if (a.match.index > b.match.index) {
+            return 1;
+        } else if (a.match.index < b.match.index) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
