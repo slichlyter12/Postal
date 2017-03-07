@@ -20,6 +20,8 @@ var nodesArray = [];
 var edgesArray = [];
 var nodes;
 var edges;
+var data = {};
+
 
 
 function Init() {
@@ -40,6 +42,12 @@ function Main() {
     // fill Directory Link Manager
     fillDLM();
 
+    // fill File Link Manager
+    fillFLM();
+
+    // fill SubContainer Link Manager
+    fillSLM();
+
     // append enabled (is node visible in UI) to Data File Structure
     appendEnabledToDFS();
 
@@ -50,6 +58,9 @@ function Main() {
     fillInitialEdges();
 
 
+    
+
+
     try{
         nodes = new vis.DataSet(nodesArray);
     } catch(err){
@@ -58,7 +69,7 @@ function Main() {
     //alert("created DataSet");
     edges = new vis.DataSet(edgesArray);
     var container = document.getElementById('mynetwork');
-    var data = {
+    data = {
         nodes: nodes,
         edges: edges
     };
@@ -77,16 +88,12 @@ function Main() {
 
     var network = new vis.Network(container, data, options);
     
-    // fill File Link Manager
-    fillFLM();
-
-    // fill SubContainer Link Manager
-    fillSLM();
+    //cluster();
 
     // MARK: - Event Listeners
-    network.on("doubleClick", nodeDoubleClick);
-    network.on("selectNode", nodeSelect);
-    network.on("deselectNode", nodeDeselect);
+    //network.on("doubleClick", nodeDoubleClick);
+    //network.on("selectNode", nodeSelect);
+    //network.on("deselectNode", nodeDeselect);
 
     //Close Window Event Listener
     toolbarButtons();
@@ -96,60 +103,6 @@ function Main() {
     
 }
 
-function toolbarButtons(){
-    document.getElementById("close-window").addEventListener("click", function (e) {
-       var window = electron.remote.getCurrentWindow();
-       window.close();
-       
-  }); 
-  document.getElementById("min-window").addEventListener("click", function (e) {
-       var window = electron.remote.getCurrentWindow();
-       window.minimize();
-       
-  }); 
-}
-
-function physicsButton(network, options) {
-    document.getElementById("physics-btn").addEventListener("click", function (e) {
-       if(isPhysics){
-           isPhysics = false;
-           this.innerHTML = "Physics: Off";
-           options.physics.enabled = false;
-           //options.physics.stabalization.enabled = true;
-           network.setOptions(options);
-           network.redraw();
-       }
-       else {
-           isPhysics = true;
-           this.innerHTML = "Physics: On";
-           options.physics.enabled = true;
-           //options.physics.stabalization.enabled = true;
-           network.setOptions(options);
-           network.redraw();
-       }
-       
-    }); 
-}
-
-function structureButton(network, options) {
-    document.getElementById("structure-btn").addEventListener("click", function (e) {
-       if(structure === "hierarchy"){
-           structure = "web";
-           this.innerHTML = "Structure: Web";
-           options.layout.hierarchical.enabled = false;
-           network.setOptions(options);
-       }
-       else if(structure == "web") {
-           structure = "hierarchy";
-           this.innerHTML = "Structure: Hierarchy";
-           options.layout.hierarchical.enabled = true;
-           options.layout.hierarchical.direction = "UD";
-           options.layout.hierarchical.sortMethod = "directed";
-            network.setOptions(options);
-       }
-       
-    }); 
-}
 
 function fillDLM() {
     var links = [];
@@ -294,10 +247,10 @@ function fillSLM() {
 
 function fillInitialNodes() {
     for (var i = 0; i < DFS.length; i++) {
-        if (DFS[i].isSubContainer == false || DFS[i].type == "external") {
+        //if (DFS[i].isSubContainer == false || DFS[i].type == "external") {
             var nodeID = DFS[i].id;
             addNodeToNodeArray(nodeID);
-        }
+       //}
     }
 }
 
@@ -307,6 +260,24 @@ function fillInitialEdges() {
         var link = condensedLinks[i];
         edgesArray.push({id: link.id, to: link.toFileStructid, from: link.from, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)'}});
     }
+    condensedLinks = SLM.getCondensedLinks();
+    for (var i = 0; i < condensedLinks.length; i++) {
+        var link = condensedLinks[i];
+        edgesArray.push({id: link.id, to: link.toFileStructid, from: link.from, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)'}});
+    }
+}
+
+function cluster() {
+    network.setData(data);
+      var clusterOptionsByData = {
+          joinCondition:function(childOptions) {
+              return childOptions.cid == 1;
+          },
+          clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'database'}
+      };
+      network.cluster(clusterOptionsByData);
+
+
 }
 
 // TODO: remove magic numbers 
@@ -486,6 +457,78 @@ function nodeDeselect(params) {
     
 
 }
+
+
+
+  function clusterByCid() {
+      network.setData(data);
+      var clusterOptionsByData = {
+          joinCondition:function(childOptions) {
+              return childOptions.cid == 1;
+          },
+          clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'database'}
+      };
+      network.cluster(clusterOptionsByData);
+  }
+
+
+
+
+  function toolbarButtons(){
+    document.getElementById("close-window").addEventListener("click", function (e) {
+       var window = electron.remote.getCurrentWindow();
+       window.close();
+       
+  }); 
+  document.getElementById("min-window").addEventListener("click", function (e) {
+       var window = electron.remote.getCurrentWindow();
+       window.minimize();
+       
+  }); 
+}
+
+function physicsButton(network, options) {
+    document.getElementById("physics-btn").addEventListener("click", function (e) {
+       if(isPhysics){
+           isPhysics = false;
+           this.innerHTML = "Physics: Off";
+           options.physics.enabled = false;
+           //options.physics.stabalization.enabled = true;
+           network.setOptions(options);
+           network.redraw();
+       }
+       else {
+           isPhysics = true;
+           this.innerHTML = "Physics: On";
+           options.physics.enabled = true;
+           //options.physics.stabalization.enabled = true;
+           network.setOptions(options);
+           network.redraw();
+       }
+       
+    }); 
+}
+
+function structureButton(network, options) {
+    document.getElementById("structure-btn").addEventListener("click", function (e) {
+       if(structure === "hierarchy"){
+           structure = "web";
+           this.innerHTML = "Structure: Web";
+           options.layout.hierarchical.enabled = false;
+           network.setOptions(options);
+       }
+       else if(structure == "web") {
+           structure = "hierarchy";
+           this.innerHTML = "Structure: Hierarchy";
+           options.layout.hierarchical.enabled = true;
+           options.layout.hierarchical.direction = "UD";
+           options.layout.hierarchical.sortMethod = "directed";
+            network.setOptions(options);
+       }
+       
+    }); 
+}
+
 
 Init();
 
