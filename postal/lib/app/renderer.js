@@ -21,6 +21,7 @@ var edgesArray = [];
 var nodes;
 var edges;
 var data = {};
+var network;
 
 
 
@@ -86,9 +87,9 @@ function Main() {
         },
     };
 
-    var network = new vis.Network(container, data, options);
+    network = new vis.Network(container, data, options);
     
-    //cluster();
+    //clusterNodes(17);
 
     // MARK: - Event Listeners
     //network.on("doubleClick", nodeDoubleClick);
@@ -267,17 +268,25 @@ function fillInitialEdges() {
     }
 }
 
-function cluster() {
+function clusterNodes(clusterHeadid) {
     network.setData(data);
-      var clusterOptionsByData = {
-          joinCondition:function(childOptions) {
-              return childOptions.cid == 1;
-          },
-          clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'database'}
-      };
-      network.cluster(clusterOptionsByData);
-
-
+    var clusterOptionsByData = {
+        joinCondition:function(childOptions) {
+            if (childOptions.id == DFS[clusterHeadid].id){
+                return true;
+            }
+            if(DFS[clusterHeadid].subContainers.length != null){
+                for(var i = 0; i < DFS[clusterHeadid].subContainers.length; i++){
+                    if(childOptions.id == DFS[clusterHeadid].subContainers[i].toFileStructid){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        },
+        clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'database'}
+    };
+    network.cluster(clusterOptionsByData);
 }
 
 // TODO: remove magic numbers 
@@ -460,16 +469,7 @@ function nodeDeselect(params) {
 
 
 
-  function clusterByCid() {
-      network.setData(data);
-      var clusterOptionsByData = {
-          joinCondition:function(childOptions) {
-              return childOptions.cid == 1;
-          },
-          clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'database'}
-      };
-      network.cluster(clusterOptionsByData);
-  }
+
 
 
 
