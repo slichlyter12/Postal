@@ -6,7 +6,7 @@ var fs = require('fs');
 var LinkManager = require('./LinkManager.js');
 
 //Globals
-var physics = "off";
+var isPhysics = false;
 var structure = "hierarchy";
 
 // create manager arrays
@@ -77,7 +77,6 @@ function Main() {
 
     var network = new vis.Network(container, data, options);
     
-
     // fill File Link Manager
     fillFLM();
 
@@ -90,14 +89,14 @@ function Main() {
     network.on("deselectNode", nodeDeselect);
 
     //Close Window Event Listener
-    toolbarBtns();
+    toolbarButtons();
 
-    physicsBtn(network, options);
-    structureBtn(network, options);
+    physicsButton(network, options);
+    structureButton(network, options);
     
 }
 
-function toolbarBtns(){
+function toolbarButtons(){
     document.getElementById("close-window").addEventListener("click", function (e) {
        var window = electron.remote.getCurrentWindow();
        window.close();
@@ -110,27 +109,29 @@ function toolbarBtns(){
   }); 
 }
 
-function physicsBtn(network, options) {
+function physicsButton(network, options) {
     document.getElementById("physics-btn").addEventListener("click", function (e) {
-       if(physics === "off"){
-           physics = "on";
+       if(isPhysics){
+           isPhysics = false;
+           this.innerHTML = "Physics: Off";
+           options.physics.enabled = false;
+           //options.physics.stabalization.enabled = true;
+           network.setOptions(options);
+           network.redraw();
+       }
+       else {
+           isPhysics = true;
            this.innerHTML = "Physics: On";
            options.physics.enabled = true;
-           options.physics.stabalization.enabled = true;
+           //options.physics.stabalization.enabled = true;
            network.setOptions(options);
-       }
-       else if(physics === "on") {
-           physics = "off";
-           this.innerHTML = "Physics: Off";
-           options.physics.stabalization.enabled = false;
-           options.physics.enabled = false;
-           network.setOptions(options);
+           network.redraw();
        }
        
     }); 
 }
 
-function structureBtn(network, options) {
+function structureButton(network, options) {
     document.getElementById("structure-btn").addEventListener("click", function (e) {
        if(structure === "hierarchy"){
            structure = "web";
@@ -138,7 +139,7 @@ function structureBtn(network, options) {
            options.layout.hierarchical.enabled = false;
            network.setOptions(options);
        }
-       else if(structure === "web") {
+       else if(structure == "web") {
            structure = "hierarchy";
            this.innerHTML = "Structure: Hierarchy";
            options.layout.hierarchical.enabled = true;
