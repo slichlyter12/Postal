@@ -8,6 +8,7 @@ var LinkManager = require('./LinkManager.js');
 //Globals
 var isPhysics = false;
 var structure = "hierarchy";
+var iClusterCounter;
 
 // create manager arrays
 var DFS; // Data File Structure
@@ -58,10 +59,6 @@ function Main() {
     // fill edges
     fillInitialEdges();
 
-
-    
-
-
     try{
         nodes = new vis.DataSet(nodesArray);
     } catch(err){
@@ -88,13 +85,21 @@ function Main() {
     };
 
     network = new vis.Network(container, data, options);
-    
-    //clusterNodes(17);
+    iClusterCounter = DFS.length;
 
+    for(var i = 0; i < DFS.length; i++){
+        if(DFS[i].type != "dir" && DFS[i].isSubContainer == false){
+            buildClusters(i);
+        }
+    }
+
+
+    
     // MARK: - Event Listeners
-    //network.on("doubleClick", nodeDoubleClick);
+    network.on("doubleClick", nodeDoubleClick);
     //network.on("selectNode", nodeSelect);
     //network.on("deselectNode", nodeDeselect);
+    
 
     //Close Window Event Listener
     toolbarButtons();
@@ -103,6 +108,9 @@ function Main() {
     structureButton(network, options);
     
 }
+
+
+
 
 
 function fillDLM() {
@@ -267,26 +275,67 @@ function fillInitialEdges() {
         edgesArray.push({id: link.id, to: link.toFileStructid, from: link.from, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)'}});
     }
 }
+function buildClusters(nodeID){
+    //If it doesn't have children, return
+    if(DFS[nodeID].subContainers.length == null || DFS[nodeID].subContainers.length == 0){
+        return;
+    }
+    else{
+        for(var i = 0; i < DFS[nodeID].subContainers.length; i++){
+            buildClusters(DFS[nodeID].subContainers[i].toFileStructid);
+        }
+        clusterNodes(nodeID);
+    }
+}
 
-function clusterNodes(clusterHeadid) {
-    network.setData(data);
+
+function clusterNodes(clusterHeadID) {
+    var NodesForCluster = [];
+
+    var struct = DFS[clusterHeadID];
+    var varColor = PickColor(struct.type);
+    var varSize = 12 + (6 * (struct.links.length));
+
+
+    NodesForCluster.push(clusterHeadID);
+    if(DFS[clusterHeadID].subContainers.length != null && DFS[clusterHeadID].subContainers.length > 0){
+        for(var i = 0; i < DFS[clusterHeadID].subContainers.length; i++){
+            NodesForCluster.push(DFS[clusterHeadID].subContainers[i].toFileStructid)
+        }
+    }
     var clusterOptionsByData = {
         joinCondition:function(childOptions) {
-            if (childOptions.id == DFS[clusterHeadid].id){
-                return true;
-            }
-            if(DFS[clusterHeadid].subContainers.length != null){
-                for(var i = 0; i < DFS[clusterHeadid].subContainers.length; i++){
-                    if(childOptions.id == DFS[clusterHeadid].subContainers[i].toFileStructid){
-                        return true;
-                    }
+            for(var i = 0; i < NodesForCluster.length; i++){
+                var ContainerID = network.findNode(NodesForCluster[i]);
+                if(childOptions.id == ContainerID[0]){
+                    return true;
                 }
             }
             return false;
         },
-        clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'database'}
+        clusterNodeProperties: {id:iClusterCounter, label: struct.name, size: varSize, borderWidth:4, font:{size: 10, color: ('rgb(232, 232, 232)')}, color: varColor, shape: 'dot'}
+        
     };
     network.cluster(clusterOptionsByData);
+    iClusterCounter++;
+}
+
+
+
+
+
+function getNodeTreeRecursive(nodeID){
+    var NodeIDs = [];
+    NodeIDs.push(nodeID);
+    if(DFS[nodeID].subContainers.length == null && DFS[nodeID].subContainers.length == 0){
+        return NodeIDs;
+    }
+    else{
+        for(var i = 0; i < DFS[nodeID].subContainers.length; i++){
+            NodeIDs.push(getNodeTreeRecursive(DFS[nodeID].subContainers[i].toFileStructid));
+        }
+        return NodeIDs;
+    }
 }
 
 // TODO: remove magic numbers 
@@ -359,7 +408,16 @@ function nodeDoubleClick(params) {
     params.event = "[original event]";
     var clickedNodeID = params.nodes;
 
-    if (DFS[clickedNodeID].subContainers.length > 0) {
+     if (params.nodes.length == 1) {
+       if (network.isCluster(params.nodes[0]) == true) {
+           network.openCluster(params.nodes[0]);
+           return;
+        }
+    }
+    if (DFS[clickedNodeID].subContainers.length != null && DFS[clickedNodeID].subContainers.length > 0){
+            buildClusters(clickedNodeID);
+        }
+    /*if (DFS[clickedNodeID].subContainers.length > 0) {
         turnOffAllFileLinks();
         for (var i = 0; i < DFS[clickedNodeID].subContainers.length; i++) {
             var childNodeID = DFS[clickedNodeID].subContainers[i].toFileStructid;
@@ -413,7 +471,7 @@ function nodeDoubleClick(params) {
         }
     } else {
         return;
-    }
+    }*/
 }
 
 function nodeSelect(params) {
@@ -516,6 +574,7 @@ function structureButton(network, options) {
            this.innerHTML = "Structure: Web";
            options.layout.hierarchical.enabled = false;
            network.setOptions(options);
+           network.redraw();
        }
        else if(structure == "web") {
            structure = "hierarchy";
@@ -523,7 +582,8 @@ function structureButton(network, options) {
            options.layout.hierarchical.enabled = true;
            options.layout.hierarchical.direction = "UD";
            options.layout.hierarchical.sortMethod = "directed";
-            network.setOptions(options);
+           network.setOptions(options);
+           network.redraw();
        }
        
     }); 
