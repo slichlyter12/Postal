@@ -256,10 +256,8 @@ function fillSLM() {
 
 function fillInitialNodes() {
     for (var i = 0; i < DFS.length; i++) {
-        //if (DFS[i].isSubContainer == false || DFS[i].type == "external") {
             var nodeID = DFS[i].id;
             addNodeToNodeArray(nodeID);
-       //}
     }
 }
 
@@ -407,71 +405,30 @@ function PickColor(type){
 function nodeDoubleClick(params) {
     params.event = "[original event]";
     var clickedNodeID = params.nodes;
+    var focusID;
+    var options = {
+        // position: {x:positionx,y:positiony}, // this is not relevant when focusing on nodes
+        scale: 1.0,
+        animation: {
+            duration: 1000,
+            easingFunction: "easeInOutQuad"
+        }
+    };
+    
 
      if (params.nodes.length == 1) {
        if (network.isCluster(params.nodes[0]) == true) {
+           focusID = (network.getNodesInCluster(clickedNodeID)[0]);           
            network.openCluster(params.nodes[0]);
+           network.focus(focusID, options);
            return;
         }
     }
     if (DFS[clickedNodeID].subContainers.length != null && DFS[clickedNodeID].subContainers.length > 0){
             buildClusters(clickedNodeID);
+            focusID = (network.findNode(clickedNodeID)[0]);
+            network.focus(focusID, options);
         }
-    /*if (DFS[clickedNodeID].subContainers.length > 0) {
-        turnOffAllFileLinks();
-        for (var i = 0; i < DFS[clickedNodeID].subContainers.length; i++) {
-            var childNodeID = DFS[clickedNodeID].subContainers[i].toFileStructid;
-            if (DFS[childNodeID].isEnabled == true) {
-                // recursively close each child
-                
-                closeAllSubcontainersRecursive(clickedNodeID);
-            } else {
-                // expand child nodes underneath parent, render links
-                
-                // NODES
-                try {
-                    var varSize = 12 + (6 * (DFS[childNodeID].links.length));
-                    nodes.update({
-                        id: DFS[childNodeID].id,
-                        color: PickColor(DFS[childNodeID].type),
-                        label: DFS[childNodeID].name,
-                        size: varSize,
-                        font:{
-                            size: 10, 
-                            color: ('rgb(232, 232, 232)')
-                        }, 
-                        shape: 'dot'
-                    });
-                } catch (err) {
-                    alert("child node update error: " + err);
-                    return;
-                }
-
-                DFS[childNodeID].isEnabled = true;
-
-                // LINKS
-                updateFromFileLinks(childNodeID);
-                
-                var newSubContainerLink = SLM.getLinkByID(DFS[clickedNodeID].subContainers[i].id);
-                try {
-                    edges.add({
-                        id: newSubContainerLink.id,
-                        to: newSubContainerLink.toFileStructid,
-                        from: newSubContainerLink.from,
-                        arrows: {
-                            to: { scaleFactor:0.3 }
-                        }, 
-                        color: { color: 'rgb(52, 52, 52)' }
-                    });
-                } catch (err) {
-                    alert("update links error: " + err);
-                    return;
-                }             
-            }
-        }
-    } else {
-        return;
-    }*/
 }
 
 function nodeSelect(params) {
@@ -591,138 +548,3 @@ function structureButton(network, options) {
 
 
 Init();
-
-/*network.on("doubleClick", function (params) {
-    params.event = "[original event]";
-    if(lastZoomedNode == -1){
-        lastZoomedNode = params.nodes;
-        var i;
-        var tempIterator;
-        for(i = 0; i < fs.length; i++){
-        if(fs[i].id == params.nodes){
-            tempIterator = i;
-        }
-        else if(fs[i].level == 0 && fs[i].id != params.nodes){
-            try {
-                nodes.update({
-                    id: fs[i].id,
-                    color: 'rgb(220,220,220)'
-                });
-            }
-            catch (err) {
-                ////alert(err);
-            }
-        }
-        }
-        
-        i = tempIterator;
-        
-        for(var j = 0; j < fs[i].subFileStructs.length; j++){
-        for(var k = 0; k < fs.length; k++){
-            if(fs[k].id == fs[i].subFileStructs[j]){
-            
-            //add new node
-            try {
-                nodes.add({id: fs[k].id, label: fs[k].name, size: varSize, font:{size: 10}, color: '#FF0000', shape: 'dot'});
-            }
-            catch (err) {
-                //////alert(err)
-                continue;
-            }
-
-            //update edges
-            for(var l = 0; l < fs[k].links.length; l++){
-                for(var m = 0; m < edgesIDArray.length; m++){
-                if(edgesIDArray[m].to == fs[k].links[l] && edgesIDArray[m].from == fs[k].id){
-                    break;
-                }
-                }
-                try {
-                edges.add({
-                    id: edgesIDArray[m].id,
-                    from: fs[k].id,
-                    to: fs[k].links[l],
-                    arrows:{to:{scaleFactor:0.3}}, 
-                    color: 'rgb(200, 200, 200)'
-                });
-                //edgesIDArray.push({id: edgeIDCounter, to: fs[k].links[l], from: fs[k].id});
-                //edgeIDCounter++;
-                }
-                catch (err) {
-                ////alert(err);
-                }
-                
-                //remove edges from higher up level
-                for(var m = 0; m < edgesIDArray.length; m++){
-                if(edgesIDArray[m].to == fs[k].links[l] && edgesIDArray[m].from == fs[i].id){
-                    break;
-                }
-                }
-                try {
-                edges.remove({
-                    id: m
-                });
-                }
-                catch (err) {
-                ////alert(err);
-                }
-            }
-
-            }
-        }
-        }
-    }
-    else{
-        //zoom out
-        ////alert("smoll");
-        lastZoomedNode = -1;
-        
-        for(var i = 0; i < fs.length; i++){
-        if(fs[i].level != 0){
-            for(var j = 0; j < fs[i].links.length; j++){
-                for(var k = 0; k < edgesIDArray.length; k++){
-                if(edgesIDArray[k].to == fs[i].links[j] && edgesIDArray[k].from == fs[i].id){
-                    try {
-                    edges.remove({
-                        id: edgesIDArray[k].id
-                    });
-                    }
-                    catch (err) {
-                    ////alert(err);
-                    }
-                    break;
-                }
-                }
-                
-            }
-            
-            try {
-                nodes.remove({
-                    id: fs[i].id
-                });
-            }
-            catch (err) {
-                ////alert(err);
-            }
-
-        }
-        else{
-            varColor = PickColor(fs[i].type)
-            try {
-                nodes.update({
-                    id: fs[i].id,
-                    color: varColor
-                });
-            }
-            catch (err) {
-                ////alert(err);
-            }
-        }
-        }
-    
-    
-    }
-
-    
-    
-});*/
