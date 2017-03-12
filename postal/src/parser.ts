@@ -7,16 +7,7 @@ import * as path from 'path';
 var nodefs = require('fs');
 
 export class Parser {
-
-    /**
-     * parse
-     * Parameters:
-     *      filepath: filepath of the file to parse
-     * 
-     * Return:
-     *      tokens: an array of tokens
-     */
-
+    
     private stack: any = [];
 
     public parse(filepath: string): any {
@@ -181,79 +172,76 @@ export class Parser {
     private getRules(filetype: string): any {
 
         // get entire grammars file
-        var grammarsFile = nodefs.readFileSync(__dirname + "/../../lib/grammars.json", "utf8");
-        var grammars = JSON.parse(grammarsFile);
+        const settings = vscode.workspace.getConfiguration('Postal');
+        let grammars = settings.grammars;
 
         // pull out grammar rules for our filetype
         var rules = [];
-        for (var i = 0; i < grammars.grammars.length; i++) {
-            for (var j = 0; j < grammars.grammars[i].filetypes.length; j++) {
-                if (grammars.grammars[i].filetypes[j] == filetype) {
-                    for (var k = 0; k < grammars.grammars[i].rules.length; k++) {
-                        
-                        var rule = grammars.grammars[i].rules[k];
-                        switch (rule.type) {
-                            case "link": 
-                                rule.regex = new RegExp(rule.options.link, "g"); 
-                                rules.push(rule);
-                                break;
-                            case "tagged":
-                                var tagStart = rule.options.tagStart;
-                                var tagEnd = rule.options.tagEnd;
-                                var namedOption = "";
-                                if (rule.options.namedOption) {
-                                    namedOption = rule.options.namedOption;
-                                }
+        for (var i = 0; i < grammars.length; i++) {
+            for (var j = 0; j < grammars[i].filetypes.length; j++) {
+                if (grammars[i].filetypes[j] == filetype) {
+                    var rule = grammars[i];
+                    switch (rule.type) {
+                        case "link": 
+                            rule.regex = new RegExp(rule.options.link, "g"); 
+                            rules.push(rule);
+                            break;
+                        case "tagged":
+                            var tagStart = rule.options.tagStart;
+                            var tagEnd = rule.options.tagEnd;
+                            var namedOption = "";
+                            if (rule.options.namedOption) {
+                                namedOption = rule.options.namedOption;
+                            }
 
-                                // regex101: https://regex101.com/r/OKd7Hv/1
-                                var regex = new RegExp(tagStart + ".*?(?:" + namedOption + ")?" + tagEnd, "g");
-                                rule.regex = regex;
-                                rules.push(rule);
+                            // regex101: https://regex101.com/r/OKd7Hv/1
+                            var regex = new RegExp(tagStart + ".*?(?:" + namedOption + ")?" + tagEnd, "g");
+                            rule.regex = regex;
+                            rules.push(rule);
 
-                                // generate new rule for closing end
-                                regex = new RegExp(rule.options.closingTag, "g");
-                                var newRule = {
-                                    title: rule.title + " closing tag",
-                                    type: "close",
-                                    regex: regex
-                                }
-                                rules.push(newRule);
+                            // generate new rule for closing end
+                            regex = new RegExp(rule.options.closingTag, "g");
+                            var newRule = {
+                                title: rule.title + " closing tag",
+                                type: "close",
+                                regex: regex
+                            }
+                            rules.push(newRule);
 
-                                break;
+                            break;
 
-                            case "c-like":
-                                var openParameterChar = rule.options.openParameterChar;
-                                var closeParameterChar = rule.options.closeParameterChar;
-                                var openLogicChar = rule.options.openLogicChar;
-                                var returnType;
-                                var regex:RegExp;
+                        case "c-like":
+                            var openParameterChar = rule.options.openParameterChar;
+                            var closeParameterChar = rule.options.closeParameterChar;
+                            var openLogicChar = rule.options.openLogicChar;
+                            var returnType;
+                            var regex:RegExp;
 
-                                // regex101: https://regex101.com/r/Prlgcn/1
-                                if (rule.options.returnType != undefined && rule.options.returnType != null && rule.options.returnType != "") {
-                                    returnType = rule.options.returnType;
-                                    regex = new RegExp("(" + returnType + ")" + "\s*(\w*)\s*" + openParameterChar + ".+?" + closeParameterChar + "\s*" + openLogicChar, "g");
-                                } else {
-                                    regex = new RegExp("(\\w+)\\s+(\\w+)\\s*\\" + openParameterChar + ".+?\\" + closeParameterChar + "\\s*\\" + openLogicChar, "g");
-                                }
+                            // regex101: https://regex101.com/r/Prlgcn/1
+                            if (rule.options.returnType != undefined && rule.options.returnType != null && rule.options.returnType != "") {
+                                returnType = rule.options.returnType;
+                                regex = new RegExp("(" + returnType + ")" + "\s*(\w*)\s*" + openParameterChar + ".+?" + closeParameterChar + "\s*" + openLogicChar, "g");
+                            } else {
+                                regex = new RegExp("(\\w+)\\s+(\\w+)\\s*\\" + openParameterChar + ".+?\\" + closeParameterChar + "\\s*\\" + openLogicChar, "g");
+                            }
 
-                                rule.regex = regex;
-                                rules.push(rule);
+                            rule.regex = regex;
+                            rules.push(rule);
 
-                                // generate new rule for closing end
-                                regex = new RegExp(rule.options.closeLogicChar, "g");
-                                var newRule = {
-                                    title: rule.title + " closing bracket",
-                                    type: "close",
-                                    regex: regex
-                                }
-                                rules.push(newRule);
+                            // generate new rule for closing end
+                            regex = new RegExp(rule.options.closeLogicChar, "g");
+                            var newRule = {
+                                title: rule.title + " closing bracket",
+                                type: "close",
+                                regex: regex
+                            }
+                            rules.push(newRule);
 
-                                break;
+                            break;
 
-                            default: 
-                                console.log("Grammar Type Error");
-                                break;
-                        }
+                        default: 
+                            console.log("Grammar Type Error");
+                            break;
                     }
                 }
             }
