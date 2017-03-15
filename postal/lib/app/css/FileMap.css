@@ -17,7 +17,7 @@ body{
     -webkit-app-region: no-drag;
     -webkit-user-select: all;
     margin: 0px 0px 0px 0px;
-    padding-top: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
     
     width: 100%;
     height: 35px;
@@ -50,26 +50,28 @@ body{
 #physics-btn{
     -webkit-app-region: no-drag;
     -webkit-user-select: all;
-    margin: 0px 0px 0px 0px;
+    margin: 4px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
-    width: 150px;
-    height: 35px;
-    background-color: #373737;
+    width: 125px;
+    height: 24px;
+    background-color: #515151;
     border-color: white;
     border-width: 1px;
     color: white;
+    font-size: 12px;
 }
 #structure-btn{
     -webkit-app-region: no-drag;
     -webkit-user-select: all;
-    margin: 0px 0px 0px 0px;
+    margin: 4px 0px 0px 5px;
     padding: 0px 0px 0px 0px;
-    width: 150px;
-    height: 35px;
-    background-color: #373737;
+    width: 125px;
+    height: 24px;
+    background-color: #515151;
     border-color: white;
     border-width: 1px;
     color: white;
+    font-size: 12px;
 
 }
 /* If we have time for pretty buttons
