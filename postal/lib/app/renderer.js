@@ -1,10 +1,14 @@
 'use strict';
 
+var electron = require('electron');
 var vis = require('vis');
 var fs = require('fs');
 var LinkManager = require('./LinkManager.js');
 
 //Globals
+var isPhysics = false;
+var structure = "hierarchy";
+var iClusterCounter;
 
 // create manager arrays
 var DFS; // Data File Structure
@@ -17,6 +21,9 @@ var nodesArray = [];
 var edgesArray = [];
 var nodes;
 var edges;
+var data = {};
+var network;
+
 
 
 function Init() {
@@ -37,6 +44,12 @@ function Main() {
     // fill Directory Link Manager
     fillDLM();
 
+    // fill File Link Manager
+    fillFLM();
+
+    // fill SubContainer Link Manager
+    fillSLM();
+
     // append enabled (is node visible in UI) to Data File Structure
     appendEnabledToDFS();
 
@@ -46,7 +59,6 @@ function Main() {
     // fill edges
     fillInitialEdges();
 
-
     try{
         nodes = new vis.DataSet(nodesArray);
     } catch(err){
@@ -55,7 +67,7 @@ function Main() {
     //alert("created DataSet");
     edges = new vis.DataSet(edgesArray);
     var container = document.getElementById('mynetwork');
-    var data = {
+    data = {
         nodes: nodes,
         edges: edges
     };
@@ -65,26 +77,50 @@ function Main() {
             hierarchical: {
                 direction: "UD",
                 sortMethod: "directed"
-            }
+            } 
         },
         physics: {
             enabled: false
         },
     };
 
-    var network = new vis.Network(container, data, options);
+    network = new vis.Network(container, data, options);
+    iClusterCounter = DFS.length;
 
-    // fill File Link Manager
-    fillFLM();
+    for(var i = 0; i < DFS.length; i++){
+        if(DFS[i].type != "dir" && DFS[i].isSubContainer == false){
+            buildClusters(i);
+        }
+    }
 
-    // fill SubContainer Link Manager
-    fillSLM();
 
+    
     // MARK: - Event Listeners
     network.on("doubleClick", nodeDoubleClick);
-    network.on("selectNode", nodeSelect);
-    network.on("deselectNode", nodeDeselect);
+    //network.on("selectNode", nodeSelect);
+    //network.on("deselectNode", nodeDeselect);
+    
+    //Error Info Scroll
+    var nt = $('.newsticker').newsTicker({
+        row_height: 22,
+        max_rows: 4,
+        speed: 400,
+        direction: 'up',
+        duration: 3000,
+        autostart: 1,
+        pauseOnHover: 1
+    });
+    //Close Window Event Listener
+    toolbarButtons();
+
+    physicsButton(network, options);
+    structureButton(network, options);
+    
 }
+
+
+
+
 
 function fillDLM() {
     var links = [];
@@ -229,10 +265,8 @@ function fillSLM() {
 
 function fillInitialNodes() {
     for (var i = 0; i < DFS.length; i++) {
-        if (DFS[i].isSubContainer == false || DFS[i].type == "external") {
             var nodeID = DFS[i].id;
             addNodeToNodeArray(nodeID);
-        }
     }
 }
 
@@ -241,6 +275,73 @@ function fillInitialEdges() {
     for (var i = 0; i < condensedLinks.length; i++) {
         var link = condensedLinks[i];
         edgesArray.push({id: link.id, to: link.toFileStructid, from: link.from, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)'}});
+    }
+    condensedLinks = SLM.getCondensedLinks();
+    for (var i = 0; i < condensedLinks.length; i++) {
+        var link = condensedLinks[i];
+        edgesArray.push({id: link.id, to: link.toFileStructid, from: link.from, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)'}});
+    }
+}
+function buildClusters(nodeID){
+    //If it doesn't have children, return
+    if(DFS[nodeID].subContainers.length == null || DFS[nodeID].subContainers.length == 0){
+        return;
+    }
+    else{
+        for(var i = 0; i < DFS[nodeID].subContainers.length; i++){
+            buildClusters(DFS[nodeID].subContainers[i].toFileStructid);
+        }
+        clusterNodes(nodeID);
+    }
+}
+
+
+function clusterNodes(clusterHeadID) {
+    var NodesForCluster = [];
+
+    var struct = DFS[clusterHeadID];
+    var varColor = PickColor(struct.type);
+    var varSize = 12 + (6 * (struct.links.length));
+
+
+    NodesForCluster.push(clusterHeadID);
+    if(DFS[clusterHeadID].subContainers.length != null && DFS[clusterHeadID].subContainers.length > 0){
+        for(var i = 0; i < DFS[clusterHeadID].subContainers.length; i++){
+            NodesForCluster.push(DFS[clusterHeadID].subContainers[i].toFileStructid)
+        }
+    }
+    var clusterOptionsByData = {
+        joinCondition:function(childOptions) {
+            for(var i = 0; i < NodesForCluster.length; i++){
+                var ContainerID = network.findNode(NodesForCluster[i]);
+                if(childOptions.id == ContainerID[0]){
+                    return true;
+                }
+            }
+            return false;
+        },
+        clusterNodeProperties: {id:iClusterCounter, label: struct.name, size: varSize, borderWidth:4, font:{size: 10, color: ('rgb(232, 232, 232)')}, color: varColor, shape: 'dot'}
+        
+    };
+    network.cluster(clusterOptionsByData);
+    iClusterCounter++;
+}
+
+
+
+
+
+function getNodeTreeRecursive(nodeID){
+    var NodeIDs = [];
+    NodeIDs.push(nodeID);
+    if(DFS[nodeID].subContainers.length == null && DFS[nodeID].subContainers.length == 0){
+        return NodeIDs;
+    }
+    else{
+        for(var i = 0; i < DFS[nodeID].subContainers.length; i++){
+            NodeIDs.push(getNodeTreeRecursive(DFS[nodeID].subContainers[i].toFileStructid));
+        }
+        return NodeIDs;
     }
 }
 
@@ -313,62 +414,30 @@ function PickColor(type){
 function nodeDoubleClick(params) {
     params.event = "[original event]";
     var clickedNodeID = params.nodes;
-
-    if (DFS[clickedNodeID].subContainers.length > 0) {
-        turnOffAllFileLinks();
-        for (var i = 0; i < DFS[clickedNodeID].subContainers.length; i++) {
-            var childNodeID = DFS[clickedNodeID].subContainers[i].toFileStructid;
-            if (DFS[childNodeID].isEnabled == true) {
-                // recursively close each child
-                
-                closeAllSubcontainersRecursive(clickedNodeID);
-            } else {
-                // expand child nodes underneath parent, render links
-                
-                // NODES
-                try {
-                    var varSize = 12 + (6 * (DFS[childNodeID].links.length));
-                    nodes.update({
-                        id: DFS[childNodeID].id,
-                        color: PickColor(DFS[childNodeID].type),
-                        label: DFS[childNodeID].name,
-                        size: varSize,
-                        font:{
-                            size: 10, 
-                            color: ('rgb(232, 232, 232)')
-                        }, 
-                        shape: 'dot'
-                    });
-                } catch (err) {
-                    alert("child node update error: " + err);
-                    return;
-                }
-
-                DFS[childNodeID].isEnabled = true;
-
-                // LINKS
-                updateFromFileLinks(childNodeID);
-                
-                var newSubContainerLink = SLM.getLinkByID(DFS[clickedNodeID].subContainers[i].id);
-                try {
-                    edges.add({
-                        id: newSubContainerLink.id,
-                        to: newSubContainerLink.toFileStructid,
-                        from: newSubContainerLink.from,
-                        arrows: {
-                            to: { scaleFactor:0.3 }
-                        }, 
-                        color: { color: 'rgb(52, 52, 52)' }
-                    });
-                } catch (err) {
-                    alert("update links error: " + err);
-                    return;
-                }             
-            }
+    var focusID;
+    var options = {
+        // position: {x:positionx,y:positiony}, // this is not relevant when focusing on nodes
+        scale: 1.0,
+        animation: {
+            duration: 1000,
+            easingFunction: "easeInOutQuad"
         }
-    } else {
-        return;
+    };
+    
+
+     if (params.nodes.length == 1) {
+       if (network.isCluster(params.nodes[0]) == true) {
+           focusID = (network.getNodesInCluster(clickedNodeID)[0]);           
+           network.openCluster(params.nodes[0]);
+           network.focus(focusID, options);
+           return;
+        }
     }
+    if (DFS[clickedNodeID].subContainers.length != null && DFS[clickedNodeID].subContainers.length > 0){
+            buildClusters(clickedNodeID);
+            focusID = (network.findNode(clickedNodeID)[0]);
+            network.focus(focusID, options);
+        }
 }
 
 function nodeSelect(params) {
@@ -422,139 +491,69 @@ function nodeDeselect(params) {
 
 }
 
+
+
+
+
+
+
+
+  function toolbarButtons(){
+    document.getElementById("close-window").addEventListener("click", function (e) {
+       var window = electron.remote.getCurrentWindow();
+       window.close();
+       
+  }); 
+  document.getElementById("min-window").addEventListener("click", function (e) {
+       var window = electron.remote.getCurrentWindow();
+       window.minimize();
+       
+  }); 
+}
+
+function physicsButton(network, options) {
+    document.getElementById("physics-btn").addEventListener("click", function (e) {
+       if(isPhysics){
+           isPhysics = false;
+           this.innerHTML = "Physics: Off";
+           options.physics.enabled = false;
+           //options.physics.stabalization.enabled = true;
+           network.setOptions(options);
+           network.redraw();
+       }
+       else {
+           isPhysics = true;
+           this.innerHTML = "Physics: On";
+           options.physics.enabled = true;
+           //options.physics.stabalization.enabled = true;
+           network.setOptions(options);
+           network.redraw();
+       }
+       
+    }); 
+}
+
+function structureButton(network, options) {
+    document.getElementById("structure-btn").addEventListener("click", function (e) {
+       if(structure === "hierarchy"){
+           structure = "web";
+           this.innerHTML = "Structure: Web";
+           options.layout.hierarchical.enabled = false;
+           network.setOptions(options);
+           network.redraw();
+       }
+       else if(structure == "web") {
+           structure = "hierarchy";
+           this.innerHTML = "Structure: Hierarchy";
+           options.layout.hierarchical.enabled = true;
+           options.layout.hierarchical.direction = "UD";
+           options.layout.hierarchical.sortMethod = "directed";
+           network.setOptions(options);
+           network.redraw();
+       }
+       
+    }); 
+}
+
+
 Init();
-
-/*network.on("doubleClick", function (params) {
-    params.event = "[original event]";
-    if(lastZoomedNode == -1){
-        lastZoomedNode = params.nodes;
-        var i;
-        var tempIterator;
-        for(i = 0; i < fs.length; i++){
-        if(fs[i].id == params.nodes){
-            tempIterator = i;
-        }
-        else if(fs[i].level == 0 && fs[i].id != params.nodes){
-            try {
-                nodes.update({
-                    id: fs[i].id,
-                    color: 'rgb(220,220,220)'
-                });
-            }
-            catch (err) {
-                ////alert(err);
-            }
-        }
-        }
-        
-        i = tempIterator;
-        
-        for(var j = 0; j < fs[i].subFileStructs.length; j++){
-        for(var k = 0; k < fs.length; k++){
-            if(fs[k].id == fs[i].subFileStructs[j]){
-            
-            //add new node
-            try {
-                nodes.add({id: fs[k].id, label: fs[k].name, size: varSize, font:{size: 10}, color: '#FF0000', shape: 'dot'});
-            }
-            catch (err) {
-                //////alert(err)
-                continue;
-            }
-
-            //update edges
-            for(var l = 0; l < fs[k].links.length; l++){
-                for(var m = 0; m < edgesIDArray.length; m++){
-                if(edgesIDArray[m].to == fs[k].links[l] && edgesIDArray[m].from == fs[k].id){
-                    break;
-                }
-                }
-                try {
-                edges.add({
-                    id: edgesIDArray[m].id,
-                    from: fs[k].id,
-                    to: fs[k].links[l],
-                    arrows:{to:{scaleFactor:0.3}}, 
-                    color: 'rgb(200, 200, 200)'
-                });
-                //edgesIDArray.push({id: edgeIDCounter, to: fs[k].links[l], from: fs[k].id});
-                //edgeIDCounter++;
-                }
-                catch (err) {
-                ////alert(err);
-                }
-                
-                //remove edges from higher up level
-                for(var m = 0; m < edgesIDArray.length; m++){
-                if(edgesIDArray[m].to == fs[k].links[l] && edgesIDArray[m].from == fs[i].id){
-                    break;
-                }
-                }
-                try {
-                edges.remove({
-                    id: m
-                });
-                }
-                catch (err) {
-                ////alert(err);
-                }
-            }
-
-            }
-        }
-        }
-    }
-    else{
-        //zoom out
-        ////alert("smoll");
-        lastZoomedNode = -1;
-        
-        for(var i = 0; i < fs.length; i++){
-        if(fs[i].level != 0){
-            for(var j = 0; j < fs[i].links.length; j++){
-                for(var k = 0; k < edgesIDArray.length; k++){
-                if(edgesIDArray[k].to == fs[i].links[j] && edgesIDArray[k].from == fs[i].id){
-                    try {
-                    edges.remove({
-                        id: edgesIDArray[k].id
-                    });
-                    }
-                    catch (err) {
-                    ////alert(err);
-                    }
-                    break;
-                }
-                }
-                
-            }
-            
-            try {
-                nodes.remove({
-                    id: fs[i].id
-                });
-            }
-            catch (err) {
-                ////alert(err);
-            }
-
-        }
-        else{
-            varColor = PickColor(fs[i].type)
-            try {
-                nodes.update({
-                    id: fs[i].id,
-                    color: varColor
-                });
-            }
-            catch (err) {
-                ////alert(err);
-            }
-        }
-        }
-    
-    
-    }
-
-    
-    
-});*/

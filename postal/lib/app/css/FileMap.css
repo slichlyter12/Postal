@@ -6,27 +6,132 @@ body{
 
 #toolbar{
     -webkit-app-region: drag;
-    -webkit-user-select: none;
+    -webkit-user-select: all;
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
     width: 100%;
     height: 32px;
     background-color: #373737;
 }
-
-.toolbarCloseButton{
-    position: absolute;
-    right: 11px;
-    width: 17px;
-    height: 17px;
-    margin-top: 6px;
-    margin-bottom: 6px;
+#configuration{
     -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    
+    width: 100%;
+    height: 35px;
+    background-color: #1e1e1e;
 }
+#min-window{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 25px;
+    background-color: #373737;
+    border-color: #1e1e1e;
+    border-width: 1px;
+    color: white;
+    float: right;
+}
+#close-window{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 25px;
+    background-color: #373737;
+    border-color: #1e1e1e;
+    border-width: 1px;
+    color: white;
+    float: right;
+}
+#physics-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 4px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 125px;
+    height: 24px;
+    background-color: #515151;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+    font-size: 12px;
+}
+#structure-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 4px 0px 0px 5px;
+    padding: 0px 0px 0px 0px;
+    width: 125px;
+    height: 24px;
+    background-color: #515151;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+    font-size: 12px;
 
-.toolbarIcon {
-  position: absolute;
-  left: 6px;
-  margin-top: 6px;
-  margin-bottom: 6px;
 }
+/* If we have time for pretty buttons
+.onoffswitch {
+    position: absolute; width: 100px;
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all; 
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 1px solid #999999; border-radius: 0px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.1s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 25px; padding: 0; line-height: 21px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    background-clip: padding-box;
+}
+#physics.onoffswitch-inner:before {
+    content: "On";
+    padding-left: 0px;
+    text-align: center;
+    background-color: #34A7C1; color: #FFFFFF;
+}
+#physics.onoffswitch-inner:after {
+    content: "Off";
+    padding-right: 0px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: center;
+}
+#type.onoffswitch-inner:before {
+    content: "Hierarchy";
+    padding-left: 0px;
+    text-align: center;
+    background-color: #34A7C1; color: #FFFFFF;
+}
+#type.onoffswitch-inner:after {
+    content: "Web";
+    padding-right: 0px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: center;
+}
+.onoffswitch-switch {
+    display: block; width: 0px; margin: 0px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 55px;
+    transition: all 0.1s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+} */

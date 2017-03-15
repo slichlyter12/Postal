@@ -8,7 +8,8 @@ import { spawn } from 'child_process'
 
 
 var nodefs = require('fs');
-var finder = require('find');     
+var finder = require('find');  
+var globToRegExp = require('glob-to-regexp');   
 
 var isWin = /^win/.test(process.platform);
 
@@ -170,10 +171,42 @@ export class Controller {
             }
         }
 
+        const settings = vscode.workspace.getConfiguration('Postal');
+        let ignoreFiles = settings.ignore;
+        let parseFiletypes = this.getGrammarFiletypes();
+        var parseFiles = [];
+        for (var s = 0; s < FileStructs.length; s++) {
+            for (var t = 0; t < parseFiletypes.length; t++) {
+                for (var u = 0; u < ignoreFiles.length; u++) {
+                    try {
+                        let regexString = globToRegExp(ignoreFiles[u]);
+                        let regex = new RegExp(regexString);
+                        let path = FileStructs[s].path;
+                        let match = regex.exec(path);
+                        if (FileStructs[s].type == parseFiletypes[t] && match == null) {
+                            parseFiles.push(path);
+                        }
+                    } catch (error) {
+                        console.log("Getting files to parse error: " + error);
+                    }
+                }
+            }
+        }
+
         //Get All tokens from Parser
         var tokens = [];
         for(i= 0; i < filePaths.length; i++){
-            tokens.push(this.parser.parse(filePaths[i]));
+            var pushed = false;
+            for (j = 0; j < parseFiles.length; j++) {
+                if (filePaths[i] == parseFiles[j]) {
+                    tokens.push(this.parser.parse(filePaths[i]));
+                    pushed = true;
+                    break;
+                }
+            }
+            if (!pushed) {
+                tokens.push([]);
+            }
         }
 
         //Add all subContainer nodes to FileStructs
@@ -263,6 +296,21 @@ export class Controller {
 
 
         return FileStructs;
+    }
+
+    private getGrammarFiletypes() {
+        const settings = vscode.workspace.getConfiguration('Postal');
+        let grammars = settings.grammars;
+
+        var filetypes = [];
+        for (var i = 0; i < grammars.length; i++) {
+            for (var j = 0; j < grammars[i].filetypes.length; j++) {
+                let filetype = grammars[i].filetypes[j];
+                filetypes.push(filetype);
+            }
+        }
+
+        return Array.from(new Set(filetypes));
     }
 
     private buildErrorStructs(){
