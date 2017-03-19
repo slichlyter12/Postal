@@ -1,66 +1,40 @@
-{"FileData":
-    {
-        "FileStructs":
-       [ 
-           {
-                "id": 0,
-                "level": 0,
-                "name": "index.html",
-                "type": "html",
-
-                "subFileStructs":
-                    [
-                        {"FileStructid": 1},
-                        {"FileStructid": 2}
-                    ],
-
-                "links":
-                    [
-                        {"FileStructid": 7},
-                        {"FileStructid": 11}
-                    ],
-
-                "errors":
-                    [
-                        {"ErrorStructid": "e11"},
-                        {"ErrorStructid": "e16"},
-                        {"ErrorStructid": "e17"}
-                    ]
-            },
-
-            {
-                "id": 7,
-                "level": 0,
-                "name": "test.html",
-                "type": "html",
-
-                "subFileStructs":
-                    [
-                        {"FileStructid": 22},
-                        {"FileStructid": 42}
-                    ],
-
-                "links":
-                    [
-                        {"FileStructid": 0},
-                        {"FileStructid": 11}
-                    ],
-
-                "errors":
-                    [
-                        {"ErrorStructid": "e42"},
-                        {"ErrorStructid": "e43"},
-                        {"ErrorStructid": "e44"}
-                    ]
-            }
-       ],
-
-    
-        "ErrorStruct":
-        {
-            "id": "e11",
-            "lineNumber": 254,
-            "message": "You forgot a closing bracket: >"
-        }
-    }
-}
+        {  
+            "id":14,
+            "level":0,
+            "isSubContainer":false,
+            "name":"header.php",
+            "type":"php",
+            "path":"c:\\Users\\Eric\\Desktop\\kingfish-master\\header.php",
+            "links":[  
+               {  
+                  "id":42,
+                  "toFileStructid":56,
+                  "lineNumber":11
+               },
+               {  
+                  "id":43,
+                  "toFileStructid":57,
+                  "lineNumber":14
+               },
+               {  
+                  "id":44,
+                  "toFileStructid":58,
+                  "lineNumber":16
+               }
+            ],
+            "subContainers":[  
+               {  
+                  "id":20,
+                  "toFileStructid":39,
+                  "lineNumber":18
+               }
+            ],
+            "Notifications":[  
+                {
+                    "id":20,
+                    "Error Message": "Improper use of 'Hello World',
+                    "lineNumber":18,
+                    "charNum":2
+                }
+            ]
+        },
