@@ -375,6 +375,18 @@ function Click(params) {
     
     //Handle Edges
     if(params.edges.length > 0){
+        for(var i = 0; i < edgesArray.length; i++){
+            try {
+                network.clustering.updateEdge(edgesArray[i].id, 
+                    {
+                        label : ""
+                    }
+                );
+            }
+            catch(err){
+                alert("Edge update error: " + err);
+            }
+        }
         for(var i = 0; i < params.edges.length; i++){
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[i]);
             var link = SLM.getLinkByID(clickedEdgeID);
@@ -382,8 +394,6 @@ function Click(params) {
             if(link != null){
                 var newLabel = "Line Number: " + link.lineNumber;
             }
-            //var clusteredEdgeIDs = network.clustering.getClusteredEdges(clickedEdgeID);
-            //alert("selected edge: " + clusteredEdgeIDs);
             try {
                 network.clustering.updateEdge(clickedEdgeID, 
                     {
@@ -396,17 +406,6 @@ function Click(params) {
             }
         }
     }
-
-    /*var clickedEdgeID = params.edges[0];
-    try {
-        edges.update({
-            id: clickedEdgeID,
-            label: 'Hello'
-        });
-    }
-    catch(err){
-        alert("Edge update error: " + err);
-    }*/
 }
 
 
