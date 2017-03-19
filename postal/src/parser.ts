@@ -18,8 +18,11 @@ export class Parser {
         // get grammars
         var rules = this.getRules(filetype);
 
+        // strip comments
+        var content = this.stripComments(filepath);
+
         // get tokens
-        var tokens = this.getTokens(filepath, rules);
+        var tokens = this.getTokens(content, rules);
 
         this.stack = [];
 
@@ -126,9 +129,63 @@ export class Parser {
         return lineNumber + 1;
     }
 
-    private getTokens(filepath: string, rules: any): any[] {
+    private stripComments(filepath: string): string {
+        // get file contents
+        var content = nodefs.readFileSync(filepath, 'utf-8');
+
+        // get filetype
+        let filetype = this.getFiletype(filepath);
+
+        // get comment grammars
+        const settings = vscode.workspace.getConfiguration('Postal');
+        let grammars = settings.grammars;
+        var commentGrammars = [];
+        for (var i = 0; i < grammars.length; i++) {
+            if (grammars[i].type == "comment") {
+                for (var j = 0; j < grammars[i].filetypes.length; j++) {
+                    if (grammars[i].filetypes[j] == filetype) {
+                        commentGrammars.push(grammars[i]);
+                    }
+                }
+            }
+        }
+
+        for (var i = 0; i < commentGrammars.length; i++) {
+            let start = commentGrammars[i].options.start
+            let end = commentGrammars[i].options.end;
+            if (end != undefined) {
+                // block comment
+
+                let regexString = "(" + start + "([\\s\\S])*?" + end + ")";
+                let regex = new RegExp("(" + start + "([\\s\\S])*?" + end + ")");
+                var match = regex.exec(content);
+                
+                // build replacement block with same number of newlines to preserve linecounter
+                while (match != null) {
+                    let matchBlock = match[0];
+                    let newlineMatches = matchBlock.match(/\n/g);
+                    let numNewlines = newlineMatches.length;
+                    var replaceString = "";
+                    for (var k = 0; k < numNewlines; k++) {
+                        replaceString += "\n";
+                    }
+                    
+                    content = content.replace(regex, replaceString);
+                    match = regex.exec(content);
+                }
+            } else {
+                // single line comment
+                let startRegex = new RegExp("(" + start + ".*)");
+                content = content.replace(startRegex, "");
+            }
+        }
+
+        return content;
+    }
+
+    private getTokens(fileString: string, rules: any): any[] {
         var tokens = [];
-        var file = nodefs.readFileSync(filepath, 'utf-8');
+        var file = fileString;
         var matchObjects = [];
         for (var i = 0; i < rules.length; i++) {
             var regex = rules[i].regex;
@@ -237,6 +294,9 @@ export class Parser {
                             }
                             rules.push(newRule);
 
+                            break;
+
+                        case "comment":
                             break;
 
                         default: 
