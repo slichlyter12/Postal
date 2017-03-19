@@ -74,64 +74,83 @@ body{
     font-size: 12px;
 
 }
-/* If we have time for pretty buttons
-.onoffswitch {
-    position: absolute; width: 100px;
+#error-container{
     -webkit-app-region: no-drag;
-    -webkit-user-select: all; 
+    -webkit-user-select: all;
 }
-.onoffswitch-checkbox {
-    display: none;
+#error-window-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 5px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 20px;
+    height: 25px;
+    right: 0px;
+    float: right;
+    background-color: #515151;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
 }
-.onoffswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: 1px solid #999999; border-radius: 0px;
+#error-window-btn.on{
+    position: absolute;
+    float: none;
+    right: 500px;
 }
-.onoffswitch-inner {
-    display: block; width: 200%; margin-left: -100%;
-    transition: margin 0.1s ease-in 0s;
+#slideout {
+  -webkit-app-region: no-drag; 
+  -webkit-user-select: all;
+  background: #cccccc;
+  color: #333;
+  position: fixed;
+  top: 33px;
+  right: -520px;
+  width: 500px;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  z-index: 10;
 }
-.onoffswitch-inner:before, .onoffswitch-inner:after {
-    display: block; float: left; width: 50%; height: 25px; padding: 0; line-height: 21px;
-    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
-    box-sizing: border-box;
-    border: 1px solid transparent;
-    background-clip: padding-box;
+#slideout.on {
+  right: 0;
 }
-#physics.onoffswitch-inner:before {
-    content: "On";
-    padding-left: 0px;
-    text-align: center;
-    background-color: #34A7C1; color: #FFFFFF;
+#error-list-title{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
 }
-#physics.onoffswitch-inner:after {
-    content: "Off";
-    padding-right: 0px;
-    background-color: #EEEEEE; color: #999999;
-    text-align: center;
+.newsticker{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
+    font-size: 16px;
 }
-#type.onoffswitch-inner:before {
-    content: "Hierarchy";
-    padding-left: 0px;
-    text-align: center;
-    background-color: #34A7C1; color: #FFFFFF;
+#prev-error-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 50px;
+    height: 20px;
+    float: right;
+    background-color: #515151;
+    color: white;
+    border-color: #cccccc;
+    border-width: 1px;
+    font-size: 15px;
 }
-#type.onoffswitch-inner:after {
-    content: "Web";
-    padding-right: 0px;
-    background-color: #EEEEEE; color: #999999;
-    text-align: center;
+#next-error-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 50px;
+    height: 20px;
+    float: right;
+    background-color: #515151;
+    color: white;
+    border-color: #cccccc;
+    border-width: 1px;
+    font-size: 15px;
 }
-.onoffswitch-switch {
-    display: block; width: 0px; margin: 0px;
-    background: #FFFFFF;
-    position: absolute; top: 0; bottom: 0;
-    right: 55px;
-    transition: all 0.1s ease-in 0s; 
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-    margin-left: 0;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px; 
-} */

@@ -3,6 +3,24 @@
     "version": "0.1.0",
     "configurations": [
         {
+            "name": "Launch UI",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/lib/app/main.js",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}/lib/app/",
+            "runtimeExecutable": "${workspaceRoot}/lib/app/node_modules/.bin/electron.cmd",
+            "runtimeArgs": [
+                ".",
+                "--enable-logging"
+            ],
+            "env": {},
+            "externalConsole": false,
+            "sourceMaps": false,
+            "outDir": null
+        },
+        {
             "name": "Launch Extension",
             "type": "extensionHost",
             "request": "launch",

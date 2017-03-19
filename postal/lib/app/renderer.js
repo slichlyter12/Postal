@@ -9,6 +9,7 @@ var LinkManager = require('./LinkManager.js');
 var isPhysics = false;
 var structure = "hierarchy";
 var iClusterCounter;
+var arrowDir = "left";
 
 // create manager arrays
 var DFS; // Data File Structure
@@ -96,21 +97,47 @@ function Main() {
 
     
     // MARK: - Event Listeners
-    network.on("doubleClick", nodeDoubleClick);
-    network.on("selectEdge", edgeSelect);
+    network.on("oncontext", RightClick);
+    network.on("click", Click);
     //network.on("selectNode", nodeSelect);
     //network.on("deselectNode", nodeDeselect);
     
-    //Error Info Scroll
-    var nt = $('.newsticker').newsTicker({
-        row_height: 22,
-        max_rows: 4,
-        speed: 400,
-        direction: 'up',
-        duration: 3000,
-        autostart: 1,
-        pauseOnHover: 1
+    document.getElementById("error-window-btn").addEventListener("click", function (e) {
+        $('#slideout').toggleClass('on');
+        $('#error-window-btn').toggleClass('on');
+        if(arrowDir == "left"){
+            arrowDir = "right";
+            this.innerHTML = "&#10095;";
+        }
+        else if(arrowDir == "right"){
+            arrowDir = "left";
+            this.innerHTML = "&#10094;";
+        }
+        
     });
+
+    
+
+    //Notification Info Scroll
+    var nt = $('.newsticker').newsTicker({
+        row_height: 18,
+        max_rows: 3,
+        speed: 300,
+        direction: 'down',
+        duration: 3000,
+        autostart: 0,
+        prevButton: $('#prev-error-btn'),
+        nextButton: $('#next-error-btn')
+    });
+/*
+    document.getElementById("prev-error-btn").addEventListener("click", function (e) {
+        nt.prevButton = $('#prev-error-btn');
+    });
+
+    document.getElementById("next-error-btn").addEventListener("click", function (e) {
+        nt.nextButton = $('#next-error-btn');
+    });
+*/
     //Close Window Event Listener
     toolbarButtons();
 
@@ -340,9 +367,10 @@ function PickColor(type){
 }
 
 // MARK: - Event Listeners
-function nodeDoubleClick(params) {
+function RightClick(params) {
     params.event = "[original event]";
-    var clickedNodeID = params.nodes;
+    
+    var clickedNodeID = network.getNodeAt(params.pointer.DOM);
     var focusID;
     var options = {
         // position: {x:positionx,y:positiony}, // this is not relevant when focusing on nodes
@@ -354,85 +382,58 @@ function nodeDoubleClick(params) {
     };
     
 
-     if (params.nodes.length == 1) {
-       if (network.isCluster(params.nodes[0]) == true) {
+    if (network.isCluster(clickedNodeID) == true) {
            focusID = (network.getNodesInCluster(clickedNodeID)[0]);           
-           network.openCluster(params.nodes[0]);
+           network.openCluster(clickedNodeID);
            network.focus(focusID, options);
            return;
-        }
     }
-    if (DFS[clickedNodeID].subContainers.length != null && DFS[clickedNodeID].subContainers.length > 0){
+    else if (DFS[clickedNodeID].subContainers.length != null && DFS[clickedNodeID].subContainers.length > 0){
             buildClusters(clickedNodeID);
             focusID = (network.findNode(clickedNodeID)[0]);
             network.focus(focusID, options);
-        }
-}
-
-function nodeSelect(params) {
-    params.event = "[original event]";
-    var clickedNodeID = params.nodes;
-    //check to see if file links are first disabled
-    turnOffAllFileLinks();
-    //enable links for only this node
-    for(var i = 0; i < DFS[clickedNodeID].links.length; i ++){
-        var fileLink = FLM.getLinkByID(DFS[clickedNodeID].links[i].id);
-        if(fileLink.isEnabled == false){
-            try {
-                edges.add({
-                    id: fileLink.id,
-                    to: fileLink.toFileStructid,
-                    from: fileLink.from,
-                    arrows: {
-                        to: { scaleFactor:0.3 }
-                    }, 
-                    color: { color: 'rgb(225, 52, 52)' }
-                });
-            } catch (err) {
-                alert("update links error: " + err);
-                return;
-            }
-            FLM.setEnabledByID(fileLink.id, true);
-        }
-    }
-
-}
-
-function nodeDeselect(params) {
-    params.event = "[original event]";
-    var clickedNodeID = params.nodes;
-    //Turn off ONLY the file links for the selected node
-    for(var i = 0; i < DFS[clickedNodeID].links.length; i ++){
-        var fileLink = FLM.getLinkByID(DFS[clickedNodeID].links[i].id);
-        if(fileLink.isEnabled == true){
-            try {
-                edges.remove({
-                    id: fileLink.id
-                });
-            } catch (err) {
-                alert("update links error: " + err);
-                return;
-            }
-            FLM.setEnabledByID(fileLink.id, false);
-        }
     }
 }
 
 
-function edgeSelect(params) {
-    var clickedEdgeID = params.edges[0];
-    try {
-        edges.update({
-            id: clickedEdgeID,
-            label: 'Hello'
-        });
-    }
-    catch(err){
-        alert("Edge update error: " + err);
-    }
+
+function Click(params) {
     
-
+    //Handle Edges
+    if(params.edges.length > 0){
+        for(var i = 0; i < edgesArray.length; i++){
+            try {
+                network.clustering.updateEdge(edgesArray[i].id, 
+                    {
+                        label : ""
+                    }
+                );
+            }
+            catch(err){
+                alert("Edge update error: " + err);
+            }
+        }
+        for(var i = 0; i < params.edges.length; i++){
+            var clickedEdgeID = network.clustering.getBaseEdge(params.edges[i]);
+            var link = SLM.getLinkByID(clickedEdgeID);
+            var newLabel = '';
+            if(link != null){
+                var newLabel = "Line Number: " + link.lineNumber;
+            }
+            try {
+                network.clustering.updateEdge(clickedEdgeID, 
+                    {
+                        label : newLabel
+                    }
+                );
+            }
+            catch(err){
+                alert("Edge update error: " + err);
+            }
+        }
+    }
 }
+
 
 
 

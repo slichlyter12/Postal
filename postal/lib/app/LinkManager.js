@@ -29,6 +29,9 @@ module.exports = class LinkManager {
     }
 
     getLinkByID(linkID) {
+        if(linkID >= this.randomAccessLinks.length){
+            return null;
+        }
         return this.randomAccessLinks[linkID];
     }
 
