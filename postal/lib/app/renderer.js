@@ -9,6 +9,7 @@ var LinkManager = require('./LinkManager.js');
 var isPhysics = false;
 var structure = "hierarchy";
 var iClusterCounter;
+var arrowDir = "left";
 
 // create manager arrays
 var DFS; // Data File Structure
@@ -101,16 +102,42 @@ function Main() {
     //network.on("selectNode", nodeSelect);
     //network.on("deselectNode", nodeDeselect);
     
-    //Error Info Scroll
-    var nt = $('.newsticker').newsTicker({
-        row_height: 22,
-        max_rows: 4,
-        speed: 400,
-        direction: 'up',
-        duration: 3000,
-        autostart: 1,
-        pauseOnHover: 1
+    document.getElementById("error-window-btn").addEventListener("click", function (e) {
+        $('#slideout').toggleClass('on');
+        $('#error-window-btn').toggleClass('on');
+        if(arrowDir == "left"){
+            arrowDir = "right";
+            this.innerHTML = "&#10095;";
+        }
+        else if(arrowDir == "right"){
+            arrowDir = "left";
+            this.innerHTML = "&#10094;";
+        }
+        
     });
+
+    
+
+    //Notification Info Scroll
+    var nt = $('.newsticker').newsTicker({
+        row_height: 18,
+        max_rows: 3,
+        speed: 300,
+        direction: 'down',
+        duration: 3000,
+        autostart: 0,
+        prevButton: $('#prev-error-btn'),
+        nextButton: $('#next-error-btn')
+    });
+/*
+    document.getElementById("prev-error-btn").addEventListener("click", function (e) {
+        nt.prevButton = $('#prev-error-btn');
+    });
+
+    document.getElementById("next-error-btn").addEventListener("click", function (e) {
+        nt.nextButton = $('#next-error-btn');
+    });
+*/
     //Close Window Event Listener
     toolbarButtons();
 
