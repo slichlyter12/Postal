@@ -95,7 +95,6 @@ function Main() {
     }
 
 
-    
     // MARK: - Event Listeners
     network.on("oncontext", RightClick);
     network.on("click", Click);
@@ -115,9 +114,6 @@ function Main() {
         }
         
     });
-
-    
-
     //Notification Info Scroll
     var nt = $('.newsticker').newsTicker({
         row_height: 18,
@@ -129,15 +125,7 @@ function Main() {
         prevButton: $('#prev-error-btn'),
         nextButton: $('#next-error-btn')
     });
-/*
-    document.getElementById("prev-error-btn").addEventListener("click", function (e) {
-        nt.prevButton = $('#prev-error-btn');
-    });
 
-    document.getElementById("next-error-btn").addEventListener("click", function (e) {
-        nt.nextButton = $('#next-error-btn');
-    });
-*/
     //Close Window Event Listener
     toolbarButtons();
 
