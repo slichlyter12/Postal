@@ -97,6 +97,7 @@ function Main() {
     
     // MARK: - Event Listeners
     network.on("doubleClick", nodeDoubleClick);
+    network.on("selectEdge", edgeSelect);
     //network.on("selectNode", nodeSelect);
     //network.on("deselectNode", nodeDeselect);
     
@@ -477,6 +478,20 @@ function nodeDeselect(params) {
             }
             FLM.setEnabledByID(fileLink.id, false);
         }
+    }
+}
+
+
+function edgeSelect(params) {
+    var clickedEdgeID = params.edges[0];
+    try {
+        edges.update({
+            id: clickedEdgeID,
+            label: 'Hello'
+        });
+    }
+    catch(err){
+        alert("Edge update error: " + err);
     }
     
 
