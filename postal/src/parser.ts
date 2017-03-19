@@ -164,10 +164,13 @@ export class Parser {
                 while (match != null) {
                     let matchBlock = match[0];
                     let newlineMatches = matchBlock.match(/\n/g);
-                    let numNewlines = newlineMatches.length;
+                    
                     var replaceString = "";
-                    for (var k = 0; k < numNewlines; k++) {
-                        replaceString += "\n";
+                    if (newlineMatches != null) {
+                        let numNewlines = newlineMatches.length;
+                        for (var k = 0; k < numNewlines; k++) {
+                            replaceString += "\n";
+                        }
                     }
                     
                     content = content.replace(regex, replaceString);
