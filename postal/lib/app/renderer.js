@@ -157,7 +157,7 @@ function fillFLM() {
     for (var i = 0; i < DFS.length; i++) {
         if (DFS[i].type != "dir" && DFS[i].isSubContainer == false) {
             links = DFS[i].links;
-            alert(links);
+            //alert(links);
             for (var j = 0; j < links.length; j++) {
                 links[j].isEnabled = false;
                 links[j].from = DFS[i].id;
