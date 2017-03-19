@@ -101,7 +101,16 @@ function Main() {
     //network.on("selectNode", nodeSelect);
     //network.on("deselectNode", nodeDeselect);
     
-
+    //Error Info Scroll
+    var nt = $('.newsticker').newsTicker({
+        row_height: 22,
+        max_rows: 4,
+        speed: 400,
+        direction: 'up',
+        duration: 3000,
+        autostart: 1,
+        pauseOnHover: 1
+    });
     //Close Window Event Listener
     toolbarButtons();
 
