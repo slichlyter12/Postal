@@ -130,6 +130,49 @@
               }
             },
             {
+              "title": "php line comments 1",
+              "type": "comment",
+              "filetypes": [
+                "php"
+              ],
+              "options": {
+                "start": "//"
+              }
+            },
+            {
+              "title": "php line comments 2",
+              "type": "comment",
+              "filetypes": [
+                "php"
+              ],
+              "options": {
+                "start": "#"
+              }
+            },
+            {
+              "title": "php block comments",
+              "type": "comment",
+              "filetypes": [
+                "php"
+              ],
+              "options": {
+                "start": "/\\*",
+                "end": "\\*/"
+              }
+            },
+            {
+              "title": "html block comments",
+              "type": "comment",
+              "filetypes": [
+                "php",
+                "html"
+              ],
+              "options": {
+                "start": "<!--",
+                "end": "-->"
+              }
+            },
+            {
               "title": "javascript requires",
               "type": "link",
               "filetypes": [
@@ -178,7 +221,6 @@
     "child_process": "^1.0.2",
     "file-system": "^2.2.1",
     "find": "0.2.7",
-    "glob-to-regexp": "^0.3.0",
     "open": "0.0.5",
     "vis": "^4.17.0"
   },
