@@ -133,8 +133,6 @@ export class Controller {
         const settings = vscode.workspace.getConfiguration('Postal');
         let ignoreFiles = settings.ignore;
 
-        console.log("Before: " + dirPaths.length);
-
         // remove ignored file paths from postal ignore
         var numRemoved = 0;
         for (var t = 0; t < filePaths.length; t++) {
