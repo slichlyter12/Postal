@@ -96,8 +96,8 @@ function Main() {
 
     
     // MARK: - Event Listeners
-    network.on("doubleClick", nodeDoubleClick);
-    network.on("selectEdge", edgeSelect);
+    network.on("oncontext", RightClick);
+    network.on("click", Click);
     //network.on("selectNode", nodeSelect);
     //network.on("deselectNode", nodeDeselect);
     
@@ -340,7 +340,7 @@ function PickColor(type){
 }
 
 // MARK: - Event Listeners
-function nodeDoubleClick(params) {
+function RightClick(params) {
     params.event = "[original event]";
     var clickedNodeID = params.nodes;
     var focusID;
@@ -369,58 +369,35 @@ function nodeDoubleClick(params) {
         }
 }
 
-function nodeSelect(params) {
-    params.event = "[original event]";
-    var clickedNodeID = params.nodes;
-    //check to see if file links are first disabled
-    turnOffAllFileLinks();
-    //enable links for only this node
-    for(var i = 0; i < DFS[clickedNodeID].links.length; i ++){
-        var fileLink = FLM.getLinkByID(DFS[clickedNodeID].links[i].id);
-        if(fileLink.isEnabled == false){
-            try {
-                edges.add({
-                    id: fileLink.id,
-                    to: fileLink.toFileStructid,
-                    from: fileLink.from,
-                    arrows: {
-                        to: { scaleFactor:0.3 }
-                    }, 
-                    color: { color: 'rgb(225, 52, 52)' }
-                });
-            } catch (err) {
-                alert("update links error: " + err);
-                return;
+
+
+function Click(params) {
+    
+    //Handle Edges
+    if(params.edges.length > 0){
+        for(var i = 0; i < params.edges.length; i++){
+            var clickedEdgeID = network.clustering.getBaseEdge(params.edges[i]);
+            var link = SLM.getLinkByID(clickedEdgeID);
+            var newLabel = '';
+            if(link != null){
+                var newLabel = "Line Number: " + link.lineNumber;
             }
-            FLM.setEnabledByID(fileLink.id, true);
+            //var clusteredEdgeIDs = network.clustering.getClusteredEdges(clickedEdgeID);
+            //alert("selected edge: " + clusteredEdgeIDs);
+            try {
+                network.clustering.updateEdge(clickedEdgeID, 
+                    {
+                        label : newLabel
+                    }
+                );
+            }
+            catch(err){
+                alert("Edge update error: " + err);
+            }
         }
     }
 
-}
-
-function nodeDeselect(params) {
-    params.event = "[original event]";
-    var clickedNodeID = params.nodes;
-    //Turn off ONLY the file links for the selected node
-    for(var i = 0; i < DFS[clickedNodeID].links.length; i ++){
-        var fileLink = FLM.getLinkByID(DFS[clickedNodeID].links[i].id);
-        if(fileLink.isEnabled == true){
-            try {
-                edges.remove({
-                    id: fileLink.id
-                });
-            } catch (err) {
-                alert("update links error: " + err);
-                return;
-            }
-            FLM.setEnabledByID(fileLink.id, false);
-        }
-    }
-}
-
-
-function edgeSelect(params) {
-    var clickedEdgeID = params.edges[0];
+    /*var clickedEdgeID = params.edges[0];
     try {
         edges.update({
             id: clickedEdgeID,
@@ -429,10 +406,9 @@ function edgeSelect(params) {
     }
     catch(err){
         alert("Edge update error: " + err);
-    }
-    
-
+    }*/
 }
+
 
 
 
