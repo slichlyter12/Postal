@@ -156,33 +156,32 @@
             }
           ]
         }
-
-    },
-    "scripts": {
-        "vscode:prepublish": "tsc -p ./;",
-        "compile": "tsc -watch -p ./",
-        "watch": "tsc -watch -p ./", 
-        "update-vscode": "node ./node_modules/vscode/bin/install",
-        "postinstall": "node ./node_modules/vscode/bin/install"
-    },
-    "devDependencies": {
-        "@types/mocha": "^2.2.32",
-        "@types/node": "^6.0.40",
-        "mocha": "^2.3.3",
-        "randexp": "^0.4.4",
-        "typescript": "^2.0.3",
-        "vscode": "^1.0.0"
-    },
-    "dependencies": {
-        "app": "^0.1.0",
-        "find": "0.2.7",
-        "browser-window": "^0.4.0",
-        "child_process": "^1.0.2",
-        "file-system": "^2.2.1",
-        "open": "0.0.5",
-        "vis": "^4.17.0"
-    },
-    "repository": "https://github.com/slichlyter12/Postal/tree/master/postal",
-    "license": "AGPL-3.0"
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./;",
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.32",
+    "@types/node": "^6.0.40",
+    "mocha": "^2.3.3",
+    "randexp": "^0.4.4",
+    "typescript": "^2.0.3",
+    "vscode": "^1.0.0"
+  },
+  "dependencies": {
+    "app": "^0.1.0",
+    "browser-window": "^0.4.0",
+    "child_process": "^1.0.2",
+    "file-system": "^2.2.1",
+    "find": "0.2.7",
+    "glob-to-regexp": "^0.3.0",
+    "open": "0.0.5",
+    "vis": "^4.17.0"
+  },
+  "repository": "https://github.com/slichlyter12/Postal/tree/master/postal",
+  "license": "AGPL-3.0"
 }
-
