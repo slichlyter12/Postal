@@ -156,7 +156,8 @@ function fillFLM() {
     var allLinks = [];
     for (var i = 0; i < DFS.length; i++) {
         if (DFS[i].type != "dir" && DFS[i].isSubContainer == false) {
-            links = getAllLinksFromFileStructRecursive(DFS[i].id);
+            links = DFS[i].links;
+            //alert(links);
             for (var j = 0; j < links.length; j++) {
                 links[j].isEnabled = false;
                 links[j].from = DFS[i].id;
@@ -171,79 +172,6 @@ function fillFLM() {
     FLM = new LinkManager(allLinks);
 }
 
-// Recursive function to get all links from this and children
-function getAllLinksFromFileStructRecursive(FileStructID) {
-    var links = [];
-
-    // check parent
-    if (DFS[FileStructID].links.length > 0) {
-        for (var i = 0; i < DFS[FileStructID].links.length; i++) {
-            var link = DFS[FileStructID].links[i];
-            links.push(link);
-        }
-    }
-
-    // check children
-    if (DFS[FileStructID].subContainers.length > 0) {
-        var childLinks = [];
-        for (var i = 0; i < DFS[FileStructID].subContainers.length; i++) {
-            var childFileStructID = DFS[DFS[FileStructID].subContainers[i].toFileStructid].id;
-            childLinks = getAllLinksFromFileStructRecursive(childFileStructID);
-
-            // push what we found to parents link list
-            for (var j = 0; j < childLinks.length; j++) {
-                links.push(childLinks[j]);
-            }
-
-        }
-    } 
-
-    return links;
-}
-
-function closeAllSubcontainersRecursive(FileStructID) {
-
-    if (DFS[FileStructID].subContainers.length > 0) {
-        if (DFS[FileStructID].isEnabled == false) {
-            return;
-        }
-        for (var i = 0; i < DFS[FileStructID].subContainers.length; i++) {
-            var childNodeID = DFS[FileStructID].subContainers[i].toFileStructid;
-            
-            closeAllSubcontainersRecursive(childNodeID);
-
-            // at a node that has active children
-            // remove links between children and parent
-            var subContainerLinkID = DFS[FileStructID].subContainers[i].id;
-            try {
-                edges.remove({
-                    id: subContainerLinkID
-                });
-            } catch (err) {
-                alert("closing subcontainers error: " + err);
-                return;
-            }
-            SLM.setEnabledByID(subContainerLinkID, false);
-
-            // update FLM 
-            updateFromFileLinks(FileStructID);
-
-            // remove children nodes
-            //alert("about to remove: " + childNodeID);
-            try {
-                nodes.remove({
-                    id: childNodeID
-                });
-            } catch (err) {
-                alert("closing subcontainers error 2: " + err);
-                return;
-            }
-            DFS[childNodeID].isEnabled = false;
-        }
-    } else {
-        return;
-    }
-}
 
 function fillSLM() {
     // loop backwards to avoid directories, will never have SubContainers
