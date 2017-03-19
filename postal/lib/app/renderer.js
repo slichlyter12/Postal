@@ -342,7 +342,8 @@ function PickColor(type){
 // MARK: - Event Listeners
 function RightClick(params) {
     params.event = "[original event]";
-    var clickedNodeID = params.nodes;
+    
+    var clickedNodeID = network.getNodeAt(params.pointer.DOM);
     var focusID;
     var options = {
         // position: {x:positionx,y:positiony}, // this is not relevant when focusing on nodes
@@ -354,19 +355,17 @@ function RightClick(params) {
     };
     
 
-     if (params.nodes.length == 1) {
-       if (network.isCluster(params.nodes[0]) == true) {
+    if (network.isCluster(clickedNodeID) == true) {
            focusID = (network.getNodesInCluster(clickedNodeID)[0]);           
-           network.openCluster(params.nodes[0]);
+           network.openCluster(clickedNodeID);
            network.focus(focusID, options);
            return;
-        }
     }
-    if (DFS[clickedNodeID].subContainers.length != null && DFS[clickedNodeID].subContainers.length > 0){
+    else if (DFS[clickedNodeID].subContainers.length != null && DFS[clickedNodeID].subContainers.length > 0){
             buildClusters(clickedNodeID);
             focusID = (network.findNode(clickedNodeID)[0]);
             network.focus(focusID, options);
-        }
+    }
 }
 
 
