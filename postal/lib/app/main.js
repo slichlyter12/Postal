@@ -10,7 +10,6 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
-
 const ipc = electron.ipcMain;
 
 // Keep a global reference of the window object, if you don't, the window will

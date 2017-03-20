@@ -9,7 +9,9 @@ import { spawn } from 'child_process'
 
 var nodefs = require('fs');
 var finder = require('find');  
-var globToRegExp = require('glob-to-regexp');   
+var globToRegExp = require('glob-to-regexp');  
+// Making a 'process bridge' 
+var ipc = require('node-ipc'); 
 
 var isWin = /^win/.test(process.platform);
 
@@ -354,6 +356,10 @@ export class Controller {
             delete spawn_env.ELECTRON_RUN_AS_NODE;
 
             var sp = spawn(command, ['.'], {cwd: cwd, env: spawn_env});
+
+            // starting the everntlistening server
+            this.startServer();
+
         } catch (error) {
             console.log("Electron Error: " + error);
         }
@@ -389,6 +395,37 @@ export class Controller {
         let sel = new vscode.Selection(lineNum - 1, 0, lineNum - 1, 0);
         vscode.window.activeTextEditor.selection = sel;
         vscode.window.activeTextEditor.revealRange(sel, vscode.TextEditorRevealType.Default);
+    }
+
+    // Theoretically starting the server to connect with Electron Client
+    public startServer() {
+        ipc.config.id   = 'world';
+        ipc.config.retry= 1500;
+    
+        ipc.serve(
+            function(){
+                ipc.server.on(
+                    'message',
+                    function(data,socket){
+                        ipc.log('got a message : ', data);
+                        ipc.server.emit(
+                            socket,
+                            'message',  //this can be anything you want so long as 
+                                        //your client knows. 
+                            data+' world!'
+                        );
+                    }
+                );
+                ipc.server.on(
+                    'socket.disconnected',
+                    function(socket, destroyedSocketID) {
+                        ipc.log('client ' + destroyedSocketID + ' has disconnected!');
+                    }
+                );
+            }
+        );
+    
+        ipc.server.start();
     }
 
 

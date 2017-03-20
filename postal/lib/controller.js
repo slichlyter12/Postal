@@ -1,5 +1,7 @@
 'use strict';
 
+const ipcClient = require('node-ipc') 
+
 var processBridge;
 
 function OpenUI(command, formatId) {
@@ -38,7 +40,8 @@ function OpenUI(command, formatId) {
     } 
     
     catch (error) {
-    console.error(error);
+      console.error(error);
     return;
   }
 }
+
