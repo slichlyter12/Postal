@@ -105,7 +105,7 @@ function Main() {
         $('#slideout').toggleClass('on');
         $('#error-window-btn').toggleClass('on');
         if(arrowDir == "left"){
-            arrowDir = "right";
+            arrowDir = "right"
             this.innerHTML = "&#10095;";
         }
         else if(arrowDir == "right"){
@@ -113,6 +113,9 @@ function Main() {
             this.innerHTML = "&#10094;";
         }
         
+    });
+    document.getElementById("error-window-btn").addEventListener("mousemove", function (e) {
+        document.getElementById("error-window-btn").title = "Show Error List";
     });
     //Notification Info Scroll
     var nt = $('.newsticker').newsTicker({
@@ -463,6 +466,10 @@ function physicsButton(network, options) {
        }
        
     }); 
+    document.getElementById("physics-btn").addEventListener("mousemove", function (e) {
+        document.getElementById("physics-btn").title = "Enable/disable physics for all nodes";
+    });
+    
 }
 
 function structureButton(network, options) {
@@ -485,6 +492,9 @@ function structureButton(network, options) {
        }
        
     }); 
+    document.getElementById("structure-btn").addEventListener("mousemove", function (e) {
+        document.getElementById("structure-btn").title = "Change the node structure";
+    });
 }
 
 

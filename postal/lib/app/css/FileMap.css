@@ -95,6 +95,7 @@ body{
     font-weight: bold;
     -webkit-transition-duration: 0.5s;
     transition-duration: 0.5s;
+    z-index: 10;
 }
 #error-window-btn.on{
     position: absolute;
