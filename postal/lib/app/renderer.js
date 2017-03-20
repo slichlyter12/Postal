@@ -173,7 +173,7 @@ function fillFLM() {
     var links = [];
     var allLinks = [];
     for (var i = 0; i < DFS.length; i++) {
-        if (DFS[i].type != "dir" && DFS[i].isSubContainer == false) {
+        if (DFS[i].type != "dir") {
             links = DFS[i].links;
             //alert(links);
             for (var j = 0; j < links.length; j++) {
@@ -227,6 +227,11 @@ function fillInitialEdges() {
     for (var i = 0; i < condensedLinks.length; i++) {
         var link = condensedLinks[i];
         edgesArray.push({id: link.id, to: link.toFileStructid, from: link.from, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)'}});
+    }
+    condensedLinks = FLM.getCondensedLinks();
+    for (var i = 0; i < condensedLinks.length; i++) {
+        var link = condensedLinks[i];
+        edgesArray.push({id: link.id, to: link.toFileStructid, from: link.from, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(255, 52, 52)'}});
     }
 }
 function buildClusters(nodeID){
@@ -422,6 +427,9 @@ function Click(params) {
                 alert("Edge update error: " + err);
             }
         }
+    }
+    if(params.nodes.length > 0){
+
     }
 }
 
