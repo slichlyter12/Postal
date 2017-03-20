@@ -9,7 +9,6 @@ import { spawn } from 'child_process'
 
 var nodefs = require('fs');
 var finder = require('find');  
-var globToRegExp = require('glob-to-regexp');  
 // Making a 'process bridge' 
 var ipc = require('node-ipc'); 
 
