@@ -13,6 +13,7 @@ var globToRegExp = require('glob-to-regexp');
 // Making a 'process bridge' 
 var ipc = require('node-ipc'); 
 
+
 var isWin = /^win/.test(process.platform);
 
 export class Controller {
@@ -130,6 +131,53 @@ export class Controller {
         var dirPaths = finder.dirSync(vscode.workspace.rootPath);
         var filePaths = finder.fileSync(vscode.workspace.rootPath);
 
+        var modifiedDirPaths = Array.from(dirPaths);
+        var modifiedFilePaths = Array.from(filePaths);
+
+        const settings = vscode.workspace.getConfiguration('Postal');
+        let ignoreFiles = settings.ignore;
+
+        // remove ignored file paths from postal ignore
+        var numRemoved = 0;
+        for (var t = 0; t < filePaths.length; t++) {
+            let path = filePaths[t];
+            for (var u = 0; u < ignoreFiles.length; u++) {
+                try {
+                    let regexString = "\/*\/" + ignoreFiles[u] + "\/*";
+                    let regex = new RegExp(regexString);
+                    let match = regex.exec(path);
+                    if (match != null) {
+                        modifiedFilePaths.splice(t - numRemoved, 1);
+                        numRemoved++;
+                    }
+                } catch (error) {
+                    console.log("Getting files to parse error: " + error);
+                }
+            }
+        }
+
+        // remove ignored directory paths from postal ignore
+        numRemoved = 0;
+        for (var t = 0; t < dirPaths.length; t++) {
+            let path = dirPaths[t];
+            for (var u = 0; u < ignoreFiles.length; u++) {
+                try {
+                    let regexString = "\/*\/" + ignoreFiles[u] + "\/*";
+                    let regex = new RegExp(regexString);
+                    let match = regex.exec(path);
+                    if (match != null) {
+                        modifiedDirPaths.splice(t - numRemoved, 1);
+                        numRemoved++;
+                    }
+                } catch (error) {
+                    console.log("Getting files to parse error: " + error);
+                }
+            }
+        }
+
+        dirPaths = Array.from(modifiedDirPaths);
+        filePaths = Array.from(modifiedFilePaths);
+
         var dirCount = dirPaths.length;
 
         //Build Directory Nodes
@@ -173,42 +221,10 @@ export class Controller {
             }
         }
 
-        const settings = vscode.workspace.getConfiguration('Postal');
-        let ignoreFiles = settings.ignore;
-        let parseFiletypes = this.getGrammarFiletypes();
-        var parseFiles = [];
-        for (var s = 0; s < FileStructs.length; s++) {
-            for (var t = 0; t < parseFiletypes.length; t++) {
-                for (var u = 0; u < ignoreFiles.length; u++) {
-                    try {
-                        let regexString = globToRegExp(ignoreFiles[u]);
-                        let regex = new RegExp(regexString);
-                        let path = FileStructs[s].path;
-                        let match = regex.exec(path);
-                        if (FileStructs[s].type == parseFiletypes[t] && match == null) {
-                            parseFiles.push(path);
-                        }
-                    } catch (error) {
-                        console.log("Getting files to parse error: " + error);
-                    }
-                }
-            }
-        }
-
         //Get All tokens from Parser
         var tokens = [];
         for(i= 0; i < filePaths.length; i++){
-            var pushed = false;
-            for (j = 0; j < parseFiles.length; j++) {
-                if (filePaths[i] == parseFiles[j]) {
-                    tokens.push(this.parser.parse(filePaths[i]));
-                    pushed = true;
-                    break;
-                }
-            }
-            if (!pushed) {
-                tokens.push([]);
-            }
+            tokens.push(this.parser.parse(filePaths[i]));
         }
 
         //Add all subContainer nodes to FileStructs
