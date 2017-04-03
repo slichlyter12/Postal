@@ -264,11 +264,11 @@ export class Controller {
                 else if(tokens[i][j].tokenType == "notification"){
                     var notificationContainer = {
                         id : this.notificationidCounter,
-                        errorMessage : tokens[i][j].value,
+                        message : tokens[i][j].value,
                         lineNumber : tokens[i][j].lineNumber
                     };
                     if(tokens[i][j].parentToken == undefined){
-                        FileStructs[i + dirCount].errors.push(notificationContainer);
+                        FileStructs[i + dirCount].notifications.push(notificationContainer);
                     }
                     else{
                          try {
@@ -276,7 +276,7 @@ export class Controller {
                         } catch (err) {
                             console.log(err);
                         }
-                        FileStructs[parentNodeid].errors.push(notificationContainer);
+                        FileStructs[parentNodeid].notifications.push(notificationContainer);
                     }
                 }
             }
