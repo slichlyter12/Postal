@@ -129,12 +129,14 @@ function Main() {
         nextButton: $('#prev-error-btn')
     });
 
+    // population notifications list
+    populateNotificationsList();
+
     //Close Window Event Listener
     toolbarButtons();
 
     physicsButton(network, options);
-    structureButton(network, options);
-    
+    structureButton(network, options);   
 }
 
 
@@ -433,7 +435,7 @@ function Click(params) {
     }
 }
 
-
+// MARK: END EVENT LISTENERS
 
 
 
@@ -503,6 +505,22 @@ function structureButton(network, options) {
     document.getElementById("structure-btn").addEventListener("mousemove", function (e) {
         document.getElementById("structure-btn").title = "Change the node structure";
     });
+}
+
+function populateNotificationsList() {
+    for (var i = 0; i < DFS.length; i++) {
+        if (DFS[i].notifications != undefined) {
+            for (var j = 0; j < DFS[i].notifications.length; j++) {
+                alert(JSON.stringify(DFS[i].notifications));
+                var message = DFS[i].notifications[j].message;
+                var lineNumber = DFS[i].notifications[j].lineNumber;
+
+                var htmlNode = document.createElement("LI");
+                htmlNode.innerHTML = "<span class='lineNumber'>" + lineNumber + "</span>: <span class='message'>" + message + "</span>";
+                document.getElementById('newsTickerList').appendChild(htmlNode);
+            }
+        }
+    }
 }
 
 

@@ -57,24 +57,5 @@
   <script src="js/jquery-3.1.1.min.js" ></script>
   <script src="js/jquery.newsTicker.min.js" ></script>
 
-  <script>
-    $(document).ready(function() {
-      // get filestructs:
-      var filestructs;
-      $.get("../../postal.json", function(data) {
-        filestructs = data;
-      });
-
-      // add notifications to newsticker
-      for (var i = 0; i < filestructs.length; i++) {
-        for (var j = 0; j < filestructs[i].notifications.length; j++) {
-          var lineNumber = filestructs[i].notifications[j].lineNumber;
-          var message = filestructs[i].notifications[j].message;
-          $(".newsticker").append("<li><span class='lineNumber'>" + lineNumber + "</span>: <span class='message'>" + message + "</span></li>");
-        }
-      }
-    });
-  </script>
-
 </body>
 </html>

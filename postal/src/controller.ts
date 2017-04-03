@@ -111,7 +111,7 @@ export class Controller {
             path: filepath,
             links: [],
             subContainers: [],
-            errors: []
+            notifications: []
         }
 
         FileStructs.push(FileStruct);
@@ -187,7 +187,7 @@ export class Controller {
                 path: dirPaths[i],
                 links: [],
                 subContainers: [],
-                errors: []
+                notifications: []
             });
             this.nodeidCounter++;
         }
@@ -203,7 +203,7 @@ export class Controller {
                 path: filePaths[j],
                 links: [],
                 subContainers: [],
-                errors: []
+                notifications: []
             });
             this.nodeidCounter++;
         }
@@ -238,7 +238,7 @@ export class Controller {
                         path: FileStructs[i + dirCount].path,
                         links: [],
                         subContainers: [],
-                        errors: []
+                        notifications: []
                     };
                    
                     FileStructs.push(FileStruct);
