@@ -125,8 +125,8 @@ function Main() {
         direction: 'down',
         duration: 3000,
         autostart: 0,
-        prevButton: $('#prev-error-btn'),
-        nextButton: $('#next-error-btn')
+        prevButton: $('#next-error-btn'),
+        nextButton: $('#prev-error-btn')
     });
 
     //Close Window Event Listener
@@ -392,7 +392,7 @@ function RightClick(params) {
 }
 
 
-
+// LEFT CLICK
 function Click(params) {
     
     //Handle Edges
