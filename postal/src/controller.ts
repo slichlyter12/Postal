@@ -261,6 +261,9 @@ export class Controller {
                     this.linkidCounter++;
 
                 }
+                else if(tokens[i][j].tokenType == "notification"){
+                    //TODO;
+                }
             }
         }
         //linking subcontainers together, add between file links
