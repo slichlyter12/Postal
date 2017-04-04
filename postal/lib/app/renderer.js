@@ -468,49 +468,39 @@ function Click(params) {
 
 
 function DoubleClick(params) {
-    console.log("!!doubleClick!!");
     var ID;
     var lineNumber;
     if (network.isCluster(params.nodes)) {
         var clusterNodes = network.getNodesInCluster(params.nodes);
-        //console.log(JSON.stringify(clusterNodes));
         ID = clusterNodes[0];
-        //console.log(JSON.stringify(ID));
-        console.log("this path: " + JSON.stringify(DFS[ID].path));
 
         if (DFS[ID].isSubContainer) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
             var link = SLM.getLinkByID(clickedEdgeID);
-            console.log(JSON.stringify(link.lineNumber));
             lineNumber = link.lineNumber;
         } else {
-            lineNumber = 0;
+            lineNumber = 1;
         }
 
     } else {
         ID = params.nodes;
-        //console.log(JSON.stringify(ID));
-        console.log(JSON.stringify(DFS[ID].path));
 
         if (DFS[ID].isSubContainer) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
             var link = SLM.getLinkByID(clickedEdgeID);
-            console.log(JSON.stringify(link.lineNumber));
             lineNumber = link.lineNumber;
         } else {
-            lineNumber = 0;
+            lineNumber = 1;
         }
 
     }
-    console.log(DFS[ID].type);
 
     if (DFS[ID].type != "dir") {
         var window = electron.remote.getCurrentWindow();
         window.blur(); 
-        console.log("!!sendMessageToVSCode!!");
         var path = (DFS[ID].path);
-        sendMessageToVSCode({ 'path': path, 'lineNumber': lineNumber });
-
+        var lineNumberString = String(lineNumber);
+        sendMessageToVSCode({ 'path': path, 'lineNumber': lineNumberString });
     } else {
         //do nothing if dir
     }

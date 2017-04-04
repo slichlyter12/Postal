@@ -434,9 +434,9 @@ export class Controller {
                  ipc.server.on(
                     'message',
                     function(data){
-                        console.log("This is what I got back:" + data.path + " and " + data.lineNumeber );
+                        console.log("This is what I got back:" + data.path + " and " + data.lineNumber );
                         var filename = data.path;
-                        var lineNum = parseInt(data.lineNumber) 
+                        var lineNum = data.lineNumber;
 
                         let uri = Uri.parse("file:" + filename);
                         vscode.workspace.openTextDocument(uri).then( doc => {
