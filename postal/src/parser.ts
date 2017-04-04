@@ -10,10 +10,15 @@ export class Parser {
     
     private stack: any = [];
 
+    private fileName: string;
+
     public parse(filepath: string): any {
 
         // get filetype
         var filetype = this.getFiletype(filepath);
+
+        //get file name
+        this.fileName = this.nameSlicer(filepath);
 
         // get grammars
         var rules = this.getRules(filetype);
@@ -32,6 +37,21 @@ export class Parser {
     private getFiletype(filepath: string): string {
         return filepath.slice(filepath.lastIndexOf(".") + 1);
     }
+
+
+    private nameSlicer(path){
+        var fileName;
+        var isWin = /^win/.test(process.platform);
+        if(isWin){
+            fileName = path.slice(path.lastIndexOf("\\")+1)
+        }
+        else{
+            fileName = path.slice(path.lastIndexOf("/")+1)
+        }
+
+        return fileName;
+    }
+
 
     private linkFound(link: string, lineNumber: number): any {
 
@@ -131,7 +151,7 @@ export class Parser {
         var token = {
             tokenType: "notification",
             type: rule.title,
-            value: notification,
+            value: this.fileName + ": " + notification,
             lineNumber: lineNumber,
             parentToken: parentToken
         }
