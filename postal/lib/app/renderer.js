@@ -401,6 +401,7 @@ function PickColor(type) {
 }
 
 // MARK: - Event Listeners
+
 function RightClick(params) {
     params.event = "[original event]";
 
@@ -514,10 +515,9 @@ function DoubleClick(params) {
     } else {
         //do nothing if dir
     }
-
-
-
 }
+
+// MARK: END EVENT LISTENERS
 
 function toolbarButtons() {
     document.getElementById("close-window").addEventListener("click", function(e) {
@@ -528,11 +528,6 @@ function toolbarButtons() {
     document.getElementById("min-window").addEventListener("click", function(e) {
         var window = electron.remote.getCurrentWindow();
         window.minimize();
-
-
-        // MARK: END EVENT LISTENERS
-
-
     });
 }
 
