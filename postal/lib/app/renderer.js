@@ -505,9 +505,11 @@ function DoubleClick(params) {
     console.log(DFS[ID].type);
 
     if (DFS[ID].type != "dir") {
+        var window = electron.remote.getCurrentWindow();
+        window.blur(); 
         console.log("!!sendMessageToVSCode!!");
         var path = (DFS[ID].path);
-        sendMessageToVSCode({ 'test': "test", 'path': path, 'lineNumber': lineNumber });
+        sendMessageToVSCode({ 'path': path, 'lineNumber': lineNumber });
 
     } else {
         //do nothing if dir
