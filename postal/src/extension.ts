@@ -7,7 +7,8 @@ import { spawn } from 'child_process';
 import { Controller } from './controller';
 
 var isWin = /^win/.test(process.platform);
-
+// Making a 'process bridge' 
+var ipc = require('node-ipc'); 
 
 
 // this method is called when your extension is activated
@@ -23,6 +24,8 @@ export function activate(context: vscode.ExtensionContext) {
 
         //NEW PARSER STUFF
         controller.buildDataStructure();
+
+        // Launch UI in electron
         controller.launchUI();
     });
     

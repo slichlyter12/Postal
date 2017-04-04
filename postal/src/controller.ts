@@ -12,7 +12,6 @@ var finder = require('find');
 // Making a 'process bridge' 
 var ipc = require('node-ipc'); 
 
-
 var isWin = /^win/.test(process.platform);
 
 export class Controller {
@@ -423,11 +422,12 @@ export class Controller {
                     'message',
                     function(data,socket){
                         ipc.log('got a message : ', data);
+                        console.log("This is what I got back:" + data);
                         ipc.server.emit(
                             socket,
                             'message',  //this can be anything you want so long as 
                                         //your client knows. 
-                            data+' world!'
+                            data + ' world!'
                         );
                     }
                 );
