@@ -99,6 +99,32 @@ function Main() {
         }
     }
 
+    var notificationsArray = buildNotificationsArray();
+
+    alert(JSON.stringify(notificationsArray));
+
+    network.on("afterDrawing", function (ctx) {
+      for(i = 0; i < notificationsArray.length; i++){
+        var nodeid = notificationsArray[i].nodeid;
+        var varSize = 12 + (6 * (DFS[nodeid].links.length));
+
+        var nodePosition = network.getPositions([nodeid]);
+
+        
+        ctx.fillStyle = '#FF0000';
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 1 + (varSize/40);
+        ctx.circle(nodePosition[nodeid].x + (varSize * 11 / 16), nodePosition[nodeid].y - (varSize * 11 / 16), 4 + (varSize/20));
+        ctx.fill();
+        ctx.stroke();
+      }
+    });
+
+
+
+
+
+
     // MARK: - Event Listeners
     network.on("oncontext", RightClick);
     network.on("click", Click);
@@ -280,6 +306,20 @@ function clusterNodes(clusterHeadID) {
     };
     network.cluster(clusterOptionsByData);
     iClusterCounter++;
+}
+
+
+function buildNotificationsArray(){
+    var notificationsArray = [];
+    for(var i = 0; i < DFS.length; i++){
+        if(DFS[i].notifications != undefined){
+            for(var j = 0; j < DFS[i].notifications.length; j++){
+                notificationsArray.push(DFS[i].notifications[j]);
+                notificationsArray[notificationsArray.length-1].nodeid = i;
+            }
+        }
+    }
+    return notificationsArray;
 }
 
 function getNodeTreeRecursive(nodeID) {
