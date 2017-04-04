@@ -32,8 +32,6 @@ var edges;
 var data = {};
 var network;
 
-
-
 function Init() {
     //alert("init");
     fs.readFile('./../../postal.json', 'utf8', function(err, data) {
@@ -110,16 +108,18 @@ function Main() {
     document.getElementById("error-window-btn").addEventListener("click", function(e) {
         $('#slideout').toggleClass('on');
         $('#error-window-btn').toggleClass('on');
+
         if (arrowDir == "left") {
-            arrowDir = "right";
+            arrowDir = "right"
             this.innerHTML = "&#10095;";
         } else if (arrowDir == "right") {
             arrowDir = "left";
             this.innerHTML = "&#10094;";
         }
-
     });
-
+    document.getElementById("error-window-btn").addEventListener("mousemove", function(e) {
+        document.getElementById("error-window-btn").title = "Show Error List";
+    });
     //Notification Info Scroll
     var nt = $('.newsticker').newsTicker({
         row_height: 18,
@@ -128,25 +128,22 @@ function Main() {
         direction: 'down',
         duration: 3000,
         autostart: 0,
-        prevButton: $('#prev-error-btn'),
-        nextButton: $('#next-error-btn')
-    });
-    /*
-        document.getElementById("prev-error-btn").addEventListener("click", function (e) {
-            nt.prevButton = $('#prev-error-btn');
-        });
 
-        document.getElementById("next-error-btn").addEventListener("click", function (e) {
-            nt.nextButton = $('#next-error-btn');
-        });
-    */
+        prevButton: $('#next-error-btn'),
+        nextButton: $('#prev-error-btn')
+    });
+
+    // population notifications list
+    populateNotificationsList();
+
     //Close Window Event Listener
     toolbarButtons();
 
     physicsButton(network, options);
-    structureButton(network, options);
 
+    structureButton(network, options);
 }
+
 
 function fillDLM() {
     var links = [];
@@ -393,7 +390,8 @@ function RightClick(params) {
 }
 
 
-// any left click 
+
+// LEFT CLICK
 function Click(params) {
 
     //Handle Edges
@@ -438,6 +436,9 @@ function toolbarButtons() {
     document.getElementById("min-window").addEventListener("click", function(e) {
         var window = electron.remote.getCurrentWindow();
         window.minimize();
+
+        // MARK: END EVENT LISTENERS
+
 
     });
 }
@@ -518,10 +519,72 @@ function sendMessageToVSCode(message) {
     ipc.of.world.emit(
         message
     )
+}
+
+function physicsButton(network, options) {
+    document.getElementById("physics-btn").addEventListener("click", function(e) {
+        if (isPhysics) {
+            isPhysics = false;
+            this.innerHTML = "Physics: Off";
+            options.physics.enabled = false;
+            //options.physics.stabalization.enabled = true;
+            network.setOptions(options);
+            network.redraw();
+        } else {
+            isPhysics = true;
+            this.innerHTML = "Physics: On";
+            options.physics.enabled = true;
+            //options.physics.stabalization.enabled = true;
+            network.setOptions(options);
+            network.redraw();
+        }
+
+    });
+    document.getElementById("physics-btn").addEventListener("mousemove", function(e) {
+        document.getElementById("physics-btn").title = "Enable/disable physics for all nodes";
+    });
 
 }
 
+function structureButton(network, options) {
+    document.getElementById("structure-btn").addEventListener("click", function(e) {
+        if (structure === "hierarchy") {
+            structure = "web";
+            this.innerHTML = "Structure: Web";
+            options.layout.hierarchical.enabled = false;
+            network.setOptions(options);
+            network.redraw();
+        } else if (structure == "web") {
+            structure = "hierarchy";
+            this.innerHTML = "Structure: Hierarchy";
+            options.layout.hierarchical.enabled = true;
+            options.layout.hierarchical.direction = "UD";
+            options.layout.hierarchical.sortMethod = "directed";
+            network.setOptions(options);
+            network.redraw();
+        }
 
+    });
+    document.getElementById("structure-btn").addEventListener("mousemove", function(e) {
+        document.getElementById("structure-btn").title = "Change the node structure";
+    });
+}
+
+function populateNotificationsList() {
+    for (var i = 0; i < DFS.length; i++) {
+        if (DFS[i].notifications != undefined) {
+            for (var j = 0; j < DFS[i].notifications.length; j++) {
+                alert(JSON.stringify(DFS[i].notifications));
+                var message = DFS[i].notifications[j].message;
+                var lineNumber = DFS[i].notifications[j].lineNumber;
+
+                var htmlNode = document.createElement("LI");
+                htmlNode.innerHTML = "<span class='lineNumber'>" + lineNumber + "</span>: <span class='message'>" + message + "</span>";
+                document.getElementById('newsTickerList').appendChild(htmlNode);
+            }
+        }
+    }
+}
 
 
 Init();

@@ -117,7 +117,31 @@ export class Parser {
 
         return token;
     }
+   
+    private notificationFound(match: any, lineNumber: number, rule: any, currentTokenID: number): any {
+        //get title
+        var notification = match[1];
 
+        // figure out parentToken
+        var parentToken = null;
+        if (this.stack != null && this.stack.length > 0) {
+            parentToken = this.stack[this.stack.length - 1];
+        }
+
+        var token = {
+            tokenType: "notification",
+            type: rule.title,
+            value: notification,
+            lineNumber: lineNumber,
+            parentToken: parentToken
+        }
+
+        this.stack.push(currentTokenID);
+
+        return token;
+    }
+
+    
     private getLineNumber(file: string, charIndex: number): number {
         var lineNumber = 0;
         for (var i = 0; i < charIndex; i++) {
@@ -221,6 +245,9 @@ export class Parser {
                 case "c-like":
                     tokens.push(this.clikeFound(matchObjects[i].match, lineNumber, matchObjects[i].rule, tokens.length));
                     break;
+                case "notification":
+                    tokens.push(this.notificationFound(matchObjects[i].match, lineNumber, matchObjects[i].rule, tokens.length));
+                    break;
 
                 default: break;
             }
@@ -298,7 +325,11 @@ export class Parser {
                             rules.push(newRule);
 
                             break;
-
+                        
+                        case "notification":
+                            rule.regex = new RegExp(rule.options.notify, "g"); 
+                            rules.push(rule);
+                            break;
                         case "comment":
                             break;
 

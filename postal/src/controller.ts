@@ -19,6 +19,7 @@ export class Controller {
     //parser: Parser;
     nodeidCounter: number = 0;
     linkidCounter: number = 0;
+    notificationidCounter: number = 0;
     parser: Parser;
     slash: string;
     constructor() {
@@ -36,8 +37,7 @@ export class Controller {
         this.nodeidCounter = 0;
         this.linkidCounter = 0;
         var FileStructs = this.buildFileStructs();
-        var ErrorStructs = this.buildErrorStructs();
-        this.writeJSON(FileStructs, ErrorStructs);      
+        this.writeJSON(FileStructs);      
     }
 
     private levelCounter(path){
@@ -113,7 +113,7 @@ export class Controller {
             path: filepath,
             links: [],
             subContainers: [],
-            errors: []
+            notifications: []
         }
 
         FileStructs.push(FileStruct);
@@ -189,7 +189,7 @@ export class Controller {
                 path: dirPaths[i],
                 links: [],
                 subContainers: [],
-                errors: []
+                notifications: []
             });
             this.nodeidCounter++;
         }
@@ -205,7 +205,7 @@ export class Controller {
                 path: filePaths[j],
                 links: [],
                 subContainers: [],
-                errors: []
+                notifications: []
             });
             this.nodeidCounter++;
         }
@@ -240,7 +240,7 @@ export class Controller {
                         path: FileStructs[i + dirCount].path,
                         links: [],
                         subContainers: [],
-                        errors: []
+                        notifications: []
                     };
                    
                     FileStructs.push(FileStruct);
@@ -263,6 +263,24 @@ export class Controller {
                     this.linkidCounter++;
 
                 }
+                else if(tokens[i][j].tokenType == "notification"){
+                    var notificationContainer = {
+                        id : this.notificationidCounter,
+                        message : tokens[i][j].value,
+                        lineNumber : tokens[i][j].lineNumber
+                    };
+                    if(tokens[i][j].parentToken == undefined){
+                        FileStructs[i + dirCount].notifications.push(notificationContainer);
+                    }
+                    else{
+                         try {
+                            var parentNodeid = tokens[i][tokens[i][j].parentToken].nodeid;
+                        } catch (err) {
+                            console.log(err);
+                        }
+                        FileStructs[parentNodeid].notifications.push(notificationContainer);
+                    }
+                }
             }
         }
         //linking subcontainers together, add between file links
@@ -271,7 +289,7 @@ export class Controller {
                 for(j = 0; j < tokens[i - dirCount].length; j++){
                     if(tokens[i - dirCount][j].tokenType == "node" && tokens[i - dirCount][j].parentToken != undefined){
                         try {
-                            var parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
+                            parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
                         } catch (err) {
                             console.log(err);
                         }
@@ -329,14 +347,9 @@ export class Controller {
         return Array.from(new Set(filetypes));
     }
 
-    private buildErrorStructs(){
-        var ErrorStructs = {};
 
-        return ErrorStructs;
-    }
-
-    private writeJSON(FileStructs, ErrorStructs){
-        var FileData = {FileStructs, ErrorStructs};
+    private writeJSON(FileStructs){
+        var FileData = {FileStructs};
         var jsonHolder = JSON.stringify({FileData});
 
         nodefs.writeFileSync(__dirname + "/../../postal.json", jsonHolder, 'utf8');

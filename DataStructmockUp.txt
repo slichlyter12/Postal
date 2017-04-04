@@ -8,24 +8,24 @@ Container{ //Node in the file map or sub container of file
     string type; //file type (html, png, directory, external reference...
     
     string path;
-    int subContainers
+    subContainers
     [{
        int GlobalId
        int "to" NodeID
        int lineNumber
     }]; links to subcontainers belonging to this node
     
-    int links
+    links
         [{
             int GlobalId
             int "to" NodeID
             int lineNumber
         }]; //links to other file containers
            
-    int errors
+    notifications
         [{
-                id;
-                lineNumber;
-                Error message;
-        }]; //links to errors by id?
+             int id;
+             int lineNumber;
+             string message;
+        }];
 }

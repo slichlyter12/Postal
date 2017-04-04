@@ -196,6 +196,18 @@
                 "openLogicChar": "{",
                 "closeLogicChar": "}"
               }
+            },
+            {
+              "title": "TODO Notification",
+              "type": "notification",
+              "filetypes": [
+                "c"
+              ],
+              "options": {
+                 "notify": "(TODO:.*)\n",
+                 "message": "Found TODO:",
+                 "isComment" : true
+              }
             }
           ]
         }
