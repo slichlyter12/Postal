@@ -469,7 +469,9 @@ function DoubleClick(params){
     }
 
     if(!DFS[ID].type == "dir"){
-        //call server
+        var path = JSON.stringify(DFS[ID].path);
+        sendMessageToVSCode({path, lineNumber});
+
     }
     else{
         //do nothing if dir
