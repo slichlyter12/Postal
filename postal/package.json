@@ -196,6 +196,18 @@
                 "openLogicChar": "{",
                 "closeLogicChar": "}"
               }
+            },
+            {
+              "title": "TODO Notification",
+              "type": "notification",
+              "filetypes": [
+                "c"
+              ],
+              "options": {
+                 "notify": "(TODO:.*)\n",
+                 "message": "Found TODO:",
+                 "isComment" : true
+              }
             }
           ]
         }
@@ -205,7 +217,8 @@
   "scripts": {
     "vscode:prepublish": "tsc -p ./;",
     "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install & npm install"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.32",

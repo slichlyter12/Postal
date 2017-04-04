@@ -127,6 +127,9 @@ body{
     color: #000000;
     font-size: 16px;
 }
+.newsticker .lineNumber {
+    font-weight: bold;
+}
 #prev-error-btn{
     -webkit-app-region: no-drag;
     -webkit-user-select: all;

@@ -4,6 +4,13 @@ var electron = require('electron');
 var vis = require('vis');
 var fs = require('fs');
 var LinkManager = require('./LinkManager.js');
+// Making a 'process bridge' 
+var ipc = require('node-ipc');
+
+ipc.config.id = 'hello';
+ipc.config.retry = 1500;
+
+initConnectionToVScode();
 
 //Globals
 var isPhysics = false;
@@ -25,11 +32,9 @@ var edges;
 var data = {};
 var network;
 
-
-
 function Init() {
     //alert("init");
-    fs.readFile('./../../postal.json', 'utf8', function (err,data) {
+    fs.readFile('./../../postal.json', 'utf8', function(err, data) {
         if (err) {
             //alert(err);
             console.log(err);
@@ -60,10 +65,10 @@ function Main() {
     // fill edges
     fillInitialEdges();
 
-    try{
+    try {
         nodes = new vis.DataSet(nodesArray);
-    } catch(err){
-        alert("Error:"+ err);
+    } catch (err) {
+        alert("Error:" + err);
     }
     //alert("created DataSet");
     edges = new vis.DataSet(edgesArray);
@@ -78,7 +83,7 @@ function Main() {
             hierarchical: {
                 direction: "UD",
                 sortMethod: "directed"
-            } 
+            }
         },
         physics: {
             enabled: false
@@ -88,12 +93,11 @@ function Main() {
     network = new vis.Network(container, data, options);
     iClusterCounter = DFS.length;
 
-    for(var i = 0; i < DFS.length; i++){
-        if(DFS[i].type != "dir" && DFS[i].isSubContainer == false){
+    for (var i = 0; i < DFS.length; i++) {
+        if (DFS[i].type != "dir" && DFS[i].isSubContainer == false) {
             buildClusters(i);
         }
     }
-
 
     // MARK: - Event Listeners
     network.on("oncontext", RightClick);
@@ -101,21 +105,20 @@ function Main() {
     network.on("doubleClick", DoubleClick);
     //network.on("selectNode", nodeSelect);
     //network.on("deselectNode", nodeDeselect);
-    
-    document.getElementById("error-window-btn").addEventListener("click", function (e) {
+
+    document.getElementById("error-window-btn").addEventListener("click", function(e) {
         $('#slideout').toggleClass('on');
         $('#error-window-btn').toggleClass('on');
-        if(arrowDir == "left"){
+
+        if (arrowDir == "left") {
             arrowDir = "right"
             this.innerHTML = "&#10095;";
-        }
-        else if(arrowDir == "right"){
+        } else if (arrowDir == "right") {
             arrowDir = "left";
             this.innerHTML = "&#10094;";
         }
-        
     });
-    document.getElementById("error-window-btn").addEventListener("mousemove", function (e) {
+    document.getElementById("error-window-btn").addEventListener("mousemove", function(e) {
         document.getElementById("error-window-btn").title = "Show Error List";
     });
     //Notification Info Scroll
@@ -126,16 +129,20 @@ function Main() {
         direction: 'down',
         duration: 3000,
         autostart: 0,
-        prevButton: $('#prev-error-btn'),
-        nextButton: $('#next-error-btn')
+
+        prevButton: $('#next-error-btn'),
+        nextButton: $('#prev-error-btn')
     });
+
+    // population notifications list
+    populateNotificationsList();
 
     //Close Window Event Listener
     toolbarButtons();
 
     physicsButton(network, options);
+
     structureButton(network, options);
-    
 }
 
 
@@ -188,7 +195,6 @@ function fillFLM() {
     FLM = new LinkManager(allLinks);
 }
 
-
 function fillSLM() {
     // loop backwards to avoid directories, will never have SubContainers
     var links = [];
@@ -210,8 +216,8 @@ function fillSLM() {
 
 function fillInitialNodes() {
     for (var i = 0; i < DFS.length; i++) {
-            var nodeID = DFS[i].id;
-            addNodeToNodeArray(nodeID);
+        var nodeID = DFS[i].id;
+        addNodeToNodeArray(nodeID);
     }
 }
 
@@ -219,32 +225,31 @@ function fillInitialEdges() {
     var condensedLinks = DLM.getCondensedLinks();
     for (var i = 0; i < condensedLinks.length; i++) {
         var link = condensedLinks[i];
-        edgesArray.push({id: link.id, to: link.toFileStructid, from: link.from, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)'}});
+        edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(52, 52, 52)' } });
     }
     condensedLinks = SLM.getCondensedLinks();
     for (var i = 0; i < condensedLinks.length; i++) {
         var link = condensedLinks[i];
-        edgesArray.push({id: link.id, to: link.toFileStructid, from: link.from, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(52, 52, 52)'}});
+        edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(52, 52, 52)' } });
     }
     condensedLinks = FLM.getCondensedLinks();
     for (var i = 0; i < condensedLinks.length; i++) {
         var link = condensedLinks[i];
-        edgesArray.push({id: link.id, to: link.toFileStructid, from: link.from, arrows:{to:{scaleFactor:0.3}}, color:{color: 'rgb(255, 52, 52)'}});
+        edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(255, 52, 52)' } });
     }
 }
-function buildClusters(nodeID){
+
+function buildClusters(nodeID) {
     //If it doesn't have children, return
-    if(DFS[nodeID].subContainers.length == null || DFS[nodeID].subContainers.length == 0){
+    if (DFS[nodeID].subContainers.length == null || DFS[nodeID].subContainers.length == 0) {
         return;
-    }
-    else{
-        for(var i = 0; i < DFS[nodeID].subContainers.length; i++){
+    } else {
+        for (var i = 0; i < DFS[nodeID].subContainers.length; i++) {
             buildClusters(DFS[nodeID].subContainers[i].toFileStructid);
         }
         clusterNodes(nodeID);
     }
 }
-
 
 function clusterNodes(clusterHeadID) {
     var NodesForCluster = [];
@@ -255,40 +260,35 @@ function clusterNodes(clusterHeadID) {
 
 
     NodesForCluster.push(clusterHeadID);
-    if(DFS[clusterHeadID].subContainers.length != null && DFS[clusterHeadID].subContainers.length > 0){
-        for(var i = 0; i < DFS[clusterHeadID].subContainers.length; i++){
+    if (DFS[clusterHeadID].subContainers.length != null && DFS[clusterHeadID].subContainers.length > 0) {
+        for (var i = 0; i < DFS[clusterHeadID].subContainers.length; i++) {
             NodesForCluster.push(DFS[clusterHeadID].subContainers[i].toFileStructid)
         }
     }
     var clusterOptionsByData = {
-        joinCondition:function(childOptions) {
-            for(var i = 0; i < NodesForCluster.length; i++){
+        joinCondition: function(childOptions) {
+            for (var i = 0; i < NodesForCluster.length; i++) {
                 var ContainerID = network.findNode(NodesForCluster[i]);
-                if(childOptions.id == ContainerID[0]){
+                if (childOptions.id == ContainerID[0]) {
                     return true;
                 }
             }
             return false;
         },
-        clusterNodeProperties: {id:iClusterCounter, label: struct.name, size: varSize, borderWidth:4, font:{size: 10, color: ('rgb(232, 232, 232)')}, color: varColor, shape: 'dot'}
-        
+        clusterNodeProperties: { id: iClusterCounter, label: struct.name, size: varSize, borderWidth: 4, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot' }
+
     };
     network.cluster(clusterOptionsByData);
     iClusterCounter++;
 }
 
-
-
-
-
-function getNodeTreeRecursive(nodeID){
+function getNodeTreeRecursive(nodeID) {
     var NodeIDs = [];
     NodeIDs.push(nodeID);
-    if(DFS[nodeID].subContainers.length == null && DFS[nodeID].subContainers.length == 0){
+    if (DFS[nodeID].subContainers.length == null && DFS[nodeID].subContainers.length == 0) {
         return NodeIDs;
-    }
-    else{
-        for(var i = 0; i < DFS[nodeID].subContainers.length; i++){
+    } else {
+        for (var i = 0; i < DFS[nodeID].subContainers.length; i++) {
             NodeIDs.push(getNodeTreeRecursive(DFS[nodeID].subContainers[i].toFileStructid));
         }
         return NodeIDs;
@@ -297,13 +297,13 @@ function getNodeTreeRecursive(nodeID){
 
 // TODO: remove magic numbers 
 // TODO: define colors
-// TODO: determin size
+// TODO: determine size
 function addNodeToNodeArray(id) {
     var struct = DFS[id];
     //alert("type: " + struct.type);
     var varColor = PickColor(struct.type);
     var varSize = 12 + (6 * (struct.links.length));
-    nodesArray.push({id: struct.id, label: struct.name, size: varSize, font:{size: 10, color: ('rgb(232, 232, 232)')}, color: varColor, shape: 'dot'});
+    nodesArray.push({ id: struct.id, label: struct.name, size: varSize, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot' });
     return;
 }
 
@@ -323,6 +323,7 @@ function turnOffAllFileLinks() {
     }
 }
 
+
 function updateFromFileLinks(newFromID) {
     var links = getAllLinksFromFileStructRecursive(newFromID);
     if (links.length > 0) {
@@ -333,29 +334,29 @@ function updateFromFileLinks(newFromID) {
     }
 }
 
-function PickColor(type){
-    switch (type){
+function PickColor(type) {
+    switch (type) {
         case "html":
-            return('rgb(0,122,204)');
+            return ('rgb(0,122,204)');
             break;
         case "php":
-            return('rgb(86,156,214)');
+            return ('rgb(86,156,214)');
             break;
         case "js":
-            return('rgb(137, 209, 133)');
+            return ('rgb(137, 209, 133)');
             break;
         case "png":
-            return('rgb(255, 200, 150)');
+            return ('rgb(255, 200, 150)');
             break;
         case "jpg":
         case "jpeg":
-            return('rgb(255, 175, 150)');
+            return ('rgb(255, 175, 150)');
             break;
         case "dir":
-            return('rgb(223, 223, 223)');
+            return ('rgb(223, 223, 223)');
             break;
         default:
-            return('rgb(150, 150, 150)');
+            return ('rgb(150, 150, 150)');
             break;
     }
 }
@@ -363,7 +364,7 @@ function PickColor(type){
 // MARK: - Event Listeners
 function RightClick(params) {
     params.event = "[original event]";
-    
+
     var clickedNodeID = network.getNodeAt(params.pointer.DOM);
     var focusID;
     var options = {
@@ -374,62 +375,59 @@ function RightClick(params) {
             easingFunction: "easeInOutQuad"
         }
     };
-    
+
 
     if (network.isCluster(clickedNodeID) == true) {
-           focusID = (network.getNodesInCluster(clickedNodeID)[0]);           
-           network.openCluster(clickedNodeID);
-           network.focus(focusID, options);
-           return;
-    }
-    else if (DFS[clickedNodeID].subContainers.length != null && DFS[clickedNodeID].subContainers.length > 0){
-            buildClusters(clickedNodeID);
-            focusID = (network.findNode(clickedNodeID)[0]);
-            network.focus(focusID, options);
+        focusID = (network.getNodesInCluster(clickedNodeID)[0]);
+        network.openCluster(clickedNodeID);
+        network.focus(focusID, options);
+        return;
+    } else if (DFS[clickedNodeID].subContainers.length != null && DFS[clickedNodeID].subContainers.length > 0) {
+        buildClusters(clickedNodeID);
+        focusID = (network.findNode(clickedNodeID)[0]);
+        network.focus(focusID, options);
+
     }
 }
 
 
 
+// LEFT CLICK
 function Click(params) {
-    
+
     //Handle Edges
-    if(params.edges.length > 0){
-        for(var i = 0; i < edgesArray.length; i++){
+    if (params.edges.length > 0) {
+        for (var i = 0; i < edgesArray.length; i++) {
             try {
-                network.clustering.updateEdge(edgesArray[i].id, 
-                    {
-                        label : ""
-                    }
-                );
-            }
-            catch(err){
+                network.clustering.updateEdge(edgesArray[i].id, {
+                    label: ""
+                });
+            } catch (err) {
                 alert("Edge update error: " + err);
             }
         }
-        for(var i = 0; i < params.edges.length; i++){
+        for (var i = 0; i < params.edges.length; i++) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[i]);
             var link = SLM.getLinkByID(clickedEdgeID);
             var newLabel = '';
-            if(link != null){
+            if (link != null) {
                 var newLabel = "Line Number: " + link.lineNumber;
             }
             try {
-                network.clustering.updateEdge(clickedEdgeID, 
-                    {
-                        label : newLabel
-                    }
-                );
-            }
-            catch(err){
+                network.clustering.updateEdge(clickedEdgeID, {
+                    label: newLabel
+                });
+            } catch (err) {
                 alert("Edge update error: " + err);
             }
         }
     }
-    if(params.nodes.length > 0){
+    if (params.nodes.length > 0) {
 
     }
+    sendMessageToVSCode({ 'ThisMessage': 'hey Cramer' })
 }
+
 
 function DoubleClick(params){
 
@@ -481,74 +479,164 @@ function DoubleClick(params){
 
 }
 
+function toolbarButtons() {
+    document.getElementById("close-window").addEventListener("click", function(e) {
+        var window = electron.remote.getCurrentWindow();
+        window.close();
+
+    });
+    document.getElementById("min-window").addEventListener("click", function(e) {
+        var window = electron.remote.getCurrentWindow();
+        window.minimize();
 
 
+        // MARK: END EVENT LISTENERS
 
 
-
-
-function toolbarButtons(){
-    document.getElementById("close-window").addEventListener("click", function (e) {
-       var window = electron.remote.getCurrentWindow();
-       window.close();
-       
-  }); 
-  document.getElementById("min-window").addEventListener("click", function (e) {
-       var window = electron.remote.getCurrentWindow();
-       window.minimize();
-       
-  }); 
+    });
 }
 
 function physicsButton(network, options) {
-    document.getElementById("physics-btn").addEventListener("click", function (e) {
-       if(isPhysics){
-           isPhysics = false;
-           this.innerHTML = "Physics: Off";
-           options.physics.enabled = false;
-           //options.physics.stabalization.enabled = true;
-           network.setOptions(options);
-           network.redraw();
-       }
-       else {
-           isPhysics = true;
-           this.innerHTML = "Physics: On";
-           options.physics.enabled = true;
-           //options.physics.stabalization.enabled = true;
-           network.setOptions(options);
-           network.redraw();
-       }
-       
-    }); 
-    document.getElementById("physics-btn").addEventListener("mousemove", function (e) {
-        document.getElementById("physics-btn").title = "Enable/disable physics for all nodes";
+    document.getElementById("physics-btn").addEventListener("click", function(e) {
+        if (isPhysics) {
+            isPhysics = false;
+            this.innerHTML = "Physics: Off";
+            options.physics.enabled = false;
+            //options.physics.stabalization.enabled = true;
+            network.setOptions(options);
+            network.redraw();
+        } else {
+            isPhysics = true;
+            this.innerHTML = "Physics: On";
+            options.physics.enabled = true;
+            //options.physics.stabalization.enabled = true;
+            network.setOptions(options);
+            network.redraw();
+        }
     });
-    
 }
 
 function structureButton(network, options) {
-    document.getElementById("structure-btn").addEventListener("click", function (e) {
-       if(structure === "hierarchy"){
-           structure = "web";
-           this.innerHTML = "Structure: Web";
-           options.layout.hierarchical.enabled = false;
-           network.setOptions(options);
-           network.redraw();
-       }
-       else if(structure == "web") {
-           structure = "hierarchy";
-           this.innerHTML = "Structure: Hierarchy";
-           options.layout.hierarchical.enabled = true;
-           options.layout.hierarchical.direction = "UD";
-           options.layout.hierarchical.sortMethod = "directed";
-           network.setOptions(options);
-           network.redraw();
-       }
-       
-    }); 
-    document.getElementById("structure-btn").addEventListener("mousemove", function (e) {
+    document.getElementById("structure-btn").addEventListener("click", function(e) {
+        if (structure === "hierarchy") {
+            structure = "web";
+            this.innerHTML = "Structure: Web";
+            options.layout.hierarchical.enabled = false;
+            network.setOptions(options);
+            network.redraw();
+        } else if (structure == "web") {
+            structure = "hierarchy";
+            this.innerHTML = "Structure: Hierarchy";
+            options.layout.hierarchical.enabled = true;
+            options.layout.hierarchical.direction = "UD";
+            options.layout.hierarchical.sortMethod = "directed";
+            network.setOptions(options);
+            network.redraw();
+        }
+
+    });
+}
+
+// this is how we send a message to VSCode 
+function initConnectionToVScode() {
+    ipc.connectTo(
+        'world',
+        function() {
+            ipc.of.world.on(
+                'connect',
+                function() {
+                    ipc.log('## connected to world ##'.rainbow, ipc.config.delay);
+                    ipc.of.world.emit(
+                        'message', //any event or message type your server listens for
+                        'Connected'
+                    )
+                }
+            );
+            ipc.of.world.on(
+                'disconnect',
+                function() {
+                    ipc.log('disconnected from world'.notice);
+                }
+            );
+            ipc.of.world.on(
+                'message', //any event or message type your server listens for 
+                function(data) {
+                    ipc.log('got a message from world : '.debug, data);
+                }
+            );
+        }
+    );
+}
+
+
+function sendMessageToVSCode(message) {
+    ipc.of.world.emit(
+        message
+    )
+}
+
+function physicsButton(network, options) {
+    document.getElementById("physics-btn").addEventListener("click", function(e) {
+        if (isPhysics) {
+            isPhysics = false;
+            this.innerHTML = "Physics: Off";
+            options.physics.enabled = false;
+            //options.physics.stabalization.enabled = true;
+            network.setOptions(options);
+            network.redraw();
+        } else {
+            isPhysics = true;
+            this.innerHTML = "Physics: On";
+            options.physics.enabled = true;
+            //options.physics.stabalization.enabled = true;
+            network.setOptions(options);
+            network.redraw();
+        }
+
+    });
+    document.getElementById("physics-btn").addEventListener("mousemove", function(e) {
+        document.getElementById("physics-btn").title = "Enable/disable physics for all nodes";
+    });
+
+}
+
+function structureButton(network, options) {
+    document.getElementById("structure-btn").addEventListener("click", function(e) {
+        if (structure === "hierarchy") {
+            structure = "web";
+            this.innerHTML = "Structure: Web";
+            options.layout.hierarchical.enabled = false;
+            network.setOptions(options);
+            network.redraw();
+        } else if (structure == "web") {
+            structure = "hierarchy";
+            this.innerHTML = "Structure: Hierarchy";
+            options.layout.hierarchical.enabled = true;
+            options.layout.hierarchical.direction = "UD";
+            options.layout.hierarchical.sortMethod = "directed";
+            network.setOptions(options);
+            network.redraw();
+        }
+
+    });
+    document.getElementById("structure-btn").addEventListener("mousemove", function(e) {
         document.getElementById("structure-btn").title = "Change the node structure";
     });
+}
+
+function populateNotificationsList() {
+    for (var i = 0; i < DFS.length; i++) {
+        if (DFS[i].notifications != undefined) {
+            for (var j = 0; j < DFS[i].notifications.length; j++) {
+                var message = DFS[i].notifications[j].message;
+                var lineNumber = DFS[i].notifications[j].lineNumber;
+
+                var htmlNode = document.createElement("LI");
+                htmlNode.innerHTML = "<span class='lineNumber'>" + lineNumber + "</span>: <span class='message'>" + message + "</span>";
+                document.getElementById('newsTickerList').appendChild(htmlNode);
+            }
+        }
+    }
 }
 
 

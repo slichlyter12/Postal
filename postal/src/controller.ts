@@ -9,6 +9,8 @@ import { spawn } from 'child_process'
 
 var nodefs = require('fs');
 var finder = require('find');  
+// Making a 'process bridge' 
+var ipc = require('node-ipc'); 
 
 var isWin = /^win/.test(process.platform);
 
@@ -17,6 +19,7 @@ export class Controller {
     //parser: Parser;
     nodeidCounter: number = 0;
     linkidCounter: number = 0;
+    notificationidCounter: number = 0;
     parser: Parser;
     slash: string;
     constructor() {
@@ -34,8 +37,7 @@ export class Controller {
         this.nodeidCounter = 0;
         this.linkidCounter = 0;
         var FileStructs = this.buildFileStructs();
-        var ErrorStructs = this.buildErrorStructs();
-        this.writeJSON(FileStructs, ErrorStructs);      
+        this.writeJSON(FileStructs);      
     }
 
     private levelCounter(path){
@@ -111,7 +113,7 @@ export class Controller {
             path: filepath,
             links: [],
             subContainers: [],
-            errors: []
+            notifications: []
         }
 
         FileStructs.push(FileStruct);
@@ -187,7 +189,7 @@ export class Controller {
                 path: dirPaths[i],
                 links: [],
                 subContainers: [],
-                errors: []
+                notifications: []
             });
             this.nodeidCounter++;
         }
@@ -203,7 +205,7 @@ export class Controller {
                 path: filePaths[j],
                 links: [],
                 subContainers: [],
-                errors: []
+                notifications: []
             });
             this.nodeidCounter++;
         }
@@ -238,7 +240,7 @@ export class Controller {
                         path: FileStructs[i + dirCount].path,
                         links: [],
                         subContainers: [],
-                        errors: []
+                        notifications: []
                     };
                    
                     FileStructs.push(FileStruct);
@@ -262,7 +264,22 @@ export class Controller {
 
                 }
                 else if(tokens[i][j].tokenType == "notification"){
-                    //TODO;
+                    var notificationContainer = {
+                        id : this.notificationidCounter,
+                        message : tokens[i][j].value,
+                        lineNumber : tokens[i][j].lineNumber
+                    };
+                    if(tokens[i][j].parentToken == undefined){
+                        FileStructs[i + dirCount].notifications.push(notificationContainer);
+                    }
+                    else{
+                         try {
+                            var parentNodeid = tokens[i][tokens[i][j].parentToken].nodeid;
+                        } catch (err) {
+                            console.log(err);
+                        }
+                        FileStructs[parentNodeid].notifications.push(notificationContainer);
+                    }
                 }
             }
         }
@@ -272,7 +289,7 @@ export class Controller {
                 for(j = 0; j < tokens[i - dirCount].length; j++){
                     if(tokens[i - dirCount][j].tokenType == "node" && tokens[i - dirCount][j].parentToken != undefined){
                         try {
-                            var parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
+                            parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
                         } catch (err) {
                             console.log(err);
                         }
@@ -330,14 +347,9 @@ export class Controller {
         return Array.from(new Set(filetypes));
     }
 
-    private buildErrorStructs(){
-        var ErrorStructs = {};
 
-        return ErrorStructs;
-    }
-
-    private writeJSON(FileStructs, ErrorStructs){
-        var FileData = {FileStructs, ErrorStructs};
+    private writeJSON(FileStructs){
+        var FileData = {FileStructs};
         var jsonHolder = JSON.stringify({FileData});
 
         nodefs.writeFileSync(__dirname + "/../../postal.json", jsonHolder, 'utf8');
@@ -371,6 +383,10 @@ export class Controller {
             delete spawn_env.ELECTRON_RUN_AS_NODE;
 
             var sp = spawn(command, ['.'], {cwd: cwd, env: spawn_env});
+
+            // starting the everntlistening server
+            this.startServer();
+
         } catch (error) {
             console.log("Electron Error: " + error);
         }
@@ -406,6 +422,38 @@ export class Controller {
         let sel = new vscode.Selection(lineNum - 1, 0, lineNum - 1, 0);
         vscode.window.activeTextEditor.selection = sel;
         vscode.window.activeTextEditor.revealRange(sel, vscode.TextEditorRevealType.Default);
+    }
+
+    // Theoretically starting the server to connect with Electron Client
+    public startServer() {
+        ipc.config.id   = 'world';
+        ipc.config.retry= 1500;
+    
+        ipc.serve(
+            function(){
+                ipc.server.on(
+                    'message',
+                    function(data,socket){
+                        ipc.log('got a message : ', data);
+                        console.log("This is what I got back:" + data);
+                        ipc.server.emit(
+                            socket,
+                            'message',  //this can be anything you want so long as 
+                                        //your client knows. 
+                            data + ' world!'
+                        );
+                    }
+                );
+                ipc.server.on(
+                    'socket.disconnected',
+                    function(socket, destroyedSocketID) {
+                        ipc.log('client ' + destroyedSocketID + ' has disconnected!');
+                    }
+                );
+            }
+        );
+    
+        ipc.server.start();
     }
 
 

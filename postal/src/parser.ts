@@ -325,7 +325,11 @@ export class Parser {
                             rules.push(newRule);
 
                             break;
-
+                        
+                        case "notification":
+                            rule.regex = new RegExp(rule.options.notify, "g"); 
+                            rules.push(rule);
+                            break;
                         case "comment":
                             break;
 
