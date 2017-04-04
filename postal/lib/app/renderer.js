@@ -101,13 +101,12 @@ function Main() {
 
     var notificationsArray = buildNotificationsArray();
 
-    alert(JSON.stringify(notificationsArray));
-
     network.on("afterDrawing", function (ctx) {
       for(i = 0; i < notificationsArray.length; i++){
         var nodeid = notificationsArray[i].nodeid;
         var varSize = 12 + (6 * (DFS[nodeid].links.length));
 
+        nodeid = network.clustering.findNode(nodeid)[0];
         var nodePosition = network.getPositions([nodeid]);
 
         
@@ -470,7 +469,6 @@ function Click(params) {
 
 function DoubleClick(params) {
     console.log("!!doubleClick!!");
-
     var ID;
     var lineNumber;
     if (network.isCluster(params.nodes)) {
