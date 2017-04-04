@@ -667,7 +667,7 @@ function populateNotificationsList() {
                 var lineNumber = DFS[i].notifications[j].lineNumber;
 
                 var htmlNode = document.createElement("LI");
-                htmlNode.innerHTML = "<span class='lineNumber'>" + lineNumber + "</span>: <span class='message'>" + message + "</span>";
+                htmlNode.innerHTML = "<span class='message'>" + message + "</span>   <span class='lineNumber'> Line: " + lineNumber + "</span>";
                 document.getElementById('newsTickerList').appendChild(htmlNode);
             }
         }
