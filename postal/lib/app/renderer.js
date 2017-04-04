@@ -511,7 +511,6 @@ function populateNotificationsList() {
     for (var i = 0; i < DFS.length; i++) {
         if (DFS[i].notifications != undefined) {
             for (var j = 0; j < DFS[i].notifications.length; j++) {
-                alert(JSON.stringify(DFS[i].notifications));
                 var message = DFS[i].notifications[j].message;
                 var lineNumber = DFS[i].notifications[j].lineNumber;
 
