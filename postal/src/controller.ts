@@ -433,16 +433,7 @@ export class Controller {
             function(){
                 ipc.server.on(
                     'message',
-                    function(data,socket){
-                        ipc.log('got a message : ', data);
-                        console.log("This is what I got back:" + data);
-                        ipc.server.emit(
-                            socket,
-                            'message',  //this can be anything you want so long as 
-                                        //your client knows. 
-                            data + ' world!'
-                        );
-                    }
+                    jumpToFilesLine()
                 );
                 ipc.server.on(
                     'socket.disconnected',

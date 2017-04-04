@@ -517,6 +517,7 @@ function initConnectionToVScode() {
 
 function sendMessageToVSCode(message) {
     ipc.of.world.emit(
+        'message',
         message
     )
 }
