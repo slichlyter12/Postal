@@ -98,6 +98,7 @@ function Main() {
     // MARK: - Event Listeners
     network.on("oncontext", RightClick);
     network.on("click", Click);
+    network.on("doubleClick", DoubleClick);
     //network.on("selectNode", nodeSelect);
     //network.on("deselectNode", nodeDeselect);
     
@@ -136,9 +137,6 @@ function Main() {
     structureButton(network, options);
     
 }
-
-
-
 
 
 function fillDLM() {
@@ -433,6 +431,55 @@ function Click(params) {
     }
 }
 
+function DoubleClick(params){
+
+    var ID;
+    var lineNumber;
+    if(network.isCluster(params.nodes)){
+        var clusterNodes = network.getNodesInCluster(params.nodes);
+        //console.log(JSON.stringify(clusterNodes));
+        ID = clusterNodes[0];
+        //console.log(JSON.stringify(ID));
+        console.log(JSON.stringify(DFS[ID].path));
+
+        if(DFS[ID].isSubContainer){
+            var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
+            var link = SLM.getLinkByID(clickedEdgeID);
+            console.log(JSON.stringify(link.lineNumber));
+            lineNumber = link.lineNumber;
+        }
+        else{
+            lineNumber = 0;
+        }
+
+    }
+    else{
+        ID = params.nodes;
+        //console.log(JSON.stringify(ID));
+        console.log(JSON.stringify(DFS[ID].path));
+
+        if(DFS[ID].isSubContainer){
+            var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
+            var link = SLM.getLinkByID(clickedEdgeID);
+            console.log(JSON.stringify(link.lineNumber));
+            lineNumber = link.lineNumber;
+        }
+        else{
+            lineNumber = 0;
+        }
+
+    }
+
+    if(!DFS[ID].type == "dir"){
+        //call server
+    }
+    else{
+        //do nothing if dir
+    }
+
+    
+
+}
 
 
 
@@ -440,8 +487,7 @@ function Click(params) {
 
 
 
-
-  function toolbarButtons(){
+function toolbarButtons(){
     document.getElementById("close-window").addEventListener("click", function (e) {
        var window = electron.remote.getCurrentWindow();
        window.close();
