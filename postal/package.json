@@ -208,6 +208,18 @@
                  "message": "Found TODO:",
                  "isComment" : true
               }
+            },
+            {
+              "title": "Incorrect String Naming Notification",
+              "type": "notification",
+              "filetypes": [
+                "cpp"
+              ],
+              "options": {
+                 "notify": "(string [^s][^t][^r].*)",
+                 "message": "Found TODO:",
+                 "isComment" : false
+              }
             }
           ]
         }

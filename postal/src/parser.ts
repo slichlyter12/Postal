@@ -151,12 +151,10 @@ export class Parser {
         var token = {
             tokenType: "notification",
             type: rule.title,
-            value: this.fileName + ": " + notification,
+            value: this.fileName + ", " + rule.title + ": " + notification,
             lineNumber: lineNumber,
             parentToken: parentToken
         }
-
-        this.stack.push(currentTokenID);
 
         return token;
     }
