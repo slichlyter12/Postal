@@ -425,59 +425,57 @@ function Click(params) {
     if (params.nodes.length > 0) {
 
     }
-    sendMessageToVSCode({ 'ThisMessage': 'hey Cramer' })
 }
 
 
-function DoubleClick(params){
+function DoubleClick(params) {
+    console.log("!!doubleClick!!");
 
     var ID;
     var lineNumber;
-    if(network.isCluster(params.nodes)){
+    if (network.isCluster(params.nodes)) {
         var clusterNodes = network.getNodesInCluster(params.nodes);
         //console.log(JSON.stringify(clusterNodes));
         ID = clusterNodes[0];
         //console.log(JSON.stringify(ID));
-        console.log(JSON.stringify(DFS[ID].path));
+        console.log("this path: " + JSON.stringify(DFS[ID].path));
 
-        if(DFS[ID].isSubContainer){
+        if (DFS[ID].isSubContainer) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
             var link = SLM.getLinkByID(clickedEdgeID);
             console.log(JSON.stringify(link.lineNumber));
             lineNumber = link.lineNumber;
-        }
-        else{
+        } else {
             lineNumber = 0;
         }
 
-    }
-    else{
+    } else {
         ID = params.nodes;
         //console.log(JSON.stringify(ID));
         console.log(JSON.stringify(DFS[ID].path));
 
-        if(DFS[ID].isSubContainer){
+        if (DFS[ID].isSubContainer) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
             var link = SLM.getLinkByID(clickedEdgeID);
             console.log(JSON.stringify(link.lineNumber));
             lineNumber = link.lineNumber;
-        }
-        else{
+        } else {
             lineNumber = 0;
         }
 
     }
+    console.log(DFS[ID].type);
 
-    if(!DFS[ID].type == "dir"){
-        var path = JSON.stringify(DFS[ID].path);
-        sendMessageToVSCode({path, lineNumber});
+    if (DFS[ID].type != "dir") {
+        console.log("!!sendMessageToVSCode!!");
+        var path = (DFS[ID].path);
+        sendMessageToVSCode({ 'test': "test", 'path': path, 'lineNumber': lineNumber });
 
-    }
-    else{
+    } else {
         //do nothing if dir
     }
 
-    
+
 
 }
 
@@ -548,10 +546,6 @@ function initConnectionToVScode() {
                 'connect',
                 function() {
                     ipc.log('## connected to world ##'.rainbow, ipc.config.delay);
-                    ipc.of.world.emit(
-                        'message', //any event or message type your server listens for
-                        'Connected'
-                    )
                 }
             );
             ipc.of.world.on(
@@ -560,23 +554,23 @@ function initConnectionToVScode() {
                     ipc.log('disconnected from world'.notice);
                 }
             );
-            ipc.of.world.on(
-                'message', //any event or message type your server listens for 
-                function(data) {
-                    ipc.log('got a message from world : '.debug, data);
-                }
+        }
+    );
+}
+
+function sendMessageToVSCode(message) {
+    console.log("Test " + message);
+    ipc.connectTo(
+        'world',
+        function() {
+            ipc.of.world.emit(
+                'message',
+                message
             );
         }
     );
 }
 
-
-function sendMessageToVSCode(message) {
-    ipc.of.world.emit(
-        'message',
-        message
-    )
-}
 
 function physicsButton(network, options) {
     document.getElementById("physics-btn").addEventListener("click", function(e) {

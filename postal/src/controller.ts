@@ -431,9 +431,25 @@ export class Controller {
     
         ipc.serve(
             function(){
-                ipc.server.on(
+                 ipc.server.on(
                     'message',
-                    jumpToFilesLine()
+                    function(data){
+                        console.log("This is what I got back:" + data.path + " and " +data.lineNumeber );
+                        var filename = data.path;
+                        var lineNum = parseInt(data.lineNumber) 
+
+                        let uri = Uri.parse("file:" + filename);
+                        vscode.workspace.openTextDocument(uri).then( doc => {
+                            console.log(doc);
+                            vscode.window.showTextDocument(doc).then( poo => {
+                                let sel = new vscode.Selection(lineNum - 1, 0, lineNum - 1, 0);
+                                vscode.window.activeTextEditor.selection = sel;
+                                vscode.window.activeTextEditor.revealRange(sel, vscode.TextEditorRevealType.Default);
+                            }); 
+                        }, reason => {
+                            console.log(reason);
+                        });
+                    }
                 );
                 ipc.server.on(
                     'socket.disconnected',
