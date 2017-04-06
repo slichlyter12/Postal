@@ -1,0 +1,18 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Samuel Lichlyter -- Developer -- @slichlyter12 -- lichlyts@oregonstate.edu
+    Cramer Smith -- Developer -- @TheCmar7 -- cramer.s.smith@gmail.com
+    Eric Winkler -- Developer -- @Doc_Spaceman -- winkleer@oregonstate.edu
+
+# THANKS
+    Zach, for the only one who actually looked at the final release
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3
+    jQuery
+    Bootstrap
+    
