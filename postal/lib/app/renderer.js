@@ -14,6 +14,7 @@ initConnectionToVScode();
 
 //Globals
 var isPhysics = false;
+var isFileLinksVisible = false;
 var structure = "hierarchy";
 var iClusterCounter;
 var arrowDir = "left";
@@ -132,8 +133,6 @@ function Main() {
     network.on("oncontext", RightClick);
     network.on("click", Click);
     network.on("doubleClick", DoubleClick);
-    //network.on("selectNode", nodeSelect);
-    //network.on("deselectNode", nodeDeselect);
 
     document.getElementById("error-window-btn").addEventListener("click", function(e) {
         $('#slideout').toggleClass('on');
@@ -170,8 +169,8 @@ function Main() {
     toolbarButtons();
 
     physicsButton(network, options);
-
     structureButton(network, options);
+    fileLinksButton(network,options);
 }
 
 
@@ -261,11 +260,11 @@ function fillInitialEdges() {
         var link = condensedLinks[i];
         edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(52, 52, 52)' } });
     }
-    condensedLinks = FLM.getCondensedLinks();
+    /*condensedLinks = FLM.getCondensedLinks();
     for (var i = 0; i < condensedLinks.length; i++) {
         var link = condensedLinks[i];
         edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(255, 52, 52)' } });
-    }
+    }*/
 }
 
 function buildClusters(nodeID) {
@@ -476,6 +475,7 @@ function Click(params) {
 function DoubleClick(params) {
     var ID;
     var lineNumber;
+    console.log("doubleclick ");
     if (network.isCluster(params.nodes)) {
         var clusterNodes = network.getNodesInCluster(params.nodes);
         ID = clusterNodes[0];
@@ -490,7 +490,7 @@ function DoubleClick(params) {
 
     } else {
         ID = params.nodes;
-
+        console.log("Isn't in cluster" + ID);
         if (DFS[ID].isSubContainer) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
             var link = SLM.getLinkByID(clickedEdgeID);
@@ -566,6 +566,19 @@ function structureButton(network, options) {
 
     });
 }
+function fileLinksButton(network, options) {
+    document.getElementById("fileLinks-btn").addEventListener("click", function(e) {
+        if (isFileLinksVisible) {
+           isFileLinksVisible = false;
+           this.innerHTML = "File Links: Off";
+        } 
+        else{
+            isFileLinksVisible = true;
+           this.innerHTML = "File Links: On";
+    }
+
+    });
+}
 
 // this is how we send a message to VSCode 
 function initConnectionToVScode() {
@@ -601,55 +614,6 @@ function sendMessageToVSCode(message) {
     );
 }
 
-
-function physicsButton(network, options) {
-    document.getElementById("physics-btn").addEventListener("click", function(e) {
-        if (isPhysics) {
-            isPhysics = false;
-            this.innerHTML = "Physics: Off";
-            options.physics.enabled = false;
-            //options.physics.stabalization.enabled = true;
-            network.setOptions(options);
-            network.redraw();
-        } else {
-            isPhysics = true;
-            this.innerHTML = "Physics: On";
-            options.physics.enabled = true;
-            //options.physics.stabalization.enabled = true;
-            network.setOptions(options);
-            network.redraw();
-        }
-
-    });
-    document.getElementById("physics-btn").addEventListener("mousemove", function(e) {
-        document.getElementById("physics-btn").title = "Enable/disable physics for all nodes";
-    });
-
-}
-
-function structureButton(network, options) {
-    document.getElementById("structure-btn").addEventListener("click", function(e) {
-        if (structure === "hierarchy") {
-            structure = "web";
-            this.innerHTML = "Structure: Web";
-            options.layout.hierarchical.enabled = false;
-            network.setOptions(options);
-            network.redraw();
-        } else if (structure == "web") {
-            structure = "hierarchy";
-            this.innerHTML = "Structure: Hierarchy";
-            options.layout.hierarchical.enabled = true;
-            options.layout.hierarchical.direction = "UD";
-            options.layout.hierarchical.sortMethod = "directed";
-            network.setOptions(options);
-            network.redraw();
-        }
-
-    });
-    document.getElementById("structure-btn").addEventListener("mousemove", function(e) {
-        document.getElementById("structure-btn").title = "Change the node structure";
-    });
-}
 
 function populateNotificationsList() {
     for (var i = 0; i < DFS.length; i++) {

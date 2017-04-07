@@ -176,10 +176,24 @@ export class Controller {
         dirPaths = Array.from(modifiedDirPaths);
         filePaths = Array.from(modifiedFilePaths);
 
-        var dirCount = dirPaths.length;
+        var dirCount = dirPaths.length + 1;
 
-        //Build Directory Nodes
-        for(var i = 0; i < dirPaths.length; i++){
+        //Build Main Directory Node
+        FileStructs.push({
+                id: this.nodeidCounter,
+                level: -1,
+                isSubContainer: false, //bool, Not files or dirs
+                name: this.nameSlicer(vscode.workspace.rootPath),
+                type: "dir",
+                path: vscode.workspace.rootPath,
+                links: [],
+                subContainers: [],
+                notifications: []
+            });
+        this.nodeidCounter++;
+       
+       //build all other Directory Nodes
+       for(var i = 0; i < dirPaths.length; i++){
             FileStructs.push({
                 id: this.nodeidCounter,
                 level: this.levelCounter(dirPaths[i]),
