@@ -23,7 +23,7 @@ var DFS; // Data File Structure
 var DLM; // Directory Link Manager
 var SLM; // SubContainer Link Manager
 var FLM; // File Link Manager
-var VLL; // Visible Link Lines
+var VLL = []; // Visible Link Lines
 
 // create network arrays
 var nodesArray = [];
@@ -438,7 +438,6 @@ function RightClick(params) {
 
 // LEFT CLICK
 function Click(params) {
-
     //Handle Edges
     if (params.edges.length > 0) {
         for (var i = 0; i < VLL.length; i++) {
@@ -450,6 +449,7 @@ function Click(params) {
                 alert("Edge update error: " + err);
             }
         }
+        VLL = [];
         for (var i = 0; i < params.edges.length; i++) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[i]);
             var link = SLM.getLinkByID(clickedEdgeID);
@@ -474,6 +474,7 @@ function Click(params) {
 
 
 function DoubleClick(params) {
+    alert("Double click");
     var ID;
     var lineNumber;
     if (network.isCluster(params.nodes)) {
