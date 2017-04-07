@@ -474,7 +474,6 @@ function Click(params) {
 
 
 function DoubleClick(params) {
-    alert("Double click");
     var ID;
     var lineNumber;
     if (network.isCluster(params.nodes)) {
