@@ -60,6 +60,9 @@ body{
     color: white;
     font-size: 12px;
 }
+#physics-btn:hover{
+    box-shadow:0 0 1px 1px white;
+}
 #structure-btn{
     -webkit-app-region: no-drag;
     -webkit-user-select: all;
@@ -72,7 +75,9 @@ body{
     border-width: 1px;
     color: white;
     font-size: 12px;
-
+}
+#structure-btn:hover{
+    box-shadow:0 0 1px 1px white;
 }
 #error-container{
     -webkit-app-region: no-drag;
