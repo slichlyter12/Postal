@@ -89,6 +89,9 @@ function Main() {
         physics: {
             enabled: false
         },
+        interaction: {
+            navigationButtons: true
+        }
     };
 
     network = new vis.Network(container, data, options);

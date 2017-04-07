@@ -158,3 +158,21 @@ body{
     border-width: 1px;
     font-size: 15px;
 }
+.vis-network .vis-navigation .vis-button.vis-zoomExtends{
+    /*background-image: url(img/network/zoomExtendsBlue.png) !important;*/
+    bottom: 9% !important;
+    right: 5% !important;
+    visibility: visible !important;
+
+}
+
+.vis-network .vis-navigation{
+    visibility: hidden;
+}
+
+div.vis-network div.vis-navigation div.vis-button:hover{
+    box-shadow:0 0 0px 0px rgba(0,168,236,.3)
+}
+div.vis-network div.vis-navigation div.vis-button:active{
+    box-shadow:0 0 1px 3px rgba(0,168,236,.95)
+}
