@@ -1,62 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head>
-
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Network | Basic usage</title>
-
-  <script src="node_modules/vis/dist/vis.js"></script>
-  <link href="node_modules/vis/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
-  <link href="css/FileMap.css" rel="StyleSheet" type="text/css">
-  <style type="text/css">
-    #mynetwork {
-      width: 1250px;
-      height: 800px;
-      background-color: #1e1e1e;
-      border-color:#1e1e1e;
-    }
-  </style>
-  <script src="js/jquery-3.1.1.min.js" ></script>
-  <script src="js/jquery.newsTicker.min.js" ></script>
-</head>
+    
+    <title>Network | Basic usage</title>
+    
+    <link href="../../node_modules/vis/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/FileMap.css" rel="StyleSheet" type="text/css">
+ 
+  </head>
 <body>
-<div id="toolbar">
-  <button type="button" id="close-window" >&#10060;</button>
-  <button type="button" id="min-window" >&#10134;</button>
-  <button type="button" id="structure-btn" >Structure: Hierarchy</button>
-  <button type="button" id="physics-btn" >Physics: Off</button>
-
-  <div id="error-container">
-    <button type="button" id="error-window-btn" >&#10094;</button>
-    <div id="slideout">
-      <span id="error-list-title"><h3 style="text-align: center">Notifications</h3></span>
-      <button type="button" id="next-error-btn" >Next</button>
-      <button type="button" id="prev-error-btn" >Prev</button>
-      <ul class="newsticker" id="newsTickerList"></ul>
+  <div id="toolbar">
+    <button type="button" id="close-window" >&#10060;</button>
+    <button type="button" id="min-window" >&#10134;</button>
+    <button type="button" id="structure-btn" >Structure: Hierarchy</button>
+    <button type="button" id="physics-btn" >Physics: Off</button>
+   
+    <div id="error-container">
+      <button type="button" id="error-window-btn" >&#10094;</button>
+     
+      <div id="slideout">
+        <span id="error-list-title"><h3 style="text-align: center">Notifications</h3></span>
+        <button type="button" id="next-error-btn" >Next</button>
+        <button type="button" id="prev-error-btn" >Prev</button>
+        <ul class="newsticker" id="newsTickerList"></ul>
+      </div>
+    
     </div>
+    <!--<div class="vis-network vis-navigation vis-button vis-zoomExtends" ></div>-->
   </div>
-  <!--<div class="vis-network vis-navigation vis-button vis-zoomExtends" ></div>-->
-</div>
-<div id="configuration">
-  
-</div>
-<div id="mynetwork"></div>
-<pre id="eventSpan"></pre>
-<script type="text/javascript">
-  require('./renderer.js');
-  
-  
-
-</script>
+  <div id="configuration"></div>
+  <div id="mynetwork"></div>
+  <pre id="eventSpan"></pre>
 
 
-
-
-<script>window.$ = window.jQuery = require('./js/jquery-3.1.1.min.js');</script>
-
+  <script type="text/javascript">
+    require('./renderer.js');
+  </script>
+  <script>window.$ = window.jQuery = require('./js/jquery-3.1.1.min.js');</script>
   <script src="js/jquery-3.1.1.min.js" ></script>
   <script src="js/jquery.newsTicker.min.js" ></script>
+  <script src="../../node_modules/vis/dist/vis.js"></script>
 
 </body>
 </html>
