@@ -130,6 +130,7 @@ function Main() {
 
 
     // MARK: - Event Listeners
+    network.on("zoom", Zoom);
     network.on("oncontext", RightClick);
     network.on("click", Click);
     network.on("doubleClick", DoubleClick);
@@ -404,6 +405,9 @@ function PickColor(type) {
 }
 
 // MARK: - Event Listeners
+function Zoom(params){
+    console.log(JSON.stringify(params.scale));
+}
 
 function RightClick(params) {
     params.event = "[original event]";
