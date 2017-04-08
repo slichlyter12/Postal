@@ -1,0 +1,32 @@
+.btn-larger {
+    font-size: 24px;
+    padding-top: 20px;
+    padding-right: 24px;
+    padding-bottom: 20px;
+    padding-left: 24px;
+}
+
+.center-block {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center-block-left {
+    margin-left: auto;
+    margin-right: auto;
+    float: left;
+}
+
+.center-block-right {
+    margin-left: auto;
+    margin-right: auto;
+    float: right;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+p.large {
+    font-size: 20px;
+}

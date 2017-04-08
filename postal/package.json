@@ -206,6 +206,29 @@
                                 "message": "Found TODO:",
                                 "isComment": true
                             }
+                        },
+                        {
+                            "title": "Incorrect String Naming Notification",
+                            "type": "notification",
+                            "filetypes": [
+                                "cpp"
+                            ],
+                            "options": {
+                                "notify": "(string [^s][^t][^r].*)",
+                                "message": "incorrectly named string:",
+                                "isComment": false
+                            }
+                        }, {
+                            "title": "IncorrectNaming TS Notification",
+                            "type": "notification",
+                            "filetypes": [
+                                "ts"
+                            ],
+                            "options": {
+                                "notify": "(var [^a-z].*)",
+                                "message": "Found variable with capital name",
+                                "isComment": false
+                            }
                         }
                     ]
                 }
@@ -232,9 +255,9 @@
         "child_process": "^1.0.2",
         "file-system": "^2.2.1",
         "find": "0.2.7",
+        "node-ipc": "^8.10.3",
         "open": "0.0.5",
-        "vis": "^4.17.0",
-        "ipc-node": "8.10.3"
+        "vis": "^4.17.0"
     },
     "repository": "https://github.com/slichlyter12/Postal/tree/master/postal",
     "license": "AGPL-3.0"

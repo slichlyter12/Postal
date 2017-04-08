@@ -23,6 +23,7 @@ var DFS; // Data File Structure
 var DLM; // Directory Link Manager
 var SLM; // SubContainer Link Manager
 var FLM; // File Link Manager
+var VLL = []; // Visible Link Lines
 
 // create network arrays
 var nodesArray = [];
@@ -88,6 +89,9 @@ function Main() {
         physics: {
             enabled: false
         },
+        interaction: {
+            navigationButtons: true
+        }
     };
 
     network = new vis.Network(container, data, options);
@@ -125,6 +129,7 @@ function Main() {
 
 
     // MARK: - Event Listeners
+    network.on("zoom", Zoom);
     network.on("oncontext", RightClick);
     network.on("click", Click);
     network.on("doubleClick", DoubleClick);
@@ -401,6 +406,10 @@ function PickColor(type) {
 }
 
 // MARK: - Event Listeners
+function Zoom(params){
+    console.log(JSON.stringify(params.scale));
+}
+
 function RightClick(params) {
     params.event = "[original event]";
 
@@ -433,18 +442,18 @@ function RightClick(params) {
 
 // LEFT CLICK
 function Click(params) {
-
     //Handle Edges
     if (params.edges.length > 0) {
-        for (var i = 0; i < edgesArray.length; i++) {
+        for (var i = 0; i < VLL.length; i++) {
             try {
-                network.clustering.updateEdge(edgesArray[i].id, {
+                network.clustering.updateEdge(VLL[i], {
                     label: ""
                 });
             } catch (err) {
                 alert("Edge update error: " + err);
             }
         }
+        VLL = [];
         for (var i = 0; i < params.edges.length; i++) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[i]);
             var link = SLM.getLinkByID(clickedEdgeID);
@@ -456,6 +465,7 @@ function Click(params) {
                 network.clustering.updateEdge(clickedEdgeID, {
                     label: newLabel
                 });
+                VLL.push(clickedEdgeID);
             } catch (err) {
                 alert("Edge update error: " + err);
             }
@@ -468,54 +478,45 @@ function Click(params) {
 
 
 function DoubleClick(params) {
-    console.log("!!doubleClick!!");
     var ID;
     var lineNumber;
     if (network.isCluster(params.nodes)) {
         var clusterNodes = network.getNodesInCluster(params.nodes);
-        //console.log(JSON.stringify(clusterNodes));
         ID = clusterNodes[0];
-        //console.log(JSON.stringify(ID));
-        console.log("this path: " + JSON.stringify(DFS[ID].path));
 
         if (DFS[ID].isSubContainer) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
             var link = SLM.getLinkByID(clickedEdgeID);
-            console.log(JSON.stringify(link.lineNumber));
             lineNumber = link.lineNumber;
         } else {
-            lineNumber = 0;
+            lineNumber = 1;
         }
 
     } else {
         ID = params.nodes;
-        //console.log(JSON.stringify(ID));
-        console.log(JSON.stringify(DFS[ID].path));
 
         if (DFS[ID].isSubContainer) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
             var link = SLM.getLinkByID(clickedEdgeID);
-            console.log(JSON.stringify(link.lineNumber));
             lineNumber = link.lineNumber;
         } else {
-            lineNumber = 0;
+            lineNumber = 1;
         }
 
     }
-    console.log(DFS[ID].type);
 
     if (DFS[ID].type != "dir") {
-        console.log("!!sendMessageToVSCode!!");
+        var window = electron.remote.getCurrentWindow();
+        window.blur(); 
         var path = (DFS[ID].path);
-        sendMessageToVSCode({ 'test': "test", 'path': path, 'lineNumber': lineNumber });
-
+        var lineNumberString = String(lineNumber);
+        sendMessageToVSCode({ 'path': path, 'lineNumber': lineNumberString });
     } else {
         //do nothing if dir
     }
-
-
-
 }
+
+// MARK: END EVENT LISTENERS
 
 function toolbarButtons() {
     document.getElementById("close-window").addEventListener("click", function(e) {
@@ -526,11 +527,6 @@ function toolbarButtons() {
     document.getElementById("min-window").addEventListener("click", function(e) {
         var window = electron.remote.getCurrentWindow();
         window.minimize();
-
-
-        // MARK: END EVENT LISTENERS
-
-
     });
 }
 
