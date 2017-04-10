@@ -136,7 +136,7 @@ function Main() {
 
 
     // MARK: - Event Listeners
-    network.on("zoom", Zoom);
+    //network.on("zoom", Zoom);
     network.on("oncontext", RightClick);
     network.on("click", Click);
     network.on("doubleClick", DoubleClick);
@@ -183,7 +183,12 @@ function Main() {
 
     physicsButton(network, options);
     structureButton(network, options);
+
+
+    zoomFont(network, options);
+
     fileLinksButton(network,options);
+
 }
 
 
@@ -418,24 +423,6 @@ function PickColor(type) {
 }
 
 // MARK: - Event Listeners
-function Zoom(params){
-    for(var i = 0; i < nodesArray.length; i++){
-        if(DFS[i].subContainers.length > 0){
-            nodesArray[i].font.size = String(10 * DFS[i].subContainers.length * (1/params.scale));
-        }
-    }
-    /*nodes = nodesArray;
-    edges = edgesArray;
-    data = {
-        nodes: nodes,
-        edges: edges
-    };*/
-    /*options.nodes = nodesArray;
-    network.setOptions(options);
-    network.redraw();*/
-    console.log(JSON.stringify(nodesArray));
-    console.log(JSON.stringify(params.scale));
-}
 
 function RightClick(params) {
     params.event = "[original event]";
@@ -546,6 +533,22 @@ function DoubleClick(params) {
 }
 
 // MARK: END EVENT LISTENERS
+function zoomFont(network, options){
+    network.on("zoom", function (params){
+        for(var i = 0; i < nodesArray.length; i++){
+            if(DFS[i].subContainers.length > 0){
+                //nodesArray[i].font.size = String(10 * DFS[i].subContainers.length * (1/params.scale));
+            }
+        }
+        
+        //options.nodes = {nodesArray}
+        //network.setOptions(options);
+        //network.redraw();
+        console.log(JSON.stringify(nodesArray));
+        console.log(JSON.stringify(params.scale));
+    });
+    
+}
 
 function toolbarButtons() {
     document.getElementById("close-window").addEventListener("click", function(e) {
