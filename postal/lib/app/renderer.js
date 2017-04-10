@@ -148,9 +148,15 @@ function Main() {
         if (arrowDir == "left") {
             arrowDir = "right"
             this.innerHTML = "&#10095;";
+            var zoombtn = document.getElementsByClassName("vis-button vis-zoomExtends");
+            zoombtn[0].style.setProperty("right", "33%", "important");
+            zoombtn[0].style.setProperty("-webkit-transition-duration", "0.5s");
         } else if (arrowDir == "right") {
             arrowDir = "left";
             this.innerHTML = "&#10094;";
+            var zoombtn = document.getElementsByClassName("vis-button vis-zoomExtends");
+            zoombtn[0].style.setProperty("right", "5%", "important");
+            zoombtn[0].style.setProperty("-webkit-transition-duration", "0.5s");
         }
     });
     document.getElementById("error-window-btn").addEventListener("mousemove", function(e) {
@@ -413,6 +419,21 @@ function PickColor(type) {
 
 // MARK: - Event Listeners
 function Zoom(params){
+    for(var i = 0; i < nodesArray.length; i++){
+        if(DFS[i].subContainers.length > 0){
+            nodesArray[i].font.size = String(10 * DFS[i].subContainers.length * (1/params.scale));
+        }
+    }
+    /*nodes = nodesArray;
+    edges = edgesArray;
+    data = {
+        nodes: nodes,
+        edges: edges
+    };*/
+    /*options.nodes = nodesArray;
+    network.setOptions(options);
+    network.redraw();*/
+    console.log(JSON.stringify(nodesArray));
     console.log(JSON.stringify(params.scale));
 }
 
@@ -639,9 +660,10 @@ function populateNotificationsList() {
             for (var j = 0; j < DFS[i].notifications.length; j++) {
                 var message = DFS[i].notifications[j].message;
                 var lineNumber = DFS[i].notifications[j].lineNumber;
+                var filename = DFS[i].name;
 
                 var htmlNode = document.createElement("LI");
-                htmlNode.innerHTML = "<span class='message'>" + message + "</span>   <span class='lineNumber'> Line: " + lineNumber + "</span>";
+                htmlNode.innerHTML = "<span class='filename'>" + filename + "</span><span class='lineNumber'>:" + lineNumber + "</span><span class='message'> " + message + "</span>";
                 document.getElementById('newsTickerList').appendChild(htmlNode);
             }
         }

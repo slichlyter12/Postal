@@ -2,7 +2,7 @@
   "name": "postal",
   "displayName": "Postal",
   "description": "A tool to help visualize code file systems",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "publisher": "postal-team",
   "engines": {
     "vscode": "^1.9.0"
@@ -11,26 +11,17 @@
     "Other"
   ],
   "keywords": [
-    "postal",
-    "file",
+    "visualize",
+    "project directory",
     "map",
-    "visual",
-    "link",
-    "hyperlink",
-    "ui",
-    "gui",
     "web",
-    "hierarchy",
-    "visualization",
-    "grammar",
-    "parser",
-    "scanner"
+    "hierarchy"
   ],
   "activationEvents": [
     "onCommand:extension.parse",
     "onCommand:extension.error"
   ],
-  "icon": "./images/postalLogo.png",
+  "icon": "images/postalLogo.png",
   "main": "./out/src/extension",
   "controllerMain": "./lib/controller",
   "contributes": {

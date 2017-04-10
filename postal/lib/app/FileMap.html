@@ -12,8 +12,8 @@
   </head>
 <body>
   <div id="toolbar">
-    <button type="button" id="close-window" >&#10060;</button>
-    <button type="button" id="min-window" >&#10134;</button>
+    <button type="button" id="close-window" >&times;</button>
+    <button type="button" id="min-window" >&minus;</button>
     <button type="button" id="structure-btn" >Structure: Hierarchy</button>
     <button type="button" id="physics-btn" >Physics: Off</button>
     <button type="button" id="fileLinks-btn" >FileLinks: Off</button>
@@ -23,14 +23,17 @@
      
       <div id="slideout">
         <span id="error-list-title"><h3 style="text-align: center">Notifications</h3></span>
-        <button type="button" id="next-error-btn" >Next</button>
-        <button type="button" id="prev-error-btn" >Prev</button>
+        <div id="next-prev-buttons">
+          <button type="button" id="prev-error-btn" >Prev</button>
+          <button type="button" id="next-error-btn" >Next</button>
+        </div>
         <ul class="newsticker" id="newsTickerList"></ul>
       </div>
     
     </div>
     <!--<div class="vis-network vis-navigation vis-button vis-zoomExtends" ></div>-->
   </div>
+  
   <div id="configuration"></div>
   <div id="mynetwork"></div>
   <pre id="eventSpan"></pre>
