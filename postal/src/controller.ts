@@ -431,7 +431,7 @@ export class Controller {
     public jumpToFilesLine(filename: string, lineNum: number) {
          let uri = Uri.parse("file:" + filename);
         vscode.workspace.openTextDocument(uri).then( doc => {
-            console.log(doc);
+            //console.log(doc);
             vscode.window.showTextDocument(doc).then( poo => {
                 this.jumpToLine(lineNum);
             }); 
@@ -444,7 +444,7 @@ export class Controller {
     public fileToEditor(fileName: string) {
         let uri = Uri.parse("file:" + fileName);
         vscode.workspace.openTextDocument(uri).then( doc => {
-            console.log(doc);
+            //console.log(doc);
             vscode.window.showTextDocument(doc);
         }, reason => {
             console.log(reason);
@@ -490,7 +490,7 @@ export class Controller {
                     'socket.disconnected',
                     function(socket, destroyedSocketID) {
                         //ipc.log('client ' + destroyedSocketID + ' has disconnected!');
-                        ipc.log("killin it");
+                        //ipc.log("killin it");
 						ipc.server.stop();
                     }
                 );
