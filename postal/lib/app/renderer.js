@@ -278,11 +278,11 @@ function fillInitialEdges() {
         var link = condensedLinks[i];
         edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(52, 52, 52)' } });
     }
-    condensedLinks = FLM.getCondensedLinks();
+    /*condensedLinks = FLM.getCondensedLinks();
     for (var i = 0; i < condensedLinks.length; i++) {
         var link = condensedLinks[i];
         edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(255, 52, 52)' } });
-    }
+    }*/
 }
 
 function buildClusters(nodeID) {
@@ -457,7 +457,6 @@ function RightClick(params) {
 // LEFT CLICK
 function Click(params) {
     //Handle Edges
-    copyNodeLocations();
     if (params.edges.length > 0) {
         for (var i = 0; i < VLL.length; i++) {
             try {
@@ -500,7 +499,7 @@ function DoubleClick(params) {
         var clusterNodes = network.getNodesInCluster(params.nodes);
         ID = clusterNodes[0];
 
-        if (DFS[ID].isSubContainer) {
+        if (DFS[ID].isSubContainer != undefined && DFS[ID].isSubContainer == true) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
             var link = SLM.getLinkByID(clickedEdgeID);
             lineNumber = link.lineNumber;
@@ -511,7 +510,7 @@ function DoubleClick(params) {
     } else {
         ID = params.nodes;
         console.log("Isn't in cluster" + ID);
-        if (DFS[ID].isSubContainer) {
+        if (DFS[ID].isSubContainer != undefined && DFS[ID].isSubContainer == true) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
             var link = SLM.getLinkByID(clickedEdgeID);
             lineNumber = link.lineNumber;
