@@ -38,6 +38,9 @@ body{
     color: white;
     float: right;
 }
+#min-window:hover, #close-window:hover{
+    background-color: #444444;
+}
 
 #physics-btn{
     -webkit-app-region: no-drag;
@@ -94,6 +97,9 @@ body{
     transition-duration: 0.5s;
     z-index: 10;
     clear: both;
+}
+#error-window-btn:hover{
+    cursor: pointer;
 }
 #error-window-btn.on{
     position: absolute;

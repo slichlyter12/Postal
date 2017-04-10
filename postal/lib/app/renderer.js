@@ -143,9 +143,15 @@ function Main() {
         if (arrowDir == "left") {
             arrowDir = "right"
             this.innerHTML = "&#10095;";
+            var zoombtn = document.getElementsByClassName("vis-button vis-zoomExtends");
+            zoombtn[0].style.setProperty("right", "33%", "important");
+            zoombtn[0].style.setProperty("-webkit-transition-duration", "0.5s");
         } else if (arrowDir == "right") {
             arrowDir = "left";
             this.innerHTML = "&#10094;";
+            var zoombtn = document.getElementsByClassName("vis-button vis-zoomExtends");
+            zoombtn[0].style.setProperty("right", "5%", "important");
+            zoombtn[0].style.setProperty("-webkit-transition-duration", "0.5s");
         }
     });
     document.getElementById("error-window-btn").addEventListener("mousemove", function(e) {
