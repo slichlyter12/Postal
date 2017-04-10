@@ -10,8 +10,6 @@ var ipc = require('node-ipc');
 ipc.config.id = 'hello';
 ipc.config.retry = 1500;
 
-//initConnectionToVScode();
-
 //Globals
 var isPhysics = false;
 var structure = "hierarchy";
@@ -577,33 +575,11 @@ function structureButton(network, options) {
     });
 }
 
-// do we need this?
-// function initConnectionToVScode() {
-//     ipc.connectTo(
-//         'world',
-//         function() {
-//             ipc.of.world.on(
-//                 'connect',
-//                 function() {
-//                     ipc.log('## connected to world ##'.rainbow, ipc.config.delay);
-//                 }
-//             );
-//             ipc.of.world.on(
-//                 'disconnect',
-//                 function() {
-//                     ipc.log('disconnected from world'.notice);
-//                 }
-//             );
-//         }
-//     );
-// }
-
 /*
     type: [double_click, kill_server]
     
 */
 function sendMessageToVSCode(type, message) {
-    console.log("Test " + message);
     ipc.connectTo(
         'world',
         function() {
