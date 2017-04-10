@@ -537,13 +537,13 @@ function zoomFont(network, options){
     network.on("zoom", function (params){
         for(var i = 0; i < nodesArray.length; i++){
             if(DFS[i].subContainers.length > 0){
-                //nodesArray[i].font.size = String(10 * DFS[i].subContainers.length * (1/params.scale));
+                nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1/params.scale);
             }
         }
         
         //options.nodes = {nodesArray}
-        //network.setOptions(options);
-        //network.redraw();
+        network.setOptions(options);
+        network.redraw();
         console.log(JSON.stringify(nodesArray));
         console.log(JSON.stringify(params.scale));
     });
