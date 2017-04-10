@@ -10,7 +10,7 @@ var ipc = require('node-ipc');
 ipc.config.id = 'hello';
 ipc.config.retry = 1500;
 
-initConnectionToVScode();
+//initConnectionToVScode();
 
 //Globals
 var isPhysics = false;
@@ -105,22 +105,22 @@ function Main() {
 
     var notificationsArray = buildNotificationsArray();
 
-    network.on("afterDrawing", function (ctx) {
-      for(i = 0; i < notificationsArray.length; i++){
-        var nodeid = notificationsArray[i].nodeid;
-        var varSize = 12 + (6 * (DFS[nodeid].links.length));
+    network.on("afterDrawing", function(ctx) {
+        for (i = 0; i < notificationsArray.length; i++) {
+            var nodeid = notificationsArray[i].nodeid;
+            var varSize = 12 + (6 * (DFS[nodeid].links.length));
 
-        nodeid = network.clustering.findNode(nodeid)[0];
-        var nodePosition = network.getPositions([nodeid]);
+            nodeid = network.clustering.findNode(nodeid)[0];
+            var nodePosition = network.getPositions([nodeid]);
 
-        
-        ctx.fillStyle = '#FF0000';
-        ctx.strokeStyle = '#FFFFFF';
-        ctx.lineWidth = 1 + (varSize/40);
-        ctx.circle(nodePosition[nodeid].x + (varSize * 11 / 16), nodePosition[nodeid].y - (varSize * 11 / 16), 4 + (varSize/20));
-        ctx.fill();
-        ctx.stroke();
-      }
+
+            ctx.fillStyle = '#FF0000';
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = 1 + (varSize / 40);
+            ctx.circle(nodePosition[nodeid].x + (varSize * 11 / 16), nodePosition[nodeid].y - (varSize * 11 / 16), 4 + (varSize / 20));
+            ctx.fill();
+            ctx.stroke();
+        }
     });
 
 
@@ -319,13 +319,13 @@ function clusterNodes(clusterHeadID) {
 }
 
 
-function buildNotificationsArray(){
+function buildNotificationsArray() {
     var notificationsArray = [];
-    for(var i = 0; i < DFS.length; i++){
-        if(DFS[i].notifications != undefined){
-            for(var j = 0; j < DFS[i].notifications.length; j++){
+    for (var i = 0; i < DFS.length; i++) {
+        if (DFS[i].notifications != undefined) {
+            for (var j = 0; j < DFS[i].notifications.length; j++) {
                 notificationsArray.push(DFS[i].notifications[j]);
-                notificationsArray[notificationsArray.length-1].nodeid = i;
+                notificationsArray[notificationsArray.length - 1].nodeid = i;
             }
         }
     }
@@ -412,7 +412,7 @@ function PickColor(type) {
 }
 
 // MARK: - Event Listeners
-function Zoom(params){
+function Zoom(params) {
     console.log(JSON.stringify(params.scale));
 }
 
@@ -513,10 +513,10 @@ function DoubleClick(params) {
 
     if (DFS[ID].type != "dir") {
         var window = electron.remote.getCurrentWindow();
-        window.blur(); 
+        window.blur();
         var path = (DFS[ID].path);
         var lineNumberString = String(lineNumber);
-        sendMessageToVSCode({ 'path': path, 'lineNumber': lineNumberString });
+        sendMessageToVSCode('double_click', { 'path': path, 'lineNumber': lineNumberString });
     } else {
         //do nothing if dir
     }
@@ -577,34 +577,38 @@ function structureButton(network, options) {
     });
 }
 
-// this is how we send a message to VSCode 
-function initConnectionToVScode() {
-    ipc.connectTo(
-        'world',
-        function() {
-            ipc.of.world.on(
-                'connect',
-                function() {
-                    ipc.log('## connected to world ##'.rainbow, ipc.config.delay);
-                }
-            );
-            ipc.of.world.on(
-                'disconnect',
-                function() {
-                    ipc.log('disconnected from world'.notice);
-                }
-            );
-        }
-    );
-}
+// do we need this?
+// function initConnectionToVScode() {
+//     ipc.connectTo(
+//         'world',
+//         function() {
+//             ipc.of.world.on(
+//                 'connect',
+//                 function() {
+//                     ipc.log('## connected to world ##'.rainbow, ipc.config.delay);
+//                 }
+//             );
+//             ipc.of.world.on(
+//                 'disconnect',
+//                 function() {
+//                     ipc.log('disconnected from world'.notice);
+//                 }
+//             );
+//         }
+//     );
+// }
 
-function sendMessageToVSCode(message) {
+/*
+    type: [double_click, kill_server]
+    
+*/
+function sendMessageToVSCode(type, message) {
     console.log("Test " + message);
     ipc.connectTo(
         'world',
         function() {
             ipc.of.world.emit(
-                'message',
+                type,
                 message
             );
         }
