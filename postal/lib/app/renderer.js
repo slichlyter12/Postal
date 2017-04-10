@@ -52,9 +52,6 @@ function Main() {
     // fill Directory Link Manager
     fillDLM();
 
-    // fill File Link Manager
-    fillFLM();
-
     // fill SubContainer Link Manager
     fillSLM();
 
@@ -96,6 +93,13 @@ function Main() {
         },
         interaction: {
             navigationButtons: true
+        },
+        edges: {
+            smooth: {
+                type: "continuous",
+                forceDirection: "vertical",
+                roundness: 1
+            }
         }
     };
 
@@ -108,6 +112,10 @@ function Main() {
         }
     }
 
+    // fill File Link Manager
+    fillFLM();
+
+    //handle notifications
     var notificationsArray = buildNotificationsArray();
 
     network.on("afterDrawing", function(ctx) {
@@ -219,15 +227,14 @@ function fillFLM() {
     for (var i = 0; i < DFS.length; i++) {
         if (DFS[i].type != "dir") {
             links = DFS[i].links;
-            //alert(links);
             for (var j = 0; j < links.length; j++) {
+                var fromID = (network.findNode(DFS[i].id)[0]);
+                var toID = (network.findNode(links[j].toFileStructid)[0]);
                 links[j].isEnabled = false;
-                links[j].from = DFS[i].id;
-
+                links[j].from = fromID;
+                links[j].to = toID;
                 allLinks.push(links[j]);
             }
-        } else if (DFS[i].isSubContainer == true) {
-            break;
         }
     }
 
@@ -361,32 +368,7 @@ function addNodeToNodeArray(id) {
     return;
 }
 
-function turnOffAllFileLinks() {
-    var fileLinks = FLM.getCondensedLinks();
-    for (var i = 0; i < fileLinks.length; i++) {
-        if (fileLinks[i].isEnabled == true) {
-            try {
-                edges.remove(fileLinks[i].id);
-            } catch (err) {
-                alert("turn off file link error: " + err);
-                return;
-            }
 
-            FLM.setEnabledByID(fileLinks[i].id, false);
-        }
-    }
-}
-
-
-function updateFromFileLinks(newFromID) {
-    var links = getAllLinksFromFileStructRecursive(newFromID);
-    if (links.length > 0) {
-        for (var i = 0; i < links.length; i++) {
-            var linkID = links[i].id;
-            FLM.setFromByID(linkID, newFromID);
-        }
-    }
-}
 
 function PickColor(type) {
     switch (type) {
@@ -612,20 +594,99 @@ function structureButton(network, options) {
 function fileLinksButton(network, options) {
     document.getElementById("fileLinks-btn").addEventListener("click", function(e) {
         if (isFileLinksVisible) {
-            isFileLinksVisible = false;
-            this.innerHTML = "File Links: Off";
-            enableFileLinks(network);
-        } else {
+           isFileLinksVisible = false;
+           this.innerHTML = "File Links: Off";
+           turnOffAllFileLinks();
+        } 
+        else{
             isFileLinksVisible = true;
             this.innerHTML = "File Links: On";
-        }
+            turnOnAllFileLinks();
+    }
+
 
     });
 }
 
-function enableFileLinks(network) {
 
+
+function turnOnAllFileLinks() {
+    var fileLinks = FLM.getCondensedLinks();
+    for (var i = 0; i < fileLinks.length; i++) {
+        FLM.setEnabledByID(fileLinks[i].id, true)
+        try {
+            edges.add(fileLinks[i].id);
+        } catch (err) {
+            alert("turn off file link error: " + err);
+            return;
+        }
+    }
 }
+
+
+function turnOffAllFileLinks() {
+    var fileLinks = FLM.getCondensedLinks();
+    for (var i = 0; i < fileLinks.length; i++) {
+        if (fileLinks[i].isEnabled == true) {
+            try {
+                edges.remove(fileLinks[i].id);
+            } catch (err) {
+                alert("turn off file link error: " + err);
+                return;
+            }
+
+            FLM.setEnabledByID(fileLinks[i].id, false);
+        }
+    }
+}
+
+
+function updateFromFileLinks(newFromID) {
+    var links = getAllLinksFromFileStructRecursive(newFromID);
+    if (links.length > 0) {
+        for (var i = 0; i < links.length; i++) {
+            var linkID = links[i].id;
+            FLM.setFromByID(linkID, newFromID);
+        }
+    }
+}
+
+
+
+// Recursive function to get all links from this and children
+function getAllLinksFromFileStructRecursive(FileStructID) {
+    var links = [];
+
+    // check parent
+    if (DFS[FileStructID].links.length > 0) {
+        for (var i = 0; i < DFS[FileStructID].links.length; i++) {
+            var link = DFS[FileStructID].links[i];
+            links.push(link);
+        }
+    }
+
+    // check children
+    if (DFS[FileStructID].subContainers.length > 0) {
+        var childLinks = [];
+        for (var i = 0; i < DFS[FileStructID].subContainers.length; i++) {
+            var childFileStructID = DFS[DFS[FileStructID].subContainers[i].toFileStructid].id;
+            childLinks = getAllLinksFromFileStructRecursive(childFileStructID);
+
+            // push what we found to parents link list
+            for (var j = 0; j < childLinks.length; j++) {
+                links.push(childLinks[j]);
+            }
+
+        }
+    } 
+
+    return links;
+}
+
+
+
+
+
 
 
 /*
