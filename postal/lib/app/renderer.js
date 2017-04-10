@@ -535,7 +535,10 @@ function DoubleClick(params) {
 function zoomFont(network, options){
     network.on("zoom", function (params){
         for(var i = 0; i < nodesArray.length; i++){
-            if(DFS[i].subContainers.length > 0){
+            if(DFS[i].links.length > 0 && DFS[i].level != 0){
+                nodesArray[i].font.size = 10 * DFS[i].links.length * (1/params.scale);
+            }
+            else if(DFS[i].subContainers.length > 0){
                 nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1/params.scale);
             }
         }
