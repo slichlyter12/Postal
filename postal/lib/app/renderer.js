@@ -10,8 +10,6 @@ var ipc = require('node-ipc');
 ipc.config.id = 'hello';
 ipc.config.retry = 1500;
 
-initConnectionToVScode();
-
 //Globals
 var isPhysics = false;
 var isFileLinksVisible = false;
@@ -120,28 +118,23 @@ function Main() {
     //handle notifications
     var notificationsArray = buildNotificationsArray();
 
-    network.on("afterDrawing", function (ctx) {
-      for(i = 0; i < notificationsArray.length; i++){
-        var nodeid = notificationsArray[i].nodeid;
-        var varSize = 12 + (6 * (DFS[nodeid].links.length));
+    network.on("afterDrawing", function(ctx) {
+        for (i = 0; i < notificationsArray.length; i++) {
+            var nodeid = notificationsArray[i].nodeid;
+            var varSize = 12 + (6 * (DFS[nodeid].links.length));
 
-        nodeid = network.clustering.findNode(nodeid)[0];
-        var nodePosition = network.getPositions([nodeid]);
+            nodeid = network.clustering.findNode(nodeid)[0];
+            var nodePosition = network.getPositions([nodeid]);
 
-        
-        ctx.fillStyle = '#FF0000';
-        ctx.strokeStyle = '#FFFFFF';
-        ctx.lineWidth = 1 + (varSize/40);
-        ctx.circle(nodePosition[nodeid].x + (varSize * 11 / 16), nodePosition[nodeid].y - (varSize * 11 / 16), 4 + (varSize/20));
-        ctx.fill();
-        ctx.stroke();
-      }
+
+            ctx.fillStyle = '#FF0000';
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = 1 + (varSize / 40);
+            ctx.circle(nodePosition[nodeid].x + (varSize * 11 / 16), nodePosition[nodeid].y - (varSize * 11 / 16), 4 + (varSize / 20));
+            ctx.fill();
+            ctx.stroke();
+        }
     });
-
-
-
-
-
 
     // MARK: - Event Listeners
     //network.on("zoom", Zoom);
@@ -195,7 +188,7 @@ function Main() {
 
     zoomFont(network, options);
 
-    fileLinksButton(network,options);
+    fileLinksButton(network, options);
 
 }
 
@@ -336,13 +329,13 @@ function clusterNodes(clusterHeadID) {
 }
 
 
-function buildNotificationsArray(){
+function buildNotificationsArray() {
     var notificationsArray = [];
-    for(var i = 0; i < DFS.length; i++){
-        if(DFS[i].notifications != undefined){
-            for(var j = 0; j < DFS[i].notifications.length; j++){
+    for (var i = 0; i < DFS.length; i++) {
+        if (DFS[i].notifications != undefined) {
+            for (var j = 0; j < DFS[i].notifications.length; j++) {
                 notificationsArray.push(DFS[i].notifications[j]);
-                notificationsArray[notificationsArray.length-1].nodeid = i;
+                notificationsArray[notificationsArray.length - 1].nodeid = i;
             }
         }
     }
@@ -405,7 +398,6 @@ function PickColor(type) {
 }
 
 // MARK: - Event Listeners
-
 function RightClick(params) {
     params.event = "[original event]";
 
@@ -504,31 +496,31 @@ function DoubleClick(params) {
 
     if (DFS[ID].type != "dir") {
         var window = electron.remote.getCurrentWindow();
-        window.blur(); 
+        window.blur();
         var path = (DFS[ID].path);
         var lineNumberString = String(lineNumber);
-        sendMessageToVSCode({ 'path': path, 'lineNumber': lineNumberString });
+        sendMessageToVSCode('double_click', { 'path': path, 'lineNumber': lineNumberString });
     } else {
         //do nothing if dir
     }
 }
 
 // MARK: END EVENT LISTENERS
-function zoomFont(network, options){
-    network.on("zoom", function (params){
-        for(var i = 0; i < nodesArray.length; i++){
-            if(DFS[i].subContainers.length > 0){
+function zoomFont(network, options) {
+    network.on("zoom", function(params) {
+        for (var i = 0; i < nodesArray.length; i++) {
+            if (DFS[i].subContainers.length > 0) {
                 //nodesArray[i].font.size = String(10 * DFS[i].subContainers.length * (1/params.scale));
             }
         }
-        
+
         //options.nodes = {nodesArray}
         //network.setOptions(options);
         //network.redraw();
         console.log(JSON.stringify(nodesArray));
         console.log(JSON.stringify(params.scale));
     });
-    
+
 }
 
 function toolbarButtons() {
@@ -583,6 +575,7 @@ function structureButton(network, options) {
 
     });
 }
+
 function fileLinksButton(network, options) {
     document.getElementById("fileLinks-btn").addEventListener("click", function(e) {
         if (isFileLinksVisible) {
@@ -596,8 +589,10 @@ function fileLinksButton(network, options) {
             turnOnAllFileLinks();
     }
 
+
     });
 }
+
 
 
 function turnOnAllFileLinks() {
@@ -676,34 +671,19 @@ function getAllLinksFromFileStructRecursive(FileStructID) {
 
 
 
-// this is how we send a message to VSCode 
-function initConnectionToVScode() {
-    ipc.connectTo(
-        'world',
-        function() {
-            ipc.of.world.on(
-                'connect',
-                function() {
-                    ipc.log('## connected to world ##'.rainbow, ipc.config.delay);
-                }
-            );
-            ipc.of.world.on(
-                'disconnect',
-                function() {
-                    ipc.log('disconnected from world'.notice);
-                }
-            );
-        }
-    );
-}
 
-function sendMessageToVSCode(message) {
-    console.log("Test " + message);
+
+
+/*
+    type: [double_click, kill_server]
+    
+*/
+function sendMessageToVSCode(type, message) {
     ipc.connectTo(
         'world',
         function() {
             ipc.of.world.emit(
-                'message',
+                type,
                 message
             );
         }
