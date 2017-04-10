@@ -9,7 +9,7 @@ Expect new releases often within the following months of release.
 Our final goal of the project is to allow users to easily tune the visualization of their project through the use of the grammars.json file.
 We also plan to add functionality to display user-defined errors within the visualization window.
 
-![File Map Example](./images/fileMap.png "File Map Example")
+![File Map Example](./images/filemap.png)
 
 
 ## Features
@@ -17,7 +17,7 @@ We also plan to add functionality to display user-defined errors within the visu
 * Generate subcomponents of files based on parsing behaviors defined in the user editable file grammars.json
 * Current options include tagged projects (i.e. HTML) and links (hrefs within HTML)
 
-###Notes: 
+### Notes: 
 * This is an early release of Postal (alpha build)
 * Several features are not yet complete and we expect buggy behavior 
 * (Use at your own risk, and/or frustration)
