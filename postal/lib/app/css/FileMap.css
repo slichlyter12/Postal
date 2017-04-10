@@ -18,35 +18,26 @@ body{
     -webkit-user-select: all;
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
-    
     width: 100%;
     height: 35px;
     background-color: #1e1e1e;
 }
-#min-window{
+
+#min-window, #close-window {
     -webkit-app-region: no-drag;
     -webkit-user-select: all;
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
-    width: 25px;
+    width: 50px;
+    height: 100%;
+    font-size: larger;
     background-color: #373737;
     border-color: #1e1e1e;
     border-width: 1px;
     color: white;
     float: right;
 }
-#close-window{
-    -webkit-app-region: no-drag;
-    -webkit-user-select: all;
-    margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-    width: 25px;
-    background-color: #373737;
-    border-color: #1e1e1e;
-    border-width: 1px;
-    color: white;
-    float: right;
-}
+
 #physics-btn{
     -webkit-app-region: no-drag;
     -webkit-user-select: all;
@@ -86,7 +77,7 @@ body{
 #error-window-btn{
     -webkit-app-region: no-drag;
     -webkit-user-select: all;
-    margin: 5px 0px 0px 0px;
+    margin: 0;
     padding: 0px 0px 0px 0px;
     width: 20px;
     height: 25px;
@@ -101,11 +92,13 @@ body{
     -webkit-transition-duration: 0.5s;
     transition-duration: 0.5s;
     z-index: 10;
+    clear: both;
 }
 #error-window-btn.on{
     position: absolute;
     float: none;
-    right: 500px;
+    right: 350px;
+    margin-top: 5px;
 }
 #slideout {
   -webkit-app-region: no-drag; 
@@ -115,7 +108,8 @@ body{
   position: fixed;
   top: 33px;
   right: -520px;
-  width: 500px;
+  width: 350px;
+  height: 100%;
   -webkit-transition-duration: 0.5s;
   transition-duration: 0.5s;
   z-index: 10;
@@ -131,10 +125,25 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     color: #000000;
     font-size: 16px;
+    height: 87% !important;
+    width: 80%;
 }
 .newsticker .lineNumber {
     font-weight: bold;
 }
+
+.newsticker li {
+    padding-bottom: 7px;
+}
+
+#next-prev-buttons {
+    display: block;
+    clear: both;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 #prev-error-btn{
     -webkit-app-region: no-drag;
     -webkit-user-select: all;
@@ -142,7 +151,7 @@ body{
     padding: 0px 0px 0px 0px;
     width: 50px;
     height: 20px;
-    float: right;
+    /*float: right;*/
     background-color: #515151;
     color: white;
     border-color: #cccccc;
@@ -156,7 +165,7 @@ body{
     padding: 0px 0px 0px 0px;
     width: 50px;
     height: 20px;
-    float: right;
+    /*float: right;*/
     background-color: #515151;
     color: white;
     border-color: #cccccc;
