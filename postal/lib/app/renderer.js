@@ -661,9 +661,10 @@ function populateNotificationsList() {
             for (var j = 0; j < DFS[i].notifications.length; j++) {
                 var message = DFS[i].notifications[j].message;
                 var lineNumber = DFS[i].notifications[j].lineNumber;
+                var filename = DFS[i].name;
 
                 var htmlNode = document.createElement("LI");
-                htmlNode.innerHTML = "<span class='message'>" + message + "</span>   <span class='lineNumber'> Line: " + lineNumber + "</span>";
+                htmlNode.innerHTML = "<span class='filename'>" + filename + "</span><span class='lineNumber'>:" + lineNumber + "</span><span class='message'> " + message + "</span>";
                 document.getElementById('newsTickerList').appendChild(htmlNode);
             }
         }

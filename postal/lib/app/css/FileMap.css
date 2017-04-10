@@ -129,8 +129,14 @@ body{
     height: 87% !important;
     width: 80%;
 }
-.newsticker .lineNumber {
+.newsticker .lineNumber, .newsticker .filename {
     font-weight: bold;
+    display: inline-block;
+}
+
+.newsticker .message {
+    display: block;
+    clear: both;
 }
 
 .newsticker li {
@@ -145,40 +151,26 @@ body{
     margin-left: auto;
 }
 
-#prev-error-btn{
+#prev-error-btn, #next-error-btn{
     -webkit-app-region: no-drag;
     -webkit-user-select: all;
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
     width: 50px;
     height: 20px;
-    /*float: right;*/
     background-color: #515151;
     color: white;
     border-color: #cccccc;
     border-width: 1px;
     font-size: 15px;
 }
-#next-error-btn{
-    -webkit-app-region: no-drag;
-    -webkit-user-select: all;
-    margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-    width: 50px;
-    height: 20px;
-    /*float: right;*/
-    background-color: #515151;
-    color: white;
-    border-color: #cccccc;
-    border-width: 1px;
-    font-size: 15px;
-}
+
 .vis-network .vis-navigation .vis-button.vis-zoomExtends{
-    /*background-image: url(img/network/zoomExtendsBlue.png) !important;*/
+    /*background-image: url(img/network/zoomExtends.png);*/
+    background-color: #000000;
     bottom: 9% !important;
     right: 5% !important;
     visibility: visible !important;
-
 }
 
 .vis-network .vis-navigation{
