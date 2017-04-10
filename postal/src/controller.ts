@@ -6,11 +6,10 @@ import * as path from 'path';
 import { Parser } from './parser'
 import { spawn } from 'child_process'
 
-
 var nodefs = require('fs');
 var finder = require('find');  
-// Making a 'process bridge' 
-var ipc = require('node-ipc'); 
+var ipc = require('node-ipc');	
+
 
 var isWin = /^win/.test(process.platform);
 
@@ -432,7 +431,7 @@ export class Controller {
     public jumpToFilesLine(filename: string, lineNum: number) {
          let uri = Uri.parse("file:" + filename);
         vscode.workspace.openTextDocument(uri).then( doc => {
-            console.log(doc);
+            //console.log(doc);
             vscode.window.showTextDocument(doc).then( poo => {
                 this.jumpToLine(lineNum);
             }); 
@@ -445,7 +444,7 @@ export class Controller {
     public fileToEditor(fileName: string) {
         let uri = Uri.parse("file:" + fileName);
         vscode.workspace.openTextDocument(uri).then( doc => {
-            console.log(doc);
+            //console.log(doc);
             vscode.window.showTextDocument(doc);
         }, reason => {
             console.log(reason);
@@ -460,36 +459,39 @@ export class Controller {
     }
 
     // Theoretically starting the server to connect with Electron Client
-    public startServer() {
+    private startServer() {
+        // this is a thing you can do. 
+        var controller = this;
+        
         ipc.config.id   = 'world';
         ipc.config.retry= 1500;
     
         ipc.serve(
             function(){
                  ipc.server.on(
-                    'message',
+                    'double_click',
                     function(data){
-                        console.log("This is what I got back:" + data.path + " and " + data.lineNumber );
+                        //console.log("This is what I got back:" + data.path + " and " + data.lineNumber );
                         var filename = data.path;
                         var lineNum = data.lineNumber;
 
-                        let uri = Uri.parse("file:" + filename);
-                        vscode.workspace.openTextDocument(uri).then( doc => {
-                            console.log(doc);
-                            vscode.window.showTextDocument(doc, 1, false).then( poo => {
-                                let sel = new vscode.Selection(lineNum - 1, 0, lineNum - 1, 0);
-                                vscode.window.activeTextEditor.selection = sel;
-                                vscode.window.activeTextEditor.revealRange(sel, vscode.TextEditorRevealType.Default);
-                            }); 
-                        }, reason => {
-                            console.log(reason);
-                        });
+						controller.jumpToFilesLine(filename, parseInt(lineNum));
                     }
                 );
+				// this will kill the server 
+				ipc.server.on(
+					'kill_server',
+					function(data){
+						ipc.server.stop();
+					}
+				);
+				// this should only happen if the user closes the electron window
                 ipc.server.on(
                     'socket.disconnected',
                     function(socket, destroyedSocketID) {
-                        ipc.log('client ' + destroyedSocketID + ' has disconnected!');
+                        //ipc.log('client ' + destroyedSocketID + ' has disconnected!');
+                        //ipc.log("killin it");
+						ipc.server.stop();
                     }
                 );
             }
@@ -498,5 +500,5 @@ export class Controller {
         ipc.server.start();
     }
 
-
 }
+
