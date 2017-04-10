@@ -2,7 +2,7 @@
     "name": "postal",
     "displayName": "Postal",
     "description": "A tool to help visualize code file systems",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "publisher": "postal-team",
     "engines": {
         "vscode": "^1.9.0"
@@ -11,26 +11,17 @@
         "Other"
     ],
     "keywords": [
-        "postal",
-        "file",
+        "visualize",
+        "project directory",
         "map",
-        "visual",
-        "link",
-        "hyperlink",
-        "ui",
-        "gui",
         "web",
-        "hierarchy",
-        "visualization",
-        "grammar",
-        "parser",
-        "scanner"
+        "hierarchy"
     ],
     "activationEvents": [
         "onCommand:extension.parse",
         "onCommand:extension.error"
     ],
-    "icon": "./images/postalLogo.png",
+    "icon": "images/postalLogo.png",
     "main": "./out/src/extension",
     "controllerMain": "./lib/controller",
     "contributes": {
@@ -43,222 +34,255 @@
                 "title": "Error"
             }
         ],
-        "configuration": {
-            "type": "object",
-            "title": "Postal Configuration",
-            "properties": {
-                "Postal.mapType": {
-                    "type": "string",
-                    "default": "hierachal",
-                    "description": "Way that the mapping is done: hierachal, nodal"
+        "keywords": [
+            "postal",
+            "file",
+            "map",
+            "visual",
+            "link",
+            "hyperlink",
+            "ui",
+            "gui",
+            "web",
+            "hierarchy",
+            "visualization",
+            "grammar",
+            "parser",
+            "scanner"
+        ],
+        "activationEvents": [
+            "onCommand:extension.parse",
+            "onCommand:extension.error"
+        ],
+        "icon": "./images/postalLogo.png",
+        "main": "./out/src/extension",
+        "controllerMain": "./lib/controller",
+        "contributes": {
+            "commands": [{
+                    "command": "extension.parse",
+                    "title": "Postal"
                 },
-                "Postal.physics": {
-                    "type": "boolean",
-                    "default": "false",
-                    "description": "Whether or not physics are applied to the map."
-                },
-                "Postal.ignore": {
-                    "type": "array",
-                    "items": {
+                {
+                    "command": "extension.error",
+                    "title": "Error"
+                }
+            ],
+            "configuration": {
+                "type": "object",
+                "title": "Postal Configuration",
+                "properties": {
+                    "Postal.mapType": {
                         "type": "string",
-                        "description": "regex of file you you want to ignore"
+                        "default": "hierachal",
+                        "description": "Way that the mapping is done: hierachal, nodal"
                     },
-                    "default": [
-                        "*.git"
-                    ],
-                    "description": "An array of regex that you want the map to ignore"
-                },
-                "Postal.grammars": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "description": "An array of grammar objects used to parse your project directory"
+                    "Postal.physics": {
+                        "type": "boolean",
+                        "default": "false",
+                        "description": "Whether or not physics are applied to the map."
                     },
-                    "default": [{
-                            "title": "div",
-                            "type": "tagged",
-                            "filetypes": [
-                                "html",
-                                "php"
-                            ],
-                            "options": {
-                                "tagStart": "<div",
-                                "namedOption": "id=\"(.+?)\"",
-                                "tagEnd": ">",
-                                "closingTag": "</div>",
-                                "nodeColor": "blue"
-                            }
+                    "Postal.ignore": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "regex of file you you want to ignore"
                         },
-                        {
-                            "title": "href link",
-                            "type": "link",
-                            "filetypes": [
-                                "html",
-                                "php"
-                            ],
-                            "options": {
-                                "link": "href=[\"](.+?)[\"]",
-                                "nodeColor": "blue"
-                            }
+                        "default": [
+                            "*.git"
+                        ],
+                        "description": "An array of regex that you want the map to ignore"
+                    },
+                    "Postal.grammars": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "description": "An array of grammar objects used to parse your project directory"
                         },
-                        {
-                            "title": "includes link",
-                            "type": "link",
-                            "filetypes": [
-                                "html",
-                                "php"
-                            ],
-                            "options": {
-                                "link": "include=[\"](.+?)[\"]",
-                                "nodeColor": "blue"
+                        "default": [{
+                                "title": "div",
+                                "type": "tagged",
+                                "filetypes": [
+                                    "html",
+                                    "php"
+                                ],
+                                "options": {
+                                    "tagStart": "<div",
+                                    "namedOption": "id=\"(.+?)\"",
+                                    "tagEnd": ">",
+                                    "closingTag": "</div>",
+                                    "nodeColor": "blue"
+                                }
+                            },
+                            {
+                                "title": "href link",
+                                "type": "link",
+                                "filetypes": [
+                                    "html",
+                                    "php"
+                                ],
+                                "options": {
+                                    "link": "href=[\"](.+?)[\"]",
+                                    "nodeColor": "blue"
+                                }
+                            },
+                            {
+                                "title": "includes link",
+                                "type": "link",
+                                "filetypes": [
+                                    "html",
+                                    "php"
+                                ],
+                                "options": {
+                                    "link": "include=[\"](.+?)[\"]",
+                                    "nodeColor": "blue"
+                                }
+                            },
+                            {
+                                "title": "body",
+                                "type": "tagged",
+                                "filetypes": [
+                                    "html",
+                                    "php"
+                                ],
+                                "options": {
+                                    "tagStart": "<body",
+                                    "tagEnd": ">",
+                                    "closingTag": "</body>",
+                                    "nodeColor": "blue"
+                                }
+                            },
+                            {
+                                "title": "php line comments 1",
+                                "type": "comment",
+                                "filetypes": [
+                                    "php"
+                                ],
+                                "options": {
+                                    "start": "//"
+                                }
+                            },
+                            {
+                                "title": "php line comments 2",
+                                "type": "comment",
+                                "filetypes": [
+                                    "php"
+                                ],
+                                "options": {
+                                    "start": "#"
+                                }
+                            },
+                            {
+                                "title": "php block comments",
+                                "type": "comment",
+                                "filetypes": [
+                                    "php"
+                                ],
+                                "options": {
+                                    "start": "/\\*",
+                                    "end": "\\*/"
+                                }
+                            },
+                            {
+                                "title": "html block comments",
+                                "type": "comment",
+                                "filetypes": [
+                                    "php",
+                                    "html"
+                                ],
+                                "options": {
+                                    "start": "<!--",
+                                    "end": "-->"
+                                }
+                            },
+                            {
+                                "title": "javascript requires",
+                                "type": "link",
+                                "filetypes": [
+                                    "js"
+                                ],
+                                "options": {
+                                    "link": "requires=[\"](.+?)[\"]",
+                                    "nodeColor": "blue"
+                                }
+                            },
+                            {
+                                "title": "c-like functions",
+                                "type": "c-like",
+                                "filetypes": [
+                                    "c"
+                                ],
+                                "options": {
+                                    "returnType": "",
+                                    "openParameterChar": "(",
+                                    "closeParameterChar": ")",
+                                    "openLogicChar": "{",
+                                    "closeLogicChar": "}"
+                                }
+                            },
+                            {
+                                "title": "TODO Notification",
+                                "type": "notification",
+                                "filetypes": [
+                                    "c"
+                                ],
+                                "options": {
+                                    "notify": "(TODO:.*)\n",
+                                    "message": "Found TODO:",
+                                    "isComment": true
+                                }
+                            },
+                            {
+                                "title": "Incorrect String Naming Notification",
+                                "type": "notification",
+                                "filetypes": [
+                                    "cpp"
+                                ],
+                                "options": {
+                                    "notify": "(string [^s][^t][^r].*)",
+                                    "message": "incorrectly named string:",
+                                    "isComment": false
+                                }
+                            }, {
+                                "title": "IncorrectNaming TS Notification",
+                                "type": "notification",
+                                "filetypes": [
+                                    "ts"
+                                ],
+                                "options": {
+                                    "notify": "(var [^a-z].*)",
+                                    "message": "Found variable with capital name",
+                                    "isComment": false
+                                }
                             }
-                        },
-                        {
-                            "title": "body",
-                            "type": "tagged",
-                            "filetypes": [
-                                "html",
-                                "php"
-                            ],
-                            "options": {
-                                "tagStart": "<body",
-                                "tagEnd": ">",
-                                "closingTag": "</body>",
-                                "nodeColor": "blue"
-                            }
-                        },
-                        {
-                            "title": "php line comments 1",
-                            "type": "comment",
-                            "filetypes": [
-                                "php"
-                            ],
-                            "options": {
-                                "start": "//"
-                            }
-                        },
-                        {
-                            "title": "php line comments 2",
-                            "type": "comment",
-                            "filetypes": [
-                                "php"
-                            ],
-                            "options": {
-                                "start": "#"
-                            }
-                        },
-                        {
-                            "title": "php block comments",
-                            "type": "comment",
-                            "filetypes": [
-                                "php"
-                            ],
-                            "options": {
-                                "start": "/\\*",
-                                "end": "\\*/"
-                            }
-                        },
-                        {
-                            "title": "html block comments",
-                            "type": "comment",
-                            "filetypes": [
-                                "php",
-                                "html"
-                            ],
-                            "options": {
-                                "start": "<!--",
-                                "end": "-->"
-                            }
-                        },
-                        {
-                            "title": "javascript requires",
-                            "type": "link",
-                            "filetypes": [
-                                "js"
-                            ],
-                            "options": {
-                                "link": "requires=[\"](.+?)[\"]",
-                                "nodeColor": "blue"
-                            }
-                        },
-                        {
-                            "title": "c-like functions",
-                            "type": "c-like",
-                            "filetypes": [
-                                "c"
-                            ],
-                            "options": {
-                                "returnType": "",
-                                "openParameterChar": "(",
-                                "closeParameterChar": ")",
-                                "openLogicChar": "{",
-                                "closeLogicChar": "}"
-                            }
-                        },
-                        {
-                            "title": "TODO Notification",
-                            "type": "notification",
-                            "filetypes": [
-                                "c"
-                            ],
-                            "options": {
-                                "notify": "(TODO:.*)\n",
-                                "message": "Found TODO:",
-                                "isComment": true
-                            }
-                        },
-                        {
-                            "title": "Incorrect String Naming Notification",
-                            "type": "notification",
-                            "filetypes": [
-                                "cpp"
-                            ],
-                            "options": {
-                                "notify": "(string [^s][^t][^r].*)",
-                                "message": "incorrectly named string:",
-                                "isComment": false
-                            }
-                        }, {
-                            "title": "IncorrectNaming TS Notification",
-                            "type": "notification",
-                            "filetypes": [
-                                "ts"
-                            ],
-                            "options": {
-                                "notify": "(var [^a-z].*)",
-                                "message": "Found variable with capital name",
-                                "isComment": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             }
-        }
-    },
-    "scripts": {
-        "vscode:prepublish": "tsc -p ./;",
-        "compile": "tsc -watch -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install & npm install"
-    },
-    "devDependencies": {
-        "@types/mocha": "^2.2.32",
-        "@types/node": "^6.0.40",
-        "mocha": "^2.3.3",
-        "randexp": "^0.4.4",
-        "typescript": "^2.0.3",
-        "vscode": "^1.0.0"
-    },
-    "dependencies": {
-        "app": "^0.1.0",
-        "browser-window": "^0.4.0",
-        "child_process": "^1.0.2",
-        "file-system": "^2.2.1",
-        "find": "0.2.7",
-        "node-ipc": "^8.10.3",
-        "open": "0.0.5",
-        "vis": "^4.17.0"
-    },
-    "repository": "https://github.com/slichlyter12/Postal/tree/master/postal",
-    "license": "AGPL-3.0"
-}
+        },
+        "scripts": {
+            "vscode:prepublish": "tsc -p ./;",
+            "compile": "tsc -watch -p ./",
+            "watch": "tsc -watch -p ./",
+            "postinstall": "node ./node_modules/vscode/bin/install & npm install"
+        },
+        "devDependencies": {
+            "@types/mocha": "^2.2.32",
+            "@types/node": "^6.0.40",
+            "mocha": "^2.3.3",
+            "randexp": "^0.4.4",
+            "typescript": "^2.0.3",
+            "vscode": "^1.0.0"
+        },
+        "dependencies": {
+            "app": "^0.1.0",
+            "browser-window": "^0.4.0",
+            "child_process": "^1.0.2",
+            "file-system": "^2.2.1",
+            "find": "0.2.7",
+            "node-ipc": "^8.10.3",
+            "open": "0.0.5",
+            "vis": "^4.17.0"
+        },
+        "repository": "https://github.com/slichlyter12/Postal/tree/master/postal",
+        "license": "AGPL-3.0"
+    }
