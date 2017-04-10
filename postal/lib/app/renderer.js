@@ -87,9 +87,9 @@ function Main() {
             hierarchical: {
                 direction: "UD",
                 sortMethod: "directed",
-                parentCentralization: false,
+                parentCentralization: true,
                 edgeMinimization: false,
-                blockShifting: false,
+                blockShifting: true,
                 levelSeparation: 200
             }
         },
