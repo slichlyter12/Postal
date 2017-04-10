@@ -529,9 +529,21 @@ function zoomFont(network, options){
         for(var i = 0; i < nodesArray.length; i++){
             if(DFS[i].links.length > 0 && DFS[i].level != 0){
                 nodesArray[i].font.size = 10 * DFS[i].links.length * (1/params.scale);
+                if(nodesArray[i].font.size > 70){
+                    nodesArray[i].font.size = 70;
+                }
+                else if(nodesArray[i].font.size < 10){
+                    nodesArray[i].font.size = 10;
+                }
             }
             else if(DFS[i].subContainers.length > 0){
                 nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1/params.scale);
+                if(nodesArray[i].font.size > 70){
+                    nodesArray[i].font.size = 70;
+                }
+                else if(nodesArray[i].font.size < 10){
+                    nodesArray[i].font.size = 10;
+                }
             }
         }
 
