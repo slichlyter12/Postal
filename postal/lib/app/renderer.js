@@ -25,6 +25,8 @@ var DLM; // Directory Link Manager
 var SLM; // SubContainer Link Manager
 var FLM; // File Link Manager
 var VLL = []; // Visible Link Lines
+var NXC; //Node X coordinate
+var NYC; //Node Y coordinate
 
 // create network arrays
 var nodesArray = [];
@@ -84,7 +86,11 @@ function Main() {
         layout: {
             hierarchical: {
                 direction: "UD",
-                sortMethod: "directed"
+                sortMethod: "directed",
+                parentCentralization: false,
+                edgeMinimization: false,
+                blockShifting: false,
+                levelSeparation: 200
             }
         },
         physics: {
@@ -261,11 +267,11 @@ function fillInitialEdges() {
         var link = condensedLinks[i];
         edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(52, 52, 52)' } });
     }
-    /*condensedLinks = FLM.getCondensedLinks();
+    condensedLinks = FLM.getCondensedLinks();
     for (var i = 0; i < condensedLinks.length; i++) {
         var link = condensedLinks[i];
         edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(255, 52, 52)' } });
-    }*/
+    }
 }
 
 function buildClusters(nodeID) {
@@ -304,7 +310,7 @@ function clusterNodes(clusterHeadID) {
             }
             return false;
         },
-        clusterNodeProperties: { id: iClusterCounter, label: struct.name, size: varSize, borderWidth: 4, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot' }
+        clusterNodeProperties: { id: iClusterCounter, label: struct.name, size: varSize, borderWidth: 4, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot', level: struct.level }
 
     };
     network.cluster(clusterOptionsByData);
@@ -346,7 +352,8 @@ function addNodeToNodeArray(id) {
     //alert("type: " + struct.type);
     var varColor = PickColor(struct.type);
     var varSize = 12 + (6 * (struct.links.length));
-    nodesArray.push({ id: struct.id, label: struct.name, size: varSize, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot' });
+    var nodeLevel = struct.level
+    nodesArray.push({ id: struct.id, label: struct.name, size: varSize, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot', level: nodeLevel });
     return;
 }
 
@@ -442,6 +449,7 @@ function RightClick(params) {
 // LEFT CLICK
 function Click(params) {
     //Handle Edges
+    copyNodeLocations();
     if (params.edges.length > 0) {
         for (var i = 0; i < VLL.length; i++) {
             try {
@@ -575,14 +583,20 @@ function fileLinksButton(network, options) {
         if (isFileLinksVisible) {
            isFileLinksVisible = false;
            this.innerHTML = "File Links: Off";
+           enableFileLinks(network);
         } 
         else{
             isFileLinksVisible = true;
-           this.innerHTML = "File Links: On";
+            this.innerHTML = "File Links: On";
     }
 
     });
 }
+
+function enableFileLinks(network){
+
+}
+
 
 // this is how we send a message to VSCode 
 function initConnectionToVScode() {

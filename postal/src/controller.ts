@@ -51,7 +51,7 @@ export class Controller {
             currSlashCounter = (path.match(/\//g) || []).length;
             topSlashCounter = (vscode.workspace.rootPath.match(/\//g) || []).length;
         }
-        var level = currSlashCounter - topSlashCounter - 1;
+        var level = currSlashCounter - topSlashCounter - 1 + 1; //plus one because there will be a main directory at 0
         return level;
     }
 
@@ -181,7 +181,7 @@ export class Controller {
         //Build Main Directory Node
         FileStructs.push({
                 id: this.nodeidCounter,
-                level: -1,
+                level: 0,
                 isSubContainer: false, //bool, Not files or dirs
                 name: this.nameSlicer(vscode.workspace.rootPath),
                 type: "dir",
@@ -299,50 +299,57 @@ export class Controller {
         }
         //linking subcontainers together, add between file links
         for(i = dirCount; i < filePaths.length + dirCount; i++){
-            try {
-                for(j = 0; j < tokens[i - dirCount].length; j++){
-                    if(tokens[i - dirCount][j].tokenType == "node" && tokens[i - dirCount][j].parentToken != undefined){
-                        try {
-                            parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
-                        } catch (err) {
-                            console.log(err);
-                        }
-                        
-                        
-                        subContainer = {
-                            id : this.linkidCounter,
-                            toFileStructid : tokens[i - dirCount][j].nodeid,
-                            lineNumber : tokens[i - dirCount][j].lineNumber
-                        };
-                        
-                        FileStructs[parentNodeid].subContainers.push(subContainer);
+            for(j = 0; j < tokens[i - dirCount].length; j++){
+                if(tokens[i - dirCount][j].tokenType == "node" && tokens[i - dirCount][j].parentToken != undefined){
+                    try {
+                        parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
+                    } catch (err) {
+                        console.log(err);
                     }
-                    else if(tokens[i - dirCount][j].tokenType == "link"){
                         
-                        var linkDestination = this.getNodeIdFromPath(tokens[i - dirCount][j].value, FileStructs);
-                        var linkcontainer = {
-                            id : this.linkidCounter,
-                            toFileStructid : linkDestination,
-                            lineNumber : tokens[i - dirCount][j].lineNumber
-                        }
-
-                        if (tokens[i - dirCount][j].parentToken != undefined) {
-                            var parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
-                            FileStructs[parentNodeid].links.push(linkcontainer);
-                        } else {
-                            FileStructs[i].links.push(linkcontainer);
-                        }
-                    }
-
-                    // increment linkidCounter
-                    this.linkidCounter++;
+                        
+                    subContainer = {
+                        id : this.linkidCounter,
+                        toFileStructid : tokens[i - dirCount][j].nodeid,
+                        lineNumber : tokens[i - dirCount][j].lineNumber
+                    };
+                    
+                    FileStructs[parentNodeid].subContainers.push(subContainer);
                 }
-            } catch (err) {
-                console.log(err);
+                else if(tokens[i - dirCount][j].tokenType == "link"){
+                        
+                    var linkDestination = this.getNodeIdFromPath(tokens[i - dirCount][j].value, FileStructs);
+                    var linkcontainer = {
+                        id : this.linkidCounter,
+                        toFileStructid : linkDestination,
+                        lineNumber : tokens[i - dirCount][j].lineNumber
+                    }
+
+                    if (tokens[i - dirCount][j].parentToken != undefined) {
+                        var parentNodeid = tokens[i - dirCount][tokens[i - dirCount][j].parentToken].nodeid;
+                        FileStructs[parentNodeid].links.push(linkcontainer);
+                    } else {
+                        FileStructs[i].links.push(linkcontainer);
+                    }
+                }
+
+                // increment linkidCounter
+                this.linkidCounter++;
             }
         }
 
-
+        //Update level information
+        for(i = dirCount; i < FileStructs.length; i++){
+            if(FileStructs[i].isSubContainer){
+                break;
+            }
+            if(FileStructs[i].subContainers.length != undefined){
+                for(var j = 0; j < FileStructs[i].subContainers.length; j++){
+                    FileStructs = this.updateFileStructLevelsRecursive(FileStructs[i].subContainers[j].toFileStructid, FileStructs[i].level, FileStructs);
+                }       
+            }
+        }
+       
         return FileStructs;
     }
 
@@ -359,6 +366,20 @@ export class Controller {
         }
 
         return Array.from(new Set(filetypes));
+    }
+
+
+    private updateFileStructLevelsRecursive(CurrentID, ParentLevel, FileStructs){
+        if(FileStructs[CurrentID].isSubContainer && FileStructs[CurrentID].level ==  null){
+            FileStructs[CurrentID].level = ParentLevel + 1;
+            if(FileStructs[CurrentID].subContainers.length != undefined){
+                for(var i = 0; i < FileStructs[CurrentID].subContainers.length; i++){
+                    this.updateFileStructLevelsRecursive(FileStructs[CurrentID].subContainers[i].toFileStructid, FileStructs[CurrentID].level, FileStructs);
+                }
+            }
+        }
+
+        return FileStructs
     }
 
 
