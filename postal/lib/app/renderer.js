@@ -14,6 +14,7 @@ initConnectionToVScode();
 
 //Globals
 var isPhysics = false;
+var isFileLinksVisible = false;
 var structure = "hierarchy";
 var iClusterCounter;
 var arrowDir = "left";
@@ -24,6 +25,8 @@ var DLM; // Directory Link Manager
 var SLM; // SubContainer Link Manager
 var FLM; // File Link Manager
 var VLL = []; // Visible Link Lines
+var NXC; //Node X coordinate
+var NYC; //Node Y coordinate
 
 // create network arrays
 var nodesArray = [];
@@ -83,7 +86,11 @@ function Main() {
         layout: {
             hierarchical: {
                 direction: "UD",
-                sortMethod: "directed"
+                sortMethod: "directed",
+                parentCentralization: false,
+                edgeMinimization: false,
+                blockShifting: false,
+                levelSeparation: 200
             }
         },
         physics: {
@@ -133,8 +140,6 @@ function Main() {
     network.on("oncontext", RightClick);
     network.on("click", Click);
     network.on("doubleClick", DoubleClick);
-    //network.on("selectNode", nodeSelect);
-    //network.on("deselectNode", nodeDeselect);
 
     document.getElementById("error-window-btn").addEventListener("click", function(e) {
         $('#slideout').toggleClass('on');
@@ -177,10 +182,13 @@ function Main() {
     toolbarButtons();
 
     physicsButton(network, options);
-
     structureButton(network, options);
 
+
     zoomFont(network, options);
+
+    fileLinksButton(network,options);
+
 }
 
 
@@ -313,7 +321,7 @@ function clusterNodes(clusterHeadID) {
             }
             return false;
         },
-        clusterNodeProperties: { id: iClusterCounter, label: struct.name, size: varSize, borderWidth: 4, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot' }
+        clusterNodeProperties: { id: iClusterCounter, label: struct.name, size: varSize, borderWidth: 4, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot', level: struct.level }
 
     };
     network.cluster(clusterOptionsByData);
@@ -355,7 +363,8 @@ function addNodeToNodeArray(id) {
     //alert("type: " + struct.type);
     var varColor = PickColor(struct.type);
     var varSize = 12 + (6 * (struct.links.length));
-    nodesArray.push({ id: struct.id, label: struct.name, size: varSize, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot' });
+    var nodeLevel = struct.level
+    nodesArray.push({ id: struct.id, label: struct.name, size: varSize, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot', level: nodeLevel });
     return;
 }
 
@@ -448,6 +457,7 @@ function RightClick(params) {
 // LEFT CLICK
 function Click(params) {
     //Handle Edges
+    copyNodeLocations();
     if (params.edges.length > 0) {
         for (var i = 0; i < VLL.length; i++) {
             try {
@@ -485,6 +495,7 @@ function Click(params) {
 function DoubleClick(params) {
     var ID;
     var lineNumber;
+    console.log("doubleclick ");
     if (network.isCluster(params.nodes)) {
         var clusterNodes = network.getNodesInCluster(params.nodes);
         ID = clusterNodes[0];
@@ -499,7 +510,7 @@ function DoubleClick(params) {
 
     } else {
         ID = params.nodes;
-
+        console.log("Isn't in cluster" + ID);
         if (DFS[ID].isSubContainer) {
             var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
             var link = SLM.getLinkByID(clickedEdgeID);
@@ -591,6 +602,25 @@ function structureButton(network, options) {
 
     });
 }
+function fileLinksButton(network, options) {
+    document.getElementById("fileLinks-btn").addEventListener("click", function(e) {
+        if (isFileLinksVisible) {
+           isFileLinksVisible = false;
+           this.innerHTML = "File Links: Off";
+           enableFileLinks(network);
+        } 
+        else{
+            isFileLinksVisible = true;
+            this.innerHTML = "File Links: On";
+    }
+
+    });
+}
+
+function enableFileLinks(network){
+
+}
+
 
 // this is how we send a message to VSCode 
 function initConnectionToVScode() {
@@ -626,55 +656,6 @@ function sendMessageToVSCode(message) {
     );
 }
 
-
-function physicsButton(network, options) {
-    document.getElementById("physics-btn").addEventListener("click", function(e) {
-        if (isPhysics) {
-            isPhysics = false;
-            this.innerHTML = "Physics: Off";
-            options.physics.enabled = false;
-            //options.physics.stabalization.enabled = true;
-            network.setOptions(options);
-            network.redraw();
-        } else {
-            isPhysics = true;
-            this.innerHTML = "Physics: On";
-            options.physics.enabled = true;
-            //options.physics.stabalization.enabled = true;
-            network.setOptions(options);
-            network.redraw();
-        }
-
-    });
-    document.getElementById("physics-btn").addEventListener("mousemove", function(e) {
-        document.getElementById("physics-btn").title = "Enable/disable physics for all nodes";
-    });
-
-}
-
-function structureButton(network, options) {
-    document.getElementById("structure-btn").addEventListener("click", function(e) {
-        if (structure === "hierarchy") {
-            structure = "web";
-            this.innerHTML = "Structure: Web";
-            options.layout.hierarchical.enabled = false;
-            network.setOptions(options);
-            network.redraw();
-        } else if (structure == "web") {
-            structure = "hierarchy";
-            this.innerHTML = "Structure: Hierarchy";
-            options.layout.hierarchical.enabled = true;
-            options.layout.hierarchical.direction = "UD";
-            options.layout.hierarchical.sortMethod = "directed";
-            network.setOptions(options);
-            network.redraw();
-        }
-
-    });
-    document.getElementById("structure-btn").addEventListener("mousemove", function(e) {
-        document.getElementById("structure-btn").title = "Change the node structure";
-    });
-}
 
 function populateNotificationsList() {
     for (var i = 0; i < DFS.length; i++) {
