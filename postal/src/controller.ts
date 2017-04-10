@@ -455,6 +455,7 @@ export class Controller {
                     'socket.disconnected',
                     function(socket, destroyedSocketID) {
                         //ipc.log('client ' + destroyedSocketID + ' has disconnected!');
+                        ipc.log("killin it");
 						ipc.server.stop();
                     }
                 );
