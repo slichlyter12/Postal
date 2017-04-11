@@ -150,6 +150,7 @@ body{
     font-size: 16px;
     height: 87% !important;
     width: 80%;
+    overflow: auto;
 }
 .newsticker .lineNumber, .newsticker .filename {
     font-weight: bold;

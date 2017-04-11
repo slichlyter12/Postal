@@ -638,17 +638,17 @@ function notificationListButton(network, options){
         document.getElementById("error-window-btn").title = "Show Error List";
     });
     //Notification Info Scroll
-    var nt = $('.newsticker').newsTicker({
-        row_height: 18,
-        max_rows: 3,
-        speed: 300,
-        direction: 'down',
-        duration: 3000,
-        autostart: 0,
+    // var nt = $('.newsticker').newsTicker({
+    //     row_height: 18,
+    //     max_rows: 3,
+    //     speed: 300,
+    //     direction: 'down',
+    //     duration: 3000,
+    //     autostart: 0,
 
-        prevButton: $('#next-error-btn'),
-        nextButton: $('#prev-error-btn')
-    });
+    //     prevButton: $('#next-error-btn'),
+    //     nextButton: $('#prev-error-btn')
+    // });
 }
 
 function legend(network, options){
