@@ -471,6 +471,7 @@ export class Controller {
                  ipc.server.on(
                     'double_click',
                     function(data){
+                        console.log("double click recieved");
                         //console.log("This is what I got back:" + data.path + " and " + data.lineNumber );
                         var filename = data.path;
                         var lineNum = data.lineNumber;
@@ -482,15 +483,31 @@ export class Controller {
 				ipc.server.on(
 					'kill_server',
 					function(data){
+                        console.log("killed");
 						ipc.server.stop();
 					}
 				);
+                ipc.server.on(
+                    'disconnect',
+                    function() {
+                        
+                        ipc.log("disconnected nat");
+                        ipc.server.stop();
+                    }
+                );
+                ipc.server.on(
+                    'destroy',
+                    function() {
+                        ipc.log("destroy nat");
+                        ipc.server.stop();
+                    }
+                );
 				// this should only happen if the user closes the electron window
                 ipc.server.on(
                     'socket.disconnected',
                     function(socket, destroyedSocketID) {
-                        //ipc.log('client ' + destroyedSocketID + ' has disconnected!');
-                        //ipc.log("killin it");
+                        ipc.log('client ' + destroyedSocketID + ' has disconnected!');
+                        ipc.log("killin it");
 						ipc.server.stop();
                     }
                 );

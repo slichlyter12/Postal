@@ -35,8 +35,11 @@ module.exports = class LinkManager {
         return this.randomAccessLinks[linkID];
     }
 
-    setFromByID(linkID, newFrom) {
-        this.randomAccessLinks[linkID].from = newFrom;
+    setClusterFromByID(linkID, newFrom) {
+        this.randomAccessLinks[linkID].clusterFrom = newFrom;
+    }
+    setClusterToByID(linkID, newTo) {
+        this.randomAccessLinks[linkID].clusterTo = newTo;
     }
 
     setEnabledByID(linkID, isEnabled) {
