@@ -186,7 +186,58 @@ body{
     border-width: 1px;
     font-size: 15px;
 }
-
+#legend-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 0;
+    padding: 0px 0px 0px 0px;
+    position: absolute;
+    float: none;
+    width: 20px;
+    height: 25px;
+    left: 0%;
+    bottom: 1%;
+    background-color: #515151;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    z-index: 10;
+    clear: both;
+}
+#legend-btn:hover{
+    cursor: pointer;
+}
+#legend-btn.on{
+    position: absolute;
+    float: none;
+    left: 30%;
+    /*margin-top: 5px;*/
+}
+#legend{
+  -webkit-app-region: no-drag; 
+  -webkit-user-select: all;
+  background: #cccccc;
+  color: #333;
+  position: fixed;
+  bottom: 1%;
+  left: -30%;
+  width: 30%;
+  height: 20%;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  z-index: 10;
+}
+#legend.on{
+  left: 0;
+}
+#legend-title{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
+}
 .vis-network .vis-navigation .vis-button.vis-zoomExtends{
     /*background-image: url(img/network/zoomExtends.png);*/
     background-color: #000000;

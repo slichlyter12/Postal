@@ -16,6 +16,7 @@ var isFileLinksVisible = false;
 var structure = "hierarchy";
 var iClusterCounter;
 var arrowDir = "left";
+var legendOpen = true;
 
 // create manager arrays
 var DFS; // Data File Structure
@@ -156,6 +157,7 @@ function Main() {
     structureButton(network, options);
     notificationListButton(network, options);
     fileLinksButton(network, options);
+    legend(network, options);
     
 }
 
@@ -645,6 +647,26 @@ function notificationListButton(network, options){
         nextButton: $('#prev-error-btn')
     });
 }
+
+function legend(network, options){
+    
+    document.getElementById("legend-btn").addEventListener("click", function(e) {
+        $('#legend').toggleClass('on');
+        $('#legend-btn').toggleClass('on');
+        if (legendOpen == true) {
+            legendOpen = false;
+            this.innerHTML = "&#10094;";
+            
+        } else if (legendOpen == false) {
+            legendOpen = true;
+            this.innerHTML = "&#10095;";
+        }
+    });
+    document.getElementById("legend-btn").addEventListener("mousemove", function(e) {
+        document.getElementById("legend-btn").title = "Show Legend";
+    });
+}
+
 
 function fileLinksButton(network, options) {
     document.getElementById("fileLinks-btn").addEventListener("click", function(e) {
