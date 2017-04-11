@@ -367,39 +367,39 @@ function addNodeToNodeArray(id) {
 function PickColor(type) {
     switch (type) {
         case "html":
-            return ('rgb(0,122,204)');
+            return ("rgb(0,122,204)");
             break;
         case "php":
-            return ('rgb(86,156,214)');
+            return ("rgb(86,156,214)");
             break;
         case "js":
-            return ('rgb(137, 209, 133)');
+            return ("rgb(137,209,133)");
             break;
         case "ts":
-            return ('rgb(157, 229, 153)');
+            return ("rgb(157,229,153)");
             break;
         case "css":
-            return ('rgb(200, 50, 200');
+            return ("rgb(200,50,200)");
         case "png":
-            return ('rgb(255, 200, 150)');
+            return ("rgb(255,200,150)");
             break;
         case "jpg":
         case "jpeg":
-            return ('rgb(255, 175, 150)');
+            return ("rgb(255,175,150)");
             break;
         case "dir":
-            return ('rgb(223, 223, 223)');
+            return ("rgb(223,223,223)");
             break;
         case "div":
-            return ('rgb(30,122,204)');
+            return ("rgb(30,122,204)");
         case "body":
-            return ('rgb(45,132,214)');
+            return ("rgb(45,132,214)");
         case "txt":
-            return ('rgb(160, 40, 10)');
+            return ("rgb(160,40,10)");
         case "json":
-            return ('rgb(10, 170, 150)');
+            return ("rgb(10,170,150)");
         default:
-            return ('rgb(150, 150, 150)');
+            return ("rgb(150,150,150)");
             break;
     }
 }
@@ -649,7 +649,27 @@ function notificationListButton(network, options){
 }
 
 function legend(network, options){
-    
+    var types = [];
+    for(var i = 0; i < DFS.length; i++){
+        types.push(DFS[i].type);
+    }
+    function unique(types){ 
+        return Array.from(new Set(types));
+    }
+    var uniqTypes = unique(types);
+    var circleColor = 'rgb(150, 150, 150)';
+    var circleX = 20;
+    var circleY = 65;
+    for(var i = 0; i < uniqTypes.length; i++){
+        circleColor = PickColor(uniqTypes[i]);
+        document.getElementById("legend-svg").insertAdjacentHTML('beforeend', '<circle id='+"circle"+i+' cx='+ circleX +' cy='+ circleY +' r="12" stroke-width="0" fill='+circleColor+'></circle>');
+        circleX = circleX + 32;
+        var cirID = "circle" + i;
+        document.getElementById(cirID).insertAdjacentHTML('beforeend', '<title>'+uniqTypes[i]+'</title');
+    }
+
+    document.getElementById("legend-svg").insertAdjacentHTML('beforeend', '<text x="5" y="93" fill="black">Hover over circles for node type</text>');
+
     document.getElementById("legend-btn").addEventListener("click", function(e) {
         $('#legend').toggleClass('on');
         $('#legend-btn').toggleClass('on');
