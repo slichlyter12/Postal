@@ -137,7 +137,6 @@ function Main() {
     });
 
     // MARK: - Event Listeners
-    //network.on("zoom", Zoom);
     network.on("oncontext", RightClick);
     network.on("click", Click);
     network.on("doubleClick", DoubleClick);
@@ -387,8 +386,19 @@ function addNodeToNodeArray(id) {
     //alert("type: " + struct.type);
     var varColor = PickColor(struct.type);
     var varSize = getNodeSize(struct.links.length);
-    var nodeLevel = struct.level
-    nodesArray.push({ id: struct.id, label: struct.name, size: varSize, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot', level: nodeLevel });
+    var nodeLevel = struct.level;
+    var fontSize = 10;
+    //Magic numbers based on average initial zoom level
+    if(struct.links.length > 0 && nodeLevel != 0){
+        fontSize = 10 * struct.links.length * 1.5;
+    }
+    else if (struct.subContainers.length > 0){
+        fontSize = 10 * struct.links.length * 1.5;
+    }
+    else if(nodeLevel == 0){
+        fontSize = 10 * struct.links.length * 0.3 * 1.5;
+    }
+    nodesArray.push({ id: struct.id, label: struct.name, size: varSize, font: { size: fontSize, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot', level: nodeLevel });
     return;
 }
 
