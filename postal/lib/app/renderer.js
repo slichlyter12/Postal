@@ -136,10 +136,16 @@ function Main() {
         }
     });
 
+    //Call initial font altering function according to initial zoom
+    zoomFont(network, options);
+
     // MARK: - Event Listeners
     network.on("oncontext", RightClick);
     network.on("click", Click);
     network.on("doubleClick", DoubleClick);
+    network.on("zoom", function (params){
+        zoomFont(network, options);
+    });
 
     // population notifications list
     populateNotificationsList();
@@ -150,9 +156,7 @@ function Main() {
     structureButton(network, options);
     notificationListButton(network, options);
     fileLinksButton(network, options);
-
-    //Zoom event listener to change font size
-    zoomFont(network, options);
+    
 }
 
 
@@ -352,16 +356,6 @@ function addNodeToNodeArray(id) {
     var varSize = getNodeSize(struct.links.length);
     var nodeLevel = struct.level;
     var fontSize = 10;
-    //Magic numbers based on average initial zoom level
-    if(struct.links.length > 0 && nodeLevel != 0){
-        fontSize = 10 * struct.links.length * 1.5;
-    }
-    else if (struct.subContainers.length > 0){
-        fontSize = 10 * struct.links.length * 1.5;
-    }
-    else if(nodeLevel == 0){
-        fontSize = 10 * struct.links.length * 0.3 * 1.5;
-    }
     nodesArray.push({ id: struct.id, label: struct.name, size: varSize, font: { size: fontSize, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot', level: nodeLevel });
     return;
 }
@@ -521,10 +515,10 @@ function DoubleClick(params) {
 
 // MARK: END EVENT LISTENERS
 function zoomFont(network, options){
-    network.on("zoom", function (params){
+        var scale = network.getScale();
         for(var i = 0; i < nodesArray.length; i++){
             if(DFS[i].links.length > 0 && DFS[i].level != 0){
-                nodesArray[i].font.size = 10 * DFS[i].links.length * (1/params.scale);
+                nodesArray[i].font.size = 10 * DFS[i].links.length * (1/scale);
                 if(nodesArray[i].font.size > 60){
                     nodesArray[i].font.size = 60;
                 }
@@ -533,7 +527,7 @@ function zoomFont(network, options){
                 }
             }
             else if(DFS[i].subContainers.length > 0){
-                nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1/params.scale);
+                nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1/scale) * .5;
                 if(nodesArray[i].font.size > 60){
                     nodesArray[i].font.size = 60;
                 }
@@ -542,7 +536,7 @@ function zoomFont(network, options){
                 }
             }
             else if(DFS[i].level == 0){
-                nodesArray[i].font.size = 10 * DFS[i].links.length* .3 * (1/params.scale);
+                nodesArray[i].font.size = 10 * DFS[i].links.length * (1/scale) * .3;
                 if(nodesArray[i].font.size > 60){
                     nodesArray[i].font.size = 60;
                 }
@@ -559,8 +553,6 @@ function zoomFont(network, options){
                 network.moveNode(key, prevNodePositions[key].x, prevNodePositions[key].y);
             }
         }
-    });
-
 }
 
 function toolbarButtons() {
