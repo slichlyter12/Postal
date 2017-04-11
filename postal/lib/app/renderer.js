@@ -300,8 +300,8 @@ function buildClusters(nodeID) {
 
 function getNodeSize(factor){
     var size = 12 + (4*(factor));
-    if(size > 22){
-        size = 22;
+    if(size > 40){
+        size = 40;
     }
     return size;
 }
