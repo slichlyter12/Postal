@@ -425,7 +425,9 @@ function PickColor(type) {
         case "body":
             return ('rgb(45,132,214)');
         case "txt":
-            return ('rgb(100, 80, 10)');
+            return ('rgb(160, 40, 10)');
+        case "json":
+            return ('rgb(10, 170, 150)');
         default:
             return ('rgb(150, 150, 150)');
             break;
