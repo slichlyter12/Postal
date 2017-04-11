@@ -298,9 +298,9 @@ function buildClusters(nodeID) {
 }
 
 
-function getNodeSize(factor){
-    var size = 12 + (4*(factor));
-    if(size > 40){
+function getNodeSize(factor) {
+    var size = 12 + (4 * (factor));
+    if (size > 40) {
         size = 40;
     }
     return size;
@@ -516,24 +516,21 @@ function DoubleClick(params) {
 }
 
 // MARK: END EVENT LISTENERS
-function zoomFont(network, options){
-    network.on("zoom", function (params){
-        for(var i = 0; i < nodesArray.length; i++){
-            if(DFS[i].links.length > 0 && DFS[i].level != 0){
-                nodesArray[i].font.size = 10 * DFS[i].links.length * (1/params.scale);
-                if(nodesArray[i].font.size > 70){
+function zoomFont(network, options) {
+    network.on("zoom", function(params) {
+        for (var i = 0; i < nodesArray.length; i++) {
+            if (DFS[i].links.length > 0 && DFS[i].level != 0) {
+                nodesArray[i].font.size = 10 * DFS[i].links.length * (1 / params.scale);
+                if (nodesArray[i].font.size > 70) {
                     nodesArray[i].font.size = 70;
-                }
-                else if(nodesArray[i].font.size < 10){
+                } else if (nodesArray[i].font.size < 10) {
                     nodesArray[i].font.size = 10;
                 }
-            }
-            else if(DFS[i].subContainers.length > 0){
-                nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1/params.scale);
-                if(nodesArray[i].font.size > 70){
+            } else if (DFS[i].subContainers.length > 0) {
+                nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1 / params.scale);
+                if (nodesArray[i].font.size > 70) {
                     nodesArray[i].font.size = 70;
-                }
-                else if(nodesArray[i].font.size < 10){
+                } else if (nodesArray[i].font.size < 10) {
                     nodesArray[i].font.size = 10;
                 }
             }
@@ -550,6 +547,8 @@ function zoomFont(network, options){
 
 function toolbarButtons() {
     document.getElementById("close-window").addEventListener("click", function(e) {
+
+        sendMessageToVSCode('kill_server', {});
         var window = electron.remote.getCurrentWindow();
         window.close();
 
@@ -604,27 +603,25 @@ function structureButton(network, options) {
 function fileLinksButton(network, options) {
     document.getElementById("fileLinks-btn").addEventListener("click", function(e) {
         if (isFileLinksVisible) {
-           isFileLinksVisible = false;
-           this.innerHTML = "File Links: Off";
-           turnOffAllFileLinks();
-        } 
-        else{
+            isFileLinksVisible = false;
+            this.innerHTML = "File Links: Off";
+            turnOffAllFileLinks();
+        } else {
             isFileLinksVisible = true;
             this.innerHTML = "File Links: On";
             turnOnAllFileLinks();
-    }
+        }
 
 
     });
 }
 
 
-
 function turnOnAllFileLinks() {
     var fileLinks = FLM.getCondensedLinks();
     for (var i = 0; i < fileLinks.length; i++) {
         FLM.setEnabledByID(fileLinks[i].id, true)
-        try { 
+        try {
             var link = fileLinks[i];
             edges.add({ id: link.id, to: link.clusterTo, from: link.clusterFrom, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(255, 52, 52)' } });
         } catch (err) {
@@ -662,8 +659,6 @@ function updateFromFileLinks(newFromID) {
     }
 }
 
-
-
 // Recursive function to get all links from this and children
 function getAllLinksFromFileStructRecursive(FileStructID) {
     var links = [];
@@ -689,16 +684,10 @@ function getAllLinksFromFileStructRecursive(FileStructID) {
             }
 
         }
-    } 
+    }
 
     return links;
 }
-
-
-
-
-
-
 
 /*
     type: [double_click, kill_server]
