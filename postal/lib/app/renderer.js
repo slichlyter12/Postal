@@ -16,6 +16,7 @@ var isFileLinksVisible = false;
 var structure = "hierarchy";
 var iClusterCounter;
 var arrowDir = "left";
+var legendOpen = true;
 
 // create manager arrays
 var DFS; // Data File Structure
@@ -136,10 +137,16 @@ function Main() {
         }
     });
 
+    //Call initial font altering function according to initial zoom
+    zoomFont(network, options);
+
     // MARK: - Event Listeners
     network.on("oncontext", RightClick);
     network.on("click", Click);
     network.on("doubleClick", DoubleClick);
+    network.on("zoom", function (params){
+        zoomFont(network, options);
+    });
 
     // population notifications list
     populateNotificationsList();
@@ -150,9 +157,8 @@ function Main() {
     structureButton(network, options);
     notificationListButton(network, options);
     fileLinksButton(network, options);
-
-    //Zoom event listener to change font size
-    zoomFont(network, options);
+    legend(network, options);
+    
 }
 
 
@@ -355,16 +361,6 @@ function addNodeToNodeArray(id) {
     var varSize = getNodeSize(struct.links.length);
     var nodeLevel = struct.level;
     var fontSize = 10;
-    //Magic numbers based on average initial zoom level
-    if(struct.links.length > 0 && nodeLevel != 0){
-        fontSize = 10 * struct.links.length * 1.5;
-    }
-    else if (struct.subContainers.length > 0){
-        fontSize = 10 * struct.links.length * 1.5;
-    }
-    else if(nodeLevel == 0){
-        fontSize = 10 * struct.links.length * 0.3 * 1.5;
-    }
     nodesArray.push({ id: struct.id, label: struct.name, size: varSize, font: { size: fontSize, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot', level: nodeLevel });
     return;
 }
@@ -374,39 +370,39 @@ function addNodeToNodeArray(id) {
 function PickColor(type) {
     switch (type) {
         case "html":
-            return ('rgb(0,122,204)');
+            return ("rgb(0,122,204)");
             break;
         case "php":
-            return ('rgb(86,156,214)');
+            return ("rgb(86,156,214)");
             break;
         case "js":
-            return ('rgb(137, 209, 133)');
+            return ("rgb(137,209,133)");
             break;
         case "ts":
-            return ('rgb(157, 229, 153)');
+            return ("rgb(157,229,153)");
             break;
         case "css":
-            return ('rgb(200, 50, 200');
+            return ("rgb(200,50,200)");
         case "png":
-            return ('rgb(255, 200, 150)');
+            return ("rgb(255,200,150)");
             break;
         case "jpg":
         case "jpeg":
-            return ('rgb(255, 175, 150)');
+            return ("rgb(255,175,150)");
             break;
         case "dir":
-            return ('rgb(223, 223, 223)');
+            return ("rgb(223,223,223)");
             break;
         case "div":
-            return ('rgb(30,122,204)');
+            return ("rgb(30,122,204)");
         case "body":
-            return ('rgb(45,132,214)');
+            return ("rgb(45,132,214)");
         case "txt":
-            return ('rgb(160, 40, 10)');
+            return ("rgb(160,40,10)");
         case "json":
-            return ('rgb(10, 170, 150)');
+            return ("rgb(10,170,150)");
         default:
-            return ('rgb(150, 150, 150)');
+            return ("rgb(150,150,150)");
             break;
     }
 }
@@ -524,10 +520,10 @@ function DoubleClick(params) {
 
 // MARK: END EVENT LISTENERS
 function zoomFont(network, options){
-    network.on("zoom", function (params){
+        var scale = network.getScale();
         for(var i = 0; i < nodesArray.length; i++){
             if(DFS[i].links.length > 0 && DFS[i].level != 0){
-                nodesArray[i].font.size = 10 * DFS[i].links.length * (1/params.scale);
+                nodesArray[i].font.size = 10 * DFS[i].links.length * (1/scale);
                 if(nodesArray[i].font.size > 60){
                     nodesArray[i].font.size = 60;
                 }
@@ -536,7 +532,7 @@ function zoomFont(network, options){
                 }
             }
             else if(DFS[i].subContainers.length > 0){
-                nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1/params.scale);
+                nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1/scale) * .5;
                 if(nodesArray[i].font.size > 60){
                     nodesArray[i].font.size = 60;
                 }
@@ -545,7 +541,7 @@ function zoomFont(network, options){
                 }
             }
             else if(DFS[i].level == 0){
-                nodesArray[i].font.size = 10 * DFS[i].links.length* .3 * (1/params.scale);
+                nodesArray[i].font.size = 10 * DFS[i].links.length * (1/scale) * .3;
                 if(nodesArray[i].font.size > 60){
                     nodesArray[i].font.size = 60;
                 }
@@ -562,8 +558,6 @@ function zoomFont(network, options){
                 network.moveNode(key, prevNodePositions[key].x, prevNodePositions[key].y);
             }
         }
-    });
-
 }
 
 function toolbarButtons() {
@@ -656,6 +650,46 @@ function notificationListButton(network, options){
         nextButton: $('#prev-error-btn')
     });
 }
+
+function legend(network, options){
+    var types = [];
+    for(var i = 0; i < DFS.length; i++){
+        types.push(DFS[i].type);
+    }
+    function unique(types){ 
+        return Array.from(new Set(types));
+    }
+    var uniqTypes = unique(types);
+    var circleColor = 'rgb(150, 150, 150)';
+    var circleX = 20;
+    var circleY = 65;
+    for(var i = 0; i < uniqTypes.length; i++){
+        circleColor = PickColor(uniqTypes[i]);
+        document.getElementById("legend-svg").insertAdjacentHTML('beforeend', '<circle id='+"circle"+i+' cx='+ circleX +' cy='+ circleY +' r="12" stroke-width="0" fill='+circleColor+'></circle>');
+        circleX = circleX + 32;
+        var cirID = "circle" + i;
+        document.getElementById(cirID).insertAdjacentHTML('beforeend', '<title>'+uniqTypes[i]+'</title');
+    }
+
+    document.getElementById("legend-svg").insertAdjacentHTML('beforeend', '<text x="5" y="93" fill="black">Hover over circles for node type</text>');
+
+    document.getElementById("legend-btn").addEventListener("click", function(e) {
+        $('#legend').toggleClass('on');
+        $('#legend-btn').toggleClass('on');
+        if (legendOpen == true) {
+            legendOpen = false;
+            this.innerHTML = "&#10094;";
+            
+        } else if (legendOpen == false) {
+            legendOpen = true;
+            this.innerHTML = "&#10095;";
+        }
+    });
+    document.getElementById("legend-btn").addEventListener("mousemove", function(e) {
+        document.getElementById("legend-btn").title = "Show Legend";
+    });
+}
+
 
 function fileLinksButton(network, options) {
     document.getElementById("fileLinks-btn").addEventListener("click", function(e) {

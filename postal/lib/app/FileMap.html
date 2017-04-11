@@ -20,6 +20,7 @@
    
     <div id="error-container">
       <button type="button" id="error-window-btn" >&#10094;</button>
+      <button type="button" id="legend-btn" >&#10095;</button>
      
       <div id="slideout">
         <span id="error-list-title"><h3 style="text-align: center">Notifications</h3></span>
@@ -28,6 +29,16 @@
           <button type="button" id="next-error-btn" >Next</button>
         </div>
         <ul class="newsticker" id="newsTickerList"></ul>
+      </div>
+      <div id="legend">
+        <span id="legend-title"><h3 style="text-align: center">Legend</h3></span>
+        <svg id="legend-svg" height="100" width="355">
+          <line x1="0" y1="4" x2="100" y2="4" style="stroke:rgb(255, 52, 52);stroke-width:2" />
+          <text x="105" y="11" fill="black">File Links</text>
+          <line x1="0" y1="35" x2="100" y2="35" style="stroke:rgb(150, 150, 150);stroke-width:2" />
+          <text x="105" y="38" fill="black">File Hierarchy</text>
+        </svg>
+        
       </div>
     
     </div>
