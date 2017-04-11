@@ -2,3 +2,4 @@ out
 node_modules
 postal.json
 *.vsix
+.DS_Store
