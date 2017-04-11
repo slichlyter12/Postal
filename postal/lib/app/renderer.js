@@ -278,11 +278,6 @@ function fillInitialEdges() {
         var link = condensedLinks[i];
         edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(52, 52, 52)' } });
     }
-    /*condensedLinks = FLM.getCondensedLinks();
-    for (var i = 0; i < condensedLinks.length; i++) {
-        var link = condensedLinks[i];
-        edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(255, 52, 52)' } });
-    }*/
 }
 
 function buildClusters(nodeID) {
@@ -331,7 +326,26 @@ function clusterNodes(clusterHeadID) {
             }
             return false;
         },
-        clusterNodeProperties: { id: iClusterCounter, label: struct.name, size: varSize, borderWidth: 4, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot', level: struct.level }
+        clusterNodeProperties: {
+            id: iClusterCounter,
+            label: struct.name,
+            size: varSize,
+            borderWidth: 3,
+            font: {
+                size: 10,
+                color: ('rgb(232, 232, 232)')
+            },
+            color: {
+                background: varColor,
+                border: 'rgb(30, 220, 30)',
+                highlight: {
+                    background: varColor,
+                    border: 'rgb(30, 255, 30)'
+                }
+            },
+            shape: 'dot',
+            level: struct.level
+        }
 
     };
     network.cluster(clusterOptionsByData);
@@ -391,6 +405,11 @@ function PickColor(type) {
         case "js":
             return ('rgb(137, 209, 133)');
             break;
+        case "ts":
+            return ('rgb(157, 229, 153)');
+            break;
+        case "css":
+            return ('rgb(200, 50, 200');
         case "png":
             return ('rgb(255, 200, 150)');
             break;
@@ -401,6 +420,12 @@ function PickColor(type) {
         case "dir":
             return ('rgb(223, 223, 223)');
             break;
+        case "div":
+            return ('rgb(30,122,204)');
+        case "body":
+            return ('rgb(45,132,214)');
+        case "txt":
+            return ('rgb(100, 80, 10)');
         default:
             return ('rgb(150, 150, 150)');
             break;
@@ -408,6 +433,7 @@ function PickColor(type) {
 }
 
 // MARK: - Event Listeners
+//RIGHT CLICK
 function RightClick(params) {
     params.event = "[original event]";
 
@@ -426,11 +452,13 @@ function RightClick(params) {
     if (network.isCluster(clickedNodeID) == true) {
         focusID = (network.getNodesInCluster(clickedNodeID)[0]);
         network.openCluster(clickedNodeID);
+        updateFileLinks(focusID);
         network.focus(focusID, options);
         return;
     } else if (DFS[clickedNodeID].subContainers.length != null && DFS[clickedNodeID].subContainers.length > 0) {
         buildClusters(clickedNodeID);
         focusID = (network.findNode(clickedNodeID)[0]);
+        updateFileLinks(focusID);
         network.focus(focusID, options);
 
     }
@@ -623,7 +651,20 @@ function turnOnAllFileLinks() {
         FLM.setEnabledByID(fileLinks[i].id, true)
         try {
             var link = fileLinks[i];
-            edges.add({ id: link.id, to: link.clusterTo, from: link.clusterFrom, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(255, 52, 52)' } });
+            edges.add({
+                id: link.id,
+                to: link.clusterTo,
+                from: link.clusterFrom,
+                arrows: {
+                    to: {
+                        scaleFactor: 0.3
+                    }
+                },
+                color: {
+                    color: 'rgb(255, 52, 52)',
+                    highlight: 'rgb(255, 75, 57)'
+                }
+            });
         } catch (err) {
             alert("turn on file link error: " + err);
             return;
@@ -648,13 +689,42 @@ function turnOffAllFileLinks() {
     }
 }
 
+function updateFileLinks(clickedNodeID) {
+    turnOffAllFileLinks();
+    //update current node (parent-most) File links
+    if (DFS[clickedNodeID].links.length != undefined) {
+        for (var i = 0; i < DFS[clickedNodeID].links.length; i++) {
+            FLM.setClusterFromByID(DFS[clickedNodeID].links[i].id, clickedNodeID);
+        }
+    }
 
-function updateFromFileLinks(newFromID) {
-    var links = getAllLinksFromFileStructRecursive(newFromID);
+    //update children froms
+    if (DFS[clickedNodeID].subContainers.length != undefined) {
+        for (var i = 0; i < DFS[clickedNodeID].subContainers.length; i++) {
+            updateFromFileLinks(DFS[clickedNodeID].subContainers[i].toFileStructid);
+        }
+    }
+    var links = FLM.getCondensedLinks();
+    if (links.length != undefined) {
+        for (var i = 0; i < links.length; i++) {
+            if (links[i].toFileStructid == clickedNodeID) {
+                FLM.setClusterToByID(links[i].id, clickedNodeID);
+            }
+        }
+    }
+    if (isFileLinksVisible) {
+        turnOnAllFileLinks();
+    }
+}
+
+
+function updateFromFileLinks(fromID) {
+    var links = getAllLinksFromFileStructRecursive(fromID);
     if (links.length > 0) {
         for (var i = 0; i < links.length; i++) {
             var linkID = links[i].id;
-            FLM.setFromByID(linkID, newFromID);
+            var clusteredID = network.findNode(fromID)[0]
+            FLM.setClusterFromByID(linkID, clusteredID);
         }
     }
 }
@@ -662,9 +732,8 @@ function updateFromFileLinks(newFromID) {
 // Recursive function to get all links from this and children
 function getAllLinksFromFileStructRecursive(FileStructID) {
     var links = [];
-
     // check parent
-    if (DFS[FileStructID].links.length > 0) {
+    if (DFS[FileStructID].links.length != undefined) {
         for (var i = 0; i < DFS[FileStructID].links.length; i++) {
             var link = DFS[FileStructID].links[i];
             links.push(link);
@@ -672,7 +741,7 @@ function getAllLinksFromFileStructRecursive(FileStructID) {
     }
 
     // check children
-    if (DFS[FileStructID].subContainers.length > 0) {
+    if (DFS[FileStructID].subContainers.length != undefined) {
         var childLinks = [];
         for (var i = 0; i < DFS[FileStructID].subContainers.length; i++) {
             var childFileStructID = DFS[DFS[FileStructID].subContainers[i].toFileStructid].id;
@@ -685,7 +754,6 @@ function getAllLinksFromFileStructRecursive(FileStructID) {
 
         }
     }
-
     return links;
 }
 
