@@ -176,7 +176,8 @@
                             "title": "c-like functions",
                             "type": "c-like",
                             "filetypes": [
-                                "c"
+                                "c",
+                                "ts"
                             ],
                             "options": {
                                 "returnType": "",
@@ -190,7 +191,9 @@
                             "title": "TODO Notification",
                             "type": "notification",
                             "filetypes": [
-                                "c"
+                                "c",
+                                "ts",
+                                "js"
                             ],
                             "options": {
                                 "notify": "(TODO:.*)\n",
