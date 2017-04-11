@@ -321,6 +321,9 @@ function buildNotificationsArray() {
     for (var i = 0; i < DFS.length; i++) {
         if (DFS[i].notifications != undefined) {
             for (var j = 0; j < DFS[i].notifications.length; j++) {
+                if(DFS[i].notifications[j].message.length > 80){
+                    continue;
+                }
                 notificationsArray.push(DFS[i].notifications[j]);
                 notificationsArray[notificationsArray.length - 1].nodeid = i;
             }
@@ -804,6 +807,9 @@ function populateNotificationsList() {
     for (var i = 0; i < DFS.length; i++) {
         if (DFS[i].notifications != undefined) {
             for (var j = 0; j < DFS[i].notifications.length; j++) {
+                if(DFS[i].notifications[j].message.length > 80){
+                    continue;
+                }
                 var message = DFS[i].notifications[j].message;
                 var lineNumber = DFS[i].notifications[j].lineNumber;
                 var filename = DFS[i].name;
