@@ -119,6 +119,28 @@ export class Parser {
         var name = match[2];
         name = type + " " + name;
 
+        // switch(type) {
+        //     case "if":
+        //     case "else":
+        //     case "while":
+        //     case "for":
+        //     case "foreach":
+        //         return null;
+            
+        //     default: break;
+        // }
+
+        // switch(name) {
+        //     case "if":
+        //     case "else":
+        //     case "while":
+        //     case "for":
+        //     case "foreach":
+        //         return null;
+            
+        //     default: break;
+        // }
+
         // figure out parentToken
         var parentToken = null;
         if (this.stack != null && this.stack.length > 0) {
