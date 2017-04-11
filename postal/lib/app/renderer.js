@@ -141,54 +141,18 @@ function Main() {
     network.on("click", Click);
     network.on("doubleClick", DoubleClick);
 
-    document.getElementById("error-window-btn").addEventListener("click", function(e) {
-        $('#slideout').toggleClass('on');
-        $('#error-window-btn').toggleClass('on');
-
-        if (arrowDir == "left") {
-            arrowDir = "right"
-            this.innerHTML = "&#10095;";
-            var zoombtn = document.getElementsByClassName("vis-button vis-zoomExtends");
-            zoombtn[0].style.setProperty("right", "33%", "important");
-            zoombtn[0].style.setProperty("-webkit-transition-duration", "0.5s");
-        } else if (arrowDir == "right") {
-            arrowDir = "left";
-            this.innerHTML = "&#10094;";
-            var zoombtn = document.getElementsByClassName("vis-button vis-zoomExtends");
-            zoombtn[0].style.setProperty("right", "5%", "important");
-            zoombtn[0].style.setProperty("-webkit-transition-duration", "0.5s");
-        }
-    });
-    document.getElementById("error-window-btn").addEventListener("mousemove", function(e) {
-        document.getElementById("error-window-btn").title = "Show Error List";
-    });
-    //Notification Info Scroll
-    var nt = $('.newsticker').newsTicker({
-        row_height: 18,
-        max_rows: 3,
-        speed: 300,
-        direction: 'down',
-        duration: 3000,
-        autostart: 0,
-
-        prevButton: $('#next-error-btn'),
-        nextButton: $('#prev-error-btn')
-    });
-
     // population notifications list
     populateNotificationsList();
 
-    //Close Window Event Listener
+    //Button Event Listeners
     toolbarButtons();
-
     physicsButton(network, options);
     structureButton(network, options);
-
-
-    zoomFont(network, options);
-
+    notificationListButton(network, options);
     fileLinksButton(network, options);
 
+    //Zoom event listener to change font size
+    zoomFont(network, options);
 }
 
 
@@ -651,6 +615,42 @@ function structureButton(network, options) {
             network.redraw();
         }
 
+    });
+}
+
+function notificationListButton(network, options){
+    document.getElementById("error-window-btn").addEventListener("click", function(e) {
+        $('#slideout').toggleClass('on');
+        $('#error-window-btn').toggleClass('on');
+
+        if (arrowDir == "left") {
+            arrowDir = "right"
+            this.innerHTML = "&#10095;";
+            var zoombtn = document.getElementsByClassName("vis-button vis-zoomExtends");
+            zoombtn[0].style.setProperty("right", "33%", "important");
+            zoombtn[0].style.setProperty("-webkit-transition-duration", "0.5s");
+        } else if (arrowDir == "right") {
+            arrowDir = "left";
+            this.innerHTML = "&#10094;";
+            var zoombtn = document.getElementsByClassName("vis-button vis-zoomExtends");
+            zoombtn[0].style.setProperty("right", "5%", "important");
+            zoombtn[0].style.setProperty("-webkit-transition-duration", "0.5s");
+        }
+    });
+    document.getElementById("error-window-btn").addEventListener("mousemove", function(e) {
+        document.getElementById("error-window-btn").title = "Show Error List";
+    });
+    //Notification Info Scroll
+    var nt = $('.newsticker').newsTicker({
+        row_height: 18,
+        max_rows: 3,
+        speed: 300,
+        direction: 'down',
+        duration: 3000,
+        autostart: 0,
+
+        prevButton: $('#next-error-btn'),
+        nextButton: $('#prev-error-btn')
     });
 }
 
