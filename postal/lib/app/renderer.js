@@ -121,7 +121,7 @@ function Main() {
     network.on("afterDrawing", function(ctx) {
         for (i = 0; i < notificationsArray.length; i++) {
             var nodeid = notificationsArray[i].nodeid;
-            var varSize = 12 + (6 * (DFS[nodeid].links.length));
+            var varSize = getNodeSize(DFS[nodeid].links.length);
 
             nodeid = network.clustering.findNode(nodeid)[0];
             var nodePosition = network.getPositions([nodeid]);
@@ -297,12 +297,22 @@ function buildClusters(nodeID) {
     }
 }
 
+
+function getNodeSize(factor){
+    var size = 12 + (4*(factor));
+    if(size > 22){
+        size = 22;
+    }
+    return size;
+}
+
+
 function clusterNodes(clusterHeadID) {
     var NodesForCluster = [];
 
     var struct = DFS[clusterHeadID];
     var varColor = PickColor(struct.type);
-    var varSize = 12 + (6 * (struct.links.length));
+    var varSize = getNodeSize(struct.links.length);
 
 
     NodesForCluster.push(clusterHeadID);
@@ -362,7 +372,7 @@ function addNodeToNodeArray(id) {
     var struct = DFS[id];
     //alert("type: " + struct.type);
     var varColor = PickColor(struct.type);
-    var varSize = 12 + (6 * (struct.links.length));
+    var varSize = getNodeSize(struct.links.length);
     var nodeLevel = struct.level
     nodesArray.push({ id: struct.id, label: struct.name, size: varSize, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot', level: nodeLevel });
     return;
