@@ -231,8 +231,8 @@ function fillFLM() {
                 var fromID = (network.findNode(DFS[i].id)[0]);
                 var toID = (network.findNode(links[j].toFileStructid)[0]);
                 links[j].isEnabled = false;
-                links[j].from = fromID;
-                links[j].to = toID;
+                links[j].clusterFrom = fromID;
+                links[j].clusterTo = toID;
                 allLinks.push(links[j]);
             }
         }
@@ -599,10 +599,11 @@ function turnOnAllFileLinks() {
     var fileLinks = FLM.getCondensedLinks();
     for (var i = 0; i < fileLinks.length; i++) {
         FLM.setEnabledByID(fileLinks[i].id, true)
-        try {
-            edges.add(fileLinks[i].id);
+        try { 
+            var link = fileLinks[i];
+            edges.add({ id: link.id, to: link.clusterTo, from: link.clusterFrom, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(255, 52, 52)' } });
         } catch (err) {
-            alert("turn off file link error: " + err);
+            alert("turn on file link error: " + err);
             return;
         }
     }
