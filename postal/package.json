@@ -210,15 +210,24 @@
                                 "isComment": false
                             }
                         }, {
-                            "title": "IncorrectNaming TS Notification",
+                            "title": "IncorrectNaming TS/js Notification",
                             "type": "notification",
                             "filetypes": [
-                                "ts"
+                                "ts","js"
                             ],
                             "options": {
                                 "notify": "(var [^a-z].*)",
                                 "message": "Found variable with capital name",
                                 "isComment": false
+                            }
+                        }, {
+                            "title": "Js class include",
+                            "type": "link",
+                            "filetypes": [
+                                "js"
+                            ],
+                            "options": {
+                                "link": "var .* = require\\('\\.?\\/?(.*)'\\);"
                             }
                         }
                     ]
