@@ -521,8 +521,8 @@ function zoomFont(network, options){
         for(var i = 0; i < nodesArray.length; i++){
             if(DFS[i].links.length > 0 && DFS[i].level != 0){
                 nodesArray[i].font.size = 10 * DFS[i].links.length * (1/params.scale);
-                if(nodesArray[i].font.size > 70){
-                    nodesArray[i].font.size = 70;
+                if(nodesArray[i].font.size > 60){
+                    nodesArray[i].font.size = 60;
                 }
                 else if(nodesArray[i].font.size < 10){
                     nodesArray[i].font.size = 10;
@@ -530,20 +530,31 @@ function zoomFont(network, options){
             }
             else if(DFS[i].subContainers.length > 0){
                 nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1/params.scale);
-                if(nodesArray[i].font.size > 70){
-                    nodesArray[i].font.size = 70;
+                if(nodesArray[i].font.size > 60){
+                    nodesArray[i].font.size = 60;
+                }
+                else if(nodesArray[i].font.size < 10){
+                    nodesArray[i].font.size = 10;
+                }
+            }
+            else if(DFS[i].level == 0){
+                nodesArray[i].font.size = 10 * DFS[i].links.length* .3 * (1/params.scale);
+                if(nodesArray[i].font.size > 60){
+                    nodesArray[i].font.size = 60;
                 }
                 else if(nodesArray[i].font.size < 10){
                     nodesArray[i].font.size = 10;
                 }
             }
         }
-
-        //options.nodes = {nodesArray}
+        var prevNodePositions = network.getPositions(nodesArray.id);
         network.setOptions(options);
-        network.redraw();
-        console.log(JSON.stringify(nodesArray));
-        console.log(JSON.stringify(params.scale));
+        for(var key in prevNodePositions){
+            if(prevNodePositions.hasOwnProperty(key)){
+                //console.log(JSON.stringify(key + "->" + JSON.stringify(prevNodePositions[key].x) + JSON.stringify(prevNodePositions[key].y)));
+                network.moveNode(key, prevNodePositions[key].x, prevNodePositions[key].y);
+            }
+        }
     });
 
 }
