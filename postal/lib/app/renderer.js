@@ -278,11 +278,6 @@ function fillInitialEdges() {
         var link = condensedLinks[i];
         edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(52, 52, 52)' } });
     }
-    /*condensedLinks = FLM.getCondensedLinks();
-    for (var i = 0; i < condensedLinks.length; i++) {
-        var link = condensedLinks[i];
-        edgesArray.push({ id: link.id, to: link.toFileStructid, from: link.from, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(255, 52, 52)' } });
-    }*/
 }
 
 function buildClusters(nodeID) {
@@ -331,7 +326,26 @@ function clusterNodes(clusterHeadID) {
             }
             return false;
         },
-        clusterNodeProperties: { id: iClusterCounter, label: struct.name, size: varSize, borderWidth: 4, font: { size: 10, color: ('rgb(232, 232, 232)') }, color: varColor, shape: 'dot', level: struct.level }
+        clusterNodeProperties: { 
+            id: iClusterCounter, 
+            label: struct.name, 
+            size: varSize, 
+            borderWidth: 3, 
+            font: { 
+                size: 10, 
+                color: ('rgb(232, 232, 232)') 
+            },
+            color: {
+                background: varColor, 
+                border: 'rgb(30, 220, 30)',
+                highlight:{
+                    background: varColor,
+                    border: 'rgb(30, 255, 30)'
+                }
+            },  
+            shape: 'dot', 
+            level: struct.level 
+        }
 
     };
     network.cluster(clusterOptionsByData);
@@ -640,7 +654,20 @@ function turnOnAllFileLinks() {
         FLM.setEnabledByID(fileLinks[i].id, true)
         try { 
             var link = fileLinks[i];
-            edges.add({ id: link.id, to: link.clusterTo, from: link.clusterFrom, arrows: { to: { scaleFactor: 0.3 } }, color: { color: 'rgb(255, 52, 52)' } });
+            edges.add({ 
+                id: link.id, 
+                to: link.clusterTo, 
+                from: link.clusterFrom, 
+                arrows: { 
+                    to: { 
+                        scaleFactor: 0.3 
+                    } 
+                }, 
+                color: { 
+                    color: 'rgb(255, 52, 52)',
+                    highlight: 'rgb(255, 75, 57)'
+                } 
+            });
         } catch (err) {
             alert("turn on file link error: " + err);
             return;
