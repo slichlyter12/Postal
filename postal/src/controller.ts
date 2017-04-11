@@ -316,7 +316,9 @@ export class Controller {
                     FileStructs[parentNodeid].subContainers.push(subContainer);
                 }
                 else if(tokens[i - dirCount][j].tokenType == "link"){
-                        
+                    var currentPath = filePaths[i - dirCount];
+                    var slicedDirectory = currentPath.slice(0, currentPath.lastIndexOf(this.slash));
+                    var fullSlicedPath = slicedDirectory + this.slash + tokens[i - dirCount][j].value;
                     var linkDestination = this.getNodeIdFromPath(tokens[i - dirCount][j].value, FileStructs);
                     var linkcontainer = {
                         id : this.linkidCounter,

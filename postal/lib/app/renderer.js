@@ -327,6 +327,9 @@ function buildNotificationsArray() {
     for (var i = 0; i < DFS.length; i++) {
         if (DFS[i].notifications != undefined) {
             for (var j = 0; j < DFS[i].notifications.length; j++) {
+                if(DFS[i].notifications[j].message.length > 80){
+                    continue;
+                }
                 notificationsArray.push(DFS[i].notifications[j]);
                 notificationsArray[notificationsArray.length - 1].nodeid = i;
             }
@@ -635,17 +638,17 @@ function notificationListButton(network, options){
         document.getElementById("error-window-btn").title = "Show Error List";
     });
     //Notification Info Scroll
-    var nt = $('.newsticker').newsTicker({
-        row_height: 18,
-        max_rows: 3,
-        speed: 300,
-        direction: 'down',
-        duration: 3000,
-        autostart: 0,
+    // var nt = $('.newsticker').newsTicker({
+    //     row_height: 18,
+    //     max_rows: 3,
+    //     speed: 300,
+    //     direction: 'down',
+    //     duration: 3000,
+    //     autostart: 0,
 
-        prevButton: $('#next-error-btn'),
-        nextButton: $('#prev-error-btn')
-    });
+    //     prevButton: $('#next-error-btn'),
+    //     nextButton: $('#prev-error-btn')
+    // });
 }
 
 function legend(network, options){
@@ -838,6 +841,9 @@ function populateNotificationsList() {
     for (var i = 0; i < DFS.length; i++) {
         if (DFS[i].notifications != undefined) {
             for (var j = 0; j < DFS[i].notifications.length; j++) {
+                if(DFS[i].notifications[j].message.length > 80){
+                    continue;
+                }
                 var message = DFS[i].notifications[j].message;
                 var lineNumber = DFS[i].notifications[j].lineNumber;
                 var filename = DFS[i].name;
