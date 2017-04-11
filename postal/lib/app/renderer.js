@@ -288,8 +288,8 @@ function clusterNodes(clusterHeadID) {
     var clusterOptionsByData = {
         joinCondition: function(childOptions) {
             for (var i = 0; i < NodesForCluster.length; i++) {
-                var ContainerID = network.findNode(NodesForCluster[i]);
-                if (childOptions.id == ContainerID[0]) {
+                var containerID = network.findNode(NodesForCluster[i]);
+                if (childOptions.id == containerID[0]) {
                     return true;
                 }
             }
@@ -476,26 +476,26 @@ function Click(params) {
 
 
 function DoubleClick(params) {
-    var ID;
+    var clickedNodeID;
     var lineNumber;
     console.log("doubleclick ");
     if (network.isCluster(params.nodes)) {
         var clusterNodes = network.getNodesInCluster(params.nodes);
-        ID = clusterNodes[0];
+        clickedNodeID = clusterNodes[0];
 
-        if (DFS[ID].isSubContainer != undefined && DFS[ID].isSubContainer == true) {
-            var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
-            var link = SLM.getLinkByID(clickedEdgeID);
+        if (DFS[clickedNodeID].isSubContainer != undefined && DFS[clickedNodeID].isSubContainer == true) {
+            var clickedEdgeclickedNodeID = network.clustering.getBaseEdge(params.edges[0]);
+            var link = SLM.getLinkByID(clickedEdgeclickedNodeID);
             lineNumber = link.lineNumber;
         } else {
             lineNumber = 1;
         }
 
     } else {
-        ID = params.nodes;
-        console.log("Isn't in cluster" + ID);
-        if (DFS[ID].isSubContainer != undefined && DFS[ID].isSubContainer == true) {
-            var clickedEdgeID = network.clustering.getBaseEdge(params.edges[0]);
+        clickedNodeID = params.nodes;
+        console.log("Isn't in cluster" + clickedNodeID);
+        if (DFS[clickedNodeID].isSubContainer != undefined && DFS[clickedNodeID].isSubContainer == true) {
+            var clickedEdgeclickedNodeID = network.clustering.getBaseEdge(params.edges[0]);
             var link = SLM.getLinkByID(clickedEdgeID);
             lineNumber = link.lineNumber;
         } else {
@@ -504,10 +504,10 @@ function DoubleClick(params) {
 
     }
 
-    if (DFS[ID].type != "dir") {
+    if (DFS[clickedNodeID].type != "dir") {
         var window = electron.remote.getCurrentWindow();
         window.blur();
-        var path = (DFS[ID].path);
+        var path = (DFS[clickedNodeID].path);
         var lineNumberString = String(lineNumber);
         sendMessageToVSCode('double_click', { 'path': path, 'lineNumber': lineNumberString });
     } else {

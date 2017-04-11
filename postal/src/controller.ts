@@ -103,7 +103,7 @@ export class Controller {
         }
 
         // no file found in project, create new node
-        var FileStruct = {
+        var fileStruct = {
             id: this.nodeidCounter,
             level: 0,
             isSubContainer: false, //bool, Not files or dirs
@@ -115,7 +115,7 @@ export class Controller {
             notifications: []
         }
 
-        FileStructs.push(FileStruct);
+        FileStructs.push(fileStruct);
         id = this.nodeidCounter;
         this.nodeidCounter++;
 
@@ -239,11 +239,11 @@ export class Controller {
         }
 
         //Add all subContainer nodes to FileStructs
-        var FileStruct = {};
+        var fileStruct = {};
         for(i = 0; i < tokens.length; i++){
             for(j = 0; j < tokens[i].length; j++){
                 if(tokens[i][j].tokenType == "node"){
-                    FileStruct = 
+                    fileStruct = 
                     {
                         id: this.nodeidCounter,
                         level: null,
@@ -256,7 +256,7 @@ export class Controller {
                         notifications: []
                     };
                    
-                    FileStructs.push(FileStruct);
+                    FileStructs.push(fileStruct);
 
                    
                     // push links between files and subcontainers
