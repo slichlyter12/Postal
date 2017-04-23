@@ -370,24 +370,32 @@ function addNodeToNodeArray(id) {
 function PickColor(type) {
     switch (type) {
         case "html":
+        case "HTML":
             return ("rgb(0,122,204)");
             break;
         case "php":
+        case "PHP":
             return ("rgb(86,156,214)");
             break;
         case "js":
+        case "JS":
             return ("rgb(137,209,133)");
             break;
         case "ts":
+        case "TS":
             return ("rgb(157,229,153)");
             break;
         case "css":
+        case "CSS":
             return ("rgb(200,50,200)");
         case "png":
+        case "PNG":
             return ("rgb(255,200,150)");
             break;
         case "jpg":
+        case "JPG":
         case "jpeg":
+        case "JPEG":
             return ("rgb(255,175,150)");
             break;
         case "dir":
@@ -398,8 +406,10 @@ function PickColor(type) {
         case "body":
             return ("rgb(45,132,214)");
         case "txt":
+        case "TXT":
             return ("rgb(160,40,10)");
         case "json":
+        case "JSON":
             return ("rgb(10,170,150)");
         default:
             return ("rgb(150,150,150)");
