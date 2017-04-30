@@ -164,14 +164,15 @@ function Main() {
     for(var i = 0; i < notificationSpans.length; i++){
         notificationSpans[i].addEventListener('mouseover', function(event) {
                 if(event.target.dataset.id != undefined || event.target.dataset.id != null){
-                    var tempid = network.clustering.findNode(event.target.dataset.id);
+                    var tempid = event.target.dataset.id;
                     nodes.update([{id:tempid, color:{background:('rgb(10, 232, 232)')}}]);
                 }
         });
         notificationSpans[i].addEventListener('mouseleave', function(event) {
                 if(event.target.dataset.id != undefined || event.target.dataset.id != null){
-                    var tempid = network.clustering.findNode(event.target.dataset.id);
-                    nodes.update([{id:tempid, color:{background:('rgb(255, 232, 232)')}}]);
+                    var tempid = event.target.dataset.id;
+                    var tempColor = PickColor(DFS[event.target.dataset.id].type);
+                    nodes.update([{id:tempid, color:{background:(tempColor)}}]);
                 }
         });
     }
