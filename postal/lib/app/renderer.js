@@ -26,6 +26,7 @@ var FLM; // File Link Manager
 var VLL = []; // Visible Link Lines
 var NXC; //Node X coordinate
 var NYC; //Node Y coordinate
+var NFS; //Notification File Structure
 
 // create network arrays
 var nodesArray = [];
@@ -158,6 +159,22 @@ function Main() {
     notificationListButton(network, options);
     fileLinksButton(network, options);
     legend(network, options);
+    
+    var notificationSpans = document.querySelectorAll('.filename');
+    for(var i = 0; i < notificationSpans.length; i++){
+        notificationSpans[i].addEventListener('mouseover', function(event) {
+                if(event.target.dataset.id != undefined || event.target.dataset.id != null){
+                    var tempid = network.clustering.findNode(event.target.dataset.id);
+                    nodes.update([{id:tempid, color:{background:('rgb(10, 232, 232)')}}]);
+                }
+        });
+        notificationSpans[i].addEventListener('mouseleave', function(event) {
+                if(event.target.dataset.id != undefined || event.target.dataset.id != null){
+                    var tempid = network.clustering.findNode(event.target.dataset.id);
+                    nodes.update([{id:tempid, color:{background:('rgb(255, 232, 232)')}}]);
+                }
+        });
+    }
     
 }
 
@@ -859,7 +876,7 @@ function populateNotificationsList() {
                 var filename = DFS[i].name;
 
                 var htmlNode = document.createElement("LI");
-                htmlNode.innerHTML = "<span class='filename'>" + filename + "</span><span class='lineNumber'>:" + lineNumber + "</span><span class='message'> " + message + "</span>";
+                htmlNode.innerHTML = "<span class='filename' data-id='" + DFS[i].id + "'>" + filename + "</span><span class='lineNumber' dataid='" + DFS[i].id + "'>:" + lineNumber + "</span><span class='message'> " + message + "</span>";
                 document.getElementById('newsTickerList').appendChild(htmlNode);
             }
         }
