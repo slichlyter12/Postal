@@ -1,7 +1,7 @@
 # Postal
 
 The Postal extension is being designed to allow developers to more quickly search through and visualize their projects. 
-Postal creates a visualization of the users project directory in an Electron window that shows files and subcomponents of those files as nodes and the links between them.
+Postal creates a visualization of the users project directory in an new window that shows files and subcomponents of those files as nodes and the links between them.
 
 Postal is currently under heavy active development.
 Expect new releases often within the following months of release.
@@ -21,13 +21,35 @@ We also plan to add functionality to display user-defined errors within the visu
 * This is an early release of Postal (alpha build)
 * Several features are not yet complete and we expect buggy behavior 
 * (Use at your own risk, and/or frustration)
-* We're just a humble group of wannabe college programmers, all feed-back and critisism welcome!
+* We're just a humble group of wannabe college programmers, all feedback and critisism welcome!
 
 ## Requirements
 * [NodeJS](https://nodejs.org/en/) (Version 6.10.0 or higher)
 
 ## Installation
-You may need to run `npm install` in Terminal or PowerShell in the following directories:
+
+### From Visual Studio Code Marketplace:
+* Within Visual Studio Code, click the extensions tab (the last one that looks like a block)
+* type "postal" into the search bar
+* click the install button
+* See "FOR ALL INSTALLATION METHODS" below
+* reload the VSCode window or close and reopen VSCode
+
+### From GitHub:
+Run the following commands:
+
+* `git clone https://github.com/slichlyter12/Postal.git`
+* `cd postal`
+* `npm install`
+* `cd lib/app`
+* `npm install`
+* `cd ../..`
+* `code .`
+* (VSCode should now be open with Postal's source code)
+* Hit `F5`
+
+### FOR ALL INSTALLATION METHODS:
+You will need to run `npm install` in Terminal or PowerShell in the following directories:
 
 * `~/.vscode/extensions/postal-team.postal-$version/`
 * `~/.vscode/extensions/postal-team.postal-$version/lib/app`
