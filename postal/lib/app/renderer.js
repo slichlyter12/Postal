@@ -161,7 +161,7 @@ function Main() {
     legend(network, options);
     notificationDoubleClick(network, options);
     
-    var notificationSpans = document.querySelectorAll('.filename');
+    var notificationSpans = document.querySelectorAll('span');
     for(var i = 0; i < notificationSpans.length; i++){
         notificationSpans[i].addEventListener('mouseover', function(event) {
                 if(event.target.dataset.id != undefined || event.target.dataset.id != null){
@@ -903,7 +903,7 @@ function populateNotificationsList() {
                 var filename = DFS[i].name;
 
                 var htmlNode = document.createElement("LI");
-                htmlNode.innerHTML = "<span class='filename' data-id='" + DFS[i].id + "'>" + filename + "</span><span class='lineNumber' dataid='" + DFS[i].id + "'>:" + lineNumber + "</span><span class='message'> " + message + "</span>";
+                htmlNode.innerHTML = "<span class='filename' data-id='" + DFS[i].id + "'>" + filename + "</span><span class='lineNumber' dataid='" + DFS[i].id + "'>:" + lineNumber + "</span><span class='message' data-id='" + DFS[i].id + "'> " + message + "</span>";
                 document.getElementById('newsTickerList').appendChild(htmlNode);
             }
         }
