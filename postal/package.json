@@ -2,7 +2,7 @@
     "name": "postal",
     "displayName": "Postal",
     "description": "A tool to help visualize code file systems",
-    "version": "0.1.4",
+    "version": "1.0",
     "publisher": "postal-team",
     "engines": {
         "vscode": "^1.9.0"
@@ -216,7 +216,7 @@
                             "title": "IncorrectNaming TS/js Notification",
                             "type": "notification",
                             "filetypes": [
-                                "ts","js"
+                                "ts", "js"
                             ],
                             "options": {
                                 "notify": "(var [^a-z].*)",
