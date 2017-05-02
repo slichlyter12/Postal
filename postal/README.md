@@ -55,8 +55,10 @@ You will need to run `npm install` in Terminal or PowerShell in the following di
 * `~/.vscode/extensions/postal-team.postal-$version/lib/app`
 
 ## Usage
+**Note:** If installed via GitHub, Postal will only be available within the window that shows up after hitting `F5`.
+
 * Launch Postal by running Postal in the command pallette, this will parse the project directory you have open in VSCode. This will also open a UI.
-* Double-click a node in the UI to expand a subcomponents of that node, by default this will only work for HTML and PHP files. Specifically divs and body tags.
+* right-click a node in the UI with a bright green border to expand subcomponents of that node, by default this will only work for HTML, PHP, JavaScript, TypeScript, and C files. Specifically divs and body tags for HTML and PHP, and functions for JavaScript, TypeScript, and C files.
 
 ## Known Issues
 
