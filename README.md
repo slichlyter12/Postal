@@ -11,16 +11,13 @@ We also plan to add functionality to display user-defined errors within the visu
 
 ![File Map Example](./postal/images/filemap.png)
 
-
 ## Features
 * Generate a visualization of the users project directory
 * Generate subcomponents of files based on parsing behaviors defined in the user editable file grammars.json
 * Current options include tagged projects (i.e. HTML) and links (hrefs within HTML)
 
 ### Notes: 
-* This is an early release of Postal (alpha build)
-* Several features are not yet complete and we expect buggy behavior 
-* (Use at your own risk, and/or frustration)
+* This is our first official release of Postal!
 * We're just a humble group of wannabe college programmers, all feedback and critisism welcome!
 
 ## Requirements
@@ -59,10 +56,6 @@ You will need to run `npm install` in Terminal or PowerShell in the following di
 
 * Launch Postal by running Postal in the command pallette, this will parse the project directory you have open in VSCode. This will also open a UI.
 * right-click a node in the UI with a bright green border to expand subcomponents of that node, by default this will only work for HTML, PHP, JavaScript, TypeScript, and C files. Specifically divs and body tags for HTML and PHP, and functions for JavaScript, TypeScript, and C files.
-
-## Known Issues
-
-* Parsing on large projects (thousands of files) takes a while, but will (probably) finish around 30 seconds
 
 ## Release Notes
 
