@@ -166,7 +166,7 @@ function Main() {
         notificationSpans[i].addEventListener('mouseover', function(event) {
                 if(event.target.dataset.id != undefined || event.target.dataset.id != null){
                     var tempid = event.target.dataset.id;
-                    nodes.update([{id:tempid, color:{background:('rgb(10, 232, 232)')}}]);
+                    nodes.update([{id:tempid, color:{background:('rgb(225, 232, 100)')}}]);
                 }
         });
         notificationSpans[i].addEventListener('mouseleave', function(event) {
