@@ -687,7 +687,8 @@ function notificationDoubleClick(network, options){
         var newsTickerid = notificationElement.parentElement.parentElement.id;
         if(newsTickerid == "newsTickerList"){
             //Get element id, corresponds to DFS index, get path from DFS
-            var notificationId = notificationElement.parentElement.children[0].id;
+            var notification = notificationElement.parentElement.children[0];
+            var notificationId = notification.data-id;
             var notificationPath = DFS[notificationId].path;
             
             //Get line number from second element
@@ -903,7 +904,7 @@ function populateNotificationsList() {
                 var filename = DFS[i].name;
 
                 var htmlNode = document.createElement("LI");
-                htmlNode.innerHTML = "<span class='filename' id='" + DFS[i].id + "'>" + filename + "</span><span class='lineNumber' id='" + DFS[i].id + "'>:" + lineNumber + "</span><span class='message'> " + message + "</span>";
+                htmlNode.innerHTML = "<span class='filename' data-id='" + DFS[i].id + "'>" + filename + "</span><span class='lineNumber' dataid='" + DFS[i].id + "'>:" + lineNumber + "</span><span class='message'> " + message + "</span>";
                 document.getElementById('newsTickerList').appendChild(htmlNode);
             }
         }
