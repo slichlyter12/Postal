@@ -173,7 +173,7 @@ body{
 }
 .newsticker li:hover {
   border: 1px solid #515151;
-  cursor: pointer;
+  cursor: default;
 }
 
 #next-prev-buttons {
