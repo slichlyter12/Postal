@@ -2,7 +2,7 @@
     "name": "postal",
     "displayName": "Postal",
     "description": "A tool to help visualize code file systems",
-    "version": "1.0",
+    "version": "1.0.0",
     "publisher": "postal-team",
     "engines": {
         "vscode": "^1.9.0"
