@@ -687,8 +687,7 @@ function notificationDoubleClick(network, options){
         var newsTickerid = notificationElement.parentElement.parentElement.id;
         if(newsTickerid == "newsTickerList"){
             //Get element id, corresponds to DFS index, get path from DFS
-            var notification = notificationElement.parentElement.children[0];
-            var notificationId = notification.data-id;
+            var notificationId = notificationElement.parentElement.children[0].getAttribute("data-id");
             var notificationPath = DFS[notificationId].path;
             
             //Get line number from second element
