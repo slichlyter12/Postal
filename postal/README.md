@@ -66,6 +66,9 @@ You will need to run `npm install` in Terminal or PowerShell in the following di
 
 ## Release Notes
 
+### 1.0
+* Feature Complete
+
 ### 0.1.3
 * Fixed bug causing the file map to not appear after its first run
 
