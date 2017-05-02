@@ -159,6 +159,7 @@ function Main() {
     notificationListButton(network, options);
     fileLinksButton(network, options);
     legend(network, options);
+    notificationDoubleClick(network, options);
     
     var notificationSpans = document.querySelectorAll('.filename');
     for(var i = 0; i < notificationSpans.length; i++){
@@ -546,6 +547,7 @@ function DoubleClick(params) {
     }
 }
 
+
 // MARK: END EVENT LISTENERS
 function zoomFont(network, options){
         var scale = network.getScale();
@@ -677,6 +679,30 @@ function notificationListButton(network, options){
     //     prevButton: $('#next-error-btn'),
     //     nextButton: $('#prev-error-btn')
     // });
+}
+
+function notificationDoubleClick(network, options){
+    document.addEventListener("dblclick", function(e){
+        var notificationElement = e.target;
+        var newsTickerid = notificationElement.parentElement.parentElement.id;
+        if(newsTickerid == "newsTickerList"){
+            //Get element id, corresponds to DFS index, get path from DFS
+            var notificationId = notificationElement.parentElement.children[0].id;
+            var notificationPath = DFS[notificationId].path;
+            
+            //Get line number from second element
+            var notificationLineNum = notificationElement.parentElement.children[1].innerHTML;
+            var lineNumTrimmed = notificationLineNum.substr(1);
+
+            //Jump to line in code
+            var window = electron.remote.getCurrentWindow();
+            window.blur();
+            sendMessageToVSCode('double_click', { 'path': notificationPath, 'lineNumber': lineNumTrimmed });
+            
+        }
+
+    });
+    
 }
 
 function legend(network, options){
@@ -877,7 +903,7 @@ function populateNotificationsList() {
                 var filename = DFS[i].name;
 
                 var htmlNode = document.createElement("LI");
-                htmlNode.innerHTML = "<span class='filename' data-id='" + DFS[i].id + "'>" + filename + "</span><span class='lineNumber' dataid='" + DFS[i].id + "'>:" + lineNumber + "</span><span class='message'> " + message + "</span>";
+                htmlNode.innerHTML = "<span class='filename' id='" + DFS[i].id + "'>" + filename + "</span><span class='lineNumber' id='" + DFS[i].id + "'>:" + lineNumber + "</span><span class='message'> " + message + "</span>";
                 document.getElementById('newsTickerList').appendChild(htmlNode);
             }
         }

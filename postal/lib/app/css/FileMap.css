@@ -7,6 +7,7 @@ body{
 #toolbar{
     -webkit-app-region: drag;
     -webkit-user-select: all;
+    user-select: none;
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
     width: 100%;
@@ -126,6 +127,7 @@ body{
 #slideout {
   -webkit-app-region: no-drag; 
   -webkit-user-select: all;
+  user-select: none;
   background: #cccccc;
   color: #333;
   position: fixed;
@@ -137,12 +139,16 @@ body{
   transition-duration: 0.5s;
   z-index: 10;
 }
+
 #slideout.on {
   right: 0;
 }
 #error-list-title{
     font-family: Arial, Helvetica, sans-serif;
     color: #000000;
+}
+#error-list-title h5{
+    margin-top: -18px;
 }
 .newsticker{
     font-family: Arial, Helvetica, sans-serif;
@@ -164,6 +170,10 @@ body{
 
 .newsticker li {
     padding-bottom: 7px;
+}
+.newsticker li:hover {
+  border: 1px solid #515151;
+  cursor: pointer;
 }
 
 #next-prev-buttons {
