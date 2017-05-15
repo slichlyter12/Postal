@@ -54,6 +54,7 @@ class GameplayDirector
 		static inline void gdPause();
 		static inline void gdTurnSnake(direction newDirection);
 		static void gdAddSnack(food_type type = normal);
+		static void gdAddBadGuy();
 
 		/* Fields */
 		static Snake Python;

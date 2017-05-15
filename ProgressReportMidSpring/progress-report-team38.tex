@@ -65,7 +65,7 @@
 % Document Title:
 \def\doctitle{A Tool to Visualize the Structure of a Codebase Using Information Foraging Theory Design Patterns}
 \def\doctype{Progress Report}
-\def\doctype{Winter Midterm Update}
+\def\doctype{Spring Midterm Update}
 \def\team{Team Postal | Group \#38}
 
 \markboth{Oregon State University}{\doctitle}
@@ -134,6 +134,7 @@ Any major errors or incompatibilities within the project or its files will be re
 	As of the end of week 6 of Spring term, the team is still waiting for response from the IRB.
 	When approval is received, the team and our client will set up a selection of users to test our program.
 	The actual testing procedures have been defined in the User Testing section later in this document.
+	
 \section{Remaining Work}
 	\subsection{Postal Extension}
 	While Functionally complete, these are several minor features the team is planing on implementing before user trails begin. 
@@ -152,17 +153,177 @@ Any major errors or incompatibilities within the project or its files will be re
 	\subsection{Spring Term}
 
 \section{User Testing}
+	
+
 	\subsection{Testing Description}
 	%Include our actual updated user questions, brief description of test projects, what we have users do
+	The test in its current state contains two sets of tasks that go with two specific software projects. 
+	One is a C++ project and the other is a HTML and PHP project. 
+	Both of these projects are about the same size and are of similar complexity. 
+	The test subjects will go through the projects completing the tasks that we have designed to measure the effectiveness of the use of IFT. 
+	\\
+	The tasks are as follows: 
+	
+	For the \textbf{C++ project}
+	\begin{enumerate}
+		\item Locate the line at which void RenderingDirector::rdRender() is defined. 
+		\item Find the number of functions in the snake.cpp file.
+		\item There is a function that is defined in Snake.cpp, but is never used. Name that function.
+		\item Find all the TODO comments in the program.
+		\item Identify the return type of the Snake::Turn function.
+		\item Find the number of times the Food class referenced in the gameplay-director.cpp file.
+		\item Find the number of .h files included in main.cpp.
+		\item Locate the file in which the Punish() function is defined.
+	\end{enumerate}
+	
+	For the \textbf{HTML and PHP project}
+	\begin{enumerate}
+		\item ?index.php? is the homepage for this web application. Over time, various features and pages were added and removed. This resulted in some files that exist within the directory that have been deprecated (they are not used within the index page or any of the pages linked to index.php). Locate all the files that are deprecated. (select all that apply check list)
+
+		\item Find the number of ?div?s in header.php
+		\item Some website applications make use of several external references like jQuery and Bootstrap. Find all external references used in the project directory. (External references are links to outside resources that are not included within the project directory, and are hosted on external servers)
+
+		\item What file and line number is ?site-menu? declared in?
+		\item How many references are there to ?stylesheet.css? in the project?
+		\item How many images are linked in the entire project?
+	\end{enumerate}
 	
 	\subsection{Measuring Results}
-	%Include questionnaire questions and how we will measure effectiveness of project
+	We will measure how long it takes the tester to complete the tasks as well as how well they answer the questions as a percentage. 
+	For example if a user were to find all the TODOs they would receive a 100\% for that question. 
+	If they missed one of the ten they would get a 90\%.
+	If the subject failed to find any of the TODOs they would receive a 0\% for that problem.
+
+	We will also do a post test questionnaire. 
+	The questionnaire will pose the subject with a number of questions that the subject can answer on a spectrum from strongly agree to strongly disagree.
+
+	The questionaire is as follows: 
+	
+	\begin{enumerate}
+		\item I could effectively complete the tasks and scenarios using the Postal tools.
+		\item I was able to complete the tasks and scenarios quickly using the Postal tools.
+		\item The organization of information and interface elements of the Postal tools within Visual Studio Code was clear.
+		\item It was easy to use this tool.
+		\item I would use Visual Studio Code again.
+		\item I could think of multiple scenarios for using for the Postal tool. 
+		\item I would use the Postal tools within Visual Studio Code again.
+		\item Seeing a project visually was useful. 
+		\item I felt the file link feature$^1$ allowed me to complete the tasks more quickly.
+		\item I felt the file link feature$^1$ allowed me to answer the questions with more confidence.
+		\item I felt the expand feature$^2$ allowed me to complete the task more quickly.
+		\item I felt the expand feature$^2$ allowed me to answer the questions with more confidence.
+		\item I felt the notification feature$^3$ allowed me to complete the task more quickly.
+		\item I felt the notification feature$^3$ allowed me to answer the questions with more confidence.	
+	\end{enumerate}
+
+	[1] File link feature: Internal references to other files displayed as red lines within the node network.
+
+	[2] Expand feature: A right-click on any file node expanded the node network to include all sub-nodes (classes, functions, divs, etc.) of the indicated node.
+
+	[3] Notification feature: Notifications (regarding malformed code, incorrect styling, etc.) were indicated by a red circle attached to the associated files/nodes and described in the notification window on the right-hand side of the screen.
+
+	The questionnaire will help us to measure how the user feels about the usefulness and general feel of the extension. 
+	The more that they strongly agree with the statements that will mean that the users enjoy and feel that the extension is useful.
+
+	\subsection{Report Rough Draft: Information Foraging Theory Improving the Rate of Information Gain in Software Development}
+	A report of the results of the an attempt to use of IFT properties used to help improve the efficiency of software development through the use of visualization. This report will describe the idea of information foraging theory as well as the Postal Extension that was developed to test the use of IFT with developers. The report will also detail the way that the software was tested along with the results of the tests, and the conclusion that is gathered from the tests. 
+	
+	\subsubsection{Information Foraging Theory}
+	Information Theory is the idea of turning information into weighted directed graphs and then implementing these graphs to better access the data.
+	
+	\subsubsection{The Postal Extension}
+	Postal is a proof of concept using IFT design patterns to present data to the user will improve the rate that the user can locate and navigate the information.
+	We hypothesize that the use of IFT in the Postal Extension will prove to increase the productivity and efficiency of programmers navigating around code and locating different parts of the code.  
+	
+	\subsubsection{Experiment Procedure}
+	\begin{enumerate}
+		\item	In a computer Lab with 15 computers set up the extension on the 15 computers.
+		\item	On the 15 computers load up the 2 testing projects.
+		\item	On the 15 computers set up a document with the question that they will be answering.
+		\item	Have the subjects each sit at a different computer and give them a 5 minute tutorial on the Postal Extension and how to use it.
+		\item	Direct the subjects to the questions that they are answering and the project that they are answering the questions about
+		\item	Give the users ten minutes to complete the set of questions.
+		\item	At the end of the ten minutes direct the users to the next set of questions and the other project. 
+		\item 	Give them another 10 minutes to answer the question without the use of the extension.
+		\item	Once the ten minutes are over they will be given a short survey. 
+		\item	The subjects will have 5 minutes to answer the survey.
+		\item	Once they are done, ask that group to leave and bring in the other 15 subject and repeat the same procedure but switch the project that the subjects use the extension on. 
+		\item 	Collect results.
+	\end{enumerate}
+	
+	The tasks are as follows: 
+	
+	For the \textbf{C++ project}
+	\begin{enumerate}
+		\item Locate the line at which void RenderingDirector::rdRender() is defined. 
+		\item Find the number of functions in the snake.cpp file.
+		\item There is a function that is defined in Snake.cpp, but is never used. Name that function.
+		\item Find all the TODO comments in the program.
+		\item Identify the return type of the Snake::Turn function.
+		\item Find the number of times the Food class referenced in the gameplay-director.cpp file.
+		\item Find the number of .h files included in main.cpp.
+		\item Locate the file in which the Punish() function is defined.
+	\end{enumerate}
+	
+	For the \textbf{HTML and PHP project}
+	\begin{enumerate}
+		\item ?index.php? is the homepage for this web application. Over time, various features and pages were added and removed. This resulted in some files that exist within the directory that have been deprecated (they are not used within the index page or any of the pages linked to index.php). Locate all the files that are deprecated. (select all that apply check list)
+		\item Find the number of ?div?s in header.php
+		\item Some website applications make use of several external references like jQuery and Bootstrap. Find all external references used in the project directory. (External references are links to outside resources that are not included within the project directory, and are hosted on external servers)
+		\item What file and line number is ?site-menu? declared in?
+		\item How many references are there to ?stylesheet.css? in the project?
+		\item How many images are linked in the entire project?
+	\end{enumerate}
+	
+	\subsubsection{Measuring Results}
+	We will measure how long it takes the tester to complete the tasks as well as how well they answer the questions as a percentage. 
+	For example if a user were to find all the TODOs they would receive a 100\% for that question. 
+	If they missed one of the ten they would get a 90\%.
+	If the subject failed to find any of the TODOs they would receive a 0\% for that problem.
+
+	We will also do a post test questionnaire. 
+	The questionnaire will pose the subject with a number of questions that the subject can answer on a spectrum from strongly agree to strongly disagree.
+
+	The questionaire is as follows: 
+	
+	\begin{enumerate}
+		\item I could effectively complete the tasks and scenarios using the Postal tools.
+		\item I was able to complete the tasks and scenarios quickly using the Postal tools.
+		\item The organization of information and interface elements of the Postal tools within Visual Studio Code was clear.
+		\item It was easy to use this tool.
+		\item I would use Visual Studio Code again.
+		\item I could think of multiple scenarios for using for the Postal tool. 
+		\item I would use the Postal tools within Visual Studio Code again.
+		\item Seeing a project visually was useful. 
+		\item I felt the file link feature$^1$ allowed me to complete the tasks more quickly.
+		\item I felt the file link feature$^1$ allowed me to answer the questions with more confidence.
+		\item I felt the expand feature$^2$ allowed me to complete the task more quickly.
+		\item I felt the expand feature$^2$ allowed me to answer the questions with more confidence.
+		\item I felt the notification feature$^3$ allowed me to complete the task more quickly.
+		\item I felt the notification feature$^3$ allowed me to answer the questions with more confidence.	
+	\end{enumerate}
+
+	[1] File link feature: Internal references to other files displayed as red lines within the node network.
+
+	[2] Expand feature: A right-click on any file node expanded the node network to include all sub-nodes (classes, functions, divs, etc.) of the indicated node.
+
+	[3] Notification feature: Notifications (regarding malformed code, incorrect styling, etc.) were indicated by a red circle attached to the associated files/nodes and described in the notification window on the right-hand side of the screen.
+	
+	\subsubsection{Conclusion}
+	
+	We will write this once we get the results of the project.	
+
 
 \pagebreak	
 \section{Images}
 	\begin{figure}
-		\includegraphics[width=400px]{capstoneUI1}
-		\caption{Current User Interface}  %%UP TO DATE??????
+		\includegraphics[width=400px]{PostalUI}
+		\caption{Visualization Interface}  
+	\end{figure}
+	
+	\begin{figure}
+		\includegraphics[width=400px]{PostalNotification}
+		\caption{Notification Interface}  
 	\end{figure}
 	
 	\begin{figure}

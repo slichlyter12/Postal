@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Network | Basic usage</title>
+    
+    <link href="../../node_modules/vis/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/FileMap.css" rel="StyleSheet" type="text/css">
+ 
+  </head>
+<body>
+  <div id="toolbar">
+    <button type="button" id="close-window" >&times;</button>
+    <button type="button" id="min-window" >&minus;</button>
+    <button type="button" id="structure-btn" >Structure: Hierarchy</button>
+    <button type="button" id="physics-btn" >Physics: Off</button>
+    <button type="button" id="fileLinks-btn" >FileLinks: Off</button>
+   
+    <div id="error-container">
+      <button type="button" id="error-window-btn" >&#10094;</button>
+      <button type="button" id="legend-btn" >&#10095;</button>
+     
+      <div id="slideout">
+        <span id="error-list-title"><h3 style="text-align: center">Notifications</h3></span>
+        <!--<div id="next-prev-buttons">
+          <button type="button" id="prev-error-btn" >Prev</button>
+          <button type="button" id="next-error-btn" >Next</button>
+        </div>-->
+        <ul class="newsticker" id="newsTickerList"></ul>
+      </div>
+      <div id="legend">
+        <span id="legend-title"><h3 style="text-align: center">Legend</h3></span>
+        <svg id="legend-svg" height="100" width="355">
+          <line x1="0" y1="4" x2="100" y2="4" style="stroke:rgb(255, 52, 52);stroke-width:2" />
+          <text x="105" y="11" fill="black">File Links</text>
+          <line x1="0" y1="35" x2="100" y2="35" style="stroke:rgb(150, 150, 150);stroke-width:2" />
+          <text x="105" y="38" fill="black">File Hierarchy</text>
+        </svg>
+        
+      </div>
+    
+    </div>
+    <!--<div class="vis-network vis-navigation vis-button vis-zoomExtends" ></div>-->
+  </div>
+  
+  <div id="configuration"></div>
+  <div id="mynetwork"></div>
+  <pre id="eventSpan"></pre>
+
+
+  <script type="text/javascript">
+    require('./renderer.js');
+  </script>
+  <script>window.$ = window.jQuery = require('./js/jquery-3.1.1.min.js');</script>
+  <script src="js/jquery-3.1.1.min.js" ></script>
+  <!--<script src="js/jquery.newsTicker.min.js" ></script>-->
+  <script src="../../node_modules/vis/dist/vis.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "postal_filemap",
+  "version": "1.0.0",
+  "description": "FileMap GUI for Postal",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "keywords": [
+  ],
+  "devDependencies": {
+    "electron": "^1.4.1"    
+  },
+  "dependencies": {    
+    "electron": "^1.4.14",
+    "process-bridge": "^0.3.6"
+  },
+  "author": "Winkleer",
+  "license": "CC0-1.0"
+}
