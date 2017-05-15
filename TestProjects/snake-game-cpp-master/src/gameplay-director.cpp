@@ -73,6 +73,8 @@ void GameplayDirector::gdProcess()
 		if (isHungry) {
 			Python.Move();
 		}
+
+		// TODO: Add Story elements 
 	}
 }
 
@@ -202,3 +204,21 @@ void GameplayDirector::gdAddSnack(food_type type) {
 	} while (Python.IsHere(foodX, foodY));
 	gdSnacks.push_back(Food(foodX, foodY, type));
 }
+
+
+/*
+* gdAddBadGuy(direction newDirection)()
+*
+* Adds new Bad Guy to the field.
+*
+* Returns: nothing.
+*
+* Author: Cramer Smith
+* Date: 05/15/2016
+* Version: 1.0
+*/
+static void gdAddBadGuy() {
+	// TODO: Figure out how to add a bad guy. 
+}
+
+

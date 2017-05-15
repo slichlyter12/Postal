@@ -16,6 +16,8 @@
 * Date: 08/01/2012
 * Version 1.1.0 Alpha
 */
+
+// TODO: Change the name of this type, maybe? 
 #ifndef FOOD_H_
 #define FOOD_H_
 
