@@ -1,0 +1,262 @@
+\documentclass[letterpaper,10pt,titlepage,draftclsnofoot,onecolumn,onesided] {IEEEtran}
+\usepackage{listings}
+\usepackage{underscore}
+\usepackage[bookmarks=true]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+%\usepackage{titling}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[noadjust]{cite}
+\usepackage{setspace}
+\nocite{*}
+\graphicspath{ {img/} }
+%\usepackage{abstract}
+
+\newcommand{\namesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+\newcommand{\studentnamesigdate}[2][4cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
+
+\hypersetup{
+    bookmarks=false,    % show bookmarks bar?
+    pdftitle={Progress Report},    % title
+    pdfauthor={Cramer Smith, Sam Lichlyter, Eric Winkler, Zach Schneider},                     % author
+    pdfsubject={Progress Report},                        % subject of the document
+    pdfkeywords={IFT, Report, Postal}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=black,       % color of internal links
+    citecolor=black,       % color of links to bibliography
+    filecolor=black,        % color of file links
+    urlcolor=blue,        % color of external links
+    linktoc=page            % only page is linked
+} 
+
+\lstdefinestyle{customperl}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=Perl,
+  columns=fullflexible,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+  numbers=left
+}
+\lstset{escapechar=@, style=customperl}
+
+% Document Title:
+\def\doctitle{A Tool to Visualize the Structure of a Codebase Using Information Foraging Theory Design Patterns}
+\def\doctype{Progress Report}
+\def\doctype{Spring Midterm Update}
+\def\team{Team Postal | Group \#38}
+
+\markboth{Oregon State University}{\doctitle}
+
+\begin{document}
+
+\title{\Huge{\bfseries{\textsf{\doctitle}}}\\\textsf{\Large{\doctype}}\\\textsf{\large{\team}}}
+\author{Cramer Smith, Sam Lichlyter, Eric Winkler, Zach Schneider}
+
+\maketitle
+\vfill
+
+\setlength\parindent{0pt} \textbf{Abstract:} Developer tools are often complex pieces of software. 
+Gathering and manipulating useful information for a programmer can often be a slow and costly process. 
+By implementing Information Foraging Theory design patterns in the creation of these tools, the information collected may be more useful or produced faster. 
+Information Foraging Theory is the theory and math behind the choices people make to maximize the value of the information they find versus the cost of getting that information.
+The aim of this project is to develop a tool that will act as a proof of concept to this idea and increase developer efficiency.
+Through the implementation of multiple IFT design patterns, the Postal team will create a developer tool that helps enforce and maintain code structure. 
+
+\vfill
+
+\pagebreak
+
+\tableofcontents
+
+
+\pagebreak
+
+\section{Project Purpose and Goals}
+Developer tools are often complex pieces of software. 
+Gathering and manipulating useful information for a programmer can often be a slow and costly process. 
+By implementing Information Foraging Theory design patterns in the creation of these tools, the information collected may be more useful or obtained faster. 
+Information Foraging Theory (IFT) is the theory and math behind the choices people make to maximize the value of the information they find versus the cost of getting that information.
+The aim of this project is to develop a tool that will act as a proof of concept for IFT and increase developer efficiency.
+
+Our project (code-named "Postal") is an extension for Visual Studio Code. 
+It is being designed to allow developers to more quickly search through and better visualize their projects.
+This extension will also help developers create clearer and cleaner code structure by offering reminders and suggestions about the best coding practices in the programming language they are currently using.
+Any major errors or incompatibilities within the project or its files will be reported to the developer as well.
+
+\section{Current Status}
+	\subsection{Project Status}
+	As of the end of week 6 of Spring term, all requirements of our project have been met, the extension itself is fully functional and most bugs in the codebase have be either resolved or negated.
+	Our extension is available for download and installation from the Microsoft Visual Studio Marketplace and is labeled as our 1.0 release. 
+	Previous alpha and beta versions had been available on the Marketplace but lacked some of the final functionality or had significant bugs present.
+	Project Postal works and has been tested on all 3 major OS platforms, Windows 7/10, MacOS and Ubuntu specifically.
+	The extension can parse and visualize most major programming languages, having been tested primarily on C, C++, HTML, CSS, JavaScript, TypeScript and PHP.
+	Default grammars (a series of regular expressions that search for language-specific keywords or tags) that allow the parser to process and visualize most of these languages have been included with the extension installation.
+	The program is highly extensible, allowing any user to add to existing language grammars or create new languages grammars themselves.
+	To this effect, the team intends to demonstrate Project Postal at the Engineering Expo with grammars not included in the default installation, so as to show how grammars can be designed toward specific codebases.
+	
+	Two deficiencies of note remain in our project that were not able to be resolved by the week 5 code freeze: a separate Node.js installation and minor visualization bugs.
+	At this time, the Postal Extension requires Node to be independently installed on the user's machine in order to work. 
+	The reason for this additional installation requirement is that our display and window system, Electron, is too large of a package to be bundled in with a Visual Studio Code extension.
+	As such, the user has to use Node's 'npm install' command to acquire Electron separately.
+	The other remaining bug of note in our project is an occasional inconsistency in how a given codebase is visualized.
+	Postal uses the Vis.js package to create a network of interactive visual nodes that represent files in the user's codebase.
+	Occasionally, Vis will generate a network that has some file nodes set to display in a location far from the rest of the network.
+	This visualization bug can typically be overcome by either redrawing the network (a button available to the user) or closing and reopening the Electron window.
+	The team was not able to determine the cause of this problem, but we feel it does not significantly detract from the overall functionality of the program.
+	
+	\subsection{Testing Status}
+	According to our agreement with our client, Prof. Chris Scaffidi, the team will conduct user testing to demonstrate whether the IFT principles with which the program was designed are effective.
+	The team has both written up a series of tasks for a set of users to perform with and without the Postal Extension, as well as a post-testing questionnaire that will gauge the whether the users felt the extension helped them achieve the tasks faster or more effectively.
+	These tasks and the questionnaire were both approved by our client and have been submitted to the university's Institutional Review Board (IRB) for human subject research approval.
+	As of the end of week 6 of Spring term, the team is still waiting for response from the IRB.
+	When approval is received, the team and our client will set up a selection of users to test our program.
+	The actual testing procedures have been defined in the User Testing section later in this document.
+\section{Remaining Work}
+
+
+\section{Problems and Solutions}
+	\subsection{Fall Term}
+	
+	
+	\subsection{Winter Term}
+	
+	
+	\subsection{Spring Term}
+
+\section{User Testing}
+	\subsection{Testing Description}
+	%Include our actual updated user questions, brief description of test projects, what we have users do
+	
+	\subsection{Measuring Results}
+	%Include questionnaire questions and how we will measure effectiveness of project
+
+\pagebreak	
+\section{Images}
+	\begin{figure}
+		\includegraphics[width=400px]{PostalUI}
+		\caption{Visualization Interface}  
+	\end{figure}
+	
+	\begin{figure}
+		\includegraphics[width=400px]{PostalNotification}
+		\caption{Notification Interface}  
+	\end{figure}
+	
+	\begin{figure}
+		\includegraphics[width=400px]{UpdatedDataStruct}
+		\caption{Updated Data Structure}
+	\end{figure}
+
+\pagebreak
+\section{Code Samples}
+	\subsection{Example Grammar}
+	This is the default grammar that parses HTML and PHP files for divs and links.
+	
+	\begin{lstlisting}
+{
+    "id" : 0,
+    "title" : "html",
+    "filetypes" : ["html", "php"],
+    "rules" : [{
+            "title": "div",
+            "type": "tagged",
+            "options" : {
+                "tagStart": "<div",
+                "namedOption" : "id=\"(.+?)\"",
+                "tagEnd": ">",
+                "closingTag": "</div>",
+                "nodeColor": "blue"
+            }
+        }, {
+            "title": "href link",
+            "type" : "link",
+            "options" : {
+                "link": "href=[\"](.+?)[\"]",
+                "nodeColor": "blue"
+            }
+        }, {
+            "title": "includes link",
+            "type": "link",
+            "options": {
+                "link": "include=[\"](.+?)[\"]",
+                "nodeColor": "blue"
+            }
+        }, {
+            "title": "body",
+            "type": "tagged",
+            "options" : {
+                "tagStart": "<body",
+                "tagEnd": ">",
+                "closingTag": "</body>",
+                "nodeColor": "blue"
+            }
+        }
+    ]
+}
+	\end{lstlisting}
+
+	\pagebreak
+	\subsection{Recursive Get All Links}
+	This function grabs all the links from the data structure of a specified file struct and it's children.
+	\begin{lstlisting}
+// Recursive function to get all links from this and children
+function getAllLinksFromFileStructRecursive(FileStructID) {
+    var links = [];
+
+    // check parent
+    if (DFS[FileStructID].links.length > 0) {
+        for (var i = 0; i < DFS[FileStructID].links.length; i++) {
+            var link = DFS[FileStructID].links[i];
+            links.push(link);
+        }
+    }
+
+    // check children
+    if (DFS[FileStructID].subContainers.length > 0) {
+        var childLinks = [];
+        for (var i = 0; i < DFS[FileStructID].subContainers.length; i++) {
+            var childFileStructID = DFS[DFS[FileStructID].subContainers[i].toFileStructid].id;
+            childLinks = getAllLinksFromFileStructRecursive(childFileStructID);
+
+            // push what we found to parents link list
+            for (var j = 0; j < childLinks.length; j++) {
+                links.push(childLinks[j]);
+            }
+
+        }
+    } 
+
+    return links;
+}
+	\end{lstlisting}
+
+\pagebreak
+\bibliographystyle{IEEEtran}
+\bibliography{progress-report-team38}
+
+
+\end{document}
+
