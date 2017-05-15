@@ -1,0 +1,269 @@
+body{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    overflow: hidden;
+}
+
+#toolbar{
+    -webkit-app-region: drag;
+    -webkit-user-select: all;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 100%;
+    height: 32px;
+    background-color: #373737;
+}
+#configuration{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 100%;
+    height: 35px;
+    background-color: #1e1e1e;
+}
+
+#min-window, #close-window {
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 50px;
+    height: 100%;
+    font-size: larger;
+    background-color: #373737;
+    border-color: #1e1e1e;
+    border-width: 0px;
+    border-left-width: 1px;
+    color: white;
+    float: right;
+}
+#min-window:hover, #close-window:hover{
+    background-color: #444444;
+}
+
+#physics-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 4px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 125px;
+    height: 24px;
+    background-color: #515151;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+    font-size: 12px;
+}
+#physics-btn:hover{
+    box-shadow:0 0 1px 1px white;
+}
+#structure-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 4px 0px 0px 5px;
+    padding: 0px 0px 0px 0px;
+    width: 125px;
+    height: 24px;
+    background-color: #515151;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+    font-size: 12px;
+}
+#structure-btn:hover{
+    box-shadow:0 0 1px 1px white;
+}
+#fileLinks-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 4px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 125px;
+    height: 24px;
+    background-color: #515151;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+    font-size: 12px;
+}
+#fileLinks-btn:hover{
+    box-shadow:0 0 1px 1px white;
+}
+#error-container{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+}
+#error-window-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 0;
+    padding: 0px 0px 0px 0px;
+    width: 20px;
+    height: 25px;
+    right: 0px;
+    float: right;
+    background-color: #515151;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    z-index: 10;
+    clear: both;
+}
+#error-window-btn:hover{
+    cursor: pointer;
+}
+#error-window-btn.on{
+    position: absolute;
+    float: none;
+    right: 350px;
+    margin-top: 5px;
+}
+#slideout {
+  -webkit-app-region: no-drag; 
+  -webkit-user-select: all;
+  background: #cccccc;
+  color: #333;
+  position: fixed;
+  top: 33px;
+  right: -520px;
+  width: 350px;
+  height: 100%;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  z-index: 10;
+}
+#slideout.on {
+  right: 0;
+}
+#error-list-title{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
+}
+.newsticker{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
+    font-size: 16px;
+    height: 87% !important;
+    width: 80%;
+    overflow: auto;
+}
+.newsticker .lineNumber, .newsticker .filename {
+    font-weight: bold;
+    display: inline-block;
+}
+
+.newsticker .message {
+    display: block;
+    clear: both;
+}
+
+.newsticker li {
+    padding-bottom: 7px;
+}
+
+#next-prev-buttons {
+    display: block;
+    clear: both;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#prev-error-btn, #next-error-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 50px;
+    height: 20px;
+    background-color: #515151;
+    color: white;
+    border-color: #cccccc;
+    border-width: 1px;
+    font-size: 15px;
+}
+#legend-btn{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: all;
+    margin: 0;
+    padding: 0px 0px 0px 0px;
+    position: absolute;
+    float: none;
+    width: 20px;
+    height: 25px;
+    left: 0%;
+    bottom: 1%;
+    background-color: #515151;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    z-index: 10;
+    clear: both;
+}
+#legend-btn:hover{
+    cursor: pointer;
+}
+#legend-btn.on{
+    position: absolute;
+    float: none;
+    left: 30%;
+    /*margin-top: 5px;*/
+}
+#legend{
+  -webkit-app-region: no-drag; 
+  -webkit-user-select: all;
+  background: #cccccc;
+  color: #333;
+  position: fixed;
+  bottom: 1%;
+  left: -30%;
+  width: 30%;
+  height: 20%;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  z-index: 10;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000000;
+  font-size: 14px;
+}
+#legend.on{
+  left: 0;
+}
+#legend-title{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
+}
+.vis-network .vis-navigation .vis-button.vis-zoomExtends{
+    /*background-image: url(img/network/zoomExtends.png);*/
+    background-color: #000000;
+    bottom: 9% !important;
+    right: 5% !important;
+    visibility: visible !important;
+}
+
+.vis-network .vis-navigation{
+    visibility: hidden;
+}
+
+div.vis-network div.vis-navigation div.vis-button:hover{
+    box-shadow:0 0 0px 0px rgba(0,168,236,.3)
+}
+div.vis-network div.vis-navigation div.vis-button:active{
+    box-shadow:0 0 1px 3px rgba(0,168,236,.95)
+}
+
+#mynetwork {
+    width: 1250px;
+    height: 800px;
+    background-color: #1e1e1e;
+    border-color:#1e1e1e;
+}
