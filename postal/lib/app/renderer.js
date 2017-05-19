@@ -527,8 +527,8 @@ function DoubleClick(params) {
         clickedNodeID = params.nodes;
         console.log("Isn't in cluster" + clickedNodeID);
         if (DFS[clickedNodeID].isSubContainer != undefined && DFS[clickedNodeID].isSubContainer == true) {
-            var clickedEdgeclickedNodeID = network.clustering.getBaseEdge(params.edges[0]);
-            var link = SLM.getLinkByID(clickedEdgeID);
+            var clickedEdgeclickedNodeID = network.clustering.getBaseEdge(params.edges[0]);//<problem
+            var link = SLM.getLinkByID(clickedEdgeclickedNodeID);
             lineNumber = link.lineNumber;
         } else {
             lineNumber = 1;
