@@ -349,7 +349,7 @@ export class Parser {
                                 returnType = rule.options.returnType;
                                 regex = new RegExp("(" + returnType + ")" + "\s*(\w*)\s*" + openParameterChar + ".+?" + closeParameterChar + "\s*" + openLogicChar, "g");
                             } else {
-                                regex = new RegExp("(\\w+)\\s+(\\w+)\\s*\\" + openParameterChar + ".+?\\" + closeParameterChar + "\\s*\\" + openLogicChar, "g");
+                                regex = new RegExp("(\\w+)\\s+(\\w+|\\w+\\:\\:\\w+)\\s*\\" + openParameterChar + ".+?\\" + closeParameterChar + "\\s*\\" + openLogicChar, "g");
                             }
 
                             rule.regex = regex;

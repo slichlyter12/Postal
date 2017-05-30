@@ -145,7 +145,7 @@ function Main() {
     network.on("oncontext", RightClick);
     network.on("click", Click);
     network.on("doubleClick", DoubleClick);
-    network.on("zoom", function (params){
+    network.on("zoom", function(params) {
         zoomFont(network, options);
     });
 
@@ -160,24 +160,24 @@ function Main() {
     fileLinksButton(network, options);
     legend(network, options);
     notificationDoubleClick(network, options);
-    
+
     var notificationSpans = document.querySelectorAll('span');
-    for(var i = 0; i < notificationSpans.length; i++){
+    for (var i = 0; i < notificationSpans.length; i++) {
         notificationSpans[i].addEventListener('mouseover', function(event) {
-                if(event.target.dataset.id != undefined || event.target.dataset.id != null){
-                    var tempid = event.target.dataset.id;
-                    nodes.update([{id:tempid, color:{background:('rgb(225, 232, 100)')}}]);
-                }
+            if (event.target.dataset.id != undefined || event.target.dataset.id != null) {
+                var tempid = event.target.dataset.id;
+                nodes.update([{ id: tempid, color: { background: ('rgb(225, 232, 100)') } }]);
+            }
         });
         notificationSpans[i].addEventListener('mouseleave', function(event) {
-                if(event.target.dataset.id != undefined || event.target.dataset.id != null){
-                    var tempid = event.target.dataset.id;
-                    var tempColor = PickColor(DFS[event.target.dataset.id].type);
-                    nodes.update([{id:tempid, color:{background:(tempColor)}}]);
-                }
+            if (event.target.dataset.id != undefined || event.target.dataset.id != null) {
+                var tempid = event.target.dataset.id;
+                var tempColor = PickColor(DFS[event.target.dataset.id].type);
+                nodes.update([{ id: tempid, color: { background: (tempColor) } }]);
+            }
         });
     }
-    
+
 }
 
 
@@ -346,7 +346,7 @@ function buildNotificationsArray() {
     for (var i = 0; i < DFS.length; i++) {
         if (DFS[i].notifications != undefined) {
             for (var j = 0; j < DFS[i].notifications.length; j++) {
-                if(DFS[i].notifications[j].message.length > 80){
+                if (DFS[i].notifications[j].message.length > 80) {
                     continue;
                 }
                 notificationsArray.push(DFS[i].notifications[j]);
@@ -391,35 +391,35 @@ function PickColor(type) {
         case "html":
         case "HTML":
             return ("rgb(0,122,204)");
-            break;
+            //break;
         case "php":
         case "PHP":
             return ("rgb(86,156,214)");
-            break;
+            //break;
         case "js":
         case "JS":
             return ("rgb(137,209,133)");
-            break;
+            //break;
         case "ts":
         case "TS":
             return ("rgb(157,229,153)");
-            break;
+            //break;
         case "css":
         case "CSS":
             return ("rgb(200,50,200)");
         case "png":
         case "PNG":
             return ("rgb(255,200,150)");
-            break;
+            //break;
         case "jpg":
         case "JPG":
         case "jpeg":
         case "JPEG":
             return ("rgb(255,175,150)");
-            break;
+            //break;
         case "dir":
             return ("rgb(223,223,223)");
-            break;
+            //break;
         case "div":
             return ("rgb(30,122,204)");
         case "body":
@@ -432,7 +432,7 @@ function PickColor(type) {
             return ("rgb(10,170,150)");
         default:
             return ("rgb(150,150,150)");
-            break;
+            //break;
     }
 }
 
@@ -527,7 +527,7 @@ function DoubleClick(params) {
         clickedNodeID = params.nodes;
         console.log("Isn't in cluster" + clickedNodeID);
         if (DFS[clickedNodeID].isSubContainer != undefined && DFS[clickedNodeID].isSubContainer == true) {
-            var clickedEdgeclickedNodeID = network.clustering.getBaseEdge(params.edges[0]);//<problem
+            var clickedEdgeclickedNodeID = network.clustering.getBaseEdge(params.edges[0]); //<problem
             var link = SLM.getLinkByID(clickedEdgeclickedNodeID);
             lineNumber = link.lineNumber;
         } else {
@@ -549,45 +549,40 @@ function DoubleClick(params) {
 
 
 // MARK: END EVENT LISTENERS
-function zoomFont(network, options){
-        var scale = network.getScale();
-        for(var i = 0; i < nodesArray.length; i++){
-            if(DFS[i].links.length > 0 && DFS[i].level != 0){
-                nodesArray[i].font.size = 10 * DFS[i].links.length * (1/scale);
-                if(nodesArray[i].font.size > 60){
-                    nodesArray[i].font.size = 60;
-                }
-                else if(nodesArray[i].font.size < 10){
-                    nodesArray[i].font.size = 10;
-                }
+function zoomFont(network, options) {
+    var scale = network.getScale();
+    for (var i = 0; i < nodesArray.length; i++) {
+        if (DFS[i].links.length > 0 && DFS[i].level != 0) {
+            nodesArray[i].font.size = 10 * DFS[i].links.length * (1 / scale);
+            if (nodesArray[i].font.size > 60) {
+                nodesArray[i].font.size = 60;
+            } else if (nodesArray[i].font.size < 10) {
+                nodesArray[i].font.size = 10;
             }
-            else if(DFS[i].subContainers.length > 0){
-                nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1/scale) * .5;
-                if(nodesArray[i].font.size > 60){
-                    nodesArray[i].font.size = 60;
-                }
-                else if(nodesArray[i].font.size < 10){
-                    nodesArray[i].font.size = 10;
-                }
+        } else if (DFS[i].subContainers.length > 0) {
+            nodesArray[i].font.size = 10 * DFS[i].subContainers.length * (1 / scale) * .5;
+            if (nodesArray[i].font.size > 60) {
+                nodesArray[i].font.size = 60;
+            } else if (nodesArray[i].font.size < 10) {
+                nodesArray[i].font.size = 10;
             }
-            else if(DFS[i].level == 0){
-                nodesArray[i].font.size = 10 * DFS[i].links.length * (1/scale) * .3;
-                if(nodesArray[i].font.size > 60){
-                    nodesArray[i].font.size = 60;
-                }
-                else if(nodesArray[i].font.size < 10){
-                    nodesArray[i].font.size = 10;
-                }
+        } else if (DFS[i].level == 0) {
+            nodesArray[i].font.size = 10 * DFS[i].links.length * (1 / scale) * .3;
+            if (nodesArray[i].font.size > 60) {
+                nodesArray[i].font.size = 60;
+            } else if (nodesArray[i].font.size < 10) {
+                nodesArray[i].font.size = 10;
             }
         }
-        var prevNodePositions = network.getPositions(nodesArray.id);
-        network.setOptions(options);
-        for(var key in prevNodePositions){
-            if(prevNodePositions.hasOwnProperty(key)){
-                //console.log(JSON.stringify(key + "->" + JSON.stringify(prevNodePositions[key].x) + JSON.stringify(prevNodePositions[key].y)));
-                network.moveNode(key, prevNodePositions[key].x, prevNodePositions[key].y);
-            }
+    }
+    var prevNodePositions = network.getPositions(nodesArray.id);
+    network.setOptions(options);
+    for (var key in prevNodePositions) {
+        if (prevNodePositions.hasOwnProperty(key)) {
+            //console.log(JSON.stringify(key + "->" + JSON.stringify(prevNodePositions[key].x) + JSON.stringify(prevNodePositions[key].y)));
+            network.moveNode(key, prevNodePositions[key].x, prevNodePositions[key].y);
         }
+    }
 }
 
 function toolbarButtons() {
@@ -645,7 +640,7 @@ function structureButton(network, options) {
     });
 }
 
-function notificationListButton(network, options){
+function notificationListButton(network, options) {
     document.getElementById("error-window-btn").addEventListener("click", function(e) {
         $('#slideout').toggleClass('on');
         $('#error-window-btn').toggleClass('on');
@@ -681,15 +676,15 @@ function notificationListButton(network, options){
     // });
 }
 
-function notificationDoubleClick(network, options){
-    document.addEventListener("dblclick", function(e){
+function notificationDoubleClick(network, options) {
+    document.addEventListener("dblclick", function(e) {
         var notificationElement = e.target;
         var newsTickerid = notificationElement.parentElement.parentElement.id;
-        if(newsTickerid == "newsTickerList"){
+        if (newsTickerid == "newsTickerList") {
             //Get element id, corresponds to DFS index, get path from DFS
             var notificationId = notificationElement.parentElement.children[0].getAttribute("data-id");
             var notificationPath = DFS[notificationId].path;
-            
+
             //Get line number from second element
             var notificationLineNum = notificationElement.parentElement.children[1].innerHTML;
             var lineNumTrimmed = notificationLineNum.substr(1);
@@ -698,31 +693,32 @@ function notificationDoubleClick(network, options){
             var window = electron.remote.getCurrentWindow();
             window.blur();
             sendMessageToVSCode('double_click', { 'path': notificationPath, 'lineNumber': lineNumTrimmed });
-            
+
         }
 
     });
-    
+
 }
 
-function legend(network, options){
+function legend(network, options) {
     var types = [];
-    for(var i = 0; i < DFS.length; i++){
+    for (var i = 0; i < DFS.length; i++) {
         types.push(DFS[i].type);
     }
-    function unique(types){ 
+
+    function unique(types) {
         return Array.from(new Set(types));
     }
     var uniqTypes = unique(types);
     var circleColor = 'rgb(150, 150, 150)';
     var circleX = 20;
     var circleY = 65;
-    for(var i = 0; i < uniqTypes.length; i++){
+    for (var i = 0; i < uniqTypes.length; i++) {
         circleColor = PickColor(uniqTypes[i]);
-        document.getElementById("legend-svg").insertAdjacentHTML('beforeend', '<circle id='+"circle"+i+' cx='+ circleX +' cy='+ circleY +' r="12" stroke-width="0" fill='+circleColor+'></circle>');
+        document.getElementById("legend-svg").insertAdjacentHTML('beforeend', '<circle id=' + "circle" + i + ' cx=' + circleX + ' cy=' + circleY + ' r="12" stroke-width="0" fill=' + circleColor + '></circle>');
         circleX = circleX + 32;
         var cirID = "circle" + i;
-        document.getElementById(cirID).insertAdjacentHTML('beforeend', '<title>'+uniqTypes[i]+'</title');
+        document.getElementById(cirID).insertAdjacentHTML('beforeend', '<title>' + uniqTypes[i] + '</title');
     }
 
     document.getElementById("legend-svg").insertAdjacentHTML('beforeend', '<text x="5" y="93" fill="black">Hover over circles for node type</text>');
@@ -733,7 +729,7 @@ function legend(network, options){
         if (legendOpen == true) {
             legendOpen = false;
             this.innerHTML = "&#10094;";
-            
+
         } else if (legendOpen == false) {
             legendOpen = true;
             this.innerHTML = "&#10095;";
@@ -895,7 +891,7 @@ function populateNotificationsList() {
     for (var i = 0; i < DFS.length; i++) {
         if (DFS[i].notifications != undefined) {
             for (var j = 0; j < DFS[i].notifications.length; j++) {
-                if(DFS[i].notifications[j].message.length > 80){
+                if (DFS[i].notifications[j].message.length > 80) {
                     continue;
                 }
                 var message = DFS[i].notifications[j].message;

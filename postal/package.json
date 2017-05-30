@@ -142,7 +142,9 @@
                             "title": "php block comments",
                             "type": "comment",
                             "filetypes": [
-                                "php"
+                                "php",
+                                "h",
+                                "cpp"
                             ],
                             "options": {
                                 "start": "/\\*",
@@ -188,10 +190,26 @@
                             }
                         },
                         {
+                            "title": "c-like functions for CPP",
+                            "type": "c-like",
+                            "filetypes": [
+                                "cpp"
+                            ],
+                            "options": {
+                                "returnType": "",
+                                "openParameterChar": "(",
+                                "closeParameterChar": ")",
+                                "openLogicChar": "{",
+                                "closeLogicChar": "}"
+                            }
+                        },
+                        {
                             "title": "TODO Notification",
                             "type": "notification",
                             "filetypes": [
                                 "c",
+                                "cpp",
+                                "h",
                                 "ts",
                                 "js"
                             ],
