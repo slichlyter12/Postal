@@ -91,17 +91,27 @@ export class Controller {
     }
 
 
-    private getNodeIdFromPath(filename: string, FileStructs: any): number {
+    private getNodeIdFromPath(filename: string, FileStructs: any, dirPaths: any): number {
         var filepath = vscode.workspace.rootPath + this.slash + filename;
         var id;
-        
-        // check for file in project
+        //check for file in top level dir
         for (var i = 0; i < FileStructs.length; i++) {
-            if (FileStructs[i].path == filepath) {
-                return FileStructs[i].id;
+                if (FileStructs[i].path == filepath) {
+                    return FileStructs[i].id;
+                }
+        }
+        
+        // check for file in lower directories
+        //TODO: ONLY WORKS FOR ONE LEVEL DOWN, NEED TO CONFIRM DIRPATHS RECURSVELY GETS NESTED DIRECTORIES
+        for(var i = 0; i < dirPaths.length; i++){
+            var dirName = this.nameSlicer(dirPaths[i]);
+            filepath = vscode.workspace.rootPath + this.slash + dirName + this.slash + filename;
+            for (var j = 0; j < FileStructs.length; j++) {
+                if (FileStructs[j].path == filepath) {
+                    return FileStructs[j].id;
+                }
             }
         }
-
         // no file found in project, create new node
         var fileStruct = {
             id: this.nodeidCounter,
@@ -319,7 +329,7 @@ export class Controller {
                     var currentPath = filePaths[i - dirCount];
                     var slicedDirectory = currentPath.slice(0, currentPath.lastIndexOf(this.slash));
                     var fullSlicedPath = slicedDirectory + this.slash + tokens[i - dirCount][j].value;
-                    var linkDestination = this.getNodeIdFromPath(tokens[i - dirCount][j].value, FileStructs);
+                    var linkDestination = this.getNodeIdFromPath(tokens[i - dirCount][j].value, FileStructs, dirPaths);
                     var linkcontainer = {
                         id : this.linkidCounter,
                         toFileStructid : linkDestination,
