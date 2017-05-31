@@ -250,6 +250,17 @@
                             "options": {
                                 "link": "var .* = require\\('\\.?\\/?(.*)'\\);"
                             }
+                        },
+                        {
+                            "title": "CPP file link",
+                            "type": "link",
+                            "filetypes": [
+                                "cpp",
+                                "h"
+                            ],
+                            "options": {
+                                "link": "#include [\"](.+?)[\"]"
+                            }
                         }
                     ]
                 }
