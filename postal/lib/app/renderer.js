@@ -97,11 +97,7 @@ function Main() {
             navigationButtons: true
         },
         edges: {
-            smooth: {
-                type: "continuous",
-                forceDirection: "vertical",
-                roundness: 1
-            }
+            smooth: false
         }
     };
 
@@ -611,7 +607,19 @@ function physicsButton(network, options) {
         } else {
             isPhysics = true;
             this.innerHTML = "Physics: On";
-            options.physics.enabled = true;
+            options.physics = {
+                "enabled": true,
+                "repulsion": {
+                "centralGravity": 0.2,
+                "springLength": 150,
+                "springConstant": 0.03,
+                "nodeDistance": 400,
+                "damping": 0.15
+                },
+                "maxVelocity": 6,
+                "minVelocity": 0.75,
+                "solver": "repulsion"
+            }
             //options.physics.stabalization.enabled = true;
             network.setOptions(options);
             network.redraw();
@@ -633,6 +641,7 @@ function structureButton(network, options) {
             options.layout.hierarchical.enabled = true;
             options.layout.hierarchical.direction = "UD";
             options.layout.hierarchical.sortMethod = "directed";
+            options.edges = {"smooth": false};
             network.setOptions(options);
             network.redraw();
         }
