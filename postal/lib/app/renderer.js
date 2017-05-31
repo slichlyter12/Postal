@@ -14,6 +14,7 @@ ipc.config.retry = 1500;
 var isPhysics = false;
 var isFileLinksVisible = false;
 var structure = "hierarchy";
+var isExpand = true;
 var iClusterCounter;
 var arrowDir = "left";
 var legendOpen = true;
@@ -154,6 +155,7 @@ function Main() {
     structureButton(network, options);
     notificationListButton(network, options);
     fileLinksButton(network, options);
+    expandButton(network,options);
     legend(network, options);
     notificationDoubleClick(network, options);
 
@@ -648,6 +650,47 @@ function structureButton(network, options) {
 
     });
 }
+
+
+function expandButton(network, options) {
+    document.getElementById("expand-btn").addEventListener("click", function(e) {
+        if (isExpand) {
+            isExpand = false;
+            this.innerHTML = "Collapse All";
+
+
+            for(var i = 0; i < DFS.length; i++){
+                if (DFS[i].type != "dir"){
+                   var cluster = network.clustering.findNode(DFS[i].id);
+                    if(network.isCluster(cluster[0]) == true){
+                        var focusID = (network.getNodesInCluster(cluster[0])[0]);
+                        network.openCluster(cluster[0]);
+                        updateFileLinks(focusID);
+                    } 
+                } 
+                
+                /*else if (DFS[clickedNodeID].subContainers.length != null && DFS[clickedNodeID].subContainers.length > 0) {
+                    buildClusters(clickedNodeID);
+                    focusID = (network.findNode(clickedNodeID)[0]);
+                    updateFileLinks(focusID);
+                    network.focus(focusID, options);
+
+                }*/
+            }
+            network.redraw();
+        } else {
+            isExpand = true;
+            this.innerHTML = "Expand All";
+            network.redraw();
+        }
+
+    });
+}
+
+
+
+
+
 
 function notificationListButton(network, options) {
     document.getElementById("error-window-btn").addEventListener("click", function(e) {
