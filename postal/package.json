@@ -122,10 +122,11 @@
                             "title": "php line comments 1",
                             "type": "comment",
                             "filetypes": [
-                                "php"
+                                "php",
+                                "cpp"
                             ],
                             "options": {
-                                "start": "//"
+                                "start": "\/\/"
                             }
                         },
                         {
@@ -147,8 +148,8 @@
                                 "cpp"
                             ],
                             "options": {
-                                "start": "/\\*",
-                                "end": "\\*/"
+                                "start": "\\/\\*",
+                                "end": "\\*\\/"
                             }
                         },
                         {

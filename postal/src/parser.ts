@@ -242,7 +242,7 @@ export class Parser {
                 }
             } else {
                 // single line comment
-                let startRegex = new RegExp("(" + start + ".*)");
+                let startRegex = new RegExp("(" + start + ".*)", 'g');
                 content = content.replace(startRegex, "");
             }
         }
