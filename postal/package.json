@@ -119,10 +119,9 @@
                             }
                         },
                         {
-                            "title": "php line comments 1",
+                            "title": "cpp line comments 1",
                             "type": "comment",
                             "filetypes": [
-                                "php",
                                 "cpp"
                             ],
                             "options": {
