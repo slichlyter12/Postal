@@ -126,7 +126,7 @@
                                 "cpp"
                             ],
                             "options": {
-                                "start": "\/\/"
+                                "start": "//"
                             }
                         },
                         {
@@ -231,18 +231,21 @@
                                 "message": "incorrectly named string:",
                                 "isComment": false
                             }
-                        }, {
+                        },
+                        {
                             "title": "IncorrectNaming TS/js Notification",
                             "type": "notification",
                             "filetypes": [
-                                "ts", "js"
+                                "ts",
+                                "js"
                             ],
                             "options": {
                                 "notify": "(var [^a-z].*)",
                                 "message": "Found variable with capital name",
                                 "isComment": false
                             }
-                        }, {
+                        },
+                        {
                             "title": "Js class include",
                             "type": "link",
                             "filetypes": [
