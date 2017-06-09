@@ -14,6 +14,11 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 	<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
 	<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+	<style>
+		body {background-color: powderblue;}
+		h1   {color: blue;}
+		p    {color: red;}
+	</style>
 </head>
 <body>
 	<!-- nav bar -->

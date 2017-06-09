@@ -45,7 +45,10 @@ class Snake {
 
 		/* Getters */
 		Piece const GetScale(int n);
+		// TODO: Make an actual getter for Size
 		int const Size();
+		// TODO: Ask head developer if we actually need any setters? 
+		// void setSize();
 
 	private:
 		/* Methods */

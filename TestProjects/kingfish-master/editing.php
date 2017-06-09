@@ -98,6 +98,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- TODO: REMOVE ALL INTERNAL CSS -->
 	<title><?php echo ucfirst($action) ." ". ucfirst($menu); ?></title>
 	<style type="text/css" media="screen">
 		nav a, nav span {

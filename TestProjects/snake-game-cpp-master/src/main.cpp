@@ -32,6 +32,7 @@ using std::endl;
 
 // Programm entry point
 int main(int argc, char ** argv) {
+	// TODO: Remove couts
 	cout << "Ataraxer's Snake 1.1.0 Alpha" << endl;
 	GameplayDirector::gdStart(argc, argv);
 }
