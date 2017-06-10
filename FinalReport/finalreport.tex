@@ -334,6 +334,39 @@ This is needed because the extension uses Electron to display the map that the e
 
 \section{Resources and Technologies}
 
+The most complex technologies the team had to learn was Node.js and vis.js
+
+\subsubsection{Node.js}
+For learning Node we primarily used the Electron reference guide available here: 
+\hyperref{https://electron.atom.io/docs/}
+This was the most helpful resource in figuring out how to build an extension for Electron as well as basic node process information. 
+The section on the Electron API was especially helpful.
+\\
+The team also made use of a couple github projects for reference purposes. 
+The biggest help by a wide margin was the VSCode Color Picker made by Anseki.
+\hyperref{https://github.com/anseki/vscode-color/}
+While the code was quite dense it was also essential in figuring out how to launch an Electron window from VSCode. 
+It also gave the team some insight in how to better build the high-level structure of our extension. 
+It is important to note that the team did not take any code from the project and only reffered to it as a guide for using the correct Node and Electron functionality.
+
+\subsubsection{Vis.js}
+Vis.js is intuitive for doing basic things with graph visualizations. 
+However, it can be very clunky when trying to implement more complex behaviors on top of its standard functionality. 
+The main resources used for figuring out Vis.js related difficulties were the official documentation and examples webpages.
+\hyperref{http://visjs.org/docs/network/}
+\hyperref{http://visjs.org/network_examples.html}
+The documentation itself was helpful for more specific information like finding function overloads but was not at all useful for understanding how to use Vis.js's functionality. 
+Fortunately, Vis.js also provided a very comprehensive examples page with samples demonstrating the majority of supported functionality and function usage.
+
+\subsubsection{Additional Resources}
+We also made use of other technology specific websites and Stack Overflow for minor issues.
+Both Regex101 and Curious Concept's JSON formatter were very helpful tools.
+\hyperref{https://regex101.com/}
+\hyperref{https://jsonformatter.curiousconcept.com/}
+Additionally, we based the majority of our parser’s architecture on the compiler we built in CS480. 
+It was, in retrospect, surprising how useful that class was to completing this project.
+
+
 \section{Learning and Overall Experience}
 % What technical information did you learn?
 % What non-technical information did you learn?
@@ -410,6 +443,36 @@ I think this hurt my friendships with these people, and I was probably less moti
 
 
 \subsection{Eric Winkler}
+
+\subsubsection{Technical Information Learned}
+
+
+\subsubsection{Non-Technical Information Learned}
+
+
+\subsubsection{Project Work}
+The most valuable lesson about project work I learned is that if a group plans on splitting the work into separate modules and assigning one or more modules exclusively per person, the modules should still be designed together as a group. 
+The team has mentioned this problem before in previous documents and it should be mentioned again how important it is to have well defined interfaces. 
+What I've never brough up is that those interfaces imply that the design and functionality of the two modules are clearly defined and understood by the team.
+That's the more important lesson to note. 
+It doesn't matter at all what the exact specifications of the interfaces are if there is missing or overlapping functionality in those modules. 
+If I had to come away with only one important lesson from this project it would be this: design thoroughly with all members of the team present.
+
+\subsubsection{Project Management}
+From a project management perspective, I've learned the importance of setting one's own deadlines and setting them early. 
+Around the middle of winter term, the team concluded that we were starting to fall behind of where we wanted to be in terms of implementation progress. 
+We had made the decision to get a working build of our extension on the VSCode store by the next coming Monday. 
+Nothing was specifically due for the class but we had placed this artificial deadline on ourselves because of concern that something might cause problems if we had planned to be finished by the end of the term instead. 
+Because of the how tight our deadline was, we forced ourselves to work close to 36 hours within a three-day period. 
+During that crunch we discovered serious problems with our design that would have caused the project to be a failure if we had waited much longer.
+My opinion is that deadline may have saved the project.
+
+\subsubsection{Working in Teams}
+
+ 
+\subsubsection{What I Would Do Differently}
+
+
 
 \pagebreak
 \section{Appendix 1}
