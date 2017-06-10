@@ -335,6 +335,39 @@ This is needed because the extension uses Electron to display the map that the e
 
 \section{Resources and Technologies}
 
+The most complex technologies the team had to learn was Node.js and vis.js
+
+\subsubsection{Node.js}
+For learning Node we primarily used the Electron reference guide available here: 
+\hyperref{https://electron.atom.io/docs/}
+This was the most helpful resource in figuring out how to build an extension for Electron as well as basic node process information. 
+The section on the Electron API was especially helpful.
+\\
+The team also made use of a couple github projects for reference purposes. 
+The biggest help by a wide margin was the VSCode Color Picker made by Anseki.
+\hyperref{https://github.com/anseki/vscode-color/}
+While the code was quite dense it was also essential in figuring out how to launch an Electron window from VSCode. 
+It also gave the team some insight in how to better build the high-level structure of our extension. 
+It is important to note that the team did not take any code from the project and only reffered to it as a guide for using the correct Node and Electron functionality.
+
+\subsubsection{Vis.js}
+Vis.js is intuitive for doing basic things with graph visualizations. 
+However, it can be very clunky when trying to implement more complex behaviors on top of its standard functionality. 
+The main resources used for figuring out Vis.js related difficulties were the official documentation and examples webpages.
+\hyperref{http://visjs.org/docs/network/}
+\hyperref{http://visjs.org/network_examples.html}
+The documentation itself was helpful for more specific information like finding function overloads but was not at all useful for understanding how to use Vis.js's functionality. 
+Fortunately, Vis.js also provided a very comprehensive examples page with samples demonstrating the majority of supported functionality and function usage.
+
+\subsubsection{Additional Resources}
+We also made use of other technology specific websites and Stack Overflow for minor issues.
+Both Regex101 and Curious Concept's JSON formatter were very helpful tools.
+\hyperref{https://regex101.com/}
+\hyperref{https://jsonformatter.curiousconcept.com/}
+Additionally, we based the majority of our parser’s architecture on the compiler we built in CS480. 
+It was, in retrospect, surprising how useful that class was to completing this project.
+
+
 \section{Learning and Overall Experience}
 % What technical information did you learn?
 % What non-technical information did you learn?
@@ -346,6 +379,58 @@ This is needed because the extension uses Electron to display the map that the e
 \subsection{Sam Lichlyter}
 
 \subsection{Zach Schneider}
+\subsubsection{Technical Information Learned}
+The core development of this project involved the learning and utilization of many new technologies, languages, and programming principles for the team and myself.
+I had previously used VS Code, but had never developed an extension for it or any other Electron based code editing platform.
+Debugging an add-on and testing it on all relevant platforms is not only useful practice for future projects in that vain, but also gives me a great appreciation for the work other developers have done over the years in extending the tools I use and enjoy.
+This was my first foray into using TypeScript, a JavaScript super-set that includes types and class-based object oriented programming. I enjoyed working with TypeScript, and felt like it included many of the JavaScript programming strategies I'm familiar with while offering a more consistent and featured experience.
+TypeScript was primarily utilized in programming for our Node.js server within VS Code.
+I had used Node in one project previously, but our capstone project this year gave me a much more in depth view into how Node servers work and how to effectively program with them.
+Additionally, I learned and became proficient in the Latex document preparation system.
+Latex creates consistent, professional looking documents, and I used it to create most of the documentation and reports for this project.
+
+\subsubsection{Non-Technical Information Learned}
+During this project I became more proficient in writing up formal documentation, particularly in adherence to IEEE standards. 
+Learning how these kinds of documents are developed, updated and referenced will greatly aide me in all future programming jobs.
+I also believe my writing ability improved overall, as the many different reports required for this class stretched me in ways I hadn't previously been challenged to attempt.
+I learned how to merge the writing styles of others within a single paper in order to have a more cohesive submission that flows, instead of 4 separate sections pasted into one document.
+Editing, while not re-writing is a skill of mine that has certainly been furthered while working on this project.
+
+\subsubsection{Project Work}
+Perhaps the most significant thing I learned about project design and implementation is how important it is for the designers and implementers to be on the same page.
+Even in our case where each of our team members served both roles, we had quite a few problems early on in not understanding what design or project feature the others were trying to convey to us.
+Sometimes we mistakenly wrote code in an entirely different train of thought than other sections, leading to serious conflicts in our project's structure and function.
+Ultimately, our solution was increased communication and more time put into the planning stages of each component's section.
+Along these lines, our team struggled to even conceptualize what we wanted from our project as a whole and if our concepts would actually work.
+In a few cases, we wrote a design or specification for a feature, then realized while creating that feature that the original envisionment would not work out.
+What I can take away from this is, again, how important the planning and design stages of projects are to their success.
+Experience in working on projects like ours will help when starting on new projects in the future.
+
+\subsubsection{Project Management}
+One of the issues our project faced was running out of time at deadlines. 
+Even if they were self-established deadlines, we couldn't strike a balance of having a deadline be significant while also flexible enough to accommodate series design problems that we occasionally encountered.
+My time management in these contexts was certainly tested in trying to allow for enough time to accomplish what was needed while also not setting deadlines too far into the future.
+Additionally, I learned the importance of differentiating when a feature or task should be done versus when it needs to be done. 
+Setting these standards for myself and communicating them to my team effectively contributed positively to my knowledge of project management.
+
+\subsubsection{Working in Teams}
+Team work can often be difficult - personality clashes, differences in work ethic, lack of communication - these are all fairly expected when working on team projects. 
+While our team was generally able to learn and work through many of these standard issues, a unique circumstance we possessed was that we are all friends outside of school.
+Some of us had heard to warnings to not work with friends on projects, but we didn't really pay them heed.
+Throughout this project, it has been exceedingly difficult to draw the line between our work relationships and our social relationships. 
+Often we would finish up work on the project then promptly spend the rest of the weekend hanging out.
+While this led to an easy dynamic early on, our relationships became strained when serious problems occurred, such as individuals not meeting deadlines, not communicating or forgetting about meetings.
+Though our project worked out in the end, this experience is not one that I'd like to undertake with friends again.
+In the future I will aim to let friends be friends and work colleagues be work colleagues.
+
+\subsubsection{What I Would Do Differently}
+With the aforementioned lessons being learned, if I were to do this project again, I would do a few things differently.
+First, I would not choose to work with close friends on an extended and stressful project such as this.
+I would make sure to spend a more significant amount of time in the early stages really nailing down what the project's purpose, goals, design and features will be.
+Communication about these plans would be made with the team and our client much more frequently at the beginning.
+Coding would begin in early December instead of January, as the extra month of working through bugs would make a large difference in final quality and lessen deadline stress along the way.
+Finally, I would begin utilizing user testing far earlier, even before features are complete in order to get feedback and save the team some of the re-writing that occurred in the later phases of the project.
+Despite these changes I would make, I feel the majority of the project went well and I'm proud of the result.
 
 \subsection{Cramer Smith}
 
@@ -411,6 +496,75 @@ I think this hurt my friendships with these people, and I was probably less moti
 
 
 \subsection{Eric Winkler}
+
+\subsubsection{Technical Information Learned}
+From a technical perspective, I've learned about or become more proficient in:
+\begin{itemize}
+    \item JavaScript and TypeScript
+    \item Node.js
+    \item Electron
+    \item Vis.js
+    \item Git and Github
+    \item Other Web-technologies (HTML, CSS)
+    \item Software Design
+    \item Asynchronous design
+    \item Object oriented Programming
+    \item Debugging
+    \item Compilers
+    \item Using APIs in general
+    \item Reading Documentation
+\end{itemize}
+
+\subsubsection{Non-Technical Information Learned}
+The theme to the non-technical lessons I learned while work on this project is that I have a new appreciation for a ton of things I learned here but hadn’t used in a practical way before.
+\\
+To start with, I now love paired programming. 
+Building the Parser and backend of this project was potentially the most complicated thing I have attempted during my undergraduate career. 
+It was almost necessary to have Sam writing code while I focused on keeping track of what exactly we were doing and what we still had to do. 
+Writing most of the code together probably saved us tens of hours.
+\\
+I also learned to love classes. 
+I've never had to use classes on the basis of trying to abstract complex problem but being able to describe things in terms classes and forget about lower level details was very helpful.
+\\
+Finally, I learned to appreciate the importance of designing before coding. 
+I'm not sure I've ever completed a homework assignment by first design it and the writing the code. 
+Everything had been, relatively speaking, simple to implement. 
+However, without an assignment guide or anyone to hold our hand through the process, we were forced to actually draw out the components of the system and really think about why we were implementing things the way we were.
+I think the most valuable piece of non-technical Information I gained from this project would be that I really like to do design related work. 
+I may attempt to pursue a career path where I can do more architecture and systems design than programming, provided that exists. 
+
+\subsubsection{Project Work}
+The most valuable lesson about project work I learned is that if a group plans on splitting the work into separate modules and assigning one or more modules exclusively per person, the modules should still be designed together as a group. 
+The team has mentioned this problem before in previous documents and it should be mentioned again how important it is to have well defined interfaces. 
+What I've never brough up is that those interfaces imply that the design and functionality of the two modules are clearly defined and understood by the team.
+That's the more important lesson to note. 
+It doesn't matter at all what the exact specifications of the interfaces are if there is missing or overlapping functionality in those modules. 
+If I had to come away with only one important lesson from this project it would be this: design thoroughly with all members of the team present.
+
+\subsubsection{Project Management}
+From a project management perspective, I've learned the importance of setting one's own deadlines and setting them early. 
+Around the middle of winter term, the team concluded that we were starting to fall behind of where we wanted to be in terms of implementation progress. 
+We had made the decision to get a working build of our extension on the VSCode store by the next coming Monday. 
+Nothing was specifically due for the class but we had placed this artificial deadline on ourselves because of concern that something might cause problems if we had planned to be finished by the end of the term instead. 
+Because of the how tight our deadline was, we forced ourselves to work close to 36 hours within a three-day period. 
+During that crunch we discovered serious problems with our design that would have caused the project to be a failure if we had waited much longer.
+My opinion is that deadline may have saved the project.
+
+\subsubsection{Working in Teams}
+I was fortunate to work with an excellent team. 
+Everyone was motivated and completed their assignments on time. 
+We had no major problems and communication was consistent. 
+One lesson I learned is that it helps quite a bit to have at least one person who can act as a leader. 
+This person doesn't necessarily have to delegate jobs or roles, but having an individual to check on team member's progress and keep a general level of organization is beneficial. 
+
+ 
+\subsubsection{What I Would Do Differently}
+A problem the team had that we don't reflect on much is that we had a bit of miscommunication on project priorities with our client. 
+We had spent so much time on our back end figuring out how to get our parser working consistently that we had neglected the front end quite a bit. 
+In a meeting our client was not happy with our progress, though a substantial amount had been made since our last check in. 
+We had failed to realize that as a tool, it was only as good as it was usable, i.e. its front end. 
+I regret not frequently communicating with our client and making him a larger part of the process.
+
 
 \pagebreak
 \section{Appendix 1}
