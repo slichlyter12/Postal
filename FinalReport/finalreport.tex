@@ -186,24 +186,26 @@ When the parser was modified in the middle of the year, he also re-worked the da
 \section{Project Documentation}
 \subsection*{Cramer Smith}
 % Cramer, This is Your PARTY! I wrote this to myself.
-This section of the document covers the details of the projects implementation and the way that the user can expect to install and use the tool.
+This section of the document covers the details of the projects implementation, and the ways that the user can expect to install and use the tool.
 
 % How does your project work?
 \subsection{How It Works}
-The extension consists of three main pieces. The first, and most complicated, is the parser. The second is the visualization, and the third is the IDE Visual Studio Code.
+The extension consists of three main pieces. The first, and most complicated, is the parser. 
+The second is the visualization, and the third is the IDE Visual Studio Code.
 The user starts in IDE opening a code project. 
-From there they can start the extension and then the parser gets to work on the users code. 
-The parser is responsible for breaking the users code down into information that the visualizer can use to generate the map that the user can navigate. 
+From the VSC IDE the user can start the extension, and then the parser gets to work on the users code. 
+The parser is responsible for breaking the users code down into informational data structure that the visualizer can use to generate the map that the user can then navigate. 
 
-The parser does this with a couple steps. 
-The parser is implemented using a combination of functions built into VSC as well as some custom code using Node.js. 
-The built in functions in VSC are mainly involve getting all the files in the user?s current working directory. 
+The parsing is done in several steps. 
+It is implemented using a combination of functions built into VSC as well as some custom code using Node.js. 
+The built in functions in VSC are mainly involve getting all the files in the user's current working directory. 
 The custom code is the bulk of the parser.
-It is responsible for checking the file for the things specified within the grammars supplied by the user. 
-A grammar is defined by the user and uses regex to define within a JSON file to define the rules that the parser uses when creating the visualization file map. 
-The parser then takes this grammar and generates the file map based on the defined links between files, or whatever the user specifies within the grammars.
+It is written in typescript and uses a number of Node.js modules, and it is responsible for checking the file for the things specified within the grammars that are supplied by the user. 
+A grammar is a JSON object defined by the user and consists of regex patterns to define  rules that the parser uses when creating the visualization file map. 
+The parser then takes this grammar and generates a datastructure. 
+The file map based on the defined links between files, or whatever the user specifies within the grammars.
 The map consist of nodes and sub-nodes that are representations of the files and their connections that the parser created.
-The map is shown on the visualization. \\
+The map is shown on the visualization custom UI. \\
 
 \begin{figure}[h]
 	\centering
@@ -215,20 +217,21 @@ On execution of a Visual Studio Code command, the Electron application will acti
 The visualization is done in the separate Electron window that is opened.
 It has several things to display from the parser information. 
 The main piece of information that the visualization displays is the file map and other information is the notification list. 
-The file map is a graphic representation of the of the user?s project solution. 
+The file map is a graphic representation of the of the user's project solution. 
 It appears as a hierarchical graph of interconnected nodes where the nodes represent a file or directory in the user's project directory, and an edge represents some link (defined in the parser section) between the two files. 
 The location of the nodes in the hierarchy will reflect its position in the project's directory. 
 This web will feature nodes of different sizes and will allow the user to zoom and pan the view. 
 The size of the node is based on the number of links to that object.
 A color corresponding to the type of file. 
 Color values are based on the VSC color scheme for aesthetic reasons.
-The name of the node is retrieved from the file struct name field and is displayed as text inside of the node. 
+The name of the node is retrieved from the file struct name field and is displayed as text beside the node. 
 A red circle will appear on the node if there are notifications within the FileStruct for that node. 
 In other words, if the size of the notification array within the FileStruct is not zero. 
 The file map is rendered within its own div using the vis.js library 'Network' module. 
-The Library by default includes the rendering, panning and zooming functionality.
+The Library by default includes the rendering, panning and zooming functionality. \\
+
 The other piece of the projects custom UI is the notification list. 
-The notification list will display all errors currently in the project directory in the form of a vertical list. 
+The notification list will display all notifications currently in the project directory in the form of a vertical list. 
 These notifications will be retrieved when the UI opens from the same data structure is being generated. 
 These notifications will be retrieved in a per node fashion and will also be grouped in the error list in the same order.
 The notifications list will exist to the side of the file map in the same electron application screen. 
@@ -245,8 +248,8 @@ The notification list is in its own div and scrolling functionality is achieved 
 
 Data handling within the Postal Extension consists of three main entities or processes: the data structure, serialization of the data structure and the storage of the data structure in a JSON file.
 The data structure is a dictionary of file nodes, stored as JavaScript objects. 
-These JavaScript objects come from the Parser parsing the currently loaded project for links and errors.
-The data structure can be considered the live version of the project data, as its dictionary is updated by the parser every time the project is saved. 
+These JavaScript objects come from the Parser parsing the currently loaded project for links and notifications.
+The data structure can be considered the live version of the project data, as its data structure is updated by the parser every time the project is parsed. 
 The nodes changed in the data structure will then be serialized into JSON jQuery using the JSON.stringify function built into JavaScript. 
 This JSON will be saved to a file, which can further be read by the Electron UI functions for updating the project node and notifications visualization. \\
 
@@ -257,7 +260,6 @@ The interfacing network is opened and closed every time the user clicks a UI ele
 The network is a simple server client network with the server being the VSC IDE and the client being the Electron window. 
 The VSC initializes itself as a server that will listen for the Electrons message when the user interacts with a UI Element. 
 Once that happens the extension will navigate the users code window on VSC to the appropriate location that the user specified when they clicked on the custom UI.  \\
-
 
 % What is its structure?
 \subsection{Structure}
@@ -354,16 +356,16 @@ It is important to note that the team did not take any code from the project and
 Vis.js is intuitive for doing basic things with graph visualizations. 
 However, it can be very clunky when trying to implement more complex behaviors on top of its standard functionality. 
 The main resources used for figuring out Vis.js related difficulties were the official documentation and examples webpages.
-\hyperref{http://visjs.org/docs/network/}
-\hyperref{http://visjs.org/network_examples.html}
+\url{http://visjs.org/docs/network/}
+\url{http://visjs.org/network_examples.html}
 The documentation itself was helpful for more specific information like finding function overloads but was not at all useful for understanding how to use Vis.js's functionality. 
 Fortunately, Vis.js also provided a very comprehensive examples page with samples demonstrating the majority of supported functionality and function usage.
 
 \subsubsection{Additional Resources}
 We also made use of other technology specific websites and Stack Overflow for minor issues.
 Both Regex101 and Curious Concept's JSON formatter were very helpful tools.
-\hyperref{https://regex101.com/}
-\hyperref{https://jsonformatter.curiousconcept.com/}
+\url{https://regex101.com/}
+\url{https://jsonformatter.curiousconcept.com/}
 Additionally, we based the majority of our parser’s architecture on the compiler we built in CS480. 
 It was, in retrospect, surprising how useful that class was to completing this project.
 
