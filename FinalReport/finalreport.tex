@@ -531,6 +531,7 @@ No changes to requirements were made for the duration of the project.
 	\caption{Bottom half of the Gantt for readability.}
 \end{figure}
 
+% Your original design document, as well as a discussion of what had to change over the course the year.
 \section{Design Document and Changes}
 \includepdf[pages={-}]{design.pdf}
 \subsection{Discussion of Changes}
@@ -541,13 +542,43 @@ This change allowed for more customization and tuning available to the user mean
 
 Another change from the original design was the use of certain technologies which will also be discussed below.
 The developers had intended to use the programming language Perl and associated libraries to parse the project directories of the user but found keeping the entire project written in TypeScript made more sense and was easier to implement while keeping the same amount of functionality required. 
-Other technology changes included using a custom implementation of the features provided by JavaScript's Lodash library and jQuery's NewsTicker library.\\
+Other technology changes included using a custom implementation of the features provided by JavaScript's Lodash library and jQuery's Advanced News Ticker API library.\\
 
 One major design change from the original document was not parsing the updated file on save or having multiple versions of the parsed data structure around.
 It was decided to only parse the project directory when the user explicitly said to (when the user wanted to pull up the file map UI/notification list). \\
 
+% Your tech review, in its original form. Did you change your mind about any technologies? What had to change?
 \section{Technology Review and Changes}
 \includepdf[pages={-}]{techreview.pdf}
+\subsection{Discussion of Changes}
+Sam Lichlyter discussed the different parser technologies the project would use to parse the files in the users project directory.
+He started out with the parser class.
+It was decided the developers would use a custom parser for the reasons he mentioned in the original Technology Review. \\
+
+The third section Sam talked about was specifically which Perl parsing tool the team would use.
+At this point in designing and developing the extension the team was pretty convinced they were going to use Perl as their parsing language.
+The design change mentioned above where they transitioned the target audience from web developers to a wider audience of developers moved them away from using Perl.
+Perl had a lot of libraries and built in functions specifically to parse HTML which the extension still needed to do, but it was decided it was better to design a more universal parser.\\
+
+Zach Schneider then went on to talk about how the extension would store it's data.
+He mainly talked about different types of databases including SQL and NoSQL databases.
+It was decided the team wouldn't really use a database at all but rather implement the data structure into a single JSON file which could then be passed to the UI to read and generate the appropriate visualization. \\
+
+As mentioned above in the design changes, the developers decided to not keep two or more versions of the parsed data, so there was no need to have a technology that compared them. \\
+
+Cramer Smith looked at different Integrated Development Environments (IDE) and their respective event listeners and languages they are written to allow the developers a better experience building the tool for that specific IDE.
+The developers decided to use Visual Studio Code for the IDE they would build the extension for.
+They did this for the reasons mentioned in the original Technology Review.\\
+
+The team decided to transition to built in events instead of using EventEmitter for the event listeners.
+Because the extension is only launched and the directory parsed when the user explicitly tells it to, there was no need for more complicated event listeners than the ones already built in. \\
+
+Eric Winkler discussed the different ways to build and show the UI. 
+The team decided to use vis.js as the main engine for displaying the nodes and edges within the file map UI.
+The broken rules (now called notifications) was planned on being displayed using jQuery's Advanced News Ticker API. 
+This was overruled by custom code as the News Ticker API didn't add much value in terms of the usefulness of the extension.
+The actual location of the file map UI was decided to be done within an Electron window.\\
+
 
 \section{Weekly Blog Posts}
 	\input{blogposts}	
