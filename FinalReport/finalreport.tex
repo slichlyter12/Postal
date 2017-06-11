@@ -513,25 +513,36 @@ No changes to requirements were made for the duration of the project.
 \end{center}
 }
 \subsection{Gantt of Implmentation Progress for the Year}
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.75\textwidth]{Gantt}
 	\caption{Gantt of the implementation progress for the acedemic year.}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.75\textwidth]{GanttTop}
 	\caption{Top half of the Gantt for readability.}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.75\textwidth]{GanttBottom}
 	\caption{Bottom half of the Gantt for readability.}
 \end{figure}
 
-
-\section{Design Documents and Changes}
+\section{Design Document and Changes}
 \includepdf[pages={-}]{design.pdf}
+\subsection{Discussion of Changes}
+The original design of the Visual Studio Code extension was targeted towards web developers.
+Discussions with the client transitioned this viewpoint to make the tool more universal and available to a wider audience of developers.
+The tool was then redesigned to allow for broader customization through the use of "grammars" which users can use to define certain behaviors for the extension.
+This change allowed for more customization and tuning available to the user meaning it didn't really matter what kind of developer they were because they could adapt the tool to their needs.\\
+
+Another change from the original design was the use of certain technologies which will also be discussed below.
+The developers had intended to use the programming language Perl and associated libraries to parse the project directories of the user but found keeping the entire project written in TypeScript made more sense and was easier to implement while keeping the same amount of functionality required. 
+Other technology changes included using a custom implementation of the features provided by JavaScript's Lodash library and jQuery's NewsTicker library.\\
+
+One major design change from the original document was not parsing the updated file on save or having multiple versions of the parsed data structure around.
+It was decided to only parse the project directory when the user explicitly said to (when the user wanted to pull up the file map UI/notification list). \\
 
 \section{Technology Review and Changes}
 \includepdf[pages={-}]{techreview.pdf}
@@ -568,7 +579,7 @@ The file map based on the defined links between files, or whatever the user spec
 The map consist of nodes and sub-nodes that are representations of the files and their connections that the parser created.
 The map is shown on the visualization custom UI. \\
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.75\textwidth]{InformationERDEPS-eps-converted-to}
 	\caption{Control flow of the way the data structure is formed}
@@ -601,7 +612,7 @@ When a notification in the list is hovered over, these errors highlight the corr
 When a notification in the list is clicked, the extension will open the file in Visual Studio Code?s text editor and scroll to line where the notification location exists. 
 The notification list is in its own div and scrolling functionality is achieved through the use of jQuery Advanced News Ticker. \\ % is it? 
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.75\textwidth]{UpdatedDataStruct-eps-converted-to}
 	\caption{Information that is stored in the data structure and the way that is it interpreted by the custom UI and displayed}
@@ -630,7 +641,7 @@ The Model being a data structure that is created by the parser.
 The View being the custom UI displays a visualization of the data structure.
 The controller is the communication between the data structure and the UI.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.75\textwidth]{MVCsimple}
 	\caption{Diagram of the way the Model View Controller Design is implemented}
