@@ -1027,46 +1027,35 @@ I regret not frequently communicating with our client and making him a larger pa
 	This is the default grammar that parses HTML and PHP files for divs and links.
 	
 	\begin{lstlisting}
-{
-    "id" : 0,
-    "title" : "html",
-    "filetypes" : ["html", "php"],
-    "rules" : [{
+"Postal.grammars": [
+        {
             "title": "div",
             "type": "tagged",
-            "options" : {
+            "filetypes": [
+                "html",
+                "php"
+            ],
+            "options": {
                 "tagStart": "<div",
-                "namedOption" : "id=\"(.+?)\"",
+                "namedOption": "id=\"(.+?)\"",
                 "tagEnd": ">",
                 "closingTag": "</div>",
                 "nodeColor": "blue"
             }
-        }, {
+        },
+        {
             "title": "href link",
-            "type" : "link",
-            "options" : {
+            "type": "link",
+            "filetypes": [
+                "html",
+                "php"
+            ],
+            "options": {
                 "link": "href=[\"](.+?)[\"]",
                 "nodeColor": "blue"
             }
-        }, {
-            "title": "includes link",
-            "type": "link",
-            "options": {
-                "link": "include=[\"](.+?)[\"]",
-                "nodeColor": "blue"
-            }
-        }, {
-            "title": "body",
-            "type": "tagged",
-            "options" : {
-                "tagStart": "<body",
-                "tagEnd": ">",
-                "closingTag": "</body>",
-                "nodeColor": "blue"
-            }
-        }
-    ]
-}
+        }, ...
+]
 	\end{lstlisting}
 
 	\pagebreak
