@@ -64,32 +64,10 @@
 }
 \lstset{escapechar=@, style=customperl}
 
-% Document Title:
-\def\doctitle{A Tool to Visualize the Structure of a Codebase Using Information Foraging Theory Design Patterns}
-\def\doctype{Final Report}
-\def\team{Team Postal | Group \#38}
-
-\markboth{Oregon State University}{\doctitle}
-
 \begin{document}
 
-\title{\Huge{\bfseries{\textsf{\doctitle}}}\\\textsf{\Large{\doctype}}\\\textsf{\large{\team}}}
-\author{Cramer Smith, Sam Lichlyter, Eric Winkler, Zach Schneider}
-
-\maketitle
-\vfill
-
-\setlength\parindent{0pt} \textbf{Abstract:} Developer tools are often complex pieces of software. 
-Gathering and manipulating useful information for a programmer can often be a slow and costly process. 
-By implementing Information Foraging Theory design patterns in the creation of these tools, the information collected may be more useful or produced faster. 
-Information Foraging Theory is the theory and math behind the choices people make to maximize the value of the information they find versus the cost of getting that information.
-The aim of this project is to develop a tool that will act as a proof of concept to this idea and increase developer efficiency.
-Through the implementation of multiple IFT design patterns, the Postal team will create a developer tool that helps enforce and maintain code structure. 
-
-\vfill
-
-\pagebreak
-
+% Cover Page
+\includepdf[pages={-}]{coverpage.pdf}
 \tableofcontents
 
 
@@ -592,7 +570,6 @@ The poster displayed at the Engineering Expo is inserted in the following page.
 %leave this blank, we'll just print this out separately in color
 
 \section{Project Documentation}
-\subsection*{Cramer Smith}
 % Cramer, This is Your PARTY! I wrote this to myself.
 This section of the document covers the details of the projects implementation, and the ways that the user can expect to install and use the tool.
 
@@ -751,8 +728,8 @@ The most complex technologies the team had to learn was Node.js and vis.js
 For learning Node we primarily used the Electron reference guide available here: 
 \hyperref{https://electron.atom.io/docs/}
 This was the most helpful resource in figuring out how to build an extension for Electron as well as basic node process information. 
-The section on the Electron API was especially helpful.
-\\
+The section on the Electron API was especially helpful. \\
+
 The team also made use of a couple github projects for reference purposes. 
 The biggest help by a wide margin was the VSCode Color Picker made by Anseki.
 \url{https://github.com/anseki/vscode-color/}
@@ -972,16 +949,16 @@ From a technical perspective, I've learned about or become more proficient in:
 \end{itemize} 
 
 \subsubsection{Non-Technical Information}
-The theme to the non-technical lessons I've learned while working on this project is that I have a new appreciation for a ton of things I learned here but hadn't used in a practical way before.
-\\
+The theme to the non-technical lessons I've learned while working on this project is that I have a new appreciation for a ton of things I learned here but hadn't used in a practical way before. \\
+
 To start with, I now love paired programming. 
 Building the Parser and back-end of this project was potentially the most complicated thing I have attempted during my undergraduate career. 
 It was almost necessary to have Sam writing code while I focused on keeping track of what exactly we were doing and what we still had to do. 
-Writing most of the code together probably saved us tens of hours.
-\\
+Writing most of the code together probably saved us tens of hours. \\
+
 I also learned to love classes. 
-I've never had to use classes on the basis of trying to abstract complex problems but being able to describe things in terms classes and forget about lower level details was very helpful.
-\\
+I've never had to use classes on the basis of trying to abstract complex problems but being able to describe things in terms classes and forget about lower level details was very helpful. \\
+
 Finally, I learned to appreciate the importance of designing before coding. 
 I'm not sure I've ever completed a homework assignment by first designing it before writing the code. 
 Everything had been, relatively speaking, simple to implement. 
