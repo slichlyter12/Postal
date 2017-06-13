@@ -1,0 +1,5 @@
+## What We Did This Week
+This week the team started work on the progress report and our presentation video of the report. Because we have our previous reports to look back on, many of the problems and solutions we had in the past are easy to recall and report as resolved now. One difficulty we've having is narrowing down a unified pitch for Expo. Our project may make sense to other developers, but requires additional foreknowledge for the layman. We have to have that pitch nailed down this weekend. Additionally, we began testing our project on users (other computer science students we know) in preparation for our actual testing phase when we hear back from the IRB.
+
+## Plans Next Week
+Next week we will wrap up our progress report and prepare to demo at Expo. I believe we will be fully ready by Friday to show off our years' work.

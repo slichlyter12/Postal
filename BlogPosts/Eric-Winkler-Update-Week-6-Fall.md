@@ -1,0 +1,3 @@
+This week we worked towards finishing our requirements document. We also spent more time discussing design options and what facets of this project were feasible with the limited time we have to implement before spring testing. We also discussed and began work on a prototype for our client that will need to be complete next week.
+
+Next week we will be working on the above mentioned prototype and sitting down with our client to discuss the project's  progress.

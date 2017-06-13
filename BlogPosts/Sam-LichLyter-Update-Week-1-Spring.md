@@ -1,0 +1,2 @@
+## This Week
+This week we met with our client who was slightly disappointed in the progress we had made in the last few weeks but offered valuable feedback and a chance for us to try again next week. So this week we have focused primarily on the feedback given to us by our client so we can meet his expectations by our next meeting. I have mostly been in charge of changing some of the subtler UI elements to make the tool more user friends and a bit easier to find/navigate information.

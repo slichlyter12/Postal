@@ -1,0 +1,3 @@
+This week we primarily worked on revising our Problem Statement as well as the rough draft of our Requirements Document. We came up with a tentative schedule for what we wanted to accomplish and when. Because we weren't given much direction in class as far as when certain documents are due, we had to more or less make it up ourselves. The schedule we came up with I think will allow us to move forward at a steady pace accomplishing the tasks and getting a working product by the end of Winter Term. This will give us plenty of time in the Spring to test our product with other people.
+
+Next week we plan on getting some functionality built into our extension for VSCode.

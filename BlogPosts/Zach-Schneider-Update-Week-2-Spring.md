@@ -1,0 +1,5 @@
+## What We Did This Week
+This week we finished up most of the UI changes we felt Chris cared about most (font, node hierarchy, readable notifications) and demoed it to him on Tuesday. He was satisfied with our progress and began the discussions about user testing. That will be our main focus outside of Expo going forward. We are writing questions to ask the users once they have tested our project that we will submit to the OSU IRB Monday. Additionally, we worked on our Capstone poster second draft. We are planning on capitalizing on the extra credit opportunity concerning the poster board by working with another team.
+
+## Plans for Next Week
+Next week we will begin creating the tasks the users will perform in our study. We will also continue polishing our project to make sure it's totally ready. We will refer to Chris to make sure our study is sound.

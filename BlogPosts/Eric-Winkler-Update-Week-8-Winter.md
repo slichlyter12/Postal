@@ -1,0 +1,1 @@
+This week we met with our client and decided on a list of features to complete in the next couple weeks. this includes refactoring our UI with a new vis method called clustering. Additionally we will be implementing C-like function parsing and  other UI features like being able to switch between web view and a hierarchy view.

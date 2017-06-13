@@ -1,0 +1,3 @@
+This week we primarily worked on building out our design document. This was a lot hard than the previous documents as we had a bit of trouble trying to interpreter the IEEE standard. It was fairly vague in it's explanations. We later found out during our TA meeting that that was by design as a highly specific document might place constraints on a projects design. We also had a brief meeting with our client to discuss plans and deadlines for over break.
+
+Next week we will be primarily working on our final report for the term and making plans for the next few weeks.

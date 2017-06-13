@@ -1,0 +1,5 @@
+## What We Did This Week
+We had two major goals we worked on this week: completing our preliminary Expo poster and finishing a number of UI features for our project. The poster had a bit of a rough start; we all did a part of the poster separately, then later realized that the whole thing was too wordy and not cohesive. We revamped the poster as a team, focusing more on why we did what we did rather than including so many technical details on how we did it. For the project itself, I worked on adding a sidebar window that will display an notifications or errors the parser finds for each node in the main UI. The visual elements are there, it's just down to getting the parser to generate the right data to populate the window.
+
+## Plans For Next Week
+Next week we will each work on our individual progress reports as well as the team video report. It should be mostly the same as the one we did a few weeks ago for the midterm. We may make minor updates to the codebase as well.

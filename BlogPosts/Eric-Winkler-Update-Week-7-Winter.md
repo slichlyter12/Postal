@@ -1,0 +1,3 @@
+This week we finished our refactor of Postal and implemented a few new features (our dig down is currently working better than before). We also published it on the store on Monday and have been bug fixing since. We still have to implement the one click links appearing and error parsing. 
+
+A challenge we have is that our npm modules are too big to include packaged in our extension, so we have to currently have the user run 'npm install' in their extension directory before it will work. This is not ideal and we're currently looking for ways around this.

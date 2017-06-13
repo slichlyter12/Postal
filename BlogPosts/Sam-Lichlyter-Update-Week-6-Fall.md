@@ -1,0 +1,3 @@
+This week we finalized our requirements document. We met up a few times to finish the sections we hadn't finished last week and to revise the ones we had. Cramer and I worked on getting our hello world example to work with VSCode as well as resolve some issues Zach and Eric were having with GitHub and Windows path names being too long. We also met with our TA, Vee, to go over our progress. He also explained what a tech review was to us.
+
+Next week we have another meeting with Chris. We plan on having a few paper prototypes (or derivatives thereof) to show him as well as our hello world extension.

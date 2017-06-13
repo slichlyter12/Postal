@@ -1,0 +1,3 @@
+This week we met to discuss some bugs with the extension when it parsed larger projects. The leading theory was that the parser would create a JSON that had links to node ids that didn't have their own structure in the JSON. This caused the GUI to try to link nodes that might not have existed. Otherwise, the extensions performance seems to work well on larger (+100 nodes) projects so far.
+
+The plan for the weekend is to get the "dig down" functionality refactored. I'll probably be adding a couple buttons to help control that.

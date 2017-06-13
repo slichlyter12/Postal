@@ -1,0 +1,2 @@
+## This Week
+This week I fixed our postalignore to allow a set of files or directories to ignore by the parser. I also moved it the settings that the user can edit within VSCode. This is instead of a separate file they would have to include. I also built a new grammar and parser behavior to allow comments to be ignored. This fixed some issues where `if` and `while` blocks were being considered functions by our default grammars.

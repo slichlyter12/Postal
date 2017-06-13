@@ -1,0 +1,4 @@
+## What We Did This Week
+This week the team spent most of our time researching technologies and writing the tech review document. Due to some questions that were brought up from some of our research, we request a one day extension for the document, as we wanted to discuss them before submitting our final conclusions. My role in the document was related to data serialization, as parsed data from our clients' project would need to be stored temporarily in some form. We decided that form would be JSON, and we would use the JSON.stringify function to serialize our parser data. Once the document was complete, we spent the rest of our time laying out the basic framework for our design document.
+## Plans for Next Week
+Next week, we plan to begin writing our design document or our progress report. Due to the short week, we're not sure what work will be completed before the break. 

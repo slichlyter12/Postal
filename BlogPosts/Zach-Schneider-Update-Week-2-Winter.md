@@ -1,0 +1,5 @@
+##What We Did This Week:
+This week the team met to see where our project stood, what functioned and what needed to function next. Eric continued to make progress on the Electron UI which displays each file in the project, while I continue to work on created the links between those files. By the end of the week, links between files were displayed visually in the electron UI. However, there most likely will need to be a rework of this functionality: the links are generated independently of the project files, which causes major id number incongruities for larger web project when parsed.
+
+##Plans For Next Week:
+Going into the next week, I will work on reworking the link generation system in the parser. This may or may not be a large effort, but it may go more smoothly if I work with Sam to get the file data I need from the parser. Meanwhile, Cramer and Eric are starting to working on triggering the parser by a save operation within VS Code. Eric will have the UI update accordingly at the same time as the save action.

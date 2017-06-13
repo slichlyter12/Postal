@@ -1,0 +1,5 @@
+##What We Did This Week
+We started the week of by meeting with or client, Chris Scaffidi. While he was happy about our progress, he still felt our project/UI wasn't to the stage of usefulness yet where someone (or us) would want to use it every day. So, our goal going forward is to move from the core visualization functionality, to making that visualization useful. This will include letting users jump to the point in code that each node represent and better visibility with node names and relationship. We will convene again this weekend to hash out much of the work that needs to be done.
+
+##Plans for Next Week
+We will evaluate where the project is after our work/code review this weekend. We hope to solidify the rest of the core functionality of the parser and begin adding "gold plating" features (though at this point those features are more or less necessary). Our new major deadline is the end of the term when we hope to have our project in a "useful" state.

@@ -1,0 +1,4 @@
+##What We Did This Week
+This week the team discussed our schedule for completing the design document, the progress report, and what work we want to accomplish on our extension for the rest of the term. I also researched options for the visual portion of our progress report--I opted for OBS and PowerPoint as I am most familiar with those tools. Aside from this, nothing else was done due to the short week.
+##Plans For Next Week
+Next week we will begin writing our design document. We will continue work on the prototype extension with the goal of having another feature done before our meeting with our client on Friday.

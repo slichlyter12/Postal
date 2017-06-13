@@ -1,0 +1,5 @@
+##What We Did This Week
+This last week was extremely busy. The team worked all weekend, essentially re-writing each component of our project, piece by piece so that they would support the required design specifications. Previously we had had a mostly working prototype, but could not build on it any further. The parser saw the most work re done, followed by the UI then the data layer. Ultimately, we achieved the milestone we wanted and published our extension to the VS Code extension marketplace, where users can now download and use it. Additionally, we completed our progress report, which we had received an extension on last week.
+
+##Plans For Next Week
+Next week we will meet with our client, Prof Scaffidi to show him our progress and find out about the research component of this project. We will continue to test, bug fix and add features to the extension, particularly around error detection in a user's code. We also have class next week to learn about how to present our project at Expo.

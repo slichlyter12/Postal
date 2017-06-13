@@ -1,0 +1,4 @@
+The week We implemented a few new features and had a meeting with our Client. 
+I spent a bit of time working on fixing some performance problems with vis.js. When running in a hierarchical mode, vis runs several optimization algorithms in an attempt to limit white space between nodes. However, our trees aren't perfect and can nodes can have links over several levels of the tree and this seems to cause vis to hang when it tries to optimize. I'm currently midway through trying to massage the input such that vis will begin to behave in a more useful way. 
+
+The result of our client meeting was that we would need to work on the UI a bit\and focus on using the tool daily. We're planning on meeting with him again next week to show our progress. 

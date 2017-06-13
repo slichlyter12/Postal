@@ -1,0 +1,7 @@
+Over break, the Postal team began implementation. We had three primary modules that were worked on be different people. Sam worked primarily on the parser, Zach on the JSON implmentation and access methods and myself on the UI.
+
+Over break I created the UI within an electron application. The UI is currently capable of reading in our standardized JSON and generating an interactive file map. The file map nodes are color coded by file type, have a size determined by the number of links to the node, can be dragged around and feature a mostly complete implementation of the "dig down" functionality. The file map can also be zoomed and panned.
+
+The next step is to update the file map to be generated on a command from VSCode. We're currently having a little trouble with this as it appears that electron needs to be launched in a certain way from its own process.
+
+WE also had a meeting with our client this first week. We brought him up to speed with where the project is and what was giving the team difficulty. He offered some very good advice about how to further develop the tool. He specifically said to focus on the one feature that makes our tool most useful and to think about what situation it might be most beneficial for testing purposes.

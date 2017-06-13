@@ -1,0 +1,7 @@
+We've just finished expo but we still have several things to complete for this project. User testing still needs to be completed. To my knowledge we are waiting on IRB approval. I personally would like to do at least one more trial run. There are also a few very minor features I would like to implement that may help with testing. After trails are completed we may be asked to write a paper about the tool and the trails.
+
+This project has been easily one of the more difficult things that I have attempted and I feel I've learned quite a few lessons from the work the team has done. Skill wise, I’ve become much more component with JavaScript and NodeJS. I’ve also managed to get a little better at git (conflicts are no longer have me resetting to head). I’ve also gained a lot of experience with design. When we had our midwinter refactor, we rebuilt the entire extension from the ground up and had to think about fitting all of the complex behaviors of the system together. I found that it is much easier to take a big problem and simplify it into smaller, manageable tasks. I’ve definitely learned a lot about abstracting.
+
+This project has made me realize that I actually really enjoy the design/architecture part of software development and I think that is something I would really like to specialize in in my career. 
+
+Overall, this project was a success for me, personally. While it’s still a little early to gauge the success for our client, I have a good feeling about how our user trials will turn out based on the informal tests we have been running.

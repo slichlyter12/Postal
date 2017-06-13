@@ -1,0 +1,3 @@
+This week the majority of our time was spent writing the requirements document. Part of that process involved getting a very, very rough schedule for our project. We had to mostly make guesses as to how long each component would take but we left some flexibility room at the end. We also made some finishing touches to our problem statement. 
+
+The plan next week is to begin preparing for our next meeting with out client. He'd like to see something on the screen (even hello world as a VSC extension). We're planning on getting our windows set up.

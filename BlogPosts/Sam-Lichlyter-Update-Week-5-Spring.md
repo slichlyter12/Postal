@@ -1,0 +1,5 @@
+# This Week
+This week we submitted our poster board for expo. We had to make a few last minute adjustments to clean it up a bit and make it easier to read. We also finished up everything for the code freeze. We implemented a few last minute features to make the tool a little bit easier as well as fixing some of the last remaining small bugs. We also interviewed for and wrote our WIRED article. I wrote mine for the STEM Academy Data Solutions team. I interviewed Shannon Ernst who seemed like the team lead. This week we also tried to find someone who would be willing to try out our tool so we could test our user tests, but we came up short.
+
+# Next Week
+Next week we plan on looking for someone again to test out our user tests on. We also plan on starting our progress report which is due the following Monday.

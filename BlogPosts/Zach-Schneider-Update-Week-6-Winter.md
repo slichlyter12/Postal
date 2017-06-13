@@ -1,0 +1,5 @@
+##What We Did This Week
+This week the team spent most of our time working on revising our various documents. Minor revisions were made to update our design document, while some serious portions of the tech review had to be updated. I was in charge of setting up the One Note pages and formatting them correctly with all the needed content for our midterm progress report. Lastly, we scheduled a team code review for this weekend so each member can understand what everyone else is working on. Hopefully this leads to cleaner and more functional code overall. We plan to work a lot this weekend in order to reach our Beta release by next week so we can begin user testing.
+
+##Plans For Next Week
+Next week we will finish our progress report presentation, as we received an extension on it. The extension is due to our accelerated work timeline for our actual project. If all major features are completed by the end of the week, we will begin working on implementing error identification and visualization for our user's projects.

@@ -1,0 +1,5 @@
+##What We Did This Week
+This week the team met up and made some progress on each of the pieces we've tasked each other with going forward. Eric successfully launched our Electron UI window from the extension itself instead of the command line, serving as a major step forward for the UI. I continue to rework the Data Structure file node generation, which is conceptually proving more difficult than expected. I will work with Sam going forward to make sure the parser gives me the data I need. Cramer successfully got code highlighting working, a step in the right direction for our error management. We also had class this week which informed us of our upcoming progress report and OneNote tasks.
+
+##Plans For Next Week
+I will set up OneNote for our "Engineering Notebook" and begin to compile the information we need to make our midterm progress report. I will also continue working on fixing Data Structure file node generation.

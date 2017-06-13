@@ -1,0 +1,4 @@
+# This week
+This week I didn't get as much done as I was planning. I made some progress on the parser but didn't get to working on the links or getting the directories to show up as nodes. Our team also met up and decided we should move our creation of the data structure to the parser instead of parsing then creating the data structure. This would save some overhead of passing data around and would prevent us from touching the data twice.
+
+This will be my task for next week. We also met with Vee for the first time this term to catch up and go over what we would be doing this term for the class, apart from working on our project.

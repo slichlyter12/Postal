@@ -1,0 +1,1 @@
+This week we finished up our Design Document. We also had a meeting with our client in which we talked about the progress we made since our last meeting as well as our plan for what we want to get done over the Christmas break. I also messed with our parser a bit make it better at finding what we wanted.

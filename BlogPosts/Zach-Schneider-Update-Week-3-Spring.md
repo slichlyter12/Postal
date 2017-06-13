@@ -1,0 +1,5 @@
+## What We Did This Week
+This week we submitted our user testing proposal off for IRB approval via Chris. This proposal included the questions we planned to ask our users and our own Human Subject certifications. Additionally, we further tweaked our project to make it completely testing ready. The team discussed the nature of the tasks we will ask users to carry out in order to test our project. These tasks should be finalized by next week. Lastly, we met as a team with Kirsten to receive feedback on our Expo poster and how we can explain our project more clearly.
+
+## Plans For Next Week
+Next week we will make modifications to our poster according to the feedback we received, then send it off to Chris for final approval before Expo submission. Secondly, we plan to finalize our user testing plans as we wait for IRB approval to come back to us. Lastly, we'll check if there's any word on whether we have to do a midterm progress report again this term. If so, we will start on that.

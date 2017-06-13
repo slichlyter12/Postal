@@ -1,0 +1,5 @@
+##What We Did This Week
+Our team continued to work on finishing our requirements document this week. We met twice to complete the remaining sections we had not finished by last Friday, then went through and revised ambiguous language and poor grammar. Sam and Cramer also continued to fiddle with our "hello world" extension in visual studio code. This test extension will likely transition into our proof of concept code that Chris asked for by mid November. Finally, we met with Ve to check our requirements progress with him and get some information about the tech review document that we will write next week.
+
+##Plans For Next Week
+According to the CS461 schedule, we will begin writing our tech review document next week. This appears to be both an individual and team document. As we clarify what technology we plan to use, we will also begin to seriously work on our proof on concept visualization extension. We hope to have this p-o-c complete in two weeks.
