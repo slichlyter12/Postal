@@ -16,9 +16,8 @@
                 "--enable-logging"
             ],
             "env": {},
-            "externalConsole": false,
             "sourceMaps": false,
-            "outDir": null
+            "outFiles": []
         },
         {
             "name": "Launch Extension",
@@ -28,7 +27,7 @@
             "args": ["--extensionDevelopmentPath=${workspaceRoot}" ],
             "stopOnEntry": false,
             "sourceMaps": true,
-            "outDir": "${workspaceRoot}/out/src",
+            "outFiles": ["${workspaceRoot}/out/src"],
             "preLaunchTask": "npm"
         },
         {
@@ -39,7 +38,7 @@
             "args": ["--extensionDevelopmentPath=${workspaceRoot}", "--extensionTestsPath=${workspaceRoot}/out/test" ],
             "stopOnEntry": false,
             "sourceMaps": true,
-            "outDir": "${workspaceRoot}/out/test",
+            "outFiles": ["${workspaceRoot}/out/test"],
             "preLaunchTask": "npm"
         }
     ]

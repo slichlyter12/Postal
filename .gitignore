@@ -10,4 +10,5 @@
 *.fls
 *dirStructure.html
 *.mp4
+**/.DS_Store
 

@@ -15,6 +15,8 @@ var ipc = require('node-ipc');
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
+    console.log("running postal...");
+
     let controller = new Controller();
 
     // The command has been defined in the package.json file

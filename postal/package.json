@@ -21,11 +21,12 @@
         "onCommand:extension.parse",
         "onCommand:extension.error"
     ],
-    "icon": "images/postalLogo.png",
+    "icon": "https://github.com/slichlyter12/Postal/blob/master/postal/images/postalLogo.png?raw=true",
     "main": "./out/src/extension",
     "controllerMain": "./lib/controller",
     "contributes": {
-        "commands": [{
+        "commands": [
+            {
                 "command": "extension.parse",
                 "title": "Postal"
             },
@@ -65,7 +66,8 @@
                         "type": "object",
                         "description": "An array of grammar objects used to parse your project directory"
                     },
-                    "default": [{
+                    "default": [
+                        {
                             "title": "div",
                             "type": "tagged",
                             "filetypes": [
